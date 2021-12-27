@@ -13,7 +13,7 @@
                     <div keyValueItem class="col" [key]="'Server'" [value]="data.guild.name"></div>
                 </div>
 
-                <div class="row mt-3">
+                <div class="row mt-2">
                     <div keyValueItem class="col" [key]="'První zpráva v'" [value]="data.firstMessageAt.toLocaleString()" *ngIf="data.firstMessageAt">
                     </div>
                     <div keyValueItem class="col" [key]="'Poslední zpráva v'" [value]="data.lastMessageAt.toLocaleString()"
@@ -25,6 +25,7 @@
                 </div>
 
                 <div class="row mt-2">
+                    <div keyValueItem class="col-3" [key]="'Počet zpráv v cache'" [value]="data.cachedMessagesCount.toLocaleString()"></div>
                     <div class="col">
                         <button class="btn btn-danger btn-sm" type="button" (click)="cleanCache()">Vyčistit cache</button>
                     </div>

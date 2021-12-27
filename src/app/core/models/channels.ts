@@ -90,6 +90,10 @@ export class GuildChannel {
     public id: string;
     public name: string;
     public type: ChannelType;
+    public cachedMessagesCount: number;
+    public firstMessageAt: DateTime | null;
+    public lastMessageAt: DateTime | null;
+    public messagesCount: number;
     public guild: Guild;
 
     get channelTypeName(): string {
@@ -101,9 +105,13 @@ export class GuildChannel {
         const channel = new GuildChannel();
 
         channel.id = data.id;
-        channel.guild = data.guild ? Guild.create(data.guild) : null;
         channel.name = data.name;
         channel.type = data.type;
+        channel.cachedMessagesCount = data.cachedMessagesCount;
+        channel.firstMessageAt = data.firstMessageAt ? DateTime.fromISOString(data.firstMessageAt) : null;
+        channel.lastMessageAt = data.lastMessageAt ? DateTime.fromISOString(data.lastMessageAt) : null;
+        channel.messagesCount = data.messagesCount;
+        channel.guild = data.guild ? Guild.create(data.guild) : null;
 
         return channel;
     }
@@ -111,8 +119,6 @@ export class GuildChannel {
 
 export class ChannelDetail extends GuildChannel {
     public flags: number;
-    public firstMessageAt: DateTime | null;
-    public lastMessageAt: DateTime | null;
     public lastMessageFrom: User | null;
     public mostActiveUser: User | null;
 
@@ -121,11 +127,8 @@ export class ChannelDetail extends GuildChannel {
         const base = super.create(data);
         const detail = new ChannelDetail();
 
-        detail.firstMessageAt = data.firstMessageAt ? DateTime.fromISOString(data.firstMessageAt) : null;
+        Object.assign(detail, base);
         detail.flags = data.flags;
-        detail.guild = base.guild;
-        detail.id = base.id;
-        detail.lastMessageAt = data.lastMessageAt ? DateTime.fromISOString(data.lastMessageAt) : null;
         detail.lastMessageFrom = data.lastMessageFrom ? User.create(data.lastMessageFrom) : null;
         detail.mostActiveUser = data.mostActiveUser ? User.create(data.mostActiveUser) : null;
         detail.name = data.name;
