@@ -74,6 +74,7 @@ export class UserListItem {
     public username: string;
     public guilds: Dictionary<string, boolean>;
     public discordStatus: UserStatus;
+    public registeredAt: DateTime;
 
     // tslint:disable: no-bitwise
     get isBotAdmin(): boolean { return (this.flags & UserFlags.BotAdmin) !== 0; }
@@ -94,6 +95,7 @@ export class UserListItem {
         item.haveBirthday = data.haveBirthday ?? false;
         item.username = data.username;
         item.discordStatus = data.discordStatus;
+        item.registeredAt = data.registeredAt ? DateTime.fromISOString(data.registeredAt) : null;
 
         return item;
     }

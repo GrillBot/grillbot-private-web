@@ -8,6 +8,7 @@
                     <th sortable (clicked)="toggleSort()" [key]="'username'" [current]="'username'" [sortDesc]='sortDesc'>Uživatelské jméno</th>
                     <th>Stav</th>
                     <th>Servery</th>
+                    <th>Registrován</th>
                     <th>Doplňující informace</th>
                     <th>Akce</th>
                 </tr>
@@ -27,6 +28,7 @@
                             <span *ngFor="let guild of item.guilds" [class.text-danger]="!guild.value">{{guild.key}}</span>
                         </div>
                     </td>
+                    <td>{{(item.registeredAt?.binding ?? '')}}</td>
                     <td class="badge-list">
                         <span class="badge bg-{{(item.haveBirthday ? 'success' : 'danger')}}"
                             title="Uživatel {{(item.haveBirthday ? 'má' : 'nemá')}} uložené datum narození">Narozeniny</span>
