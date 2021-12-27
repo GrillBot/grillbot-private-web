@@ -179,6 +179,7 @@ export class UserDetail {
     public isKnown: boolean;
     public avatarUrl: string;
     public selfUnverifyMinimalTime: string | null;
+    public registeredAt: DateTime | null;
 
     // tslint:disable: no-bitwise
     get isBotAdmin(): boolean { return (this.flags & UserFlags.BotAdmin) !== 0; }
@@ -201,6 +202,7 @@ export class UserDetail {
         detail.isKnown = data.isKnown;
         detail.avatarUrl = data.avatarUrl;
         detail.selfUnverifyMinimalTime = data.selfUnverifyMinimalTime;
+        detail.registeredAt = data.registeredAt ? DateTime.fromISOString(data.registeredAt) : null;
 
         return detail;
     }

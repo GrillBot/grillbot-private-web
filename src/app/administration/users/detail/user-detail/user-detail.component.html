@@ -22,6 +22,7 @@
                         </div>
 
                         <div class="row mt-3">
+                            <div keyValueItem class="col-3" [key]="'Datum a čas registrace'" [value]="(data.registeredAt?.binding ?? 'Není známo')"></div>
                             <div class="col flags">
                                 <span class="badge bg-{{(data.haveBirthday ? 'success' : 'danger')}}"
                                     title="Uživatel {{(data.haveBirthday ? 'má' : 'nemá')}} uložené datum narození">Narozeniny</span>
