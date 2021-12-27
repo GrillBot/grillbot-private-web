@@ -7,6 +7,7 @@ import { CommandStatisticItem, DiagnosticsInfo } from '../models/system';
 import { environment } from 'src/environments/environment';
 import { UserStatus } from '../models/enums/user-status';
 import { HttpErrorResponse } from '@angular/common/http';
+import { QueryParam } from '../models/http';
 
 @Injectable({ providedIn: 'root' })
 export class SystemService {
@@ -34,8 +35,9 @@ export class SystemService {
         );
     }
 
-    getCommandsStatistics(): ObservableList<CommandStatisticItem> {
-        const url = `${environment.apiUrl}/system/commands`;
+    getCommandsStatistics(searchQuery: string): ObservableList<CommandStatisticItem> {
+        const parameters = searchQuery ? new QueryParam('searchQuery', searchQuery).toString() : '';
+        const url = `${environment.apiUrl}/system/commands?${parameters}`;
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.get<CommandStatisticItem[]>(url, { headers }).pipe(
