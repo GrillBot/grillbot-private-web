@@ -1,10 +1,10 @@
-FROM node:14-alpine as BUILD
+FROM node:15-alpine as AngularBuild
 WORKDIR /usr/src/app
 COPY package.json package-lock.json ./
 RUN npm install
 COPY . .
 RUN npm run ng -- build --configuration=production
 
-FROM nginx
+FROM nginx:alpine
 COPY nginx.conf /etc/nginx/nginx.conf
-COPY --from=BUILD /usr/src/app/dist/GrillBotClient /usr/share/nginx/html
+COPY --from=AngularBuild /usr/src/app/dist/GrillBotClient /usr/share/nginx/html

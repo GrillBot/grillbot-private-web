@@ -4,7 +4,7 @@
 
 export const environment = {
     production: false,
-    apiUrl: 'https://grillbot.cloud/api',
+    apiUrl: 'https://localhost:5000/api',
     hearthbeat: 30000
 };
 
