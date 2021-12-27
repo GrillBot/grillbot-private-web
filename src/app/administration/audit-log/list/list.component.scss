@@ -12,6 +12,8 @@
     & table {
         & pre {
             margin-bottom: 0;
+            word-wrap: break-word;
+            white-space: pre-wrap;
         }
     }
 }

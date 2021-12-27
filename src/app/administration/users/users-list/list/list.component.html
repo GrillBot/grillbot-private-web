@@ -2,11 +2,11 @@
     <app-data-list #list (readData)="readData($event)">
         <app-loading *ngIf="!list.isDataLoaded"></app-loading>
 
-        <table class="table table-sm table-bordered table-striped clickable" *ngIf="list.isDataLoaded">
+        <table class="table table-sm table-bordered table-striped clickable auto-column-width" *ngIf="list.isDataLoaded">
             <thead>
                 <tr>
                     <th sortable (clicked)="toggleSort()" [key]="'username'" [current]="'username'" [sortDesc]='sortDesc'>Uživatelské jméno</th>
-                    <th style="width: 80px;">Stav</th>
+                    <th>Stav</th>
                     <th>Servery</th>
                     <th>Doplňující informace</th>
                     <th>Akce</th>

@@ -2,11 +2,11 @@
     <app-data-list #list (readData)="readData($event)">
         <app-loading *ngIf="!list.isDataLoaded"></app-loading>
 
-        <table class="table table-sm table-bordered table-striped" *ngIf="list.isDataLoaded">
+        <table class="table table-sm table-bordered table-striped auto-column-width" *ngIf="list.isDataLoaded">
             <thead>
                 <tr>
                     <th style="width: 40px">&nbsp;</th>
-                    <th style="width: 130px" sortable [key]="'id'" [current]="sortBy" [sortDesc]="sortDesc" (clicked)="setSort($any($event))">ID</th>
+                    <th style="min-width: 60px" sortable [key]="'id'" [current]="sortBy" [sortDesc]="sortDesc" (clicked)="setSort($any($event))">ID</th>
                     <th sortable [key]="'user'" [current]="sortBy" [sortDesc]="sortDesc" (clicked)="setSort($any($event))">Hledající</th>
                     <th sortable [key]="'guild'" [current]="sortBy" [sortDesc]="sortDesc" (clicked)="setSort($any($event))">Server</th>
                     <th sortable [key]="'channel'" [current]="sortBy" [sortDesc]="sortDesc" (clicked)="setSort($any($event))">Kanál</th>

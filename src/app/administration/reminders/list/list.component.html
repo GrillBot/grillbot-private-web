@@ -7,19 +7,16 @@
                 <h6 class="mb-0">Pro zadaný filtr nebyly nalezeny žádné položky.</h6>
             </app-card>
 
-            <table class="table table-sm table-bordered table-striped" *ngIf="!list.isEmpty">
+            <table class="table table-sm table-bordered table-striped auto-column-width" *ngIf="!list.isEmpty">
                 <thead>
                     <tr>
-                        <th style="width: 150px" sortable [key]="'id'" [current]="sortBy" [sortDesc]="sortDesc" (clicked)="setSort($any($event))">#
-                        </th>
+                        <th sortable [key]="'id'" [current]="sortBy" [sortDesc]="sortDesc" (clicked)="setSort($any($event))">#</th>
                         <th sortable [key]="'fromUser'" [current]="sortBy" [sortDesc]="sortDesc" (clicked)="setSort($any($event))">Odesílatel</th>
                         <th sortable [key]="'toUser'" [current]="sortBy" [sortDesc]="sortDesc" (clicked)="setSort($any($event))">Příjemce</th>
                         <th sortable [key]="'at'" [current]="sortBy" [sortDesc]="sortDesc" (clicked)="setSort($any($event))">Oznámit v</th>
-                        <th style="width: 150px" sortable [key]="'postpone'" [current]="sortBy" [sortDesc]="sortDesc"
-                            (clicked)="setSort($any($event))">
-                            Odloženo</th>
-                        <th style="width: 100px">Oznámeno</th>
-                        <th style="width: 200px">Akce</th>
+                        <th sortable [key]="'postpone'" [current]="sortBy" [sortDesc]="sortDesc" (clicked)="setSort($any($event))">Odloženo</th>
+                        <th>Oznámeno</th>
+                        <th>Akce</th>
                     </tr>
                 </thead>
                 <tbody>

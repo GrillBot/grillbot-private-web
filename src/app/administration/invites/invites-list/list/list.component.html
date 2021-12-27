@@ -2,13 +2,11 @@
     <app-data-list #list (readData)="readData($event)">
         <app-loading *ngIf="!list.isDataLoaded"></app-loading>
 
-        <table class="table table-bordered table-sm table-striped" *ngIf="list.isDataLoaded">
+        <table class="table table-bordered table-sm table-striped auto-column-width" *ngIf="list.isDataLoaded">
             <thead>
                 <tr>
-                    <th style="width: 200px;" sortable (clicked)="setSort($any($event))" [key]="'code'" [current]="sortBy" [sortDesc]="sortDesc">Kód
-                    </th>
-                    <th style="width: 300px" sortable (clicked)="setSort($any($event))" [key]="'createdAt'" [current]="sortBy" [sortDesc]="sortDesc">
-                        Vytvořeno</th>
+                    <th sortable (clicked)="setSort($any($event))" [key]="'code'" [current]="sortBy" [sortDesc]="sortDesc">Kód</th>
+                    <th sortable (clicked)="setSort($any($event))" [key]="'createdAt'" [current]="sortBy" [sortDesc]="sortDesc">Vytvořeno</th>
                     <th sortable (clicked)="setSort($any($event))" [key]="'creator'" [current]="sortBy" [sortDesc]="sortDesc">Vytvořil</th>
                     <th>Použilo uživatelů</th>
                     <th>Server</th>

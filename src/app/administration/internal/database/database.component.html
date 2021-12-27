@@ -1,17 +1,17 @@
 <app-card [title]="'Stav databáze'" [icon]="'fas fa-database'" [size]="'md'">
     <app-loading *ngIf="!data"></app-loading>
 
-    <table *ngIf="data" class="table table-sm table-bordered table-striped">
+    <table *ngIf="data" class="table table-sm table-bordered table-striped auto-column-width">
         <thead>
             <tr>
-                <th class="auto-width">Název tabulky</th>
+                <th>Název tabulky</th>
                 <th>Počet záznamů</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let item of data">
-                <td class="auto-width">{{item.key}}</td>
-                <td>{{item.value}}</td>
+                <td>{{item.key}}</td>
+                <td>{{item.value.toLocaleString()}}</td>
             </tr>
         </tbody>
     </table>

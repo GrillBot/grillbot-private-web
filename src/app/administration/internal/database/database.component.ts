@@ -7,7 +7,7 @@ import { SystemService } from 'src/app/core/services/system.service';
     templateUrl: './database.component.html'
 })
 export class DatabaseComponent implements OnInit {
-    data: Dictionary<string, string>;
+    data: Dictionary<string, number>;
 
     constructor(
         private systemService: SystemService

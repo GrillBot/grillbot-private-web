@@ -24,12 +24,12 @@ export class SystemService {
         );
     }
 
-    getDatabaseInfo(): ObservableDict<string, string> {
+    getDatabaseInfo(): ObservableDict<string, number> {
         const url = `${environment.apiUrl}/system/db`;
         const headers = this.base.getHttpHeaders();
 
-        return this.base.http.get<Dictionary<string, string>>(url, { headers }).pipe(
-            map(data => Object.keys(data).map(k => ({ key: k, value: data[k] as string }))),
+        return this.base.http.get<Dictionary<string, number>>(url, { headers }).pipe(
+            map(data => Object.keys(data).map(k => ({ key: k, value: data[k] as number }))),
             catchError((err: HttpErrorResponse) => this.base.catchError(err))
         );
     }
