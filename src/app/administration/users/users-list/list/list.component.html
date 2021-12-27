@@ -2,7 +2,7 @@
     <app-data-list #list (readData)="readData($event)">
         <app-loading *ngIf="!list.isDataLoaded"></app-loading>
 
-        <table class="table table-sm table-bordered table-striped" *ngIf="list.isDataLoaded">
+        <table class="table table-sm table-bordered table-striped clickable" *ngIf="list.isDataLoaded">
             <thead>
                 <tr>
                     <th sortable (clicked)="toggleSort()" [key]="'username'" [current]="'username'" [sortDesc]='sortDesc'>Uživatelské jméno</th>
@@ -13,7 +13,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let item of list.items">
+                <tr route-click *ngFor="let item of list.items" [route]="'/admin/users/' + item.id">
                     <td>
                         {{item.username}}
                         <span class="badge bg-secondary" *ngIf="item.isBot">Bot</span>

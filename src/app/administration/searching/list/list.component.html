@@ -2,7 +2,7 @@
     <app-data-list #list (readData)="readData($event)">
         <app-loading *ngIf="!list.isDataLoaded"></app-loading>
 
-        <table class="table table-sm table-bordered" *ngIf="list.isDataLoaded">
+        <table class="table table-sm table-bordered table-striped" *ngIf="list.isDataLoaded">
             <thead>
                 <tr>
                     <th style="width: 40px">&nbsp;</th>

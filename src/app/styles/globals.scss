@@ -52,26 +52,6 @@ body {
     font-weight: lighter;
 }
 
-app-data-list table {
-    & td {
-        &.badge-list {
-            & span:not(:last-child) {
-                margin-right: 5px;
-            }
-        }
-
-        &:not(.badge-list) {
-            & .badge {
-                font-size: 0.6em;
-            }
-        }
-
-        & list-button {
-            margin-right: 5px;
-        }
-    }
-}
-
 select.form-control {
     appearance: auto !important;
     -webkit-appearance: auto !important;

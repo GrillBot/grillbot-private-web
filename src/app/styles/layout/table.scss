@@ -31,3 +31,33 @@ table {
         }
     }
 }
+
+app-data-list {
+    & table {
+        &.clickable {
+            & tr:hover td {
+                background-color: lighten(lightskyblue, 20%);
+            }
+        }
+
+        & tr {
+            & td {
+                &.badge-list {
+                    & span:not(:last-child) {
+                        margin-right: 5px;
+                    }
+                }
+
+                &:not(.badge-list) {
+                    & .badge {
+                        font-size: 0.6em;
+                    }
+                }
+
+                & list-button {
+                    margin-right: 5px;
+                }
+            }
+        }
+    }
+}

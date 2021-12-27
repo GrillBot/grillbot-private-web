@@ -1,3 +1,4 @@
+import { DirectivesModule } from './directives/directives.module';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -8,7 +9,6 @@ import { DataListComponent } from './data-list/data-list.component';
 import { NgbModalModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoadingComponent } from './loading/loading.component';
 import { ListButtonComponent } from './list-button/list-button.component';
-import { KeyValueItemDirective } from './directives/key-value-item.directive';
 import { ModalComponent } from './modal/modal.component';
 import { ValidationErrorsModalComponent } from './modal/validation-errors-modal/validation-errors-modal.component';
 import { CommonDashboardComponent } from './common-dashboard/common-dashboard.component';
@@ -29,7 +29,6 @@ import { NgSelectModule } from '@ng-select/ng-select';
         DataListComponent,
         LoadingComponent,
         ListButtonComponent,
-        KeyValueItemDirective,
         ModalComponent,
         ValidationErrorsModalComponent,
         CommonDashboardComponent,
@@ -51,7 +50,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
         RouterModule,
         NgbModalModule,
         NgxFilesizeModule,
-        NgSelectModule
+        NgSelectModule,
+        DirectivesModule
     ],
     exports: [
         CommonModule,
@@ -62,7 +62,6 @@ import { NgSelectModule } from '@ng-select/ng-select';
         DataListComponent,
         LoadingComponent,
         ListButtonComponent,
-        KeyValueItemDirective,
         ModalComponent,
         ValidationErrorsModalComponent,
         CommonDashboardComponent,
@@ -75,7 +74,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
         SortingDirective,
         TimeSpanInputComponent,
         SearchInputComponent,
-        NgSelectModule
+        NgSelectModule,
+        DirectivesModule
     ]
 })
 export class SharedModule { }

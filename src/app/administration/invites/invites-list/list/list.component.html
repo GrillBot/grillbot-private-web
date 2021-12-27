@@ -2,7 +2,7 @@
     <app-data-list #list (readData)="readData($event)">
         <app-loading *ngIf="!list.isDataLoaded"></app-loading>
 
-        <table class="table table-bordered table-sm" *ngIf="list.isDataLoaded">
+        <table class="table table-bordered table-sm table-striped" *ngIf="list.isDataLoaded">
             <thead>
                 <tr>
                     <th style="width: 200px;" sortable (clicked)="setSort($any($event))" [key]="'code'" [current]="sortBy" [sortDesc]="sortDesc">Kód

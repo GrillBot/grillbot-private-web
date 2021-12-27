@@ -2,7 +2,7 @@
     <app-data-list #list (readData)="readData($event)">
         <app-loading *ngIf="!list.isDataLoaded"></app-loading>
 
-        <table class="table table-bordered table-sm" *ngIf="list.isDataLoaded">
+        <table class="table table-bordered table-sm table-striped clickable" *ngIf="list.isDataLoaded">
             <thead>
                 <tr>
                     <th style="width: 300px" sortable (clicked)="setSort($any($event))" [key]="'name'" [current]="sortBy" [sortDesc]="sortDesc">Název
@@ -14,7 +14,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let item of list.items">
+                <tr route-click *ngFor="let item of list.items" [route]="'/admin/channels/' + item.id">
                     <td>{{item.name}}</td>
                     <td>{{item.channelTypeName}}</td>
                     <td>{{item.guild.name}}</td>
