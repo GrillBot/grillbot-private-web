@@ -123,7 +123,7 @@
             </tr>
         </table>
 
-        <div *ngIf="type === AuditLogItemType.MessageDeleted">
+        <div *ngIf="type === AuditLogItemType.MessageDeleted && data.data.content?.length > 0">
             <pre class="alert alert-secondary">{{data.data.content}}</pre>
         </div>
     </div>
