@@ -2,11 +2,12 @@
     <app-data-list #list (readData)="readData($event)">
         <app-loading *ngIf="!list.isDataLoaded"></app-loading>
 
-        <table class="table table-sm table-bordered table-striped auto-column-width" *ngIf="list.isDataLoaded">
+        <table class="table table-sm table-bordered table-striped auto-column-width clickable" *ngIf="list.isDataLoaded">
             <thead>
                 <tr>
                     <th style="width: 40px">&nbsp;</th>
-                    <th style="min-width: 60px" sortable [key]="'id'" [current]="sortBy" [sortDesc]="sortDesc" (clicked)="setSort($any($event))">ID</th>
+                    <th style="min-width: 60px" sortable [key]="'id'" [current]="sortBy" [sortDesc]="sortDesc" (clicked)="setSort($any($event))">ID
+                    </th>
                     <th sortable [key]="'user'" [current]="sortBy" [sortDesc]="sortDesc" (clicked)="setSort($any($event))">Hledající</th>
                     <th sortable [key]="'guild'" [current]="sortBy" [sortDesc]="sortDesc" (clicked)="setSort($any($event))">Server</th>
                     <th sortable [key]="'channel'" [current]="sortBy" [sortDesc]="sortDesc" (clicked)="setSort($any($event))">Kanál</th>
@@ -14,7 +15,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let item of list.items">
+                <tr *ngFor="let item of list.items" (click)="showMessage(item, $event)">
                     <td class="text-md-center">
                         <app-checkbox #item_check [id]="item.id"></app-checkbox>
                     </td>
@@ -24,7 +25,7 @@
                     <td>{{item.channel.name}}</td>
                     <td>
                         <list-button [link]="item.jumpLink" icon="location-arrow" title="Přejít na zprávu" [absoluteLink]="true"></list-button>
-                        <list-button (clicked)="showMessage(item)" icon="info" title="Zobrazit zprávu"></list-button>
+                        <list-button (clicked)="showMessage(item, $event)" icon="info" title="Zobrazit zprávu"></list-button>
                     </td>
                 </tr>
                 <tr *ngIf="list.isEmpty">

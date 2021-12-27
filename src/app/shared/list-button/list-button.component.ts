@@ -14,5 +14,13 @@ export class ListButtonComponent {
     @Input() classList: string[] = [];
     @Input() absoluteLink = false;
 
-    @Output() clicked = new EventEmitter<unknown>();
+    @Output() clicked = new EventEmitter<Event>();
+
+    onClicked(event: Event): void {
+        if (this.link) {
+            event.stopPropagation();
+        } else {
+            this.clicked.emit(event);
+        }
+    }
 }

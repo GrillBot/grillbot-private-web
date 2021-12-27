@@ -1,16 +1,17 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ListComponent } from './list/list.component';
 import { FilterComponent } from './filter/filter.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SearchingRoutingModule } from './searching-routing.module';
+import { SearchingDetailComponent } from './searching-detail/searching-detail.component';
 
 @NgModule({
     declarations: [
         ListComponent,
         FilterComponent,
-        DashboardComponent
+        DashboardComponent,
+        SearchingDetailComponent
     ],
     imports: [
         SharedModule,

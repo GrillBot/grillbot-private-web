@@ -7,6 +7,7 @@ import { DataListComponent } from 'src/app/shared/data-list/data-list.component'
 import { ModalService } from 'src/app/shared/modal';
 import { CheckboxComponent } from 'src/app/shared/checkbox/checkbox.component';
 import { CardComponent } from 'src/app/shared/card/card.component';
+import { SearchingDetailComponent } from '../searching-detail/searching-detail.component';
 
 @Component({
     selector: 'app-list',
@@ -52,11 +53,17 @@ export class ListComponent {
         if (selectedItems.length === 0) { return; }
 
         this.modalService.showQuestion('Smazat hledání', 'Opravdu si přejete smazat označená hledání?').onAccept.subscribe(_ => {
-            this.searchingService.removeSearches(selectedItems).subscribe(_ => this.list.onChange());
+            this.searchingService.removeSearches(selectedItems).subscribe(__ => this.list.onChange());
         });
     }
 
-    showMessage(item: SearchingListItem): void {
-        this.modalService.showNotification('Obsah zprávy', item.message);
+    showMessage(item: SearchingListItem, event: Event): void {
+        if (event) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+
+        const modal = this.modalService.showCustomModal<SearchingDetailComponent>(SearchingDetailComponent, 'xl');
+        modal.componentInstance.item = item;
     }
 }
