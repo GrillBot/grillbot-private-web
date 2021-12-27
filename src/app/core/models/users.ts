@@ -80,7 +80,7 @@ export class UserListItem {
     get isBotAdmin(): boolean { return (this.flags & UserFlags.BotAdmin) !== 0; }
     get haveWebAdmin(): boolean { return (this.flags & UserFlags.WebAdmin) !== 0; }
     get isBot(): boolean { return (this.flags & UserFlags.NotUser) !== 0; }
-    get isWebAdminOnline(): boolean { return (this.flags & UserFlags.WebAdmin) !== 0; }
+    get isWebAdminOnline(): boolean { return (this.flags & UserFlags.WebAdminOnline) !== 0; }
 
     get status(): string { return UserStatusTexts[Support.getEnumKeyByValue(UserStatus, this.discordStatus)]; }
     get statusColor(): string { return StatusColorMapping[Support.getEnumKeyByValue(UserStatus, this.discordStatus)]; }
