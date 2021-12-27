@@ -124,7 +124,7 @@
     </tr>
 
     <tr *ngIf="data.before.denyValue > 0 || data.after.denyValue > 0">
-        <td>Povolená oprávnění:</td>
+        <td>Zakázaná oprávnění:</td>
         <td>{{data.before.denyValue | discordPermsPipe}}</td>
         <td>{{data.after.denyValue | discordPermsPipe}}</td>
     </tr>
