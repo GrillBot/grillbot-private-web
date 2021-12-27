@@ -1,5 +1,5 @@
 import { filter } from 'rxjs/operators';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/core/services/auth.service';
 
@@ -13,13 +13,15 @@ export class SidenavComponent implements OnInit {
 
     constructor(
         public router: Router,
-        public authService: AuthService
+        public authService: AuthService,
+        private route: ActivatedRoute
     ) { }
 
     ngOnInit(): void {
-        this.activeRoute = this.router.url;
+        this.activeRoute = this.route.snapshot.firstChild.data.id as string;
+
         this.router.events
             .pipe(filter(o => o instanceof NavigationEnd))
-            .subscribe((e: NavigationEnd) => this.activeRoute = e.url);
+            .subscribe((_: NavigationEnd) => this.activeRoute = this.route.snapshot.firstChild.data.id as string);
     }
 }

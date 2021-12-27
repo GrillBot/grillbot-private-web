@@ -14,52 +14,52 @@ const routes: Routes = [
             {
                 path: 'servers',
                 loadChildren: () => import('./guilds/guilds.module').then(mod => mod.GuildsModule),
-                data: { title: 'Servery' }
+                data: { title: 'Servery', id: 'servers' }
             },
             {
                 path: 'users',
                 loadChildren: () => import('./users/users.module').then(mod => mod.UsersModule),
-                data: { title: 'Uživatelé' }
+                data: { title: 'Uživatelé', id: 'users' }
             },
             {
                 path: 'audit-log',
                 loadChildren: () => import('./audit-log/audit-log.module').then(mod => mod.AuditLogModule),
-                data: { title: 'Audit log' }
+                data: { title: 'Audit log', id: 'audit-log' }
             },
             {
                 path: 'channels',
                 loadChildren: () => import('./channels/channels.module').then(mod => mod.ChannelsModule),
-                data: { title: 'Kanály' }
+                data: { title: 'Kanály', id: 'channels' }
             },
             {
                 path: 'invites',
                 loadChildren: () => import('./invites/invites.module').then(mod => mod.InvitesModule),
-                data: { title: 'Pozvánky' }
+                data: { title: 'Pozvánky', id: 'invites' }
             },
             {
                 path: 'permissions',
                 loadChildren: () => import('./permissions/permissions.module').then(mod => mod.PermissionsModule),
-                data: { title: 'Oprávnění' }
+                data: { title: 'Oprávnění', id: 'permissions' }
             },
             {
                 path: 'reminder',
                 loadChildren: () => import('./reminders/reminders.module').then(mod => mod.RemindersModule),
-                data: { title: 'Reminder' }
+                data: { title: 'Reminder', id: 'reminder' }
             },
             {
                 path: 'search',
                 loadChildren: () => import('./searching/searching.module').then(mod => mod.SearchingModule),
-                data: { title: 'Hledání' }
+                data: { title: 'Hledání', id: 'searching' }
             },
             {
                 path: 'internal',
                 loadChildren: () => import('./internal/internal.module').then(mod => mod.InternalModule),
-                data: { title: 'Interní' }
+                data: { title: 'Interní', id: 'internal' }
             },
             {
                 path: 'unverify',
                 loadChildren: () => import('./unverify/unverify.module').then(mod => mod.UnverifyModule),
-                data: { title: 'Unverify' }
+                data: { title: 'Unverify', id: 'unverify' }
             }
         ]
     },
