@@ -24,10 +24,11 @@ export class FilterComponent implements OnInit {
 
     ngOnInit(): void {
         this.flagsMask = Object.keys(UserFilterFlags)
-            .filter(o => !isNaN(parseInt(o, 10)) && parseInt(o, 10) > 0)
+            .map(o => parseInt(o, 10))
+            .filter(o => !isNaN(o) && o > 0)
             .map(o => ({
-                key: parseInt(o, 10),
-                value: UserFilterFlagsTexts[Support.getEnumKeyByValue(UserFilterFlags, parseInt(o, 10))] as string
+                key: o,
+                value: UserFilterFlagsTexts[Support.getEnumKeyByValue(UserFilterFlags, o)] as string
             }));
 
         const filter = GetUserListParams.create(this.storage.read<GetUserListParams>('UserListFilter')) || GetUserListParams.empty;
@@ -50,7 +51,8 @@ export class FilterComponent implements OnInit {
         this.form.patchValue({
             username: filter.username,
             guild: filter.guildId,
-            flags: filter.flags
+            flags: filter.flags,
+            usedInviteCode: filter.usedInviteCode
         });
     }
 
@@ -59,8 +61,9 @@ export class FilterComponent implements OnInit {
             username: [filter.username],
             guild: [filter.guildId],
             flags: [filter.flags],
+            usedInviteCode: [filter.usedInviteCode]
         });
 
-        this.form.valueChanges.pipe(debounceTime(600)).subscribe(_ => this.submitForm());
+        this.form.valueChanges.pipe(debounceTime(500)).subscribe(_ => this.submitForm());
     }
 }

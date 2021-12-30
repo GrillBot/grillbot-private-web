@@ -106,13 +106,15 @@ export class GetUserListParams {
     public guildId: string | null = null;
     public flags = 0;
     public haveBirthday = false;
+    public usedInviteCode: string | null;
 
     get queryParams(): QueryParam[] {
         return [
             this.username ? new QueryParam('username', this.username) : null,
             this.guildId ? new QueryParam('guildId', this.guildId) : null,
             this.flags ? new QueryParam('flags', this.flags) : null,
-            new QueryParam('haveBirthday', this.haveBirthday)
+            new QueryParam('haveBirthday', this.haveBirthday),
+            this.usedInviteCode ? new QueryParam('usedInviteCode', this.usedInviteCode) : null
         ].filter(o => o);
     }
 
@@ -127,6 +129,7 @@ export class GetUserListParams {
         params.guildId = form.guild;
         params.haveBirthday = (form.flags & UserFilterFlags.HaveBirthday) !== 0;
         params.username = form.username;
+        params.usedInviteCode = form.usedInviteCode;
 
         return params;
     }
@@ -161,7 +164,8 @@ export class GetUserListParams {
         return {
             guild: this.guildId,
             flags: this.serializeFlags(),
-            username: this.username
+            username: this.username,
+            usedInviteCode: this.usedInviteCode
         };
     }
 }

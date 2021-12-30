@@ -1,4 +1,4 @@
-<app-card [title]="'Vyhledávání'" [icon]="'fas fa-search'" [size]="'md'" [allowHideButton]="true">
+<app-card [title]="'Vyhledávání'" [icon]="'fas fa-search'" [allowHideButton]="true">
     <form [formGroup]="form">
         <div class="row">
             <div class="col form-group">
@@ -10,15 +10,20 @@
                 <label>Server</label>
                 <app-search-input formControlName="guild" [searchSource]="'guilds'"></app-search-input>
             </div>
+
+            <div class="col form-group">
+                <label>Použitý kód pozvánky</label>
+                <input type="text" formControlName="usedInviteCode" class="form-control" />
+            </div>
         </div>
 
         <div class="row mt-3">
-            <div class="col">
+            <div class="col-8">
                 <label>Vybrat uživatele, kteří splňují</label>
                 <checkbox-bitmask [options]="flagsMask" formControlName="flags"></checkbox-bitmask>
             </div>
 
-            <div class="col-2 d-flex align-items-end justify-content-end">
+            <div class="col d-flex align-items-end justify-content-end">
                 <button class="btn btn-danger" type="button" (click)="reset()">Smazat filtr</button>
             </div>
         </div>
