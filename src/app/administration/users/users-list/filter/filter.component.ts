@@ -1,3 +1,4 @@
+import { ActivatedRoute, Router } from '@angular/router';
 import { Dictionary } from './../../../../core/models/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -19,7 +20,9 @@ export class FilterComponent implements OnInit {
 
     constructor(
         private fb: FormBuilder,
-        private storage: StorageService
+        private storage: StorageService,
+        private activatedRoute: ActivatedRoute,
+        private router: Router
     ) { }
 
     ngOnInit(): void {
@@ -32,6 +35,12 @@ export class FilterComponent implements OnInit {
             }));
 
         const filter = GetUserListParams.create(this.storage.read<GetUserListParams>('UserListFilter')) || GetUserListParams.empty;
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        const usedInviteCodeQuery = this.activatedRoute.snapshot.queryParams.usedInviteCode;
+        if (usedInviteCodeQuery) {
+            filter.usedInviteCode = usedInviteCodeQuery as string;
+            this.router.navigate([], { relativeTo: this.activatedRoute, queryParams: {} });
+        }
 
         this.initFilter(filter);
         this.submitForm();
