@@ -46,8 +46,9 @@ export class SystemService {
         );
     }
 
-    setBotState(state: UserStatus): Observable<unknown> {
-        const url = `${environment.apiUrl}/system/status/${state}`;
+    setBotState(isActive: boolean): Observable<unknown> {
+        const parameters = new QueryParam('isActive', isActive).toString();
+        const url = `${environment.apiUrl}/system/status?${parameters}`;
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.put(url, null, { headers }).pipe(

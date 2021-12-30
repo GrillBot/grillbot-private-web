@@ -14,17 +14,11 @@
         <div class="row mt-3">
             <div keyValueItem class="col-2" [key]="'Využito paměti'" value="{{data.usedMemory | filesize}}"></div>
             <div keyValueItem class="col-2" [key]="'Serverový čas'" [value]="data.currentDateTime.binding"></div>
-            <div keyValueItem class="col-2" [key]="'Stav bota'" [value]="data.botStatus"></div>
+            <div keyValueItem class="col-2" [key]="'Stav bota'" [value]="(data.isActive ? 'Aktivní' : 'Neaktivní')"></div>
             <div class="col d-flex align-items-end">
                 <div class="btn-group">
-                    <button class="btn btn-sm btn-success" [disabled]="data.userStatus === UserStatus.Online"
-                        (click)="toggleState(UserStatus.Online)">Online</button>
-                    <button class="btn btn-sm btn-warning" [disabled]="data.userStatus === UserStatus.Idle"
-                        (click)="toggleState(UserStatus.Idle)">Neaktivní</button>
-                    <button class="btn btn-sm btn-danger" [disabled]="data.userStatus === UserStatus.DoNotDisturb"
-                        (click)="toggleState(UserStatus.DoNotDisturb)">Nerušit</button>
-                    <button class="btn btn-sm btn-secondary" (click)="toggleState(UserStatus.Invisible)"
-                        [disabled]="data.userStatus === UserStatus.Offline || data.userStatus === UserStatus.Invisible">Neviditelný</button>
+                    <button class="btn btn-sm btn-success" [disabled]="data.isActive" (click)="toggleState(true)">Aktivní</button>
+                    <button class="btn btn-sm btn-danger" [disabled]="!data.isActive" (click)="toggleState(false)">Neaktivní</button>
                 </div>
             </div>
         </div>
