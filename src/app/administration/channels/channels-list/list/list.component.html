@@ -21,8 +21,8 @@
                     <td>{{item.channelTypeName}}</td>
                     <td>{{item.messagesCount.toLocaleString()}}</td>
                     <td>{{item.cachedMessagesCount.toLocaleString()}}</td>
-                    <td>{{item.firstMessageAt.binding}}</td>
-                    <td>{{item.lastMessageAt.binding}}</td>
+                    <td>{{item.firstMessageAt?.binding ?? ''}}</td>
+                    <td>{{item.lastMessageAt?.binding ?? ''}}</td>
                     <td>{{item.guild.name}}</td>
                     <td>
                         <list-button [link]="'/admin/channels/' + item.id" [icon]="'info'"></list-button>

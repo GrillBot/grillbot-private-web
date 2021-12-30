@@ -93,6 +93,9 @@
                                 <td>{{item.firstMessageAt.toLocaleString()}}</td>
                                 <td>{{item.lastMessageAt.toLocaleString()}}</td>
                             </tr>
+                            <tr *ngIf="channelStats.isEmpty">
+                                <td colspan="6">V tomto kanálu nebyly zaznamenány žádné zprávy</td>
+                            </tr>
                         </tbody>
                     </table>
                 </app-data-list>
