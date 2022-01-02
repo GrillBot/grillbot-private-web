@@ -20,7 +20,8 @@ export enum AuditLogItemType {
     UserLeft = 16,
     UserJoined = 17,
     MessageEdited = 18,
-    MessageDeleted = 19
+    MessageDeleted = 19,
+    InteractionCommand = 20
 }
 
 export enum AuditLogItemTypeTexts {
@@ -42,5 +43,6 @@ export enum AuditLogItemTypeTexts {
     UserLeft = 'Uživatel opustil server',
     UserJoined = 'Uživatel se připojil na server',
     MessageEdited = 'Zpráva upravena',
-    MessageDeleted = 'Zpráva odebrána'
+    MessageDeleted = 'Zpráva odebrána',
+    InteractionCommand = 'Integrovaný příkaz'
 }

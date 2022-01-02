@@ -5,7 +5,6 @@ import { Injectable } from '@angular/core';
 import { BaseService } from './base.service';
 import { CommandStatisticItem, DiagnosticsInfo } from '../models/system';
 import { environment } from 'src/environments/environment';
-import { UserStatus } from '../models/enums/user-status';
 import { HttpErrorResponse } from '@angular/common/http';
 import { QueryParam } from '../models/http';
 
@@ -52,6 +51,27 @@ export class SystemService {
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.put(url, null, { headers }).pipe(
+            catchError((err: HttpErrorResponse) => this.base.catchError(err))
+        );
+    }
+
+    getAuditLogStatistics(): ObservableDict<string, number> {
+        const url = `${environment.apiUrl}/system/db/audit-log`;
+        const headers = this.base.getHttpHeaders();
+
+        return this.base.http.get<Dictionary<string, number>>(url, { headers }).pipe(
+            map(data => Object.keys(data).map(k => ({ key: k, value: data[k] as number }))),
+            catchError((err: HttpErrorResponse) => this.base.catchError(err))
+        );
+    }
+
+    getInteractionsStatus(searchQuery: string): ObservableList<CommandStatisticItem> {
+        const parameters = searchQuery ? new QueryParam('searchQuery', searchQuery).toString() : '';
+        const url = `${environment.apiUrl}/system/interactions?${parameters}`;
+        const headers = this.base.getHttpHeaders();
+
+        return this.base.http.get<CommandStatisticItem[]>(url, { headers }).pipe(
+            map(data => data.map(o => CommandStatisticItem.create(o))),
             catchError((err: HttpErrorResponse) => this.base.catchError(err))
         );
     }

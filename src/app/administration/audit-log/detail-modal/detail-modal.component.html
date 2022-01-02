@@ -30,17 +30,15 @@
                 <ng-container *ngSwitchCase="AuditLogItemType.GuildUpdated">
                     <ng-container *ngTemplateOutlet="guildUpdated"></ng-container>
                 </ng-container>
+                <ng-container *ngSwitchCase="AuditLogItemType.InteractionCommand">
+                    <ng-container *ngTemplateOutlet="interaction"></ng-container>
+                </ng-container>
             </ng-container>
         </tbody>
     </table>
 </app-modal>
 
-<ng-template #command>
-    <tr>
-        <td>Příkaz</td>
-        <td>{{data.command}}</td>
-    </tr>
-
+<ng-template #commandBase>
     <tr>
         <td>Dokončen úspěšně</td>
         <td>{{data.isSuccess | czechBooleanPipe}}</td>
@@ -59,11 +57,79 @@
             </td>
         </tr>
     </ng-container>
+</ng-template>
+
+<ng-template #command>
+    <tr>
+        <td>Příkaz</td>
+        <td>{{data.command}}</td>
+    </tr>
+
+    <ng-container *ngTemplateOutlet="commandBase"></ng-container>
 
     <tr>
         <td>Obsah zprávy</td>
         <td>
             <pre>{{data.messageContent}}</pre>
+        </td>
+    </tr>
+</ng-template>
+
+<ng-template #interaction>
+    <tr>
+        <td>Příkaz</td>
+        <td>{{data.name}} ({{data.moduleName}}/{{data.methodName}})</td>
+    </tr>
+
+    <ng-container *ngTemplateOutlet="commandBase"></ng-container>
+
+    <tr>
+        <td>Bot odpověděl</td>
+        <td>{{data.hasResponded | czechBooleanPipe}}</td>
+    </tr>
+
+    <tr>
+        <td>Platný token</td>
+        <td>{{data.isValidToken | czechBooleanPipe}}</td>
+    </tr>
+
+    <tr *ngIf="data.parameters?.length > 0">
+        <td>Parametry</td>
+        <td>
+            <table class="table table-sm table-bordered auto-column-width mb-0">
+                <tbody>
+                    <tr *ngFor="let parameter of data.parameters">
+                        <td>{{parameter.name}}</td>
+                        <td>{{parameter.type}}</td>
+                        <td>
+                            <ng-container [ngSwitch]="parameter.type">
+                                <ng-container *ngSwitchCase="'Boolean'">{{parameter.value | czechBooleanPipe}}</ng-container>
+                                <ng-container *ngSwitchCase="'Integer'">{{parameter.value}}</ng-container>
+                                <ng-container *ngSwitchCase="'Number'">{{parameter.value}}</ng-container>
+                                <ng-container *ngSwitchCase="'String'">
+                                    <code>{{parameter.value}}</code>
+                                </ng-container>
+                                <ng-container *ngSwitchCase="'Channel'">#{{parameter.value?.Name}} ({{parameter.value?.Id}})</ng-container>
+                                <ng-container *ngSwitchCase="'Role'">
+                                    <span class="badge" [style.background-color]="parameter.value.Color">&nbsp;</span>
+                                    {{parameter.value.Name}}
+                                </ng-container>
+                                <ng-container *ngSwitchCase="'User'">
+                                    <ng-container *ngIf="parameter.value">
+                                        {{parameter.value.Username}}#{{parameter.value.Discriminator}} ({{parameter.value.Id}})
+                                    </ng-container>
+                                </ng-container>
+                                <ng-container *ngSwitchCase="'Message'">
+                                    Autor: {{parameter.value.Author.Username}}#{{parameter.value.Author.Discriminator}}
+                                    ({{parameter.value.Author.Id}})<br>
+                                    Vytvořeno: {{parameter.value.CreatedAt | dateTimeFormatter}}<br>
+                                    Obsah zprávy: <code>{{parameter.value.Content}}</code>
+                                </ng-container>
+                            </ng-container>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </td>
     </tr>
 </ng-template>

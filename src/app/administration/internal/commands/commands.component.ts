@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { debounceTime, filter } from 'rxjs/operators';
 import { CommandStatisticItem } from 'src/app/core/models/system';
@@ -9,6 +9,8 @@ import { SystemService } from 'src/app/core/services/system.service';
     templateUrl: './commands.component.html'
 })
 export class CommandsComponent implements OnInit {
+    @Input() useInteractions: boolean;
+
     data: CommandStatisticItem[];
     form: FormGroup;
 
@@ -37,6 +39,11 @@ export class CommandsComponent implements OnInit {
     reload(): void {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         const searchQuery = this.form.value.searchQuery as string;
-        this.systemService.getCommandsStatistics(searchQuery).subscribe(data => this.data = data);
+
+        if (this.useInteractions) {
+            this.systemService.getInteractionsStatus(searchQuery).subscribe(data => this.data = data);
+        } else {
+            this.systemService.getCommandsStatistics(searchQuery).subscribe(data => this.data = data);
+        }
     }
 }
