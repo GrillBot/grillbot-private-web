@@ -14,10 +14,11 @@ export class OAuth2Link {
 }
 
 export class JwtToken {
-    public uniqueName: string;
+    public name: string;
     public id: string;
     public issuer: string;
     public audience: string;
+    public role: string;
 
     static createFromToken(data: string): JwtToken | null {
         return this.create(JwtDecode(data));
@@ -27,10 +28,11 @@ export class JwtToken {
         if (!data) { return null; }
 
         const token = new JwtToken();
-        token.uniqueName = data.unique_name;
-        token.audience = data.audience;
+        token.name = data.name;
+        token.audience = data.aud;
         token.id = data.nameid;
-        token.issuer = data.issuer;
+        token.issuer = data.iss;
+        token.role = data.role;
 
         return token;
     }
