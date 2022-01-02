@@ -1,4 +1,4 @@
-<app-card [title]="'Statistika příkazů'" [icon]="'fas fa-terminal'" [allowHideButton]="true">
+<app-card [title]="(useInteractions ? 'Integrované' : 'Textové') + ' příkazy'" [icon]="'fas fa-terminal'" [allowHideButton]="true">
     <app-loading *ngIf="!data"></app-loading>
 
     <ng-container *ngIf="data">
@@ -26,6 +26,9 @@
                     <td>{{item.successCount}}</td>
                     <td>{{item.failedCount}}</td>
                     <td>{{item.successRate}} %</td>
+                </tr>
+                <tr *ngIf="data.length === 0">
+                    <td colspan="5">Ještě nebyl zavolán žádný příkaz.</td>
                 </tr>
             </tbody>
         </table>

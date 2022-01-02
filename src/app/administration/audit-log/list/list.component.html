@@ -7,11 +7,13 @@
                 <thead>
                     <tr>
                         <td style="width: 150px">Seřadit podle: </td>
-                        <th style="width: 200px" sortable (clicked)="setSort($any($event))" [key]="'guild'" [current]="sortBy" [sortDesc]="sortDesc">
+                        <th style="width: 200px" sortable (clicked)="setSort($any($event))" [key]="'guild'" [current]="sortBy"
+                            [sortDesc]="sortDesc">
                             Serveru</th>
                         <th style="width: 200px" sortable (clicked)="setSort($any($event))" [key]="'processed'" [current]="sortBy"
                             [sortDesc]="sortDesc">Uživatele</th>
-                        <th style="width: 200px" sortable (clicked)="setSort($any($event))" [key]="'type'" [current]="sortBy" [sortDesc]="sortDesc">
+                        <th style="width: 200px" sortable (clicked)="setSort($any($event))" [key]="'type'" [current]="sortBy"
+                            [sortDesc]="sortDesc">
                             Typu</th>
                         <th style="width: 200px" sortable (clicked)="setSort($any($event))" [key]="'channel'" [current]="sortBy"
                             [sortDesc]="sortDesc">Kanálu</th>
@@ -183,7 +185,8 @@
         </ng-container>
 
         <ng-container *ngIf="type === AuditLogItemType.OverwriteUpdated">
-            <p class="m-0" *ngIf="data.before.targetId ?? data.after.targetId">ID cíle: <b>{{data.before.targetId ?? data.after.targetId}}</b></p>
+            <p class="m-0" *ngIf="data.before.targetId ?? data.after.targetId">ID cíle: <b>{{data.before.targetId ??
+                    data.after.targetId}}</b></p>
             <p class="m-0" *ngIf="data.before.target != undefined || data.after.target != undefined">
                 Typ:
                 <ng-container [ngSwitch]="data.before.target ?? data.after.target">
@@ -249,6 +252,12 @@
                 <p class="m-0">Autor: <b>{{data.data.author.username}}#{{data.data.author.discriminator}}</b></p>
                 <p class="m-0">Vytvořeno: <b>{{data.data.createdAt | dateTimeFormatter}}</b></p>
             </ng-container>
+        </ng-container>
+
+        <ng-container *ngIf="type === AuditLogItemType.InteractionCommand">
+            <p class="m-0">Příaz: <b>{{data.name}} ({{data.moduleName}}/{{data.methodName}})</b></p>
+            <p class="m-0">Odpověděl: <b>{{data.hasResponded | czechBooleanPipe}}</b></p>
+            <p class="m-0">Dokončen úspěšně: <b>{{data.isSuccess | czechBooleanPipe}}</b></p>
         </ng-container>
     </div>
 </ng-template>
