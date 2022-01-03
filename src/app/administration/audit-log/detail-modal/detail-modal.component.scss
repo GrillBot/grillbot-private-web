@@ -15,5 +15,10 @@ table {
         & pre {
             margin-bottom: 0px;
         }
+
+        & td code {
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
     }
 }
