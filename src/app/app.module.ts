@@ -1,12 +1,32 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { LoginComponent } from './components/login/login.component';
 import { APP_BASE_HREF, PlatformLocation } from '@angular/common';
+import { RouterModule, Routes } from '@angular/router';
+
+const routes: Routes = [
+    {
+        path: '',
+        redirectTo: 'admin',
+        pathMatch: 'full'
+    },
+    {
+        path: 'admin',
+        loadChildren: () => import('./administration/administration.module').then(mod => mod.AdministrationModule)
+    },
+    {
+        path: 'login',
+        component: LoginComponent
+    },
+    {
+        path: '**',
+        component: PageNotFoundComponent
+    }
+];
 
 @NgModule({
     declarations: [
@@ -16,8 +36,8 @@ import { APP_BASE_HREF, PlatformLocation } from '@angular/common';
     ],
     imports: [
         BrowserModule,
-        AppRoutingModule,
-        SharedModule
+        SharedModule,
+        RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })
     ],
     providers: [
         {

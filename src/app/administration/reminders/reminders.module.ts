@@ -3,7 +3,11 @@ import { FilterComponent } from './filter/filter.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ListComponent } from './list/list.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { ReminderRoutingModule } from './reminder-routing.module';
+import { RouterModule, Routes } from '@angular/router';
+
+const routes: Routes = [
+    { path: '', component: DashboardComponent }
+];
 
 @NgModule({
     declarations: [
@@ -13,7 +17,7 @@ import { ReminderRoutingModule } from './reminder-routing.module';
     ],
     imports: [
         SharedModule,
-        ReminderRoutingModule
+        RouterModule.forChild(routes)
     ]
 })
 export class RemindersModule { }

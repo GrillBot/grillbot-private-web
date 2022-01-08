@@ -4,8 +4,12 @@ import { DiagnosticsComponent } from './diagnostics/diagnostics.component';
 import { CommandsComponent } from './commands/commands.component';
 import { DatabaseComponent } from './database/database.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { InternalRoutingModule } from './internal-routing.module';
 import { AuditLogStatsComponent } from './audit-log-stats/audit-log-stats.component';
+import { RouterModule, Routes } from '@angular/router';
+
+const routes: Routes = [
+    { path: '', component: DashboardComponent }
+];
 
 @NgModule({
     declarations: [
@@ -17,7 +21,7 @@ import { AuditLogStatsComponent } from './audit-log-stats/audit-log-stats.compon
     ],
     imports: [
         SharedModule,
-        InternalRoutingModule
+        RouterModule.forChild(routes)
     ]
 })
 export class InternalModule { }

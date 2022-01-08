@@ -1,11 +1,15 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ListComponent } from './list/list.component';
 import { FilterComponent } from './filter/filter.component';
 import { CreateComponent } from './create/create.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { PermissionsRoutingModule } from './permissions-routing.module';
+import { RouterModule, Routes } from '@angular/router';
+
+const routes: Routes = [
+    { path: '', component: DashboardComponent },
+    { path: 'create', component: CreateComponent }
+];
 
 @NgModule({
     declarations: [
@@ -16,7 +20,7 @@ import { PermissionsRoutingModule } from './permissions-routing.module';
     ],
     imports: [
         SharedModule,
-        PermissionsRoutingModule
+        RouterModule.forChild(routes)
     ]
 })
 export class PermissionsModule { }
