@@ -16,7 +16,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let item of list.items" (click)="showMessage(item, $event)">
-                    <td class="text-md-center">
+                    <td class="text-md-center" (click)="$event.stopPropagation()">
                         <app-checkbox #item_check [id]="item.id"></app-checkbox>
                     </td>
                     <td>{{item.id}}</td>
