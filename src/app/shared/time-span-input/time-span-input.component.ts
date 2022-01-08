@@ -52,16 +52,10 @@ export class TimeSpanInputComponent implements OnInit, ControlValueAccessor {
         if (obj === null) { return; }
         const matched = obj.match(this.parseRegex);
 
-        if (obj.includes('.')) {
-            this.form.get('days').setValue(parseInt(matched[1], 10));
-            this.form.get('hours').setValue(parseInt(matched[2], 10));
-            this.form.get('minutes').setValue(parseInt(matched[3], 10));
-            this.form.get('seconds').setValue(parseInt(matched[4], 10));
-        } else {
-            this.form.get('hours').setValue(parseInt(matched[1], 10));
-            this.form.get('minutes').setValue(parseInt(matched[2], 10));
-            this.form.get('seconds').setValue(parseInt(matched[3], 10));
-        }
+        this.form.get('days').setValue(obj.includes('.') ? parseInt(matched[1], 10) : 0);
+        this.form.get('hours').setValue(parseInt(matched[2], 10));
+        this.form.get('minutes').setValue(parseInt(matched[3], 10));
+        this.form.get('seconds').setValue(parseInt(matched[4], 10));
     }
 
     registerOnChange(fn: (value: string) => void): void {
