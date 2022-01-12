@@ -10,6 +10,10 @@ export class Channel {
     public name: string;
     public type: ChannelType;
 
+    get fullFormat(): string {
+        return `#${this.name} (${this.id})`;
+    }
+
     static create(data: any): Channel | null {
         if (!data) { return null; }
 
@@ -121,6 +125,7 @@ export class ChannelDetail extends GuildChannel {
     public flags: number;
     public lastMessageFrom: User | null;
     public mostActiveUser: User | null;
+    public parentChannel: Channel | null;
 
     static create(data: any): ChannelDetail | null {
         if (!data) { return null; }
@@ -133,6 +138,7 @@ export class ChannelDetail extends GuildChannel {
         detail.mostActiveUser = data.mostActiveUser ? User.create(data.mostActiveUser) : null;
         detail.name = data.name;
         detail.type = data.type;
+        detail.parentChannel = data.parentChannel ? Channel.create(data.parentChannel) : null;
 
         return detail;
     }

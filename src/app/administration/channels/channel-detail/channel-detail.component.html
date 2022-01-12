@@ -14,7 +14,8 @@
                 </div>
 
                 <div class="row mt-2">
-                    <div keyValueItem class="col" [key]="'První zpráva v'" [value]="data.firstMessageAt.toLocaleString()" *ngIf="data.firstMessageAt">
+                    <div keyValueItem class="col" [key]="'První zpráva v'" [value]="data.firstMessageAt.toLocaleString()"
+                        *ngIf="data.firstMessageAt">
                     </div>
                     <div keyValueItem class="col" [key]="'Poslední zpráva v'" [value]="data.lastMessageAt.toLocaleString()"
                         *ngIf="data.lastMessageAt"></div>
@@ -25,6 +26,8 @@
                 </div>
 
                 <div class="row mt-2">
+                    <div keyValueItem class="col-3" [key]="'Nadřazený kanál'" [value]="data.parentChannel.fullFormat"
+                        *ngIf="data.parentChannel"></div>
                     <div keyValueItem class="col-3" [key]="'Počet zpráv v cache'" [value]="data.cachedMessagesCount.toLocaleString()"></div>
                     <div class="col">
                         <button class="btn btn-danger btn-sm" type="button" (click)="cleanCache()">Vyčistit cache</button>
