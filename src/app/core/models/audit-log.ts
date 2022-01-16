@@ -89,7 +89,8 @@ export class AuditLogListItem {
             AuditLogItemType.OverwriteUpdated,
             AuditLogItemType.MemberUpdated,
             AuditLogItemType.GuildUpdated,
-            AuditLogItemType.InteractionCommand
+            AuditLogItemType.InteractionCommand,
+            AuditLogItemType.ThreadDeleted
         ];
 
         if (otherTypeWithDetails.includes(this.type)) { return true; }
@@ -113,7 +114,8 @@ export class AuditLogListItem {
             AuditLogItemType.UserLeft,
             AuditLogItemType.UserJoined,
             AuditLogItemType.MessageDeleted,
-            AuditLogItemType.InteractionCommand
+            AuditLogItemType.InteractionCommand,
+            AuditLogItemType.ThreadDeleted
         ];
 
         return types.includes(this.type);

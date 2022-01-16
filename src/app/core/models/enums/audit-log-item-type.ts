@@ -21,7 +21,8 @@ export enum AuditLogItemType {
     UserJoined = 17,
     MessageEdited = 18,
     MessageDeleted = 19,
-    InteractionCommand = 20
+    InteractionCommand = 20,
+    ThreadDeleted = 21
 }
 
 export enum AuditLogItemTypeTexts {
@@ -44,5 +45,6 @@ export enum AuditLogItemTypeTexts {
     UserJoined = 'Uživatel se připojil na server',
     MessageEdited = 'Zpráva upravena',
     MessageDeleted = 'Zpráva odebrána',
-    InteractionCommand = 'Integrovaný příkaz'
+    InteractionCommand = 'Integrovaný příkaz',
+    ThreadDeleted = 'Smazáno vlákno'
 }

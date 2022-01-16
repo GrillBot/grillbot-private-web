@@ -33,6 +33,9 @@
                 <ng-container *ngSwitchCase="AuditLogItemType.InteractionCommand">
                     <ng-container *ngTemplateOutlet="interaction"></ng-container>
                 </ng-container>
+                <ng-container *ngSwitchCase="AuditLogItemType.ThreadDeleted">
+                    <ng-container *ngTemplateOutlet="threadDeleted"></ng-container>
+                </ng-container>
             </ng-container>
         </tbody>
     </table>
@@ -314,5 +317,55 @@
     <tr>
         <td>Změnen banner</td>
         <td colspan="2">{{data.bannerChanged | czechBooleanPipe}}</td>
+    </tr>
+</ng-template>
+
+<ng-template #threadDeleted>
+    <tr>
+        <td>ID</td>
+        <td>{{data.id}}</td>
+    </tr>
+
+    <tr>
+        <td>Název</td>
+        <td>{{data.name}}</td>
+    </tr>
+
+    <tr>
+        <td>Typ</td>
+        <td>
+            <ng-container [ngSwitch]="data.threadType">
+                <ng-container *ngSwitchCase="10">Novinky</ng-container>
+                <ng-container *ngSwitchCase="11">Veřejné vlákno</ng-container>
+                <ng-container *ngSwitchCase="12">Soukromé vlákno</ng-container>
+            </ng-container>
+        </td>
+    </tr>
+
+    <tr *ngIf="data.slowMode != undefined">
+        <td>SlowMode (vteřiny)</td>
+        <td>{{data.slowMode}}</td>
+    </tr>
+
+    <tr>
+        <td>Doba archivace</td>
+        <td>
+            <ng-container [ngSwitch]="data.archiveDuration">
+                <ng-container *ngSwitchCase="60">1 hodina</ng-container>
+                <ng-container *ngSwitchCase="1440">24 hodin</ng-container>
+                <ng-container *ngSwitchCase="4320">3 dny</ng-container>
+                <ng-container *ngSwitchCase="10080">1 týden</ng-container>
+            </ng-container>
+        </td>
+    </tr>
+
+    <tr>
+        <td>Archivován</td>
+        <td>{{data.isArchived | czechBooleanPipe}}</td>
+    </tr>
+
+    <tr>
+        <td>Uzamčen</td>
+        <td>{{data.isLocked | czechBooleanPipe}}</td>
     </tr>
 </ng-template>

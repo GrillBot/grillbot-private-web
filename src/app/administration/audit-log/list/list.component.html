@@ -138,24 +138,28 @@
             <p class="m-0">Dokončen úspěšně: <b>{{data.isSuccess | czechBooleanPipe}}</b></p>
         </ng-container>
 
-        <ng-container *ngIf="type === AuditLogItemType.ChannelCreated || type === AuditLogItemType.ChannelDeleted">
+        <ng-container
+            *ngIf="type === AuditLogItemType.ChannelCreated || type === AuditLogItemType.ChannelDeleted || type === AuditLogItemType.ThreadDeleted ">
             <p class="m-0">Název: <b>{{data.name}}</b></p>
-            <p class="m-0">
-                Typ:
-                <b>
-                    <ng-container [ngSwitch]="data.type">
-                        <ng-container *ngSwitchCase="0">Text</ng-container>
-                        <ng-container *ngSwitchCase="1">DM</ng-container>
-                        <ng-container *ngSwitchCase="2">Voice</ng-container>
-                        <ng-container *ngSwitchCase="3">Group</ng-container>
-                        <ng-container *ngSwitchCase="4">Category</ng-container>
-                        <ng-container *ngSwitchCase="5">News</ng-container>
-                    </ng-container>
-                </b>
-            </p>
-            <p class="m-0" *ngIf="data.slowMode">SlowMode (vteřiny): <b>{{data.slowMode}}</b></p>
-            <p class="m-0" *ngIf="data.type === 0 || data.type === 5">NSFW: <b>{{data.isNsfw | czechBooleanPipe}}</b></p>
-            <p class="m-0" *ngIf="data.bitrate">Bitrate (bps): <b>{{data.bitrate}}</b></p>
+
+            <ng-container *ngIf="type === AuditLogItemType.ChannelCreated || type === AuditLogItemType.ChannelDeleted">
+                <p class="m-0">
+                    Typ:
+                    <b>
+                        <ng-container [ngSwitch]="data.type">
+                            <ng-container *ngSwitchCase="0">Text</ng-container>
+                            <ng-container *ngSwitchCase="1">DM</ng-container>
+                            <ng-container *ngSwitchCase="2">Voice</ng-container>
+                            <ng-container *ngSwitchCase="3">Group</ng-container>
+                            <ng-container *ngSwitchCase="4">Category</ng-container>
+                            <ng-container *ngSwitchCase="5">News</ng-container>
+                        </ng-container>
+                    </b>
+                </p>
+                <p class="m-0" *ngIf="data.slowMode">SlowMode (vteřiny): <b>{{data.slowMode}}</b></p>
+                <p class="m-0" *ngIf="data.type === 0 || data.type === 5">NSFW: <b>{{data.isNsfw | czechBooleanPipe}}</b></p>
+                <p class="m-0" *ngIf="data.bitrate">Bitrate (bps): <b>{{data.bitrate}}</b></p>
+            </ng-container>
         </ng-container>
 
         <ng-container *ngIf="type === AuditLogItemType.ChannelUpdated">
