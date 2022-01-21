@@ -27,7 +27,17 @@ export class UserDetailComponent implements OnInit {
     ngOnInit(): void {
         const userId: string = this.activatedRoute.snapshot.params.id as string;
 
-        this.userService.getUserDetail(userId).subscribe(detail => this.data = detail);
+        this.userService.getUserDetail(userId).subscribe(detail => {
+            if (detail.isPublicAdminOnline) {
+                detail.activeClients.push('UserAdmin');
+            }
+
+            if (detail.isWebAdminOnline) {
+                detail.activeClients.push('WebAdmin');
+            }
+
+            this.data = detail;
+        });
     }
 
     onUserUpdated(detail: UserDetail): void {

@@ -3,7 +3,9 @@ export enum UserFlags {
     BotAdmin = 1,
     WebAdmin = 2,
     NotUser = 4,
-    WebAdminOnline = 8
+    WebAdminOnline = 8,
+    PublicAdministrationBlocked = 16,
+    PublicAdminOnline = 32
 }
 
 export enum UserFlagsTexts {

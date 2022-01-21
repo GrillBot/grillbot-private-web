@@ -189,6 +189,8 @@ export class UserDetail {
     get isBotAdmin(): boolean { return (this.flags & UserFlags.BotAdmin) !== 0; }
     get haveWebAdmin(): boolean { return (this.flags & UserFlags.WebAdmin) !== 0; }
     get isBot(): boolean { return (this.flags & UserFlags.NotUser) !== 0; }
+    get isWebAdminOnline(): boolean { return (this.flags & UserFlags.WebAdminOnline) !== 0; }
+    get isPublicAdminOnline(): boolean { return (this.flags & UserFlags.PublicAdminOnline) !== 0; }
 
     static create(data: any): UserDetail | null {
         if (!data) { return null; }

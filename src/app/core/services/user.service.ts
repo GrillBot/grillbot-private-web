@@ -53,7 +53,7 @@ export class UserService {
     }
 
     hearthbeat(): Observable<unknown> {
-        const url = `${environment.apiUrl}/users/hearthbeat?isPublic=false`;
+        const url = `${environment.apiUrl}/users/hearthbeat`;
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.post(url, null, { headers }).pipe(
@@ -62,7 +62,7 @@ export class UserService {
     }
 
     hearthbeatOff(): Observable<unknown> {
-        const url = `${environment.apiUrl}/users/hearthbeat?isPublic=false`;
+        const url = `${environment.apiUrl}/users/hearthbeat`;
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.delete(url, { headers }).pipe(
