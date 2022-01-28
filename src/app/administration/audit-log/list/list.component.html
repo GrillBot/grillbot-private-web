@@ -61,9 +61,9 @@
             <p *ngIf="item.processedUser" class="m-0">
                 Provedl:
                 <b>
-                    <ng-container *ngIf="item.processedUser.nickname">{{item.processedUser.nickname}} ({{item.processedUser.username}})
+                    <ng-container *ngIf="item.processedUser.nickname">{{item.processedUser.nickname}} ({{item.processedUser.fullUsername}})
                     </ng-container>
-                    <ng-container *ngIf="!item.processedUser.nickname">{{item.processedUser.username}}</ng-container>
+                    <ng-container *ngIf="!item.processedUser.nickname">{{item.processedUser.fullUsername}}</ng-container>
                 </b>
             </p>
         </div>

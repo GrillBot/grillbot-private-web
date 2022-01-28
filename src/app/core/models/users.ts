@@ -25,13 +25,11 @@ export class User {
 
         const user = new User();
 
-        /* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access */
         user.id = data.id;
         user.isBot = data.isBot;
         user.avatarUrl = data.avatarUrl;
         user.discriminator = data.discriminator;
         user.username = data.username;
-        /* eslint-enable */
 
         return user;
     }
@@ -173,6 +171,7 @@ export class GetUserListParams {
 export class UserDetail {
     public id: string;
     public username: string;
+    public discriminator: string;
     public note: string;
     public flags: number;
     public haveBirthday: boolean;
@@ -191,6 +190,7 @@ export class UserDetail {
     get isBot(): boolean { return (this.flags & UserFlags.NotUser) !== 0; }
     get isWebAdminOnline(): boolean { return (this.flags & UserFlags.WebAdminOnline) !== 0; }
     get isPublicAdminOnline(): boolean { return (this.flags & UserFlags.PublicAdminOnline) !== 0; }
+    get fullUsername(): string { return this.username + (!this.discriminator || this.discriminator.length == 0 ? '' : `#${this.discriminator}`); }
 
     static create(data: any): UserDetail | null {
         if (!data) { return null; }
@@ -209,6 +209,7 @@ export class UserDetail {
         detail.avatarUrl = data.avatarUrl;
         detail.selfUnverifyMinimalTime = data.selfUnverifyMinimalTime;
         detail.registeredAt = data.registeredAt ? DateTime.fromISOString(data.registeredAt) : null;
+        detail.discriminator = data.discriminator;
 
         return detail;
     }
