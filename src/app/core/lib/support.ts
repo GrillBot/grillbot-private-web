@@ -25,6 +25,9 @@ export class Support {
     }
 
     static createDiff(before: string, after: string): string[] {
+        if (!before || !after) {
+            return [];
+        }
         const lines = diffLines(before, after, { newlineIsToken: true, ignoreCase: true });
         return lines.map(o => {
             if (o.added) { return `+ ${o.value}`; }
