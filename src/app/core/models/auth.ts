@@ -1,4 +1,4 @@
-import * as JwtDecode from 'jwt-decode';
+import JwtDecode from 'jwt-decode';
 import { DateTime } from './datetime';
 
 export class OAuth2Link {
