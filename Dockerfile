@@ -1,4 +1,4 @@
-FROM node:15-alpine as AngularBuild
+FROM node:16-alpine as AngularBuild
 WORKDIR /usr/src/app
 COPY package.json package-lock.json ./
 RUN npm install
