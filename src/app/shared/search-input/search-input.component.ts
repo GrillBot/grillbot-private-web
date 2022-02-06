@@ -43,7 +43,10 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor, OnCha
 
     ngOnChanges(changes: SimpleChanges): void {
         if (!changes) { return; }
-        if ((this.searchSource === 'channels' || this.searchSource === 'roles') && changes.guildId && !changes.guildId.firstChange) {
+        if (
+            (this.searchSource === 'channels' || this.searchSource === 'roles' || this.searchSource === 'channels-no-threads')
+            && changes.guildId && !changes.guildId.firstChange
+        ) {
             this.initData();
         }
     }
@@ -55,7 +58,7 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor, OnCha
                 request = this.dataService.getUsersList(true);
                 break;
             case 'channels':
-                request = this.dataService.getChannels(this.guildId);
+                request = this.dataService.getChannels(this.guildId, false);
                 break;
             case 'commands':
                 request = this.dataService.getCommands().pipe(map((data: string[]) => data.map(o => ({ key: o, value: o }))));
@@ -68,6 +71,9 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor, OnCha
                 break;
             case 'users':
                 request = this.dataService.getUsersList(false);
+                break;
+            case 'channels-no-threads':
+                request = this.dataService.getChannels(this.guildId, true);
                 break;
         }
 

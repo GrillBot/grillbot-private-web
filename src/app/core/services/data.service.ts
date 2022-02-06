@@ -22,9 +22,12 @@ export class DataService {
         );
     }
 
-    getChannels(guildId?: string): ObservableDict<string, string> {
-        const parameter = guildId ? new QueryParam('guildId', guildId).toString() : '';
-        const url = `${environment.apiUrl}/data/channels?${parameter}`;
+    getChannels(guildId?: string, ignoreThreads: boolean = false): ObservableDict<string, string> {
+        const parameters: QueryParam[] = [];
+        if (guildId) { parameters.push(new QueryParam('guildId', guildId)); }
+        if (ignoreThreads) { parameters.push(new QueryParam('ignoreThreads', ignoreThreads)); }
+        const params = parameters.map(o => o.toString()).join('&');
+        const url = `${environment.apiUrl}/data/channels?${params}`;
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.get<Dictionary<string, string>>(url, { headers }).pipe(
