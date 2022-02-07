@@ -22,7 +22,7 @@ export class ListComponent {
 
     filterChanged(filter: GetUserListParams): void {
         this.filter = filter;
-        if (this.list) { this.list.onChange(); }
+        if (this.list) { this.list.filterChanged(); }
     }
 
     readData(pagination: PaginatedParams): void {
@@ -31,6 +31,6 @@ export class ListComponent {
 
     toggleSort(): void {
         this.sortDesc = !this.sortDesc;
-        this.list.onChange();
+        this.list.filterChanged();
     }
 }

@@ -24,7 +24,7 @@ export class ListComponent {
 
     filterChanged(filter: GetInviteListParams): void {
         this.filter = filter;
-        if (this.list) { this.list.onChange(); }
+        if (this.list) { this.list.filterChanged(); }
     }
 
     readData(pagination: PaginatedParams): void {
@@ -39,6 +39,6 @@ export class ListComponent {
             this.sortDesc = !this.sortDesc;
         }
 
-        if (this.list) { this.list.onChange(); }
+        if (this.list) { this.list.filterChanged(); }
     }
 }

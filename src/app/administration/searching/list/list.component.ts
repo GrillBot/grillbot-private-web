@@ -30,7 +30,7 @@ export class ListComponent {
 
     filterChanged(filter: GetSearchingListParams): void {
         this.filter = filter;
-        if (this.list) { this.list.onChange(); }
+        if (this.list) { this.list.filterChanged(); }
     }
 
     readData(pagination: PaginatedParams): void {
@@ -45,7 +45,7 @@ export class ListComponent {
             this.sortDesc = !this.sortDesc;
         }
 
-        if (this.list) { this.list.onChange(); }
+        if (this.list) { this.list.filterChanged(); }
     }
 
     removeItems(): void {
@@ -53,7 +53,7 @@ export class ListComponent {
         if (selectedItems.length === 0) { return; }
 
         this.modalService.showQuestion('Smazat hledání', 'Opravdu si přejete smazat označená hledání?').onAccept.subscribe(_ => {
-            this.searchingService.removeSearches(selectedItems).subscribe(__ => this.list.onChange());
+            this.searchingService.removeSearches(selectedItems).subscribe(__ => this.list.filterChanged());
         });
     }
 

@@ -26,7 +26,7 @@ export class ListComponent {
 
     filterChanged(filter: GetReminderListParams): void {
         this.filter = filter;
-        if (this.list) { this.list.onChange(); }
+        if (this.list) { this.list.filterChanged(); }
     }
 
     readData(pagination: PaginatedParams): void {
@@ -41,7 +41,7 @@ export class ListComponent {
             this.sortDesc = !this.sortDesc;
         }
 
-        if (this.list) { this.list.onChange(); }
+        if (this.list) { this.list.filterChanged(); }
     }
 
     cancel(item: RemindMessage, notify: boolean): void {
@@ -49,7 +49,7 @@ export class ListComponent {
         if (notify) { message += 'Uživateli přijde předčasně oznámení.'; }
 
         this.modalService.showQuestion('Zrušení upozornění', message).onAccept.subscribe(_ => {
-            this.reminderService.cancelRemind(item.id, notify).subscribe(__ => this.list.onChange());
+            this.reminderService.cancelRemind(item.id, notify).subscribe(__ => this.list.filterChanged());
         });
     }
 

@@ -34,7 +34,7 @@ export class ListComponent implements OnInit {
 
     filterChanged(filter: UnverifyLogParams): void {
         this.filter = filter;
-        if (this.list) { this.list.onChange(); }
+        if (this.list) { this.list.filterChanged(); }
     }
 
     readData(pagination: PaginatedParams): void {
@@ -51,13 +51,13 @@ export class ListComponent implements OnInit {
             this.sortDesc = !this.sortDesc;
         }
 
-        if (this.list) { this.list.onChange(); }
+        if (this.list) { this.list.filterChanged(); }
     }
 
     recoverState(item: UnverifyLogItem): void {
         this.modalService
             .showQuestion('Obnovení stavu uživatele', 'Opravdu si přejete obnovit tomuto uživateli stav přístupů před unverify?')
-            .onAccept.subscribe(_ => this.unverifyService.recoverUnverifyState(item.id).subscribe(__ => this.list.onChange()));
+            .onAccept.subscribe(_ => this.unverifyService.recoverUnverifyState(item.id).subscribe(__ => this.list.filterChanged()));
     }
 
     resolveChannelName(id: string): string | null {

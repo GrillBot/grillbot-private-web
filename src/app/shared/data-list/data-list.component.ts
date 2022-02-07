@@ -36,17 +36,12 @@ export class DataListComponent implements OnInit {
             ])]
         });
 
-        this.form.valueChanges.subscribe(() => this.onChange());
-        this.onChange();
+        this.form.valueChanges.subscribe(() => this.onChange(true));
+        this.onChange(true);
     }
 
-    onChange(): void {
-        const limit = this.limit;
-        this.pageSize = limit;
-        this.isDataLoaded = false;
-
-        const paginationParams = PaginatedParams.create({ page: this.currentPage, pageSize: limit });
-        this.readData.emit(paginationParams);
+    filterChanged(): void {
+        this.onChange(true);
     }
 
     setData(result: PaginatedResponse<any>, parentCard?: CardComponent): void {
@@ -62,6 +57,19 @@ export class DataListComponent implements OnInit {
     }
 
     pageChange(_: number): void {
-        this.onChange();
+        this.onChange(false);
+    }
+
+    private onChange(forgetPage: boolean): void {
+        const limit = this.limit;
+        this.pageSize = limit;
+        this.isDataLoaded = false;
+
+        if (forgetPage) {
+            this.currentPage = 1;
+        }
+
+        const paginationParams = PaginatedParams.create({ page: this.currentPage, pageSize: limit });
+        this.readData.emit(paginationParams);
     }
 }

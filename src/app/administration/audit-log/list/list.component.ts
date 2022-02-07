@@ -34,7 +34,7 @@ export class ListComponent {
 
     filterChanged(filter: AuditLogListParams): void {
         this.filter = filter;
-        if (this.list) { this.list.onChange(); }
+        if (this.list) { this.list.filterChanged(); }
     }
 
     readData(pagination: PaginatedParams): void {
@@ -48,12 +48,12 @@ export class ListComponent {
         } else {
             this.sortDesc = !this.sortDesc;
         }
-        if (this.list) { this.list.onChange(); }
+        if (this.list) { this.list.filterChanged(); }
     }
 
     removeItem(id: number): void {
         this.modalService.showQuestion('Smazání záznamu z logu', 'Opravdu si přeješ smazat záznam z logu? Tato akce je nevratná!')
-            .onAccept.subscribe(_ => this.auditLogService.removeItem(id).subscribe(__ => this.list.onChange()));
+            .onAccept.subscribe(_ => this.auditLogService.removeItem(id).subscribe(__ => this.list.filterChanged()));
     }
 
     openDetail(item: AuditLogListItem): void {

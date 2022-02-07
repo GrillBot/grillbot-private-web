@@ -21,7 +21,7 @@ export class ListComponent {
 
     filterChanged(filter: GuildListFilter): void {
         this.filter = filter;
-        if (this.list) { this.list.onChange(); }
+        if (this.list) { this.list.filterChanged(); }
     }
 
     readData(pagination: PaginatedParams): void {
