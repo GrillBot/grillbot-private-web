@@ -7,4 +7,7 @@ import { Component, Input } from '@angular/core';
 })
 export class LoadingComponent {
     @Input() noText = false;
+    @Input() small = false;
+    @Input() align: 'start' | 'end' | 'center' | 'justify' = 'center';
+    @Input() text = 'Probíhá načítání';
 }

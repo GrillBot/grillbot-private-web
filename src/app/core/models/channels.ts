@@ -1,5 +1,6 @@
 import { Support } from '../lib/support';
 import { DateTime } from './datetime';
+import { ChannelFlagMapping } from './enums/channel-flags';
 import { ChannelType } from './enums/channel-type';
 import { Guild } from './guilds';
 import { QueryParam } from './http';
@@ -104,6 +105,10 @@ export class GuildChannel {
         return Support.getEnumKeyByValue(ChannelType, this.type);
     }
 
+    get isThread(): boolean {
+        return this.type === ChannelType.PublicThread || this.type === ChannelType.PrivateThread;
+    }
+
     static create(data: any): GuildChannel | null {
         if (!data) { return null; }
         const channel = new GuildChannel();
@@ -166,5 +171,24 @@ export class ChannelUserStatItem {
         item.username = data.username;
 
         return item;
+    }
+}
+
+export class UpdateChannelParams {
+    public flags: number;
+
+    static create(form: any): UpdateChannelParams | null {
+        if (!form) { return null; }
+
+        const params = new UpdateChannelParams();
+
+        params.flags = 0;
+        for (const map of ChannelFlagMapping) {
+            if ((form.flags & map.source) != 0) {
+                params.flags |= map.destination;
+            }
+        }
+
+        return params;
     }
 }

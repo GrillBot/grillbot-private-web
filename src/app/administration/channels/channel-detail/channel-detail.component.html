@@ -37,6 +37,21 @@
         </div>
     </div>
 
+    <div class="row mt-3 ml-0 mr-0" *ngIf="settingsForm && !this.data.isThread">
+        <div class="col">
+            <app-card icon="fas fa-cogs" [title]="'Nastavení'">
+                <div class="row">
+                    <div class="col">
+                        <app-loading [small]="true" [align]="'start'" [text]="'Probíhá ukládání'" *ngIf="settingsSaving"></app-loading>
+                        <form [formGroup]="settingsForm">
+                            <checkbox-bitmask [options]="flagsOptions" formControlName="flags"></checkbox-bitmask>
+                        </form>
+                    </div>
+                </div>
+            </app-card>
+        </div>
+    </div>
+
     <div class="row mt-3 ml-0 mr-0">
         <div class="col">
             <app-card icon="fas fa-envelope" [title]="'Odeslat zprávu do kanálu'" [allowHideButton]="true">

@@ -1,5 +1,6 @@
+import { UpdateChannelParams } from './../models/channels';
 import { HttpErrorResponse } from '@angular/common/http';
-import { PaginatedResponse } from './../models/common';
+import { PaginatedResponse, EmptyObservable } from './../models/common';
 import { QueryParam } from './../models/http';
 import { catchError, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
@@ -60,6 +61,15 @@ export class ChannelService {
 
         return this.base.http.get<ChannelDetail>(url, { headers }).pipe(
             map(data => ChannelDetail.create(data)),
+            catchError((err: HttpErrorResponse) => this.base.catchError(err))
+        );
+    }
+
+    updateChannel(id: string, params: UpdateChannelParams): EmptyObservable {
+        const url = `${environment.apiUrl}/channel/${id}`;
+        const headers = this.base.getHttpHeaders();
+
+        return this.base.http.put(url, params, { headers }).pipe(
             catchError((err: HttpErrorResponse) => this.base.catchError(err))
         );
     }

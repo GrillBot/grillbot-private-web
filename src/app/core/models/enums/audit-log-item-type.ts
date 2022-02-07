@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-/* eslint-disable no-shadow */
-
 export enum AuditLogItemType {
     Info = 1,
     Warning = 2,
