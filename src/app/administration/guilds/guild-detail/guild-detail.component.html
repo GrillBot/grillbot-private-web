@@ -6,7 +6,8 @@
     <div class="row ml-0 mr-0" *ngIf="!data.isConnected">
         <div class="col">
             <p class="alert alert-warning">
-                Server {{data.name}} byl nalezen v databázi, ale nelze o něm zobrazit detailní informace, protože není připojen na server.<br>
+                Server {{data.name}} byl nalezen v databázi, ale nelze o něm zobrazit detailní informace, protože není připojen na
+                server.<br>
                 <a routerLink="/admin/servers" class="btn btn-link p-0">
                     <i class="fas fa-arrow-left"></i>
                     Zpět na seznam serverů
@@ -31,10 +32,22 @@
                             <div keyValueItem class="col-3" [key]="'Vlastník'" [value]="data.owner.fullUsername"></div>
                         </div>
 
-                        <div class="row mt-3">
+                        <div class="row mt-2">
                             <div keyValueItem class="col-3" [key]="'Úroveň vylepšení'" [value]="'Level ' + data.premiumTier"></div>
                             <div keyValueItem class="col-3" [key]="'Univerzální pozvánka'" [value]="data.vanityUrl ?? 'Neexistuje'"></div>
                             <div keyValueItem class="col-3" [key]="'Booster role'" [value]="data.boosterRole?.name ?? 'Neexistuje'"></div>
+                            <div keyValueItem class="col-3" [key]="'Maximum členů'"
+                                [value]="data.maxMembers?.toLocaleString() ?? 'Není známo'"></div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div keyValueItem class="col-3" [key]="'Maximum online uživatelů'"
+                                [value]="data.maxPresences?.toLocaleString() ?? 'Není známo'"></div>
+                            <div keyValueItem class="col-3" [key]="'Maximum akt. uživatelů s webkamerou'"
+                                [value]="data.maxVideoChannelUsers?.toLocaleString() ?? 'Není známo'"></div>
+                            <div keyValueItem class="col-3" [key]="'Maximální bitrate'" [value]="data.maxBitrate + ' kbps'"></div>
+                            <div keyValueItem class="col-3" [key]="'Maximální velikost souboru (nahrávání)'"
+                                [value]="data.maxUploadLimit + ' MB'"></div>
                         </div>
                     </div>
                 </div>
@@ -46,14 +59,16 @@
                         <div class="col form-group">
                             <label>
                                 Umlčující role
-                                <i class="fas fa-info-circle" title="Role, která zablokuje přístup do veřejných kanálů, znemožní psaní, ..."></i>
+                                <i class="fas fa-info-circle"
+                                    title="Role, která zablokuje přístup do veřejných kanálů, znemožní psaní, ..."></i>
                             </label>
                             <app-search-input [searchSource]="'roles'" [guildId]="data.id" formControlName="mutedRole"></app-search-input>
                         </div>
 
                         <div class="col form-group">
                             <label>Administrátorský kanál</label>
-                            <app-search-input [searchSource]="'channels'" [guildId]="data.id" formControlName="adminChannel"></app-search-input>
+                            <app-search-input [searchSource]="'channels'" [guildId]="data.id" formControlName="adminChannel">
+                            </app-search-input>
                         </div>
 
                         <div class="col-2 d-flex align-items-end">

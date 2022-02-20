@@ -52,6 +52,11 @@ export class GuildDetail extends Guild {
     public mutedRole?: Role;
     public boosterRole?: Role;
     public adminChannel?: Channel;
+    public maxMembers?: number;
+    public maxPresences?: number;
+    public maxVideoChannelUsers?: number;
+    public maxBitrate: number;
+    public maxUploadLimit: number;
 
     static create(data: any): GuildDetail | null {
         if (!data) { return null; }
@@ -65,6 +70,11 @@ export class GuildDetail extends Guild {
         guild.isConnected = base.isConnected;
         guild.premiumTier = data.premiumTier;
         guild.vanityUrl = data.vanityUrl;
+        guild.maxMembers = data.maxMembers;
+        guild.maxPresences = data.maxPresences;
+        guild.maxVideoChannelUsers = data.maxVideoChannelUsers;
+        guild.maxBitrate = data.maxBitrate;
+        guild.maxUploadLimit = data.maxUploadLimit;
 
         if (data.adminChannel) { guild.adminChannel = Channel.create(data.adminChannel); }
         if (data.createdAt) { guild.createdAt = DateTime.fromISOString(data.createdAt); }
