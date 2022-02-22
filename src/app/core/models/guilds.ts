@@ -4,6 +4,7 @@ import { DateTime } from './datetime';
 import { PremiumTier } from './enums/premium-tier';
 import { Role } from './roles';
 import { User } from './users';
+import { UserStatus } from './enums/user-status';
 
 export class GuildListFilter {
     public nameQuery: string | null;
@@ -43,6 +44,67 @@ export class Guild {
     }
 }
 
+export class ClientTypeReport {
+    public desktop: number;
+    public mobile: number;
+    public web: number;
+
+    static create(data: any): ClientTypeReport | null {
+        if (!data) { return null; }
+
+        const report = new ClientTypeReport();
+        report.desktop = data.Desktop ?? 0;
+        report.mobile = data.Mobile ?? 0;
+        report.web = data.Web ?? 0;
+
+        return report;
+    }
+}
+
+export class GuildDatabaseReport {
+    public auditLogs: number;
+    public channels: number;
+    public invites: number;
+    public searches: number;
+    public unverifies: number;
+    public unverifyLogs: number;
+    public users: number;
+
+    static create(data: any): GuildDatabaseReport | null {
+        if (!data) { return null; }
+
+        const report = new GuildDatabaseReport();
+        report.auditLogs = data.auditLogs ?? 0;
+        report.channels = data.channels ?? 0;
+        report.invites = data.invites ?? 0;
+        report.searches = data.searches ?? 0;
+        report.unverifies = data.unverifies ?? 0;
+        report.unverifyLogs = data.unverifyLogs ?? 0;
+        report.users = data.users ?? 0;
+
+        return report;
+    }
+}
+
+export class UserStatusReport {
+    public online: number;
+    public offline: number;
+    public idle: number;
+    public doNotDisturb: number;
+
+    static create(data: any): UserStatusReport | null {
+        if (!data) { return null; }
+        const report = new UserStatusReport();
+
+        report.online = data.Online ?? 0;
+        report.idle = data.Idle ?? 0;
+        report.doNotDisturb = data.DoNotDisturb ?? 0;
+        report.offline = data.offline ?? 0;
+
+        return report;
+    }
+}
+
 export class GuildDetail extends Guild {
     public createdAt?: DateTime;
     public iconUrl?: string;
@@ -57,6 +119,9 @@ export class GuildDetail extends Guild {
     public maxVideoChannelUsers?: number;
     public maxBitrate: number;
     public maxUploadLimit: number;
+    public clientTypeReport?: ClientTypeReport;
+    public databaseReport?: GuildDatabaseReport;
+    public userStatusReport?: UserStatusReport;
 
     static create(data: any): GuildDetail | null {
         if (!data) { return null; }
@@ -81,6 +146,9 @@ export class GuildDetail extends Guild {
         if (data.boosterRole) { guild.boosterRole = Role.create(data.boosterRole); }
         if (data.mutedRole) { guild.mutedRole = Role.create(data.mutedRole); }
         if (data.owner) { guild.owner = User.create(data.owner); }
+        if (data.clientTypeReport) { guild.clientTypeReport = ClientTypeReport.create(data.clientTypeReport); }
+        if (data.databaseReport) { guild.databaseReport = GuildDatabaseReport.create(data.databaseReport); }
+        if (data.userStatusReport) { guild.userStatusReport = UserStatusReport.create(data.userStatusReport); }
 
         return guild;
     }
