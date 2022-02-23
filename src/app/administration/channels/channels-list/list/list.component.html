@@ -8,10 +8,12 @@
                     <th sortable (clicked)="setSort($any($event))" [key]="'name'" [current]="sortBy" [sortDesc]="sortDesc">Název</th>
                     <th sortable (clicked)="setSort($any($event))" [key]="'type'" [current]="sortBy" [sortDesc]="sortDesc">Typ</th>
                     <th>Počet zpráv</th>
-                    <th>Počet zpráv v cache</th>
+                    <th>Zpráv v cache</th>
                     <th>První zpráva</th>
                     <th>Posl. zpráva</th>
                     <th>Server</th>
+                    <th>Počet práv (role)</th>
+                    <th>Počet práv (uživatel)</th>
                     <th>Akce</th>
                 </tr>
             </thead>
@@ -24,6 +26,8 @@
                     <td>{{item.firstMessageAt?.binding ?? ''}}</td>
                     <td>{{item.lastMessageAt?.binding ?? ''}}</td>
                     <td>{{item.guild.name}}</td>
+                    <td>{{item.rolePermissionCount?.toLocaleString()}}</td>
+                    <td>{{item.userPermissionCount?.toLocaleString()}}</td>
                     <td>
                         <list-button [link]="'/admin/channels/' + item.id" [icon]="'info'"></list-button>
                     </td>

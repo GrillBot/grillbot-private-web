@@ -15,6 +15,14 @@ export class Channel {
         return `#${this.name} (${this.id})`;
     }
 
+    get isThread(): boolean {
+        return this.type === ChannelType.PublicThread || this.type === ChannelType.PrivateThread;
+    }
+
+    get channelTypeName(): string {
+        return Support.getEnumKeyByValue(ChannelType, this.type);
+    }
+
     static create(data: any): Channel | null {
         if (!data) { return null; }
 
@@ -91,42 +99,33 @@ export class GetChannelListParams {
 
 export type ChannelListSortTypes = 'name' | 'type';
 
-export class GuildChannel {
-    public id: string;
-    public name: string;
-    public type: ChannelType;
+export class GuildChannelListItem extends Channel {
     public cachedMessagesCount: number;
     public firstMessageAt: DateTime | null;
     public lastMessageAt: DateTime | null;
     public messagesCount: number;
     public guild: Guild;
+    public rolePermissionCount?: number;
+    public userPermissionCount?: number;
 
-    get channelTypeName(): string {
-        return Support.getEnumKeyByValue(ChannelType, this.type);
-    }
-
-    get isThread(): boolean {
-        return this.type === ChannelType.PublicThread || this.type === ChannelType.PrivateThread;
-    }
-
-    static create(data: any): GuildChannel | null {
+    static create(data: any): GuildChannelListItem | null {
         if (!data) { return null; }
-        const channel = new GuildChannel();
+        const channel = new GuildChannelListItem();
 
-        channel.id = data.id;
-        channel.name = data.name;
-        channel.type = data.type;
+        Object.assign(channel, super.create(data));
         channel.cachedMessagesCount = data.cachedMessagesCount;
         channel.firstMessageAt = data.firstMessageAt ? DateTime.fromISOString(data.firstMessageAt) : null;
         channel.lastMessageAt = data.lastMessageAt ? DateTime.fromISOString(data.lastMessageAt) : null;
         channel.messagesCount = data.messagesCount;
         channel.guild = data.guild ? Guild.create(data.guild) : null;
+        channel.rolePermissionCount = data.rolePermissionCount;
+        channel.userPermissionCount = data.userPermissionCount;
 
         return channel;
     }
 }
 
-export class ChannelDetail extends GuildChannel {
+export class ChannelDetail extends GuildChannelListItem {
     public flags: number;
     public lastMessageFrom: User | null;
     public mostActiveUser: User | null;

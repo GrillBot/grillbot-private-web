@@ -29,6 +29,11 @@
                     <div keyValueItem class="col-3" [key]="'Nadřazený kanál'" [value]="data.parentChannel.fullFormat"
                         *ngIf="data.parentChannel"></div>
                     <div keyValueItem class="col-3" [key]="'Počet zpráv v cache'" [value]="data.cachedMessagesCount.toLocaleString()"></div>
+                    <div keyValueItem class="col-3" [key]="'Počet oprávnění pro role'" [value]="data.rolePermissionCount?.toLocaleString() ?? 'Není známo'"></div>
+                    <div keyValueItem class="col-3" [key]="'Počet oprávnění pro uživatele'" [value]="data.userPermissionCount?.toLocaleString() ?? 'Není známo'"></div>
+                </div>
+
+                <div class="row mt-1">
                     <div class="col">
                         <button class="btn btn-danger btn-sm" type="button" (click)="cleanCache()">Vyčistit cache</button>
                     </div>

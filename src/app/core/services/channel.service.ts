@@ -1,4 +1,3 @@
-import { UpdateChannelParams } from './../models/channels';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PaginatedResponse, EmptyObservable } from './../models/common';
 import { QueryParam } from './../models/http';
@@ -8,7 +7,7 @@ import { BaseService } from './base.service';
 import { Injectable } from '@angular/core';
 import {
     ChannelDetail, ChannelListSortTypes, ChannelUserStatItem, GetChannelListParams,
-    GuildChannel, SendMessageToChannelParams
+    SendMessageToChannelParams, GuildChannelListItem, UpdateChannelParams
 } from '../models/channels';
 import { environment } from 'src/environments/environment';
 import { PaginatedParams } from '../models/common';
@@ -30,7 +29,7 @@ export class ChannelService {
     }
 
     getChannelsList(filter: GetChannelListParams, pagination: PaginatedParams, sortBy: ChannelListSortTypes, sortDesc: boolean):
-        Observable<PaginatedResponse<GuildChannel>> {
+        Observable<PaginatedResponse<GuildChannelListItem>> {
         const parameters = [
             ...filter.queryParams,
             ...pagination.queryParams,
@@ -40,8 +39,8 @@ export class ChannelService {
         const url = `${environment.apiUrl}/channel?${parameters}`;
         const headers = this.base.getHttpHeaders();
 
-        return this.base.http.get<PaginatedResponse<GuildChannel>>(url, { headers }).pipe(
-            map(data => PaginatedResponse.create(data, entity => GuildChannel.create(entity))),
+        return this.base.http.get<PaginatedResponse<GuildChannelListItem>>(url, { headers }).pipe(
+            map(data => PaginatedResponse.create(data, entity => GuildChannelListItem.create(entity))),
             catchError((err: HttpErrorResponse) => this.base.catchError(err))
         );
     }
