@@ -65,6 +65,11 @@ const routes: Routes = [
                 data: { title: 'Unverify', id: 'unverify' }
             },
             {
+                path: 'selfunverify',
+                loadChildren: () => import('./selfunverify/selfunverify.module').then(mod => mod.SelfunverifyModule),
+                data: { title: 'SelfUnverify', id: 'selfunverify' }
+            },
+            {
                 path: 'auto-reply',
                 loadChildren: () => import('./auto-reply/auto-reply.module').then(mod => mod.AutoReplyModule),
                 data: { title: 'Automatické odpovědi', id: 'auto-reply' }
