@@ -2,28 +2,37 @@
     <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
         <div class="sb-sidenav-menu">
             <div class="nav">
-                <ng-container *ngTemplateOutlet="menuItem; context: {link: '/users', icon:'fa-users', title:'Uživatelé', id:'users'}"></ng-container>
+                <ng-container *ngTemplateOutlet="menuItem; context: {link: '/users', icon:'fa-users', title:'Uživatelé', id:'users'}">
+                </ng-container>
                 <ng-container
                     *ngTemplateOutlet="menuItem; context: {link: '/audit-log', icon:'fa-clipboard-list', title:'Audit log', id:'audit-log'}">
                 </ng-container>
                 <ng-container *ngTemplateOutlet="menuItem; context: {link: '/servers', icon:'fa-server', title:'Servery', id:'servers'}">
                 </ng-container>
-                <ng-container *ngTemplateOutlet="menuItem; context: {link: '/channels', icon:'fa-envelope-open-text', title:'Kanály', id:'channels'}">
+                <ng-container
+                    *ngTemplateOutlet="menuItem; context: {link: '/channels', icon:'fa-envelope-open-text', title:'Kanály', id:'channels'}">
                 </ng-container>
-                <ng-container *ngTemplateOutlet="menuItem; context: {link: '/invites', icon:'fa-user-plus', title:'Pozvánky', id:'invites'}">
+                <ng-container
+                    *ngTemplateOutlet="menuItem; context: {link: '/invites', icon:'fa-user-plus', title:'Pozvánky', id:'invites'}">
                 </ng-container>
-                <ng-container *ngTemplateOutlet="menuItem; context: {link: '/permissions', icon:'fa-user-lock', title:'Oprávnění', id:'permissions'}">
+                <ng-container
+                    *ngTemplateOutlet="menuItem; context: {link: '/permissions', icon:'fa-user-lock', title:'Oprávnění', id:'permissions'}">
                 </ng-container>
                 <ng-container *ngTemplateOutlet="menuItem; context: {link: '/reminder', icon:'fa-bell', title:'Reminder', id:'reminder'}">
                 </ng-container>
                 <ng-container *ngTemplateOutlet="menuItem; context: {link: '/search', icon:'fa-search', title:'Hledání', id:'searching'}">
                 </ng-container>
-                <ng-container *ngTemplateOutlet="menuItem; context: {link: '/internal', icon:'fa-network-wired', title:'Interní', id:'internal'}">
+                <ng-container
+                    *ngTemplateOutlet="menuItem; context: {link: '/internal', icon:'fa-network-wired', title:'Interní', id:'internal'}">
                 </ng-container>
-                <ng-container *ngTemplateOutlet="menuItem; context: {link: '/unverify', icon:'fa-skull-crossbones', title:'Unverify', id:'unverify'}">
+                <ng-container
+                    *ngTemplateOutlet="menuItem; context: {link: '/unverify', icon:'fa-skull-crossbones', title:'Unverify', id:'unverify'}">
                 </ng-container>
                 <ng-container
                     *ngTemplateOutlet="menuItem; context: {link: '/unverify/logs', icon:'fa-skull-crossbones', title:'Unverify log', id:'unverify'}">
+                </ng-container>
+                <ng-container
+                    *ngTemplateOutlet="menuItem; context: {link: '/selfunverify', icon:'fa-book-dead', title:'SelfUnverify', id:'selfunverify'}">
                 </ng-container>
                 <ng-container
                     *ngTemplateOutlet="menuItem; context: {link:'/auto-reply',icon:'fa-reply-all',title:'Automatické odpovědi',id:'auto-reply'}">
