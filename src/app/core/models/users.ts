@@ -176,7 +176,6 @@ export class UserDetail {
     public flags: number;
     public haveBirthday: boolean;
     public guilds: GuildUserDetail[];
-    public emotes: EmoteStatItem[];
     public status: UserStatus;
     public activeClients: string[];
     public isKnown: boolean;
@@ -202,7 +201,6 @@ export class UserDetail {
         detail.flags = data.flags;
         detail.haveBirthday = data.haveBirthday ?? false;
         detail.guilds = data.guilds?.map((o: any) => GuildUserDetail.create(o)).filter((o: GuildUserDetail) => o);
-        detail.emotes = data.emotes?.map((o: any) => EmoteStatItem.create(o)).filter((o: EmoteStatItem) => o);
         detail.status = data.status;
         detail.activeClients = data.activeClients?.map((o: string) => o);
         detail.isKnown = data.isKnown;
@@ -226,6 +224,7 @@ export class GuildUserDetail {
     public channels: ChannelStatItem[];
     public isGuildKnown: boolean;
     public isUserInGuild: boolean;
+    public emotes: EmoteStatItem[];
 
     static create(data: any): GuildUserDetail | null {
         if (!data) { return null; }
@@ -241,6 +240,7 @@ export class GuildUserDetail {
         detail.channels = data.channels?.map((o: any) => ChannelStatItem.create(o)).filter((o: ChannelStatItem) => o);
         detail.isGuildKnown = data.isGuildKnown;
         detail.isUserInGuild = data.isUserInGuild;
+        detail.emotes = data.emotes?.map((o: any) => EmoteStatItem.create(o)).filter((o: EmoteStatItem) => o);
 
         return detail;
     }

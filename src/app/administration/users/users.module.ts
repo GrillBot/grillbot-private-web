@@ -5,7 +5,6 @@ import { ListComponent } from './users-list/list/list.component';
 import { FilterComponent } from './users-list/filter/filter.component';
 import { UserDetailComponent } from './detail/user-detail/user-detail.component';
 import { UserDetailGuildsComponent } from './detail/user-detail-guilds/user-detail-guilds.component';
-import { UserDetailEmotesComponent } from './detail/user-detail-emotes/user-detail-emotes.component';
 import { UserDetailSettingsComponent } from './detail/user-detail-settings/user-detail-settings.component';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -21,7 +20,6 @@ const routes: Routes = [
         FilterComponent,
         UserDetailComponent,
         UserDetailGuildsComponent,
-        UserDetailEmotesComponent,
         UserDetailSettingsComponent
     ],
     imports: [

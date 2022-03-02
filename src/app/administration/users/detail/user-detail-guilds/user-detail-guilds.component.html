@@ -17,24 +17,30 @@
                     <div keyValueItem class="col-2" [key]="'Serverový nick'" [value]="guild.nickname ?? 'Nenastaven'"></div>
                     <div keyValueItem class="col-2" [key]="'Body'" [value]="guild.points.toLocaleString()"></div>
                     <div keyValueItem class="col-2" [key]="'Počet udělených reakcí'" [value]="guild.givenReactions.toLocaleString()"></div>
-                    <div keyValueItem class="col-2" [key]="'Počet obdržených reakcí'" [value]="guild.obtainedReactions.toLocaleString()"></div>
+                    <div keyValueItem class="col-2" [key]="'Počet obdržených reakcí'" [value]="guild.obtainedReactions.toLocaleString()">
+                    </div>
                 </div>
 
                 <div class="row mb-3" *ngIf="guild.usedInvite">
                     <div class="col">
-                        Použitá pozvánka<br>
+                        <span class="d-block">Použitá pozvánka</span>
                         <b>
                             {{guild.usedInvite.code}}
                             <ng-container *ngIf="guild.usedInvite.creator">({{guild.usedInvite.creator.fullUsername}}) </ng-container>
-                            <ng-container *ngIf="guild.usedInvite.createdAt">({{guild.usedInvite.createdAt.toLocaleString()}})</ng-container>
+                            <ng-container *ngIf="guild.usedInvite.createdAt">({{guild.usedInvite.createdAt.toLocaleString()}})
+                            </ng-container>
                         </b>
                     </div>
                 </div>
 
                 <div class="row" *ngIf="guild.createdInvites && guild.createdInvites.length > 0">
-                    <div class="col-6">
-                        Seznam vytvořených pozvánek<br>
-                        <table class="table table-sm table-bordered table-striped">
+                    <div class="col-6 mb-3">
+                        <span class="d-block">
+                            Seznam vytvořených pozvánek
+                            <a class="smaller" href="javascript:;" (click)="toggleVisibility('invites', i)">{{visibilityText('invites',
+                                i)}}</a>
+                        </span>
+                        <table class="table table-sm table-bordered table-striped mb-0" *ngIf="isVisible('invites', i)">
                             <thead>
                                 <tr>
                                     <th>Kód</th>
@@ -52,9 +58,13 @@
                 </div>
 
                 <div class="row" *ngIf="guild.channels && guild.channels.length > 0">
-                    <div class="col">
-                        Aktivita v kanálech<br>
-                        <table class="table table-sm table-bordered table-striped">
+                    <div class="col mb-3">
+                        <span class="d-block">
+                            Aktivita v kanálech
+                            <a class="smaller" href="javascript:;" (click)="toggleVisibility('channels', i)">{{visibilityText('channels',
+                                i)}}</a>
+                        </span>
+                        <table class="table table-sm table-bordered table-striped mb-0" *ngIf="isVisible('channels', i)">
                             <thead>
                                 <tr>
                                     <th>Kanál</th>
@@ -72,6 +82,27 @@
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="guild.emotes && guild.emotes.length > 0">
+                    <div class="col">
+                        <span class="d-block">
+                            Použité emotikony
+                            <a class="smaller" href="javascript:;" (click)="toggleVisibility('emotes', i)">{{visibilityText('emotes',
+                                i)}}</a>
+                        </span>
+                        <div class="border rounded guild-emote-list" *ngIf="isVisible('emotes', i)">
+                            <div class="border rounded m-2 guild-emote-list-item" *ngFor="let emote of guild.emotes">
+                                <img class="card-img-top" [src]="emote.imageUrl" [alt]="emote.name">
+                                <div class="card-body pt-0 ps-1 pb-1 d-flex flex-column">
+                                    <b>{{emote.name}}</b>
+                                    <span>Použito: <b>{{emote.useCount.toLocaleString()}}x</b></span>
+                                    <span>Poprvé: <b>{{emote.firstOccurence.toLocaleString()}}</b></span>
+                                    <span>Naposledy: <b>{{emote.lastOccurence.toLocaleString()}}</b></span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </app-card>
