@@ -22,6 +22,7 @@ import { SortingDirective } from './data-list/sorting.directive';
 import { TimeSpanInputComponent } from './time-span-input/time-span-input.component';
 import { SearchInputComponent } from './search-input/search-input.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { NavigationComponent } from './navigation/navigation.component';
 
 @NgModule({
     declarations: [
@@ -39,7 +40,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
         DateTimeFormatterPipe,
         SortingDirective,
         TimeSpanInputComponent,
-        SearchInputComponent
+        SearchInputComponent,
+        NavigationComponent
     ],
     imports: [
         CommonModule,
@@ -75,7 +77,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
         TimeSpanInputComponent,
         SearchInputComponent,
         NgSelectModule,
-        DirectivesModule
+        DirectivesModule,
+        NavigationComponent
     ]
 })
 export class SharedModule { }
