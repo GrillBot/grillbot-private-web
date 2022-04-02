@@ -9,7 +9,6 @@ export class SearchingListItem {
     public guild: Guild;
     public channel: Channel;
     public message: string;
-    public jumpLink: string;
 
     static create(data: any): SearchingListItem | null {
         if (!data) { return null; }
@@ -18,7 +17,6 @@ export class SearchingListItem {
         item.channel = Channel.create(data.channel);
         item.guild = Guild.create(data.guild);
         item.id = data.id;
-        item.jumpLink = data.jumpLink;
         item.message = data.message;
         item.user = User.create(data.user);
 
@@ -30,12 +28,14 @@ export class GetSearchingListParams {
     public userId: string | null = null;
     public guildId: string | null = null;
     public channelId: string | null = null;
+    public messageQuery: string | null = null;
 
     get queryParams(): QueryParam[] {
         return [
             this.userId ? new QueryParam('userId', this.userId) : null,
             this.guildId ? new QueryParam('guildId', this.guildId) : null,
-            this.channelId ? new QueryParam('channelId', this.channelId) : null
+            this.channelId ? new QueryParam('channelId', this.channelId) : null,
+            this.messageQuery ? new QueryParam('messageQuery', this.messageQuery) : null
         ].filter(o => o);
     }
 
@@ -48,6 +48,7 @@ export class GetSearchingListParams {
         params.userId = form.userId;
         params.guildId = form.guildId;
         params.channelId = form.channelId;
+        params.messageQuery = form.messageQuery;
 
         return params;
     }

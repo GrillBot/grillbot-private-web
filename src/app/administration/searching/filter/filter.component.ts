@@ -43,7 +43,8 @@ export class FilterComponent implements OnInit {
         this.form = this.fb.group({
             guildId: [filter.guildId],
             channelId: [filter.channelId],
-            userId: [filter.userId]
+            userId: [filter.userId],
+            messageQuery: [filter.messageQuery]
         });
 
         this.form.valueChanges.pipe(debounceTime(500)).subscribe(_ => this.submitForm());

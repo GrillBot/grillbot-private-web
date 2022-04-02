@@ -24,7 +24,6 @@
                     <td>{{item.guild.name}}</td>
                     <td>{{item.channel.name}}</td>
                     <td>
-                        <list-button [link]="item.jumpLink" icon="location-arrow" title="Přejít na zprávu" [absoluteLink]="true"></list-button>
                         <list-button (clicked)="showMessage(item, $event)" icon="info" title="Zobrazit zprávu"></list-button>
                     </td>
                 </tr>
