@@ -32,8 +32,8 @@
         <div class="row">
             <div class="col form-group">
                 <label>Typy operací</label>
-                <ng-select [bindValue]="'key'" [bindLabel]="'value'" [closeOnSelect]="false" [clearable]="true" [items]="types" [multiple]="true"
-                    [notFoundText]="'Nenalezen žádný typ'" [searchable]="true" formControlName="types"></ng-select>
+                <ng-select [bindValue]="'key'" [bindLabel]="'value'" [closeOnSelect]="false" [clearable]="true" [items]="types"
+                    [multiple]="true" [notFoundText]="'Nenalezen žádný typ'" [searchable]="true" formControlName="types"></ng-select>
             </div>
         </div>
 
@@ -43,6 +43,7 @@
             </div>
 
             <div class="col d-flex justify-content-end">
+                <button class="btn btn-link me-2" type="button" (click)="submitForm()">Obnovit</button>
                 <button class="btn btn-danger" (click)="cleanFilter()">Smazat filtr</button>
             </div>
         </div>

@@ -68,3 +68,9 @@ textarea {
 .smaller {
     font-size: 75% !important;
 }
+
+.btn {
+    &.btn-link {
+        color: $dark;
+    }
+}
