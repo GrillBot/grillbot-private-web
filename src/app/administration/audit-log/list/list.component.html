@@ -209,6 +209,9 @@
             <p class="m-0">Cílový uživatel: <b>{{data.target.username}}#{{data.target.discriminator}}</b></p>
             <p class="m-0" *ngIf="data.nickname">Změněna přezdívka</p>
             <p class="m-0" *ngIf="data.isDeaf || data.isMuted">Změněno umlčení</p>
+            <p class="m-0" *ngIf="data.note">Změněna poznámka</p>
+            <p class="m-0" *ngIf="data.selfUnverifyMinimalTime">Změněn minimální čas selfunverify</p>
+            <p class="m-0" *ngIf="data.flags">Změněny příznaky</p>
         </ng-container>
 
         <ng-container *ngIf="type === AuditLogItemType.MemberRoleUpdated">

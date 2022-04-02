@@ -1,3 +1,4 @@
+import { PipesModule } from './pipes/pipes.module';
 import { DirectivesModule } from './directives/directives.module';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
@@ -15,9 +16,6 @@ import { CommonDashboardComponent } from './common-dashboard/common-dashboard.co
 import { CheckboxComponent } from './checkbox/checkbox.component';
 import { CheckboxBitmaskComponent } from './checkbox-bitmask/checkbox-bitmask.component';
 import { NgxFilesizeModule } from 'ngx-filesize';
-import { CzechBooleanPipePipe } from './pipes/czech-boolean-pipe.pipe';
-import { DiscordPermsPipePipe } from './pipes/discord-perms-pipe.pipe';
-import { DateTimeFormatterPipe } from './pipes/date-time-formatter.pipe';
 import { SortingDirective } from './data-list/sorting.directive';
 import { TimeSpanInputComponent } from './time-span-input/time-span-input.component';
 import { SearchInputComponent } from './search-input/search-input.component';
@@ -35,9 +33,6 @@ import { NavigationComponent } from './navigation/navigation.component';
         CommonDashboardComponent,
         CheckboxComponent,
         CheckboxBitmaskComponent,
-        CzechBooleanPipePipe,
-        DiscordPermsPipePipe,
-        DateTimeFormatterPipe,
         SortingDirective,
         TimeSpanInputComponent,
         SearchInputComponent,
@@ -53,7 +48,8 @@ import { NavigationComponent } from './navigation/navigation.component';
         NgbModalModule,
         NgxFilesizeModule,
         NgSelectModule,
-        DirectivesModule
+        DirectivesModule,
+        PipesModule
     ],
     exports: [
         CommonModule,
@@ -70,15 +66,13 @@ import { NavigationComponent } from './navigation/navigation.component';
         CheckboxComponent,
         CheckboxBitmaskComponent,
         NgxFilesizeModule,
-        CzechBooleanPipePipe,
-        DiscordPermsPipePipe,
-        DateTimeFormatterPipe,
         SortingDirective,
         TimeSpanInputComponent,
         SearchInputComponent,
         NgSelectModule,
         DirectivesModule,
-        NavigationComponent
+        NavigationComponent,
+        PipesModule
     ]
 })
 export class SharedModule { }
