@@ -37,9 +37,6 @@ export class CreateComponent implements OnInit {
             user: [null],
             state: [this.states[0].key]
         });
-
-        this.form.get('isRole').valueChanges.subscribe(_ => this.setValidators());
-        this.setValidators();
     }
 
     submitForm(): void {
@@ -54,15 +51,17 @@ export class CreateComponent implements OnInit {
         return ValidationHelper.isInvalid(this.form, controlId, errorId);
     }
 
-    private setValidators(): void {
+    isValid(): boolean {
+        let isValid = this.form.valid;
+
         if (this.isRole) {
-            // eslint-disable-next-line @typescript-eslint/unbound-method
-            this.form.get('role').addValidators([Validators.required]);
-            this.form.get('user').clearValidators();
+            const validationResult = Validators.required(this.form.get('role'));
+            isValid = isValid && validationResult == null;
         } else {
-            // eslint-disable-next-line @typescript-eslint/unbound-method
-            this.form.get('user').addValidators([Validators.required]);
-            this.form.get('role').clearValidators();
+            const validationResult = Validators.required(this.form.get('user'));
+            isValid = isValid && validationResult == null;
         }
+
+        return isValid;
     }
 }

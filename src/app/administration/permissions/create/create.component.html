@@ -41,11 +41,12 @@
                     <div class="col">
                         <label>Stav</label>
                         <ng-select [bindValue]="'key'" [bindLabel]="'value'" [closeOnSelect]="true" [clearable]="false" [items]="states"
-                            [multiple]="false" [notFoundText]="'Nenalezen žádný stav'" [searchable]="false" formControlName="state"></ng-select>
+                            [multiple]="false" [notFoundText]="'Nenalezen žádný stav'" [searchable]="false" formControlName="state">
+                        </ng-select>
                     </div>
 
                     <div class="col-1 d-flex align-items-end justify-content-end">
-                        <button class="btn btn-success" type="submit" [disabled]="form.invalid">Uložit</button>
+                        <button class="btn btn-success" type="submit" [disabled]="!isValid()">Uložit</button>
                     </div>
                 </div>
             </form>
