@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { DiagnosticsComponent } from './diagnostics/diagnostics.component';
 import { CommandsComponent } from './commands/commands.component';
 import { DatabaseComponent } from './database/database.component';
@@ -8,12 +7,14 @@ import { AuditLogStatsComponent } from './audit-log-stats/audit-log-stats.compon
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-    { path: '', component: DashboardComponent }
+    { path: '', redirectTo: 'diag' },
+    { path: 'diag', component: DiagnosticsComponent },
+    { path: 'commands/text', component: CommandsComponent, data: { interactions: false } },
+    { path: 'commands/interactions', component: CommandsComponent, data: { interactions: true } }
 ];
 
 @NgModule({
     declarations: [
-        DashboardComponent,
         DiagnosticsComponent,
         CommandsComponent,
         DatabaseComponent,

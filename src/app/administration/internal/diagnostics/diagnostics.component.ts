@@ -1,6 +1,9 @@
+import { InternalNavigation } from './../navigation';
+import { ActivatedRoute } from '@angular/router';
 import { SystemService } from './../../../core/services/system.service';
 import { DiagnosticsInfo } from './../../../core/models/system';
 import { Component, OnInit } from '@angular/core';
+import { INavigation } from 'src/app/shared/navigation/navigation';
 
 @Component({
     selector: 'app-diagnostics',
@@ -8,10 +11,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DiagnosticsComponent implements OnInit {
     data: DiagnosticsInfo;
+    navigation: INavigation;
 
     constructor(
-        private systemService: SystemService
-    ) { }
+        private systemService: SystemService,
+        route: ActivatedRoute
+    ) {
+        this.navigation = new InternalNavigation(route);
+    }
 
     ngOnInit(): void {
         this.refreshDiag();

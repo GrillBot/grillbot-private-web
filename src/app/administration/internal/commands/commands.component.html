@@ -1,36 +1,42 @@
-<app-card [title]="(useInteractions ? 'Integrované' : 'Textové') + ' příkazy'" [icon]="'fas fa-terminal'" [allowHideButton]="true">
-    <app-loading *ngIf="!data"></app-loading>
+<app-navigation [navigation]="navigation"></app-navigation>
 
-    <ng-container *ngIf="data">
-        <form class="mb-1" [formGroup]="form">
-            <div class="form-group">
-                <label>Vyhledávání</label>
-                <input type="text" class="form-control form-control-sm" formControlName="searchQuery" />
-            </div>
-        </form>
+<div class=" row ms-0 me-0 mt-3">
+    <div class="col">
+        <app-card [title]="(interactions ? 'Integrované' : 'Textové') + ' příkazy'" [icon]="'fas fa-terminal'">
+            <app-loading *ngIf="!data"></app-loading>
 
-        <table class="table table-sm table-bordered table-striped auto-column-width">
-            <thead>
-                <tr>
-                    <th>Příkaz</th>
-                    <th>Poslední volání</th>
-                    <th>Počet úspěšných</th>
-                    <th>Počet chybných</th>
-                    <th>Úspěšnost</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of data">
-                    <td>{{item.command}}</td>
-                    <td>{{item.lastCall.toLocaleString()}}</td>
-                    <td>{{item.successCount}}</td>
-                    <td>{{item.failedCount}}</td>
-                    <td>{{item.successRate}} %</td>
-                </tr>
-                <tr *ngIf="data.length === 0">
-                    <td colspan="5">Ještě nebyl zavolán žádný příkaz.</td>
-                </tr>
-            </tbody>
-        </table>
-    </ng-container>
-</app-card>
+            <ng-container *ngIf="data">
+                <form class="mb-1" [formGroup]="form">
+                    <div class="form-group">
+                        <label>Vyhledávání</label>
+                        <input type="text" class="form-control form-control-sm" formControlName="searchQuery" />
+                    </div>
+                </form>
+
+                <table class="table table-sm table-bordered table-striped auto-column-width">
+                    <thead>
+                        <tr>
+                            <th>Příkaz</th>
+                            <th>Poslední volání</th>
+                            <th>Počet úspěšných</th>
+                            <th>Počet chybných</th>
+                            <th>Úspěšnost</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of data">
+                            <td>{{item.command}}</td>
+                            <td>{{item.lastCall.toLocaleString()}}</td>
+                            <td>{{item.successCount}}</td>
+                            <td>{{item.failedCount}}</td>
+                            <td>{{item.successRate}} %</td>
+                        </tr>
+                        <tr *ngIf="data.length === 0">
+                            <td colspan="5">Ještě nebyl zavolán žádný příkaz.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </ng-container>
+        </app-card>
+    </div>
+</div>
