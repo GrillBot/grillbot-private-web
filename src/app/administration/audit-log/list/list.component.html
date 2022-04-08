@@ -132,18 +132,18 @@
 </ng-template>
 
 <ng-template #logDataCol let-data="data" let-type="type">
-    <div class="col">
+    <div class="col log-data-col">
         <ng-container *ngIf="type === AuditLogItemType.Command">
-            <p class="m-0">Příkaz: <b>{{data.command}}</b></p>
-            <p class="m-0">Dokončen úspěšně: <b>{{data.isSuccess | czechBooleanPipe}}</b></p>
+            <p>Příkaz: <b>{{data.command}}</b></p>
+            <p>Dokončen úspěšně: <b>{{data.isSuccess | czechBooleanPipe}}</b></p>
         </ng-container>
 
         <ng-container
             *ngIf="type === AuditLogItemType.ChannelCreated || type === AuditLogItemType.ChannelDeleted || type === AuditLogItemType.ThreadDeleted ">
-            <p class="m-0">Název: <b>{{data.name}}</b></p>
+            <p>Název: <b>{{data.name}}</b></p>
 
             <ng-container *ngIf="type === AuditLogItemType.ChannelCreated || type === AuditLogItemType.ChannelDeleted">
-                <p class="m-0">
+                <p>
                     Typ:
                     <b>
                         <ng-container [ngSwitch]="data.type">
@@ -156,9 +156,9 @@
                         </ng-container>
                     </b>
                 </p>
-                <p class="m-0" *ngIf="data.slowMode">SlowMode (vteřiny): <b>{{data.slowMode}}</b></p>
-                <p class="m-0" *ngIf="data.type === 0 || data.type === 5">NSFW: <b>{{data.isNsfw | czechBooleanPipe}}</b></p>
-                <p class="m-0" *ngIf="data.bitrate">Bitrate (bps): <b>{{data.bitrate}}</b></p>
+                <p *ngIf="data.slowMode">SlowMode (vteřiny): <b>{{data.slowMode}}</b></p>
+                <p *ngIf="data.type === 0 || data.type === 5">NSFW: <b>{{data.isNsfw | czechBooleanPipe}}</b></p>
+                <p *ngIf="data.bitrate">Bitrate (bps): <b>{{data.bitrate}}</b></p>
             </ng-container>
         </ng-container>
 
@@ -171,27 +171,26 @@
         </ng-container>
 
         <ng-container *ngIf="type === AuditLogItemType.EmojiDeleted">
-            <p class="m-0">ID: <b>{{data.id}}</b></p>
-            <p class="m-0">Název: <b>{{data.name}}</b></p>
+            <p>ID: <b>{{data.id}}</b></p>
+            <p>Název: <b>{{data.name}}</b></p>
         </ng-container>
 
         <ng-container *ngIf="type === AuditLogItemType.OverwriteCreated || type === AuditLogItemType.OverwriteDeleted">
-            <p class="m-0">ID cíle: <b>{{data.targetId}}</b></p>
-            <p class="m-0">
+            <p>ID cíle: <b>{{data.targetId}}</b></p>
+            <p>
                 Typ:
                 <ng-container [ngSwitch]="data.target">
                     <b *ngSwitchCase="0">Role</b>
                     <b *ngSwitchCase="1">Uživatel</b>
                 </ng-container>
             </p>
-            <p class="m-0" *ngIf="data.allowValue > 0">Povolená oprávnění: <b>{{data.allowValue | discordPermsPipe}}</b></p>
-            <p class="m-0" *ngIf="data.denyValue > 0">Zakázaná oprávnění: <b>{{data.denyValue | discordPermsPipe}}</b></p>
+            <p *ngIf="data.allowValue > 0">Povolená oprávnění: <b>{{data.allowValue | discordPermsPipe}}</b></p>
+            <p *ngIf="data.denyValue > 0">Zakázaná oprávnění: <b>{{data.denyValue | discordPermsPipe}}</b></p>
         </ng-container>
 
         <ng-container *ngIf="type === AuditLogItemType.OverwriteUpdated">
-            <p class="m-0" *ngIf="data.before.targetId ?? data.after.targetId">ID cíle: <b>{{data.before.targetId ??
-                    data.after.targetId}}</b></p>
-            <p class="m-0" *ngIf="data.before.target != undefined || data.after.target != undefined">
+            <p *ngIf="data.before.targetId ?? data.after.targetId">ID cíle: <b>{{data.before.targetId ?? data.after.targetId}}</b></p>
+            <p *ngIf="data.before.target != undefined || data.after.target != undefined">
                 Typ:
                 <ng-container [ngSwitch]="data.before.target ?? data.after.target">
                     <b *ngSwitchCase="0">Role</b>
@@ -201,28 +200,28 @@
         </ng-container>
 
         <ng-container *ngIf="type === AuditLogItemType.Unban">
-            <p class="m-0">ID: <b>{{data.id}}</b></p>
-            <p class="m-0">Název: <b>{{data.username}}#{{data.discriminator}}</b></p>
+            <p>ID: <b>{{data.id}}</b></p>
+            <p>Název: <b>{{data.username}}#{{data.discriminator}}</b></p>
         </ng-container>
 
         <ng-container *ngIf="type === AuditLogItemType.MemberUpdated">
-            <p class="m-0">Cílový uživatel: <b>{{data.target.username}}#{{data.target.discriminator}}</b></p>
-            <p class="m-0" *ngIf="data.nickname">Změněna přezdívka</p>
-            <p class="m-0" *ngIf="data.isDeaf || data.isMuted">Změněno umlčení</p>
-            <p class="m-0" *ngIf="data.note">Změněna poznámka</p>
-            <p class="m-0" *ngIf="data.selfUnverifyMinimalTime">Změněn minimální čas selfunverify</p>
-            <p class="m-0" *ngIf="data.flags">Změněny příznaky</p>
+            <p>Cílový uživatel: <b>{{data.target.username}}#{{data.target.discriminator}}</b></p>
+            <p *ngIf="data.nickname">Změněna přezdívka</p>
+            <p *ngIf="data.isDeaf || data.isMuted">Změněno umlčení</p>
+            <p *ngIf="data.note">Změněna poznámka</p>
+            <p *ngIf="data.selfUnverifyMinimalTime">Změněn minimální čas selfunverify</p>
+            <p *ngIf="data.flags">Změněny příznaky</p>
         </ng-container>
 
         <ng-container *ngIf="type === AuditLogItemType.MemberRoleUpdated">
-            <p class="m-0">Cílový uživatel: <b>{{data.target.username}}#{{data.target.discriminator}}</b></p>
+            <p>Cílový uživatel: <b>{{data.target.username}}#{{data.target.discriminator}}</b></p>
         </ng-container>
 
         <ng-container *ngIf="type === AuditLogItemType.GuildUpdated">
-            <p class="m-0">
+            <p>
                 Změměno:
                 <b>
-                    <span class="m-0" *ngIf="data.afkChannel">AFK kanál </span>
+                    <span *ngIf="data.afkChannel">AFK kanál </span>
                     <span *ngIf="data.afkTimeout">AFK timeout </span>
                     <span *ngIf="data.defaultMessageNotifications">Výchozí upozornění </span>
                     <span *ngIf="data.description">Popis </span>
@@ -243,35 +242,33 @@
         </ng-container>
 
         <ng-container *ngIf="type === AuditLogItemType.UserLeft">
-            <p class="m-0">Uživatel: <b>{{data.user.username}}#{{data.user.discriminator}}</b></p>
-            <p class="m-0">Počet členů (po odpojení): <b>{{data.memberCount}}</b></p>
-            <p class="m-0">BAN: <b>{{data.isBan | czechBooleanPipe}}</b></p>
-            <p class="m-0" *ngIf="data.isBan">Důvod BANu: <b>{{data.banReason}}</b></p>
+            <p>Uživatel: <b>{{data.user.username}}#{{data.user.discriminator}}</b></p>
+            <p>Počet členů (po odpojení): <b>{{data.memberCount}}</b></p>
+            <p>BAN: <b>{{data.isBan | czechBooleanPipe}}</b></p>
+            <p *ngIf="data.isBan">Důvod BANu: <b>{{data.banReason}}</b></p>
         </ng-container>
 
         <ng-container *ngIf="type === AuditLogItemType.UserJoined">
-            <p class="m-0">Počet členů (po připojení): <b>{{data.memberCount}}</b></p>
+            <p>Počet členů (po připojení): <b>{{data.memberCount}}</b></p>
         </ng-container>
 
         <ng-container *ngIf="type === AuditLogItemType.MessageDeleted">
-            <p class="m-0">Nalezeno v cache: <b>{{data.cached | czechBooleanPipe}}</b></p>
-            <ng-container *ngIf="data.cached">
-                <p class="m-0">Autor: <b>{{data.data.author.username}}#{{data.data.author.discriminator}}</b></p>
-                <p class="m-0">Vytvořeno: <b>{{data.data.createdAt | dateTimeFormatter}}</b></p>
-            </ng-container>
+            <p>Nalezeno v cache: <b>{{data.cached | czechBooleanPipe}}</b></p>
+            <p>Autor: <b>{{data.data.author.username}}#{{data.data.author.discriminator}}</b></p>
+            <p>Vytvořeno: <b>{{data.data.createdAt | dateTimeFormatter}}</b></p>
         </ng-container>
 
         <ng-container *ngIf="type === AuditLogItemType.InteractionCommand">
-            <p class="m-0">Příkaz: <b>{{data.name}} ({{data.moduleName}}/{{data.methodName}})</b></p>
-            <p class="m-0">Odpověděl: <b>{{data.hasResponded | czechBooleanPipe}}</b></p>
-            <p class="m-0">Dokončen úspěšně: <b>{{data.isSuccess | czechBooleanPipe}}</b></p>
+            <p>Příkaz: <b>{{data.name}} ({{data.moduleName}}/{{data.methodName}})</b></p>
+            <p>Odpověděl: <b>{{data.hasResponded | czechBooleanPipe}}</b></p>
+            <p>Dokončen úspěšně: <b>{{data.isSuccess | czechBooleanPipe}}</b></p>
         </ng-container>
 
         <ng-container *ngIf="type === AuditLogItemType.JobCompleted">
-            <p class="m-0">Úloha: <b>{{data.jobName}}</b></p>
-            <p class="m-0">Začátek: <b>{{data.startAt | dateTimeFormatter}}</b></p>
-            <p class="m-0">Konec: <b>{{data.endAt | dateTimeFormatter}}</b></p>
-            <p class="m-0 text-danger" *ngIf="data.wasError">
+            <p>Úloha: <b>{{data.jobName}}</b></p>
+            <p>Začátek: <b>{{data.startAt | dateTimeFormatter}}</b></p>
+            <p>Konec: <b>{{data.endAt | dateTimeFormatter}}</b></p>
+            <p class="text-danger" *ngIf="data.wasError">
                 <i class="fas fa-exclamation-triangle me-1"></i>
                 <b>Došlo k chybě</b>
             </p>
