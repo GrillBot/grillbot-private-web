@@ -19,7 +19,8 @@ export enum AuditLogItemType {
     MessageEdited = 18,
     MessageDeleted = 19,
     InteractionCommand = 20,
-    ThreadDeleted = 21
+    ThreadDeleted = 21,
+    JobCompleted = 22
 }
 
 export enum AuditLogItemTypeTexts {
@@ -43,5 +44,6 @@ export enum AuditLogItemTypeTexts {
     MessageEdited = 'Zpráva upravena',
     MessageDeleted = 'Zpráva odebrána',
     InteractionCommand = 'Integrovaný příkaz',
-    ThreadDeleted = 'Smazáno vlákno'
+    ThreadDeleted = 'Smazáno vlákno',
+    JobCompleted = 'Naplánovaná úloha'
 }

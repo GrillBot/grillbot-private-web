@@ -262,9 +262,19 @@
         </ng-container>
 
         <ng-container *ngIf="type === AuditLogItemType.InteractionCommand">
-            <p class="m-0">Příaz: <b>{{data.name}} ({{data.moduleName}}/{{data.methodName}})</b></p>
+            <p class="m-0">Příkaz: <b>{{data.name}} ({{data.moduleName}}/{{data.methodName}})</b></p>
             <p class="m-0">Odpověděl: <b>{{data.hasResponded | czechBooleanPipe}}</b></p>
             <p class="m-0">Dokončen úspěšně: <b>{{data.isSuccess | czechBooleanPipe}}</b></p>
+        </ng-container>
+
+        <ng-container *ngIf="type === AuditLogItemType.JobCompleted">
+            <p class="m-0">Úloha: <b>{{data.jobName}}</b></p>
+            <p class="m-0">Začátek: <b>{{data.startAt | dateTimeFormatter}}</b></p>
+            <p class="m-0">Konec: <b>{{data.endAt | dateTimeFormatter}}</b></p>
+            <p class="m-0 text-danger" *ngIf="data.wasError">
+                <i class="fas fa-exclamation-triangle me-1"></i>
+                <b>Došlo k chybě</b>
+            </p>
         </ng-container>
     </div>
 </ng-template>

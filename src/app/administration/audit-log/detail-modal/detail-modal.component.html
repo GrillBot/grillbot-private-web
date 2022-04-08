@@ -2,8 +2,8 @@
     <pre *ngIf="isTextView">{{data}}</pre>
 
     <ng-container *ngIf="!isTextView">
-        <div class="mb-3">
-            <span *ngIf="item.type === AuditLogItemType.MemberUpdated && data.target">
+        <div class="mb-3" *ngIf="item.type === AuditLogItemType.MemberUpdated && data.target">
+            <span>
                 <b>Uživatel: </b>
                 {{data.target.username}}#{{data.target.discriminator}}
             </span>
@@ -43,6 +43,9 @@
                     </ng-container>
                     <ng-container *ngSwitchCase="AuditLogItemType.ThreadDeleted">
                         <ng-container *ngTemplateOutlet="threadDeleted"></ng-container>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="AuditLogItemType.JobCompleted">
+                        <ng-container *ngTemplateOutlet="jobCompleted"></ng-container>
                     </ng-container>
                 </ng-container>
             </tbody>
@@ -387,5 +390,39 @@
     <tr>
         <td>Uzamčen</td>
         <td>{{data.isLocked | czechBooleanPipe}}</td>
+    </tr>
+</ng-template>
+
+<ng-template #jobCompleted>
+    <tr>
+        <td>Název</td>
+        <td>{{data.jobName}}</td>
+    </tr>
+
+    <tr>
+        <td>Začátek</td>
+        <td>{{data.startAt | dateTimeFormatter}}</td>
+    </tr>
+
+    <tr>
+        <td>Dokončeno</td>
+        <td>{{data.endAt | dateTimeFormatter}}</td>
+    </tr>
+
+    <tr>
+        <td>Trvání</td>
+        <td>{{data.endAt | duration:data.startAt}}</td>
+    </tr>
+
+    <tr>
+        <td>Došlo k chybě</td>
+        <td>{{data.wasError | czechBooleanPipe}}</td>
+    </tr>
+
+    <tr *ngIf="data.result">
+        <td>Výsledek</td>
+        <td>
+            <pre class="pt-2 pb-2 alert alert-{{(data.wasError ? 'danger' : 'success')}}">{{data.result}}</pre>
+        </td>
     </tr>
 </ng-template>

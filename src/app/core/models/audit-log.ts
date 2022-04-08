@@ -90,11 +90,11 @@ export class AuditLogListItem {
             AuditLogItemType.MemberUpdated,
             AuditLogItemType.GuildUpdated,
             AuditLogItemType.InteractionCommand,
-            AuditLogItemType.ThreadDeleted
+            AuditLogItemType.ThreadDeleted,
+            AuditLogItemType.JobCompleted
         ];
 
-        if (otherTypeWithDetails.includes(this.type)) { return true; }
-        return false;
+        return otherTypeWithDetails.includes(this.type);
     }
 
     get canShowColumn(): boolean {
@@ -115,7 +115,8 @@ export class AuditLogListItem {
             AuditLogItemType.UserJoined,
             AuditLogItemType.MessageDeleted,
             AuditLogItemType.InteractionCommand,
-            AuditLogItemType.ThreadDeleted
+            AuditLogItemType.ThreadDeleted,
+            AuditLogItemType.JobCompleted
         ];
 
         return types.includes(this.type);
