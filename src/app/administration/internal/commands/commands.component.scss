@@ -1,0 +1,9 @@
+@import "../../../styles/variables.scss";
+
+.bg-warning {
+    background-color: lighten($warning, 20%) !important;
+}
+
+.bg-danger {
+    background-color: lighten($danger, 20%) !important;
+}

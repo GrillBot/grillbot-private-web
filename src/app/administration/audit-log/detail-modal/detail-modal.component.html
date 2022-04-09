@@ -59,6 +59,11 @@
         <td>{{data.isSuccess | czechBooleanPipe}}</td>
     </tr>
 
+    <tr *ngIf="data.duration != null && data.duration != undefined">
+        <td>Trvání</td>
+        <td>{{data.duration}} ms</td>
+    </tr>
+
     <ng-container *ngIf="!data.isSuccess">
         <tr>
             <td>Kód chyby</td>

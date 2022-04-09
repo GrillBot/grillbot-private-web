@@ -41,6 +41,10 @@ export class CommandStatisticItem {
     public successCount: number;
     public failedCount: number;
     public successRate: number;
+    public minDuration: number;
+    public maxDuration: number;
+    public totalDuration: number;
+    public avgDuration: number;
 
     static create(data: any): CommandStatisticItem | null {
         if (!data) { return null; }
@@ -51,6 +55,10 @@ export class CommandStatisticItem {
         item.lastCall = DateTime.fromISOString(data.lastCall);
         item.successCount = data.successCount;
         item.successRate = data.successRate;
+        item.minDuration = data.minDuration;
+        item.maxDuration = data.maxDuration;
+        item.totalDuration = data.totalDuration;
+        item.avgDuration = data.avgDuration;
 
         return item;
     }

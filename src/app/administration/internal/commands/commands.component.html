@@ -18,18 +18,27 @@
                         <tr>
                             <th>Příkaz</th>
                             <th>Poslední volání</th>
-                            <th>Počet úspěšných</th>
-                            <th>Počet chybných</th>
+                            <th>Úspěšných</th>
+                            <th>Chybných</th>
                             <th>Úspěšnost</th>
+                            <th>Min. doba běhu</th>
+                            <th>Max. doba běhu</th>
+                            <th>Celk. doba běhu</th>
+                            <th>Prům. doba běhu</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let item of data">
+                        <tr *ngFor="let item of data" [class.bg-warning]="item.successRate > 25 && item.successRate < 50"
+                            [class.bg-danger]="item.successRate <= 25">
                             <td>{{item.command}}</td>
                             <td>{{item.lastCall.toLocaleString()}}</td>
                             <td>{{item.successCount}}</td>
                             <td>{{item.failedCount}}</td>
                             <td>{{item.successRate}} %</td>
+                            <td>{{item.minDuration}} ms</td>
+                            <td>{{item.maxDuration}} ms</td>
+                            <td>{{item.totalDuration}} ms</td>
+                            <td>{{item.avgDuration}} ms</td>
                         </tr>
                         <tr *ngIf="data.length === 0">
                             <td colspan="5">Ještě nebyl zavolán žádný příkaz.</td>
