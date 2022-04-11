@@ -21,6 +21,7 @@ import { TimeSpanInputComponent } from './time-span-input/time-span-input.compon
 import { SearchInputComponent } from './search-input/search-input.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NavigationComponent } from './navigation/navigation.component';
+import { EmotePickerComponent } from './emote-picker/emote-picker.component';
 
 @NgModule({
     declarations: [
@@ -36,7 +37,8 @@ import { NavigationComponent } from './navigation/navigation.component';
         SortingDirective,
         TimeSpanInputComponent,
         SearchInputComponent,
-        NavigationComponent
+        NavigationComponent,
+        EmotePickerComponent
     ],
     imports: [
         CommonModule,
@@ -72,7 +74,8 @@ import { NavigationComponent } from './navigation/navigation.component';
         NgSelectModule,
         DirectivesModule,
         NavigationComponent,
-        PipesModule
+        PipesModule,
+        EmotePickerComponent
     ]
 })
 export class SharedModule { }

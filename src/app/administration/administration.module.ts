@@ -73,6 +73,11 @@ const routes: Routes = [
                 path: 'auto-reply',
                 loadChildren: () => import('./auto-reply/auto-reply.module').then(mod => mod.AutoReplyModule),
                 data: { title: 'Automatické odpovědi', id: 'auto-reply' }
+            },
+            {
+                path: 'emotes',
+                loadChildren: () => import('./emotes/emotes.module').then(mod => mod.EmotesModule),
+                data: { title: 'Správa emotů', id: 'emotes' }
             }
         ]
     },

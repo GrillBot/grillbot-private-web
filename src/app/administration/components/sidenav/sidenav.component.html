@@ -12,6 +12,8 @@
                 <ng-container
                     *ngTemplateOutlet="menuItem; context: {link: '/channels', icon:'fa-envelope-open-text', title:'Kanály', id:'channels'}">
                 </ng-container>
+                <ng-container *ngTemplateOutlet="menuItem;context: {link:'/emotes',icon:'fa-smile',title:'Správa emotů',id:'emotes',iconGroup:'far'}">
+                </ng-container>
                 <ng-container
                     *ngTemplateOutlet="menuItem; context: {link: '/invites', icon:'fa-user-plus', title:'Pozvánky', id:'invites'}">
                 </ng-container>
@@ -48,10 +50,10 @@
     </nav>
 </div>
 
-<ng-template #menuItem let-link="link" let-icon="icon" let-title="title" let-id="id">
+<ng-template #menuItem let-link="link" let-icon="icon" let-title="title" let-id="id" let-iconGroup="iconGroup">
     <a class="nav-link" [routerLink]="'/admin' + link" [class.active]="id == activeRoute">
         <div class="sb-nav-link-icon">
-            <i class="fas {{icon}}"></i>
+            <i class="{{(iconGroup ? iconGroup : 'fas')}} {{icon}}"></i>
         </div>
         {{title}}
     </a>

@@ -1,4 +1,5 @@
 import { ActivatedRoute } from '@angular/router';
+import { NavigationHelper } from 'src/app/core/lib/navigation';
 import { INavigation, NavigationItem } from 'src/app/shared/navigation/navigation';
 
 export class InternalNavigation implements INavigation {
@@ -13,15 +14,7 @@ export class InternalNavigation implements INavigation {
     }
 
     isActive(item: NavigationItem): boolean {
-        const currentPath = this.buildCurrentPath();
+        const currentPath = NavigationHelper.buildPath(this.currentRoute);
         return currentPath === item.routerLink;
-    }
-
-    private buildCurrentPath(): string {
-        const parts = this.currentRoute.snapshot.pathFromRoot
-            .filter(o => o.routeConfig?.path && o.routeConfig.path.length > 0)
-            .map(o => o.routeConfig.path);
-
-        return `/${parts.join('/')}`;
     }
 }

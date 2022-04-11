@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { BaseService } from './base.service';
 import { map, catchError } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
+import { EmoteItem } from '../models/emotes';
 
 @Injectable({ providedIn: 'root' })
 export class DataService {
@@ -64,6 +65,16 @@ export class DataService {
 
         return this.base.http.get<Dictionary<string, string>>(url, { headers }).pipe(
             map(data => Object.keys(data).map(k => ({ key: k, value: data[k] as string }))),
+            catchError((err: HttpErrorResponse) => this.base.catchError(err))
+        );
+    }
+
+    getEmotes(): ObservableList<EmoteItem> {
+        const url = `${environment.apiUrl}/data/emotes`;
+        const headers = this.base.getHttpHeaders();
+
+        return this.base.http.get<EmoteItem[]>(url, { headers }).pipe(
+            map(emotes => emotes.map(e => EmoteItem.create(e))),
             catchError((err: HttpErrorResponse) => this.base.catchError(err))
         );
     }

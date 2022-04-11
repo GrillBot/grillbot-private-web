@@ -94,9 +94,9 @@
                         </span>
                         <div class="border rounded guild-emote-list" *ngIf="isVisible('emotes', i)">
                             <div class="border rounded m-2 guild-emote-list-item" *ngFor="let emote of guild.emotes">
-                                <img class="card-img-top" [src]="emote.imageUrl" [alt]="emote.name">
+                                <img class="card-img-top" [src]="emote.emote.imageUrl" [alt]="emote.emote.name">
                                 <div class="card-body pt-0 ps-1 pb-1 d-flex flex-column">
-                                    <b>{{emote.name}}</b>
+                                    <b>{{emote.emote.name}}</b>
                                     <span>Použito: <b>{{emote.useCount.toLocaleString()}}x</b></span>
                                     <span>Poprvé: <b>{{emote.firstOccurence.toLocaleString()}}</b></span>
                                     <span>Naposledy: <b>{{emote.lastOccurence.toLocaleString()}}</b></span>

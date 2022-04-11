@@ -2,6 +2,7 @@ import { Dictionary } from 'src/app/core/models/common';
 import { Support } from '../lib/support';
 import { ChannelStatItem } from './channels';
 import { DateTime } from './datetime';
+import { EmoteStatItem } from './emotes';
 import { UserFilterFlags, UserFilterMapping } from './enums/user-filter-flags';
 import { UserFlags } from './enums/user-flags';
 import { StatusColorMapping, UserStatus, UserStatusTexts } from './enums/user-status';
@@ -243,27 +244,6 @@ export class GuildUserDetail {
         detail.emotes = data.emotes?.map((o: any) => EmoteStatItem.create(o)).filter((o: EmoteStatItem) => o);
 
         return detail;
-    }
-}
-
-export class EmoteStatItem {
-    public name: string;
-    public useCount: number;
-    public imageUrl: string;
-    public firstOccurence: DateTime;
-    public lastOccurence: DateTime;
-
-    static create(data: any): EmoteStatItem | null {
-        if (!data) { return null; }
-        const item = new EmoteStatItem();
-
-        item.name = data.name;
-        item.useCount = data.useCount;
-        item.imageUrl = data.imageUrl;
-        item.firstOccurence = DateTime.fromISOString(data.firstOccurence);
-        item.lastOccurence = DateTime.fromISOString(data.lastOccurence);
-
-        return item;
     }
 }
 
