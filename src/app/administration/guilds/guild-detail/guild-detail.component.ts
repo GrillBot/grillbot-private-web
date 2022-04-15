@@ -29,14 +29,19 @@ export class GuildDetailComponent implements OnInit {
 
             this.form = this.fb.group({
                 mutedRole: [this.data.mutedRole?.id ?? null],
-                adminChannel: [this.data.adminChannel?.id ?? null]
+                adminChannel: [this.data.adminChannel?.id ?? null],
+                emoteSuggestionChannel: [this.data.emoteSuggestionChannel?.id ?? null]
             });
         });
     }
 
     submitSettings(): void {
         /* eslint-disable @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-argument */
-        const params = new UpdateGuildParams(this.form.value.mutedRole, this.form.value.adminChannel);
+        const params = new UpdateGuildParams(
+            this.form.value.mutedRole,
+            this.form.value.adminChannel,
+            this.form.value.emoteSuggestionChannel
+        );
 
         this.guildService.updateGuild(this.data.id, params).subscribe(_ => {
             this.modal.showNotification('Změna nastavení serveru', 'Nastavení serveru bylo úspěšně provedeno.');

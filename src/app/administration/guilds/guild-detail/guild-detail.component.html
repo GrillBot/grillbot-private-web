@@ -130,8 +130,14 @@
 
                         <div class="col form-group">
                             <label>Administrátorský kanál</label>
-                            <app-search-input [searchSource]="'channels'" [guildId]="data.id" formControlName="adminChannel">
+                            <app-search-input [searchSource]="'channels-no-threads'" [guildId]="data.id" formControlName="adminChannel">
                             </app-search-input>
+                        </div>
+
+                        <div class="col form-group">
+                            <label>Kanál pro návrhy emotů</label>
+                            <app-search-input [searchSource]="'channels-no-threads'" [guildId]="data.id"
+                                formControlName="emoteSuggestionChannel"></app-search-input>
                         </div>
 
                         <div class="col-2 d-flex align-items-end">
