@@ -168,6 +168,7 @@
             <b *ngIf="data.before.slowMode != undefined || data.after.slowMode != undefined">SlowMode </b>
             <b *ngIf="data.before.isNsfw != undefined || data.after.isNsfw != undefined">NSFW stav </b>
             <b *ngIf="data.before.bitrate || data.after.bitrate">Bitrate</b>
+            <b *ngIf="data.before.topic || data.after.topic">Popis</b>
         </ng-container>
 
         <ng-container *ngIf="type === AuditLogItemType.EmojiDeleted">

@@ -178,6 +178,12 @@
         <td>{{data.before.bitrate}}</td>
         <td>{{data.after.bitrate}}</td>
     </tr>
+
+    <tr *ngIf="data.before.topic || data.after.topic">
+        <td>Popis</td>
+        <td>{{data.before.topic}}</td>
+        <td>{{data.after.topic}}</td>
+    </tr>
 </ng-template>
 
 <ng-template #overwriteUpdated>
