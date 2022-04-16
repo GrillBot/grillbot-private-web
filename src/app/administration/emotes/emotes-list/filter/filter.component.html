@@ -38,9 +38,13 @@
                 <input type="datetime-local" formControlName="lastOccurenceTo" class="form-control" />
             </div>
 
-            <div class="col d-flex justify-content-end align-items-end">
-                <button class="btn btn-link me-2" type="button" (click)="submitForm()">Obnovit</button>
-                <button class="btn btn-danger" (click)="cleanFilter()">Smazat filtr</button>
+            <div class="col d-flex align-items-end justify-content-between">
+                <app-checkbox [id]="'filterAnimated'" [label]="'Skrýt animované'" formControlName="filterAnimated"></app-checkbox>
+
+                <div>
+                    <button class="btn btn-link me-2" type="button" (click)="submitForm()">Obnovit</button>
+                    <button class="btn btn-danger" (click)="cleanFilter()">Smazat filtr</button>
+                </div>
             </div>
         </div>
     </form>

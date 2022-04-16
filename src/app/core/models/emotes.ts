@@ -49,6 +49,7 @@ export class EmotesListParams {
     public lastOccurence: RangeParams<DateTime>;
     public sort: SortParams;
     public pagination: PaginatedParams;
+    public filterAnimated: boolean;
 
     static get empty(): EmotesListParams {
         const params = new EmotesListParams();
@@ -57,6 +58,7 @@ export class EmotesListParams {
         params.lastOccurence = {};
         params.useCount = {};
         params.sort = {};
+        params.filterAnimated = false;
 
         return params;
     }
@@ -73,7 +75,8 @@ export class EmotesListParams {
             new QueryParam('sort.orderBy', this.sort.orderBy),
             new QueryParam('sort.descending', this.sort.descending),
             new QueryParam('pagination.page', this.pagination.page),
-            new QueryParam('pagination.pageSize', this.pagination.pageSize)
+            new QueryParam('pagination.pageSize', this.pagination.pageSize),
+            new QueryParam('filterAnimated', this.filterAnimated)
         ].filter(o => o);
     }
 
@@ -83,6 +86,7 @@ export class EmotesListParams {
         const params = new EmotesListParams();
 
         params.guildId = data.guildId;
+        params.filterAnimated = data.filterAnimated;
         params.useCount = {
             from: data.useCount.from,
             to: data.useCount.to
@@ -106,6 +110,7 @@ export class EmotesListParams {
         const params = new EmotesListParams();
 
         params.guildId = form.guildId;
+        params.filterAnimated = form.filterAnimated ?? false;
 
         params.useCount = {
             from: form.useCountFrom,

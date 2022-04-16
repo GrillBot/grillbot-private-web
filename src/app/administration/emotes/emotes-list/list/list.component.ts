@@ -50,7 +50,7 @@ export class ListComponent implements OnInit {
             request = this.emotesService.getStatsOfSupportedEmotes(parameters);
         }
 
-        request.subscribe(data => this.list.setData(data));
+        request.subscribe(data => this.list.setData(data, this.card));
     }
 
     setSort(sortBy: SortingTypes): void {
