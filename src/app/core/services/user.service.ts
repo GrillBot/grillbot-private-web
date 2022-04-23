@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 import { PaginatedResponse } from '../models/common';
 import { GetUserListParams, UserDetail, UserListItem } from '../models/users';
 import { BaseService } from './base.service';
-import { QueryParam } from '../models/http';
 import { environment } from 'src/environments/environment';
 import { map, catchError } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -16,13 +15,8 @@ export class UserService {
         private base: BaseService
     ) { }
 
-    getUsersList(filter: GetUserListParams, pagination: PaginatedParams, sortDesc: boolean): Observable<PaginatedResponse<UserListItem>> {
-        const parameters = [
-            ...filter.queryParams,
-            ...pagination.queryParams,
-            new QueryParam('sortDesc', sortDesc)
-        ].filter(o => o).map(o => o.toString()).join('&');
-
+    getUsersList(filter: GetUserListParams): Observable<PaginatedResponse<UserListItem>> {
+        const parameters = filter.queryParams.map(o => o.toString()).join('&');
         const url = `${environment.apiUrl}/users?${parameters}`;
         const headers = this.base.getHttpHeaders();
 

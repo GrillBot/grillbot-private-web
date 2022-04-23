@@ -1,13 +1,16 @@
 <app-card #card [title]="'Pozvánky'" [icon]="'fas fa-user-plus'">
-    <app-data-list #list (readData)="readData($event)">
+    <app-data-list #list (readData)="readData($event)" [parentCard]="card">
         <app-loading *ngIf="!list.isDataLoaded"></app-loading>
 
         <table class="table table-bordered table-sm table-striped auto-column-width" *ngIf="list.isDataLoaded">
             <thead>
                 <tr>
-                    <th sortable (clicked)="setSort($any($event))" [key]="'code'" [current]="sortBy" [sortDesc]="sortDesc">Kód</th>
-                    <th sortable (clicked)="setSort($any($event))" [key]="'createdAt'" [current]="sortBy" [sortDesc]="sortDesc">Vytvořeno</th>
-                    <th sortable (clicked)="setSort($any($event))" [key]="'creator'" [current]="sortBy" [sortDesc]="sortDesc">Vytvořil</th>
+                    <th sortable (clicked)="setSort($any($event))" [key]="'Code'" [current]="sort.orderBy" [sortDesc]="sort.descending">Kód
+                    </th>
+                    <th sortable (clicked)="setSort($any($event))" [key]="'CreatedAt'" [current]="sort.orderBy"
+                        [sortDesc]="sort.descending">Vytvořeno</th>
+                    <th sortable (clicked)="setSort($any($event))" [key]="'Creator'" [current]="sort.orderBy" [sortDesc]="sort.descending">
+                        Vytvořil</th>
                     <th>Použilo uživatelů</th>
                     <th>Server</th>
                 </tr>

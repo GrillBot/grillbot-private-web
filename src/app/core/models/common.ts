@@ -62,3 +62,33 @@ export interface SortParams {
     orderBy?: string;
     descending?: boolean;
 }
+
+export class FilterBase {
+    public pagination: PaginatedParams;
+    public sort: SortParams;
+
+    get queryParams(): QueryParam[] {
+        const result = [];
+
+        if (this.sort) {
+            result.push(
+                new QueryParam('sort.orderBy', this.sort.orderBy),
+                new QueryParam('sort.descending', this.sort.descending)
+            );
+        }
+
+        if (this.pagination) {
+            result.push(
+                new QueryParam('pagination.page', this.pagination.page),
+                new QueryParam('pagination.pageSize', this.pagination.pageSize)
+            );
+        }
+
+        return result;
+    }
+
+    set(pagination: PaginatedParams, sort: SortParams) {
+        this.pagination = pagination;
+        this.sort = sort;
+    }
+}

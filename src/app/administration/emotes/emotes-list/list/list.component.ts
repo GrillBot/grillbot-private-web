@@ -4,7 +4,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { PaginatedParams, PaginatedResponse, SortParams } from 'src/app/core/models/common';
 import { EmotesListParams, EmoteStatItem, SortingTypes } from 'src/app/core/models/emotes';
 import { EmotesService } from 'src/app/core/services/emotes.service';
-import { CardComponent } from 'src/app/shared/card/card.component';
 import { DataListComponent } from 'src/app/shared/data-list/data-list.component';
 import { ModalService } from 'src/app/shared/modal';
 import { MergeModalComponent } from '../../merge-modal/merge-modal.component';
@@ -16,7 +15,6 @@ import { MergeModalComponent } from '../../merge-modal/merge-modal.component';
 })
 export class ListComponent implements OnInit {
     @ViewChild('list', { static: false }) list: DataListComponent;
-    @ViewChild('card', { static: false }) card: CardComponent;
 
     sort: SortParams = { orderBy: 'UseCount', descending: true };
     unsupported = false;
@@ -39,18 +37,18 @@ export class ListComponent implements OnInit {
     }
 
     readData(pagination: PaginatedParams): void {
-        const parameters = this.filter
-            .setPagination(pagination)
-            .setSort(this.sort);
+        if (!this.filter) { return; }
+
+        this.filter.set(pagination, this.sort);
 
         let request: Observable<PaginatedResponse<EmoteStatItem>>;
         if (this.unsupported) {
-            request = this.emotesService.getStatsOfUnsupportedEmotes(parameters);
+            request = this.emotesService.getStatsOfUnsupportedEmotes(this.filter);
         } else {
-            request = this.emotesService.getStatsOfSupportedEmotes(parameters);
+            request = this.emotesService.getStatsOfSupportedEmotes(this.filter);
         }
 
-        request.subscribe(data => this.list.setData(data, this.card));
+        request.subscribe(data => this.list.setData(data));
     }
 
     setSort(sortBy: SortingTypes): void {

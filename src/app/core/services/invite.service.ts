@@ -5,24 +5,16 @@ import { GetInviteListParams, GuildInvite, InviteListSortTypes } from '../models
 import { BaseService } from './base.service';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { QueryParam } from '../models/http';
 import { map, catchError } from 'rxjs/operators';
 
-/* eslint-disable @typescript-eslint/type-annotation-spacing */
 @Injectable({ providedIn: 'root' })
 export class InviteService {
     constructor(
         private base: BaseService
     ) { }
 
-    getInviteList(params: GetInviteListParams, pagination: PaginatedParams, sortDesc: boolean, sortBy: InviteListSortTypes)
-        : Observable<PaginatedResponse<GuildInvite>> {
-        const parameters = [
-            ...params.queryParams,
-            ...pagination.queryParams,
-            new QueryParam('sortDesc', sortDesc),
-            new QueryParam('sortBy', sortBy)
-        ].filter(o => o).map(o => o.toString()).join('&');
+    getInviteList(params: GetInviteListParams): Observable<PaginatedResponse<GuildInvite>> {
+        const parameters = params.queryParams.map(o => o.toString()).join('&');
         const url = `${environment.apiUrl}/invite?${parameters}`;
         const headers = this.base.getHttpHeaders();
 

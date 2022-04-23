@@ -1,4 +1,5 @@
 import { Support } from '../lib/support';
+import { FilterBase } from './common';
 import { DateTime } from './datetime';
 import { ChannelFlagMapping } from './enums/channel-flags';
 import { ChannelType } from './enums/channel-type';
@@ -70,7 +71,7 @@ export class SendMessageToChannelParams {
     }
 }
 
-export class GetChannelListParams {
+export class GetChannelListParams extends FilterBase {
     public guildId: string | null = null;
     public nameContains: string | null = null;
     public channelType: ChannelType | null = null;
@@ -79,7 +80,8 @@ export class GetChannelListParams {
         return [
             this.guildId ? new QueryParam('guildId', this.guildId) : null,
             this.nameContains ? new QueryParam('nameContains', this.nameContains) : null,
-            this.channelType != null ? new QueryParam('channelType', this.channelType) : null
+            this.channelType != null ? new QueryParam('channelType', this.channelType) : null,
+            ...super.queryParams
         ].filter(o => o);
     }
 

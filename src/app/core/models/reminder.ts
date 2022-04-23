@@ -1,3 +1,4 @@
+import { FilterBase } from './common';
 import { FormGroup } from '@angular/forms';
 import { QueryParam } from './http';
 import { DateTime } from './datetime';
@@ -28,7 +29,7 @@ export class RemindMessage {
     }
 }
 
-export class GetReminderListParams {
+export class GetReminderListParams extends FilterBase {
     public fromUserId: string | null = null;
     public toUserId: string | null = null;
     public originalMessageId: string | null = null;
@@ -47,7 +48,8 @@ export class GetReminderListParams {
             this.messageContains ? new QueryParam('messageContains', this.messageContains) : null,
             this.createdFrom ? new QueryParam('createdFrom', this.createdFrom) : null,
             this.createdTo ? new QueryParam('createdTo', this.createdTo) : null,
-            new QueryParam('onlyWaiting', this.onlyWaiting)
+            new QueryParam('onlyWaiting', this.onlyWaiting),
+            ...super.queryParams
         ].filter(o => o);
     }
 

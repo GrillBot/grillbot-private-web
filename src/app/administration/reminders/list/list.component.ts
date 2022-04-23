@@ -1,8 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
-import { PaginatedParams } from 'src/app/core/models/common';
+import { PaginatedParams, SortParams } from 'src/app/core/models/common';
 import { GetReminderListParams, RemindListSortTypes, RemindMessage } from 'src/app/core/models/reminder';
 import { ReminderService } from 'src/app/core/services/reminder.service';
-import { CardComponent } from 'src/app/shared/card/card.component';
 import { DataListComponent } from 'src/app/shared/data-list/data-list.component';
 import { ModalService } from 'src/app/shared/modal';
 
@@ -12,10 +11,8 @@ import { ModalService } from 'src/app/shared/modal';
 })
 export class ListComponent {
     @ViewChild('list', { static: false }) list: DataListComponent;
-    @ViewChild('card', { static: false }) card: CardComponent;
 
-    sortDesc = true;
-    sortBy: RemindListSortTypes = 'id';
+    sort: SortParams = { orderBy: 'Id', descending: true };
 
     private filter: GetReminderListParams;
 
@@ -30,15 +27,17 @@ export class ListComponent {
     }
 
     readData(pagination: PaginatedParams): void {
-        this.reminderService.getReminderList(this.filter, pagination, this.sortBy, this.sortDesc)
-            .subscribe(list => this.list.setData(list, this.card));
+        if (!this.filter) { return; }
+
+        this.filter.set(pagination, this.sort);
+        this.reminderService.getReminderList(this.filter).subscribe(list => this.list.setData(list));
     }
 
     setSort(sortBy: RemindListSortTypes): void {
-        if (this.sortBy !== sortBy) {
-            this.sortBy = sortBy;
+        if (this.sort.orderBy !== sortBy) {
+            this.sort.orderBy = sortBy;
         } else {
-            this.sortDesc = !this.sortDesc;
+            this.sort.descending = !this.sort.descending;
         }
 
         if (this.list) { this.list.filterChanged(); }

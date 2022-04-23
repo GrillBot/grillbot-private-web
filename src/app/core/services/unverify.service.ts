@@ -46,14 +46,8 @@ export class UnverifyService {
         );
     }
 
-    getUnverifyLog(filter: UnverifyLogParams, pagination: PaginatedParams, sortBy: UnverifyListSortTypes,
-        sortDesc: boolean): Observable<PaginatedResponse<UnverifyLogItem>> {
-        const parameters = [
-            ...filter.queryParams,
-            ...pagination.queryParams,
-            new QueryParam('sortBy', sortBy),
-            new QueryParam('sortDesc', sortDesc)
-        ].filter(o => o).map(o => o.toString()).join('&');
+    getUnverifyLog(filter: UnverifyLogParams): Observable<PaginatedResponse<UnverifyLogItem>> {
+        const parameters = filter.queryParams.map(o => o.toString()).join('&');
         const url = `${environment.apiUrl}/unverify/log?${parameters}`;
         const headers = this.base.getHttpHeaders();
 

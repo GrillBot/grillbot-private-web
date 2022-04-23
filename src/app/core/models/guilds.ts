@@ -4,9 +4,9 @@ import { DateTime } from './datetime';
 import { PremiumTier } from './enums/premium-tier';
 import { Role } from './roles';
 import { User } from './users';
-import { UserStatus } from './enums/user-status';
+import { FilterBase } from './common';
 
-export class GuildListFilter {
+export class GuildListFilter extends FilterBase {
     public nameQuery: string | null;
 
     static get empty(): GuildListFilter { return new GuildListFilter(); }
@@ -14,6 +14,7 @@ export class GuildListFilter {
     get queryParams(): QueryParam[] {
         return [
             this.nameQuery ? new QueryParam('nameQuery', this.nameQuery) : null,
+            ...super.queryParams
         ].filter(o => o);
     }
 

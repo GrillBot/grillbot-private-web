@@ -1,3 +1,4 @@
+import { FilterBase } from './common';
 import { Dictionary } from 'src/app/core/models/common';
 import { Support } from '../lib/support';
 import { ChannelStatItem } from './channels';
@@ -100,7 +101,7 @@ export class UserListItem {
     }
 }
 
-export class GetUserListParams {
+export class GetUserListParams extends FilterBase {
     public username: string | null = null;
     public guildId: string | null = null;
     public flags = 0;
@@ -113,7 +114,8 @@ export class GetUserListParams {
             this.guildId ? new QueryParam('guildId', this.guildId) : null,
             this.flags ? new QueryParam('flags', this.flags) : null,
             new QueryParam('haveBirthday', this.haveBirthday),
-            this.usedInviteCode ? new QueryParam('usedInviteCode', this.usedInviteCode) : null
+            this.usedInviteCode ? new QueryParam('usedInviteCode', this.usedInviteCode) : null,
+            ...super.queryParams
         ].filter(o => o);
     }
 

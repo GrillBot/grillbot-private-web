@@ -1,13 +1,14 @@
 import { Support } from 'src/app/core/lib/support';
 import { AuditLogItemTypeTexts } from 'src/app/core/models/enums/audit-log-item-type';
 import { Channel } from './channels';
+import { FilterBase } from './common';
 import { DateTime } from './datetime';
 import { AuditLogItemType } from './enums/audit-log-item-type';
 import { Guild } from './guilds';
 import { QueryParam } from './http';
 import { User } from './users';
 
-export class AuditLogListParams {
+export class AuditLogListParams extends FilterBase {
     public guildId: string | null;
     public processedUserIds: string[] = [];
     public types: AuditLogItemType[] = [];
@@ -26,7 +27,8 @@ export class AuditLogListParams {
             this.createdFrom ? new QueryParam('createdFrom', this.createdFrom) : null,
             this.createdTo ? new QueryParam('createdTo', this.createdTo) : null,
             new QueryParam('ignoreBots', this.ignoreBots),
-            this.channelId ? new QueryParam('channelId', this.channelId) : null
+            this.channelId ? new QueryParam('channelId', this.channelId) : null,
+            ...super.queryParams
         ].filter(o => o);
     }
 

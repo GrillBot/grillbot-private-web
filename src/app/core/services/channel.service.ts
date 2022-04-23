@@ -28,14 +28,8 @@ export class ChannelService {
         );
     }
 
-    getChannelsList(filter: GetChannelListParams, pagination: PaginatedParams, sortBy: ChannelListSortTypes, sortDesc: boolean):
-        Observable<PaginatedResponse<GuildChannelListItem>> {
-        const parameters = [
-            ...filter.queryParams,
-            ...pagination.queryParams,
-            new QueryParam('sortBy', sortBy),
-            new QueryParam('sortDesc', sortDesc)
-        ].filter(o => o).map(o => o.toString()).join('&');
+    getChannelsList(filter: GetChannelListParams): Observable<PaginatedResponse<GuildChannelListItem>> {
+        const parameters = filter.queryParams.map(o => o.toString()).join('&');
         const url = `${environment.apiUrl}/channel?${parameters}`;
         const headers = this.base.getHttpHeaders();
 

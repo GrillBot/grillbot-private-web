@@ -3,7 +3,6 @@ import { Component, ViewChild } from '@angular/core';
 import { GuildService } from 'src/app/core/services/guild.service';
 import { PaginatedParams } from 'src/app/core/models/common';
 import { DataListComponent } from 'src/app/shared/data-list/data-list.component';
-import { CardComponent } from 'src/app/shared/card/card.component';
 
 @Component({
     selector: 'app-list',
@@ -11,7 +10,6 @@ import { CardComponent } from 'src/app/shared/card/card.component';
 })
 export class ListComponent {
     @ViewChild('list', { static: false }) list: DataListComponent;
-    @ViewChild('card', { static: false }) card: CardComponent;
 
     private filter: GuildListFilter;
 
@@ -25,7 +23,9 @@ export class ListComponent {
     }
 
     readData(pagination: PaginatedParams): void {
-        this.guildService.getGuildList(this.filter, pagination)
-            .subscribe(response => this.list.setData(response, this.card));
+        if (!this.filter) { return; }
+
+        this.filter.set(pagination, null);
+        this.guildService.getGuildList(this.filter).subscribe(response => this.list.setData(response));
     }
 }

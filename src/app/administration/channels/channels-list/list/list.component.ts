@@ -1,8 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { ChannelListSortTypes, GetChannelListParams } from 'src/app/core/models/channels';
-import { PaginatedParams } from 'src/app/core/models/common';
+import { PaginatedParams, SortParams } from 'src/app/core/models/common';
 import { ChannelService } from 'src/app/core/services/channel.service';
-import { CardComponent } from 'src/app/shared/card/card.component';
 import { DataListComponent } from 'src/app/shared/data-list/data-list.component';
 
 @Component({
@@ -11,10 +10,8 @@ import { DataListComponent } from 'src/app/shared/data-list/data-list.component'
 })
 export class ListComponent {
     @ViewChild('list', { static: false }) list: DataListComponent;
-    @ViewChild('card', { static: false }) card: CardComponent;
 
-    sortDesc = false;
-    sortBy: ChannelListSortTypes = 'name';
+    sort: SortParams = { orderBy: 'Name', descending: false };
 
     private filter: GetChannelListParams;
 
@@ -28,15 +25,17 @@ export class ListComponent {
     }
 
     readData(pagination: PaginatedParams): void {
-        this.channelService.getChannelsList(this.filter, pagination, this.sortBy, this.sortDesc)
-            .subscribe(list => this.list.setData(list, this.card));
+        if (!this.filter) { return; }
+
+        this.filter.set(pagination, this.sort);
+        this.channelService.getChannelsList(this.filter).subscribe(list => this.list.setData(list));
     }
 
     setSort(sortBy: ChannelListSortTypes): void {
-        if (this.sortBy !== sortBy) {
-            this.sortBy = sortBy;
+        if (this.sort.orderBy !== sortBy) {
+            this.sort.orderBy = sortBy;
         } else {
-            this.sortDesc = !this.sortDesc;
+            this.sort.descending = !this.sort.descending;
         }
 
         if (this.list) { this.list.filterChanged(); }

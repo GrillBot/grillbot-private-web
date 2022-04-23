@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PaginatedParams, PaginatedResponse } from 'src/app/core/models/common';
 import { CardComponent } from '../card/card.component';
@@ -11,6 +11,9 @@ import { defaultPageSize, pageSizes } from './models';
 })
 export class DataListComponent implements OnInit {
     @Output() readData = new EventEmitter<any>();
+    @Output() setDataEvent = new EventEmitter<PaginatedResponse<any>>();
+
+    @Input() parentCard: CardComponent;
 
     isDataLoaded = false;
     totalItemsCount = 0;
@@ -44,16 +47,17 @@ export class DataListComponent implements OnInit {
         this.onChange(true);
     }
 
-    setData(result: PaginatedResponse<any>, parentCard?: CardComponent): void {
+    setData(result: PaginatedResponse<any>): void {
         this.items = result.data;
         this.currentPage = result.page;
         this.totalItemsCount = result.totalItemsCount === 0 ? 1 : result.totalItemsCount;
 
-        if (parentCard) {
-            parentCard.recordsCount = result.totalItemsCount;
+        if (this.parentCard) {
+            this.parentCard.recordsCount = result.totalItemsCount;
         }
 
         this.isDataLoaded = true;
+        setTimeout(() => this.setDataEvent.emit(result), 10);
     }
 
     pageChange(_: number): void {

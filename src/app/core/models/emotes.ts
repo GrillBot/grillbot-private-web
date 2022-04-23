@@ -1,4 +1,4 @@
-import { PaginatedParams, RangeParams, SortParams } from "./common";
+import { FilterBase, PaginatedParams, RangeParams, SortParams } from "./common";
 import { DateTime } from "./datetime";
 import { QueryParam } from "./http";
 
@@ -42,13 +42,11 @@ export class EmoteStatItem {
     }
 }
 
-export class EmotesListParams {
+export class EmotesListParams extends FilterBase {
     public guildId: string;
     public useCount: RangeParams<number>;
     public firstOccurence: RangeParams<DateTime>;
     public lastOccurence: RangeParams<DateTime>;
-    public sort: SortParams;
-    public pagination: PaginatedParams;
     public filterAnimated: boolean;
 
     static get empty(): EmotesListParams {
@@ -57,7 +55,6 @@ export class EmotesListParams {
         params.firstOccurence = {};
         params.lastOccurence = {};
         params.useCount = {};
-        params.sort = {};
         params.filterAnimated = false;
 
         return params;
@@ -72,10 +69,7 @@ export class EmotesListParams {
             this.firstOccurence.to != null ? new QueryParam('firstOccurence.to', this.firstOccurence.to) : null,
             this.lastOccurence.from != null ? new QueryParam('lastOccurence.from', this.lastOccurence.from) : null,
             this.lastOccurence.to != null ? new QueryParam('lastOccurence.to', this.lastOccurence.to) : null,
-            new QueryParam('sort.orderBy', this.sort.orderBy),
-            new QueryParam('sort.descending', this.sort.descending),
-            new QueryParam('pagination.page', this.pagination.page),
-            new QueryParam('pagination.pageSize', this.pagination.pageSize),
+            ...super.queryParams,
             new QueryParam('filterAnimated', this.filterAnimated)
         ].filter(o => o);
     }
@@ -128,16 +122,6 @@ export class EmotesListParams {
         };
 
         return params;
-    }
-
-    setPagination(pagination: PaginatedParams): EmotesListParams {
-        this.pagination = pagination;
-        return this;
-    }
-
-    setSort(sort: SortParams): EmotesListParams {
-        this.sort = sort;
-        return this;
     }
 }
 

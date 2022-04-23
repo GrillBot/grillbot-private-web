@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Guild, GuildDetail, GuildListFilter, UpdateGuildParams } from '../models/guilds';
 import { BaseService } from './base.service';
-import { PaginatedParams, PaginatedResponse } from '../models/common';
+import { PaginatedResponse } from '../models/common';
 import { environment } from 'src/environments/environment';
 import { catchError, map } from 'rxjs/operators';
 
@@ -13,11 +13,8 @@ export class GuildService {
         private base: BaseService
     ) { }
 
-    getGuildList(filter: GuildListFilter, pagination: PaginatedParams): Observable<PaginatedResponse<Guild>> {
-        const parameters = [
-            ...filter.queryParams,
-            ...pagination.queryParams
-        ].filter(o => o).map(o => o.toString()).join('&');
+    getGuildList(filter: GuildListFilter): Observable<PaginatedResponse<Guild>> {
+        const parameters = filter.queryParams.map(o => o.toString()).join('&');
 
         const url = `${environment.apiUrl}/guild?${parameters}`;
         const headers = this.base.getHttpHeaders();

@@ -22,11 +22,11 @@ import { SearchInputComponent } from './search-input/search-input.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NavigationComponent } from './navigation/navigation.component';
 import { EmotePickerComponent } from './emote-picker/emote-picker.component';
+import { DataListModule } from './data-list/data-list.module';
 
 @NgModule({
     declarations: [
         CardComponent,
-        DataListComponent,
         LoadingComponent,
         ListButtonComponent,
         ModalComponent,
@@ -34,7 +34,6 @@ import { EmotePickerComponent } from './emote-picker/emote-picker.component';
         CommonDashboardComponent,
         CheckboxComponent,
         CheckboxBitmaskComponent,
-        SortingDirective,
         TimeSpanInputComponent,
         SearchInputComponent,
         NavigationComponent,
@@ -45,13 +44,13 @@ import { EmotePickerComponent } from './emote-picker/emote-picker.component';
         ReactiveFormsModule,
         HttpClientModule,
         FormsModule,
-        NgbPaginationModule,
         RouterModule,
         NgbModalModule,
         NgxFilesizeModule,
         NgSelectModule,
         DirectivesModule,
-        PipesModule
+        PipesModule,
+        DataListModule
     ],
     exports: [
         CommonModule,
@@ -59,7 +58,6 @@ import { EmotePickerComponent } from './emote-picker/emote-picker.component';
         HttpClientModule,
         FormsModule,
         CardComponent,
-        DataListComponent,
         LoadingComponent,
         ListButtonComponent,
         ModalComponent,
@@ -68,14 +66,14 @@ import { EmotePickerComponent } from './emote-picker/emote-picker.component';
         CheckboxComponent,
         CheckboxBitmaskComponent,
         NgxFilesizeModule,
-        SortingDirective,
         TimeSpanInputComponent,
         SearchInputComponent,
         NgSelectModule,
         DirectivesModule,
         NavigationComponent,
         PipesModule,
-        EmotePickerComponent
+        EmotePickerComponent,
+        DataListModule
     ]
 })
 export class SharedModule { }

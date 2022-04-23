@@ -26,14 +26,8 @@ export class AuditLogService {
         );
     }
 
-    getAuditLogList(filter: AuditLogListParams, pagination: PaginatedParams, sortDesc: boolean, sortBy: SortingTypes)
-        : Observable<PaginatedResponse<AuditLogListItem>> {
-        const parameters = [
-            ...filter.queryParams,
-            ...pagination.queryParams,
-            new QueryParam('sortDesc', sortDesc),
-            new QueryParam('sortBy', sortBy)
-        ].filter(o => o).map(o => o.toString()).join('&');
+    getAuditLogList(filter: AuditLogListParams): Observable<PaginatedResponse<AuditLogListItem>> {
+        const parameters = filter.queryParams.map(o => o.toString()).join('&');
         const url = `${environment.apiUrl}/auditlog?${parameters}`;
         const headers = this.base.getHttpHeaders();
 

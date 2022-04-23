@@ -1,3 +1,4 @@
+import { FilterBase } from './common';
 import { QueryParam } from './http';
 import { DateTime } from './datetime';
 import { Guild } from './guilds';
@@ -54,7 +55,7 @@ export class GuildInvite extends Invite {
     }
 }
 
-export class GetInviteListParams {
+export class GetInviteListParams extends FilterBase {
     public guildId: string | null = null;
     public creatorId: string | null = null;
     public code: string | null = null;
@@ -67,7 +68,8 @@ export class GetInviteListParams {
             this.creatorId ? new QueryParam('creatorId', this.creatorId) : null,
             this.code ? new QueryParam('code', this.code) : null,
             this.createdFrom ? new QueryParam('createdFrom', this.createdFrom) : null,
-            this.createdTo ? new QueryParam('createdTo', this.createdTo) : null
+            this.createdTo ? new QueryParam('createdTo', this.createdTo) : null,
+            ...super.queryParams
         ].filter(o => o);
     }
 

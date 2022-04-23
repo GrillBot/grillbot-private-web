@@ -15,14 +15,8 @@ export class ReminderService {
         private base: BaseService
     ) { }
 
-    getReminderList(params: GetReminderListParams, pagination: PaginatedParams, sortBy: RemindListSortTypes, sortDesc: boolean)
-        : Observable<PaginatedResponse<RemindMessage>> {
-        const parameters = [
-            ...params.queryParams,
-            ...pagination.queryParams,
-            new QueryParam('sortBy', sortBy),
-            new QueryParam('sortDesc', sortDesc)
-        ].filter(o => o).map(o => o.toString()).join('&');
+    getReminderList(params: GetReminderListParams): Observable<PaginatedResponse<RemindMessage>> {
+        const parameters = params.queryParams.map(o => o.toString()).join('&');
         const url = `${environment.apiUrl}/remind?${parameters}`;
         const headers = this.base.getHttpHeaders();
 

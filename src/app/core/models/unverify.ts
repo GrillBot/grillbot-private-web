@@ -5,6 +5,7 @@ import { GuildUser, User } from './users';
 import { Guild } from './guilds';
 import { QueryParam } from './http';
 import { Support } from '../lib/support';
+import { PaginatedParams, SortParams, FilterBase } from './common';
 
 export class UnverifyUserProfile {
     public user: User;
@@ -137,7 +138,7 @@ export class UnverifyLogUpdate {
     }
 }
 
-export class UnverifyLogParams {
+export class UnverifyLogParams extends FilterBase {
     public operation: UnverifyOperation | null = null;
     public guildId: string | null = null;
     public fromUserId: string | null = null;
@@ -151,8 +152,9 @@ export class UnverifyLogParams {
             this.guildId ? new QueryParam('guildId', this.guildId) : null,
             this.fromUserId ? new QueryParam('fromUserId', this.fromUserId) : null,
             this.toUserId ? new QueryParam('toUserId', this.toUserId) : null,
-            this.createdFrom ? new QueryParam('createdFrom', this.createdFrom) : null,
-            this.createdTo ? new QueryParam('createdTo', this.createdTo) : null
+            this.createdFrom ? new QueryParam('created.From', this.createdFrom) : null,
+            this.createdTo ? new QueryParam('created.To', this.createdTo) : null,
+            ...super.queryParams
         ].filter(o => o);
     }
 

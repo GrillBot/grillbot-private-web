@@ -1,25 +1,37 @@
-<app-card #card [title]="'Unverify log'" [icon]="'fas fa-skull-crossbones'">
+<app-card #card [title]="'Unverify log'" [icon]="'fas fa-skull-crossbones'" [header]="false">
     <app-data-list #list (readData)="readData($event)">
         <app-loading *ngIf="!list.isDataLoaded"></app-loading>
 
         <ng-container *ngIf="list.isDataLoaded">
-            <table class="table table-bordered table-sm">
-                <thead>
-                    <tr>
-                        <th>Seřadit podle: </th>
-                        <th sortable style="width: 150px" (clicked)="setSort($any($event))" [key]="'operation'" [current]="sortBy"
-                            [sortDesc]="sortDesc">Operace</th>
-                        <th sortable style="width: 150px;" (clicked)="setSort($any($event))" [key]="'guild'" [current]="sortBy" [sortDesc]="sortDesc">
-                            Server</th>
-                        <th sortable style="width: 150px" (clicked)="setSort($any($event))" [key]="'fromUser'" [current]="sortBy"
-                            [sortDesc]="sortDesc">Provedl</th>
-                        <th sortable style="width: 250px" (clicked)="setSort($any($event))" [key]="'toUser'" [current]="sortBy" [sortDesc]="sortDesc">
-                            Cílový uživatel</th>
-                        <th sortable (clicked)="setSort($any($event))" [key]="'createdAt'" [current]="sortBy" [sortDesc]="sortDesc">Datum a čas
-                            provedení</th>
-                    </tr>
-                </thead>
-            </table>
+            <div class="row">
+                <div class="col">
+                    <table class="table table-bordered table-sm">
+                        <thead>
+                            <tr>
+                                <th>Seřadit podle: </th>
+                                <th sortable style="width: 150px" (clicked)="setSort($any($event))" [key]="'Operation'"
+                                    [current]="sort.orderBy" [sortDesc]="sort.descending">Operace</th>
+                                <th sortable style="width: 150px;" (clicked)="setSort($any($event))" [key]="'Guild'"
+                                    [current]="sort.orderBy" [sortDesc]="sort.descending">Server</th>
+                                <th sortable style="width: 150px" (clicked)="setSort($any($event))" [key]="'FromUser'"
+                                    [current]="sort.orderBy" [sortDesc]="sort.descending">Provedl</th>
+                                <th sortable style="width: 250px" (clicked)="setSort($any($event))" [key]="'ToUser'"
+                                    [current]="sort.orderBy" [sortDesc]="sort.descending">Cílový uživatel</th>
+                                <th sortable (clicked)="setSort($any($event))" [key]="'CreatedAt'" [current]="sort.orderBy"
+                                    [sortDesc]="sort.descending">Datum a čas provedení</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+
+                <div class="col-auto mt-1">
+                    <app-items-count></app-items-count>
+                </div>
+            </div>
+
+            <app-card *ngIf="list.isEmpty" [header]="false" [classes]="['mb-3']">
+                <h5>Nebyl nalezen žádný záznam o provedení operace.</h5>
+            </app-card>
 
             <app-card *ngFor="let item of list.items" [header]="false" [classes]="['mb-3']">
                 <div class="row">

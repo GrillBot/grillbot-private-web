@@ -1,5 +1,5 @@
 <app-card #card [title]="'Seznam notifikací'" [icon]="'fas fa-bell'">
-    <app-data-list #list (readData)="readData($event)">
+    <app-data-list #list (readData)="readData($event)" [parentCard]="card">
         <app-loading *ngIf="!list.isDataLoaded"></app-loading>
 
         <ng-container *ngIf="list.isDataLoaded">
@@ -10,11 +10,16 @@
             <table class="table table-sm table-bordered table-striped auto-column-width" *ngIf="!list.isEmpty">
                 <thead>
                     <tr>
-                        <th sortable [key]="'id'" [current]="sortBy" [sortDesc]="sortDesc" (clicked)="setSort($any($event))">#</th>
-                        <th sortable [key]="'fromUser'" [current]="sortBy" [sortDesc]="sortDesc" (clicked)="setSort($any($event))">Odesílatel</th>
-                        <th sortable [key]="'toUser'" [current]="sortBy" [sortDesc]="sortDesc" (clicked)="setSort($any($event))">Příjemce</th>
-                        <th sortable [key]="'at'" [current]="sortBy" [sortDesc]="sortDesc" (clicked)="setSort($any($event))">Oznámit v</th>
-                        <th sortable [key]="'postpone'" [current]="sortBy" [sortDesc]="sortDesc" (clicked)="setSort($any($event))">Odloženo</th>
+                        <th sortable [key]="'Id'" [current]="sort.orderBy" [sortDesc]="sort.descending" (clicked)="setSort($any($event))">#
+                        </th>
+                        <th sortable [key]="'FromUser'" [current]="sort.orderBy" [sortDesc]="sort.descending"
+                            (clicked)="setSort($any($event))">Odesílatel</th>
+                        <th sortable [key]="'ToUser'" [current]="sort.orderBy" [sortDesc]="sort.descending"
+                            (clicked)="setSort($any($event))">Příjemce</th>
+                        <th sortable [key]="'At'" [current]="sort.orderBy" [sortDesc]="sort.descending" (clicked)="setSort($any($event))">
+                            Oznámit v</th>
+                        <th sortable [key]="'Postpone'" [current]="sort.orderBy" [sortDesc]="sort.descending"
+                            (clicked)="setSort($any($event))">Odloženo</th>
                         <th>Oznámeno</th>
                         <th>Akce</th>
                     </tr>
@@ -29,7 +34,8 @@
                         <td>{{item.notified | czechBooleanPipe}}</td>
                         <td>
                             <list-button (clicked)="showMessage(item)" title="Zobrazit zprávu" icon="info"></list-button>
-                            <list-button (clicked)="cancel(item, false)" title="Stornovat" icon="window-close" *ngIf="!item.notified"></list-button>
+                            <list-button (clicked)="cancel(item, false)" title="Stornovat" icon="window-close" *ngIf="!item.notified">
+                            </list-button>
                             <list-button (clicked)="cancel(item, true)" title="Předčasně oznámit" icon="bullhorn" *ngIf="!item.notified">
                             </list-button>
                         </td>

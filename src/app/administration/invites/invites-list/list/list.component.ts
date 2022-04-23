@@ -1,8 +1,8 @@
+import { SortParams } from './../../../../core/models/common';
 import { Component, ViewChild } from '@angular/core';
 import { PaginatedParams } from 'src/app/core/models/common';
 import { GetInviteListParams, InviteListSortTypes } from 'src/app/core/models/invites';
 import { InviteService } from 'src/app/core/services/invite.service';
-import { CardComponent } from 'src/app/shared/card/card.component';
 import { DataListComponent } from 'src/app/shared/data-list/data-list.component';
 
 @Component({
@@ -11,10 +11,8 @@ import { DataListComponent } from 'src/app/shared/data-list/data-list.component'
 })
 export class ListComponent {
     @ViewChild('list', { static: false }) list: DataListComponent;
-    @ViewChild('card', { static: false }) card: CardComponent;
 
-    sortDesc = true;
-    sortBy: InviteListSortTypes = 'createdAt';
+    sort: SortParams = { orderBy: 'CreatedAt', descending: true };
 
     private filter: GetInviteListParams;
 
@@ -28,15 +26,17 @@ export class ListComponent {
     }
 
     readData(pagination: PaginatedParams): void {
-        this.inviteService.getInviteList(this.filter, pagination, this.sortDesc, this.sortBy)
-            .subscribe(list => this.list.setData(list, this.card));
+        if (!this.filter) { return; }
+
+        this.filter.set(pagination, this.sort);
+        this.inviteService.getInviteList(this.filter).subscribe(list => this.list.setData(list));
     }
 
     setSort(sortBy: InviteListSortTypes): void {
-        if (this.sortBy !== sortBy) {
-            this.sortBy = sortBy;
+        if (this.sort.orderBy !== sortBy) {
+            this.sort.orderBy = sortBy;
         } else {
-            this.sortDesc = !this.sortDesc;
+            this.sort.descending = !this.sort.descending;
         }
 
         if (this.list) { this.list.filterChanged(); }

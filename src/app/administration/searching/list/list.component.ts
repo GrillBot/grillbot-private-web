@@ -1,6 +1,6 @@
 import { SearchingListItem } from './../../../core/models/searching';
 import { Component, QueryList, ViewChild, ViewChildren } from '@angular/core';
-import { PaginatedParams } from 'src/app/core/models/common';
+import { PaginatedParams, SortParams } from 'src/app/core/models/common';
 import { GetSearchingListParams, SearchingListSortTypes } from 'src/app/core/models/searching';
 import { SearchingService } from 'src/app/core/services/searching.service';
 import { DataListComponent } from 'src/app/shared/data-list/data-list.component';
@@ -18,8 +18,7 @@ export class ListComponent {
     @ViewChildren('item_check') checkboxes: QueryList<CheckboxComponent>;
     @ViewChild('card', { static: false }) card: CardComponent;
 
-    sortDesc = true;
-    sortBy: SearchingListSortTypes = 'id';
+    sort: SortParams = { orderBy: 'Id', descending: true };
 
     private filter: GetSearchingListParams;
 
@@ -34,15 +33,17 @@ export class ListComponent {
     }
 
     readData(pagination: PaginatedParams): void {
-        this.searchingService.getSearchList(this.filter, pagination, this.sortBy, this.sortDesc)
-            .subscribe(list => this.list.setData(list, this.card));
+        if (!this.filter) { return; }
+
+        this.filter.set(pagination, this.sort);
+        this.searchingService.getSearchList(this.filter).subscribe(list => this.list.setData(list));
     }
 
     setSort(sortBy: SearchingListSortTypes): void {
-        if (this.sortBy !== sortBy) {
-            this.sortBy = sortBy;
+        if (this.sort.orderBy !== sortBy) {
+            this.sort.orderBy = sortBy;
         } else {
-            this.sortDesc = !this.sortDesc;
+            this.sort.descending = !this.sort.descending;
         }
 
         if (this.list) { this.list.filterChanged(); }

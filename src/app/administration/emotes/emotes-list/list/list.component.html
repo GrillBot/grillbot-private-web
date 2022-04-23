@@ -1,6 +1,6 @@
 <app-card #card [title]="(unsupported ? 'Nepodporované' : 'Podporované') + ' emoty'"
     [icon]="'far fa-smile' + (unsupported ? ' fa-rotate-180' : '')">
-    <app-data-list #list (readData)="readData($event)">
+    <app-data-list #list (readData)="readData($event)" [parentCard]="card">
         <app-loading *ngIf="!list.isDataLoaded"></app-loading>
 
         <ng-container *ngIf="list.isDataLoaded">

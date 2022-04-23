@@ -1,3 +1,4 @@
+import { FilterBase } from './common';
 import { Channel } from './channels';
 import { Guild } from './guilds';
 import { QueryParam } from './http';
@@ -24,7 +25,7 @@ export class SearchingListItem {
     }
 }
 
-export class GetSearchingListParams {
+export class GetSearchingListParams extends FilterBase {
     public userId: string | null = null;
     public guildId: string | null = null;
     public channelId: string | null = null;
@@ -35,7 +36,8 @@ export class GetSearchingListParams {
             this.userId ? new QueryParam('userId', this.userId) : null,
             this.guildId ? new QueryParam('guildId', this.guildId) : null,
             this.channelId ? new QueryParam('channelId', this.channelId) : null,
-            this.messageQuery ? new QueryParam('messageQuery', this.messageQuery) : null
+            this.messageQuery ? new QueryParam('messageQuery', this.messageQuery) : null,
+            ...super.queryParams
         ].filter(o => o);
     }
 
