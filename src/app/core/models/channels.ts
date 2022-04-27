@@ -75,13 +75,15 @@ export class GetChannelListParams extends FilterBase {
     public guildId: string | null = null;
     public nameContains: string | null = null;
     public channelType: ChannelType | null = null;
+    public hideDeleted: boolean = true;
 
     get queryParams(): QueryParam[] {
         return [
             this.guildId ? new QueryParam('guildId', this.guildId) : null,
             this.nameContains ? new QueryParam('nameContains', this.nameContains) : null,
             this.channelType != null ? new QueryParam('channelType', this.channelType) : null,
-            ...super.queryParams
+            ...super.queryParams,
+            new QueryParam('hideDeleted', this.hideDeleted)
         ].filter(o => o);
     }
 
@@ -94,6 +96,7 @@ export class GetChannelListParams extends FilterBase {
         params.channelType = form.channelType;
         params.guildId = form.guildId;
         params.nameContains = form.nameContains;
+        params.hideDeleted = form.hideDeleted;
 
         return params;
     }

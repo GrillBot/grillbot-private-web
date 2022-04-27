@@ -47,7 +47,8 @@ export class FilterComponent implements OnInit {
         this.form.patchValue({
             guildId: empty.guildId,
             channelType: empty.channelType,
-            nameContains: empty.nameContains
+            nameContains: empty.nameContains,
+            hideDeleted: empty.hideDeleted
         });
     }
 
@@ -55,7 +56,8 @@ export class FilterComponent implements OnInit {
         this.form = this.fb.group({
             guildId: [filter.guildId],
             channelType: [filter.channelType],
-            nameContains: [filter.nameContains]
+            nameContains: [filter.nameContains],
+            hideDeleted: [filter.hideDeleted]
         });
 
         this.form.valueChanges.pipe(debounceTime(500)).subscribe(_ => this.submitForm());

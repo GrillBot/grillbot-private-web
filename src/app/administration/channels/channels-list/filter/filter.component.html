@@ -1,4 +1,4 @@
-<app-card [title]="'Vyhledávání'" [icon]="'fas fa-search'" [size]="'lg'" [maxWidth]="'1300px'" [allowHideButton]="true">
+<app-card [title]="'Vyhledávání'" [icon]="'fas fa-search'" [allowHideButton]="true">
     <form [formGroup]="form">
         <div class="row">
             <div class="col">
@@ -12,7 +12,8 @@
                 <div class="form-group">
                     <label>Typ kanálu</label>
                     <ng-select [bindValue]="'key'" [bindLabel]="'value'" [closeOnSelect]="true" [clearable]="true" [items]="channelTypes"
-                        [multiple]="false" [notFoundText]="'Nenalezen žádný typ'" [searchable]="true" formControlName="channelType"></ng-select>
+                        [multiple]="false" [notFoundText]="'Nenalezen žádný typ'" [searchable]="true" formControlName="channelType">
+                    </ng-select>
                 </div>
             </div>
 
@@ -23,7 +24,14 @@
                 </div>
             </div>
 
-            <div class="col-3 d-flex align-items-end justify-content-end">
+            <div class="col-2">
+                <div class="form-group">
+                    <label>&nbsp;</label>
+                    <app-checkbox [label]="'Skrýt neexistující'" [id]="'hideDeleted'" formControlName="hideDeleted"></app-checkbox>
+                </div>
+            </div>
+
+            <div class="col-auto d-flex align-items-end justify-content-end">
                 <button class="btn btn-link me-2" type="button" (click)="submitForm()">Obnovit</button>
                 <button class="btn btn-danger" (click)="reset()" type="button">Smazat filtr</button>
             </div>
