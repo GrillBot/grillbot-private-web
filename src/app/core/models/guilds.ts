@@ -70,6 +70,7 @@ export class GuildDatabaseReport {
     public unverifies: number;
     public unverifyLogs: number;
     public users: number;
+    public cacheIndexes: number;
 
     static create(data: any): GuildDatabaseReport | null {
         if (!data) { return null; }
@@ -82,6 +83,7 @@ export class GuildDatabaseReport {
         report.unverifies = data.unverifies ?? 0;
         report.unverifyLogs = data.unverifyLogs ?? 0;
         report.users = data.users ?? 0;
+        report.cacheIndexes = data.cacheIndexes ?? 0;
 
         return report;
     }
