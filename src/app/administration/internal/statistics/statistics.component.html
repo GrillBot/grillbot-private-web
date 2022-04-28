@@ -1,0 +1,68 @@
+<app-modal [title]="header">
+    <table class="table table-sm table-bordered table-striped auto-column-width">
+        <thead>
+            <tr *ngIf="isDictLike">
+                <th *ngIf="isDb">Název tabulky</th>
+                <th *ngIf="isAuditLogByType">Typ</th>
+                <th *ngIf="isUnverifyLogByType">Operace</th>
+                <th *ngIf="isAuditLogByDate || isUnverifyLogByDate">Období</th>
+                <th>Počet záznamů</th>
+            </tr>
+
+            <tr *ngIf="isStatLike">
+                <th *ngIf="isTextCommands || isInteractions">Příkaz</th>
+                <th *ngIf="isJobs">Název úlohy</th>
+                <th>Poslední volání</th>
+                <th>Úspěšných</th>
+                <th>Chybných</th>
+                <th>Úspěšnost</th>
+                <th>Min. doba běhu</th>
+                <th>Max. doba běhu</th>
+                <th>Celk. doba běhu</th>
+                <th>Prům. doba běhu</th>
+            </tr>
+        </thead>
+
+        <tbody *ngIf="isDictLike">
+            <ng-container *ngIf="dictQuery | async as result; else loading_dictlike">
+                <tr *ngFor="let item of result">
+                    <td>{{item.key}}</td>
+                    <td>{{item.value.toLocaleString()}}</td>
+                </tr>
+            </ng-container>
+        </tbody>
+
+        <tbody *ngIf="isStatLike">
+            <ng-container *ngIf="statItemsQuery | async as result; else loading_statlike">
+                <tr *ngFor="let item of result" [class.bg-warning]="item.successRate > 25 && item.successRate < 50"
+                    [class.bg-danger]="item.successRate <= 25">
+                    <td [title]="item.key">{{item.key | cut:35}}</td>
+                    <td>{{item.last.binding}}</td>
+                    <td>{{item.successCount}}</td>
+                    <td>{{item.failedCount}}</td>
+                    <td>{{item.successRate}} %</td>
+                    <td>{{item.minDuration}} ms</td>
+                    <td>{{item.maxDuration}} ms</td>
+                    <td>{{item.totalDuration}} ms</td>
+                    <td>{{item.avgDuration}} ms</td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+</app-modal>
+
+<ng-template #loading_dictlike>
+    <tr>
+        <td colspan="2">
+            <app-loading></app-loading>
+        </td>
+    </tr>
+</ng-template>
+
+<ng-template #loading_statlike>
+    <tr>
+        <td colspan="9">
+            <app-loading></app-loading>
+        </td>
+    </tr>
+</ng-template>

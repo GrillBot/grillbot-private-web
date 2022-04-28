@@ -1,3 +1,4 @@
+import { CutPipe } from './cut-test.pipe';
 import { DurationPipe } from './duration.pipe';
 import { DiscordPermsPipePipe } from './discord-perms-pipe.pipe';
 import { DateTimeFormatterPipe } from './date-time-formatter.pipe';
@@ -11,14 +12,16 @@ import { NgModule } from '@angular/core';
         CzechBooleanPipePipe,
         DateTimeFormatterPipe,
         DiscordPermsPipePipe,
-        DurationPipe
+        DurationPipe,
+        CutPipe
     ],
     exports: [
         BitmaskToStringPipe,
         CzechBooleanPipePipe,
         DateTimeFormatterPipe,
         DiscordPermsPipePipe,
-        DurationPipe
+        DurationPipe,
+        CutPipe
     ]
 })
 export class PipesModule { }

@@ -1,5 +1,3 @@
-<app-navigation [navigation]="navigation"></app-navigation>
-
 <div class=" row ms-0 me-0 mt-3">
     <div class="col">
         <app-card [title]="'Diagnostika'" [icon]="'fas fa-network-wired'">
@@ -32,12 +30,19 @@
     </div>
 </div>
 
-<div class="row ms-0 me-0 mt-3 mb-3">
+<div class="row ms-0 me-0 mt-3">
     <div class="col">
-        <app-database></app-database>
-    </div>
-
-    <div class="col">
-        <app-audit-log-stats></app-audit-log-stats>
+        <app-card [title]="'Statistiky'" [icon]="'far fa-list-alt'">
+            <ul>
+                <li><a href="javascript:;" (click)="openStats('db')" class="text-dark">Stav databáze</a></li>
+                <li><a href="javascript:;" (click)="openStats('audit-log/type')" class="text-dark">Audit log (podle typu)</a></li>
+                <li><a href="javascript:;" (click)="openStats('audit-log/date')" class="text-dark">Audit log (po měsících)</a></li>
+                <li><a href="javascript:;" (click)="openStats('unverify-logs/type')" class="text-dark">Unverify log (podle typu)</a></li>
+                <li><a href="javascript:;" (click)="openStats('unverify-logs/date')" class="text-dark">Unverify-log (po měsících)</a></li>
+                <li><a href="javascript:;" (click)="openStats('text-commands')" class="text-dark">Textové příkazy</a></li>
+                <li><a href="javascript:;" (click)="openStats('interactions')" class="text-dark">Interaktivní příkazy</a></li>
+                <li><a href="javascript:;" (click)="openStats('jobs')" class="text-dark">Naplánované úlohy</a></li>
+            </ul>
+        </app-card>
     </div>
 </div>

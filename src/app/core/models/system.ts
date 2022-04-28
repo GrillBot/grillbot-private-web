@@ -34,32 +34,3 @@ export class DiagnosticsInfo {
         return info;
     }
 }
-
-export class CommandStatisticItem {
-    public command: string;
-    public lastCall: DateTime;
-    public successCount: number;
-    public failedCount: number;
-    public successRate: number;
-    public minDuration: number;
-    public maxDuration: number;
-    public totalDuration: number;
-    public avgDuration: number;
-
-    static create(data: any): CommandStatisticItem | null {
-        if (!data) { return null; }
-        const item = new CommandStatisticItem();
-
-        item.command = data.command;
-        item.failedCount = data.failedCount;
-        item.lastCall = DateTime.fromISOString(data.lastCall);
-        item.successCount = data.successCount;
-        item.successRate = data.successRate;
-        item.minDuration = data.minDuration;
-        item.maxDuration = data.maxDuration;
-        item.totalDuration = data.totalDuration;
-        item.avgDuration = data.avgDuration;
-
-        return item;
-    }
-}

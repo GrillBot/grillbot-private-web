@@ -1,9 +1,8 @@
-import { InternalNavigation } from './../navigation';
-import { ActivatedRoute } from '@angular/router';
 import { SystemService } from './../../../core/services/system.service';
 import { DiagnosticsInfo } from './../../../core/models/system';
 import { Component, OnInit } from '@angular/core';
-import { INavigation } from 'src/app/shared/navigation/navigation';
+import { ModalService } from 'src/app/shared/modal';
+import { StatisticsComponent } from '../statistics/statistics.component';
 
 @Component({
     selector: 'app-diagnostics',
@@ -11,14 +10,11 @@ import { INavigation } from 'src/app/shared/navigation/navigation';
 })
 export class DiagnosticsComponent implements OnInit {
     data: DiagnosticsInfo;
-    navigation: INavigation;
 
     constructor(
         private systemService: SystemService,
-        route: ActivatedRoute
-    ) {
-        this.navigation = new InternalNavigation(route);
-    }
+        private modalService: ModalService
+    ) { }
 
     ngOnInit(): void {
         this.refreshDiag();
@@ -31,5 +27,10 @@ export class DiagnosticsComponent implements OnInit {
 
     toggleState(isActive: boolean): void {
         this.systemService.setBotState(isActive).subscribe(_ => this.refreshDiag());
+    }
+
+    openStats(type: string): void {
+        const modal = this.modalService.showCustomModal<StatisticsComponent>(StatisticsComponent, 'xxl');
+        modal.componentInstance.type = type;
     }
 }

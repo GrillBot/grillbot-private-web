@@ -1,24 +1,18 @@
 import { NgModule } from '@angular/core';
 import { DiagnosticsComponent } from './diagnostics/diagnostics.component';
-import { CommandsComponent } from './commands/commands.component';
-import { DatabaseComponent } from './database/database.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { AuditLogStatsComponent } from './audit-log-stats/audit-log-stats.component';
 import { RouterModule, Routes } from '@angular/router';
+import { StatisticsComponent } from './statistics/statistics.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'diag' },
-    { path: 'diag', component: DiagnosticsComponent },
-    { path: 'commands/text', component: CommandsComponent, data: { interactions: false } },
-    { path: 'commands/interactions', component: CommandsComponent, data: { interactions: true } }
+    { path: 'diag', component: DiagnosticsComponent }
 ];
 
 @NgModule({
     declarations: [
         DiagnosticsComponent,
-        CommandsComponent,
-        DatabaseComponent,
-        AuditLogStatsComponent
+        StatisticsComponent
     ],
     imports: [
         SharedModule,

@@ -3,7 +3,7 @@ import { ModalComponent } from './modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Injectable } from '@angular/core';
 
-export type ModalSize = 'sm' | 'lg' | 'xl';
+export type ModalSize = 'sm' | 'lg' | 'xl' | 'xxl';
 
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 @Injectable({ providedIn: 'root' })
