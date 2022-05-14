@@ -1,0 +1,9 @@
+<app-modal [title]="'Pokročilé vyhledávání'" [type]="'filter'">
+    <app-text-filter #info [label]="'Informační zpráva'" *ngIf="canInfo"></app-text-filter>
+    <app-text-filter #warning [label]="'Varování'" *ngIf="canWarning"></app-text-filter>
+    <app-text-filter #error [label]="'Chyba'" *ngIf="canError"></app-text-filter>
+
+    <app-execution-filter #command [label]="'Příkazy'" *ngIf="canCommand"></app-execution-filter>
+    <app-execution-filter #interaction [label]="'Integrovaný příkaz'" *ngIf="canInteraction"></app-execution-filter>
+    <app-execution-filter #job [label]="'Naplánovaná úloha'" *ngIf="canJob"></app-execution-filter>
+</app-modal>

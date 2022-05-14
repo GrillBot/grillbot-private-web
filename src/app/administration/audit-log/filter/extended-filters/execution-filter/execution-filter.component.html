@@ -1,0 +1,37 @@
+<app-card [header]="false" [classes]="['mb-3']">
+    <h5>{{label}}</h5>
+
+    <form>
+        <div class="row">
+            <div class="col-2 d-flex align-items-center">Název</div>
+
+            <div class="col">
+                <input type="text" placeholder="Název" class="form-control" />
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-2 d-flex align-items-center">Dokončeno úspěšně</div>
+
+            <div class="col">
+                <select class="form-control">
+                    <option [value]="null">Nerozhoduje</option>
+                    <option [value]="true">Ano</option>
+                    <option [value]="false">Ne</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-2 d-flex align-items-center">Doba trvání</div>
+
+            <div class="col">
+                <input type="number" min="0" placeholder="Od" class="form-control" />
+            </div>
+
+            <div class="col">
+                <input type="number" placeholder="Do" class="form-control" />
+            </div>
+        </div>
+    </form>
+</app-card>

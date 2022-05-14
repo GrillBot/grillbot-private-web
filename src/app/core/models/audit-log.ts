@@ -1,12 +1,59 @@
 import { Support } from 'src/app/core/lib/support';
 import { AuditLogItemTypeTexts } from 'src/app/core/models/enums/audit-log-item-type';
 import { Channel } from './channels';
-import { FilterBase } from './common';
+import { FilterBase, RangeParams } from './common';
 import { DateTime } from './datetime';
 import { AuditLogItemType } from './enums/audit-log-item-type';
 import { Guild } from './guilds';
 import { QueryParam } from './http';
 import { User } from './users';
+
+export class TextFilter {
+    public text: string | null = null;
+
+    getQueryParams(property: string): QueryParam[] {
+        return [
+            this.text ? new QueryParam(`${property}.Text`, this.text) : null
+        ].filter(o => o);
+    }
+
+    static create(form: any): TextFilter | null {
+        if (!form) { return null; }
+        const filter = new TextFilter();
+
+        filter.text = form.text;
+
+        return filter;
+    }
+}
+
+export class ExecutionFilter {
+    public name: string = null;
+    public wasSuccess?: boolean;
+    public duration: RangeParams<number>;
+
+    getQueryParams(property: string): QueryParam[] {
+        return [
+            this.name ? new QueryParam(`${property}.Name`, this.name) : null,
+            this.wasSuccess != undefined ? new QueryParam(`${property}.WasSuccess`, this.wasSuccess) : null,
+            ...(this.duration ? [new QueryParam(`${property}.Duration.From`, this.duration.from), new QueryParam(`${property}.Duration.To`, this.duration.to)] : [])
+        ].filter(o => o);
+    }
+
+    static create(form: any): ExecutionFilter | null {
+        if (!form) { return null; }
+        const filter = new ExecutionFilter();
+
+        filter.name = form.name;
+        filter.wasSuccess = form.wasSuccess;
+        filter.duration = {
+            from: form.duration_from,
+            to: form.duration_to
+        };
+
+        return filter;
+    }
+}
 
 export class AuditLogListParams extends FilterBase {
     public guildId: string | null;
@@ -16,6 +63,14 @@ export class AuditLogListParams extends FilterBase {
     public createdTo: string | null;
     public ignoreBots: boolean;
     public channelId: string | null;
+
+    public infoFilter: TextFilter | null = null;
+    public warningFilter: TextFilter | null = null;
+    public errorFilter: TextFilter | null = null;
+
+    public commandFilter: ExecutionFilter | null = null;
+    public interactionsFilter: ExecutionFilter | null = null;
+    public jobFilter: ExecutionFilter | null = null;
 
     static get empty(): AuditLogListParams { return new AuditLogListParams(); }
 
@@ -28,7 +83,15 @@ export class AuditLogListParams extends FilterBase {
             this.createdTo ? new QueryParam('createdTo', this.createdTo) : null,
             new QueryParam('ignoreBots', this.ignoreBots),
             this.channelId ? new QueryParam('channelId', this.channelId) : null,
-            ...super.queryParams
+            ...super.queryParams,
+
+            ...(this.infoFilter ? this.infoFilter.getQueryParams('InfoFilter') : []),
+            ...(this.warningFilter ? this.warningFilter.getQueryParams('WarningFilter') : []),
+            ...(this.errorFilter ? this.errorFilter.getQueryParams('ErrorFilter') : []),
+
+            ...(this.commandFilter ? this.commandFilter.getQueryParams('CommandFilter') : []),
+            ...(this.interactionsFilter ? this.interactionsFilter.getQueryParams('InteractionFilter') : []),
+            ...(this.jobFilter ? this.jobFilter.getQueryParams('JobFilter') : [])
         ].filter(o => o);
     }
 
@@ -40,7 +103,7 @@ export class AuditLogListParams extends FilterBase {
             createdTo: this.createdTo,
             ignoreBots: this.ignoreBots ?? false,
             processedUsers: this.processedUserIds,
-            types: this.types
+            types: this.types,
         };
     }
 

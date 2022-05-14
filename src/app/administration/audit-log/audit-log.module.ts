@@ -5,6 +5,9 @@ import { FilterComponent } from './filter/filter.component';
 import { ListComponent } from './list/list.component';
 import { DetailModalComponent } from './detail-modal/detail-modal.component';
 import { RouterModule, Routes } from '@angular/router';
+import { ExtendedFiltersModalComponent } from './filter/extended-filters/extended-filters-modal/extended-filters-modal.component';
+import { TextFilterComponent } from './filter/extended-filters/text-filter/text-filter.component';
+import { ExecutionFilterComponent } from './filter/extended-filters/execution-filter/execution-filter.component';
 
 const routes: Routes = [
     { path: '', component: DashboardComponent }
@@ -15,7 +18,10 @@ const routes: Routes = [
         DashboardComponent,
         FilterComponent,
         ListComponent,
-        DetailModalComponent
+        DetailModalComponent,
+        ExtendedFiltersModalComponent,
+        TextFilterComponent,
+        ExecutionFilterComponent
     ],
     imports: [
         SharedModule,

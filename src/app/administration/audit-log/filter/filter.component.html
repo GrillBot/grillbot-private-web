@@ -42,6 +42,10 @@
                 <app-checkbox [id]="'ignore-bots'" formControlName="ignoreBots" [label]="'Ignorovat operace provedené boty'"></app-checkbox>
             </div>
 
+            <div class="col d-flex align-items-center justify-content-center">
+                <button *ngIf="allowExtendedFilters" class="btn btn-link" type="button" (click)="openExtendedFiltersModal()">Pokročilé vyhledávání</button>
+            </div>
+
             <div class="col d-flex justify-content-end">
                 <button class="btn btn-link me-2" type="button" (click)="submitForm()">Obnovit</button>
                 <button class="btn btn-danger" (click)="cleanFilter()">Smazat filtr</button>

@@ -15,4 +15,4 @@ export class ModalData<TComponent> {
     }
 }
 
-export type ModalType = 'notification' | 'question' | 'form';
+export type ModalType = 'notification' | 'question' | 'form' | 'filter';
