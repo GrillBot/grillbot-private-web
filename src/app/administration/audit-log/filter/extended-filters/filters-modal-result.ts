@@ -1,6 +1,6 @@
 import { TextFilter, ExecutionFilter } from './../../../../core/models/audit-log';
 
-export interface ExtendedFiltersModalResult {
+export interface ExtendedFiltersModalData {
     infoFilter: TextFilter;
     warningFilter: TextFilter;
     errorFilter: TextFilter;

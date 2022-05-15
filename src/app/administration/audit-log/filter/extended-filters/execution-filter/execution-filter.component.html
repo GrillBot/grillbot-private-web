@@ -1,12 +1,12 @@
 <app-card [header]="false" [classes]="['mb-3']">
     <h5>{{label}}</h5>
 
-    <form>
+    <form [formGroup]="form">
         <div class="row">
             <div class="col-2 d-flex align-items-center">Název</div>
 
             <div class="col">
-                <input type="text" placeholder="Název" class="form-control" />
+                <input type="text" placeholder="Název" class="form-control" formControlName="name" />
             </div>
         </div>
 
@@ -14,7 +14,7 @@
             <div class="col-2 d-flex align-items-center">Dokončeno úspěšně</div>
 
             <div class="col">
-                <select class="form-control">
+                <select class="form-control" formControlName="wasSuccess">
                     <option [value]="null">Nerozhoduje</option>
                     <option [value]="true">Ano</option>
                     <option [value]="false">Ne</option>
@@ -26,11 +26,11 @@
             <div class="col-2 d-flex align-items-center">Doba trvání</div>
 
             <div class="col">
-                <input type="number" min="0" placeholder="Od" class="form-control" />
+                <input type="number" min="0" placeholder="Od" class="form-control" formControlName="durationFrom" />
             </div>
 
             <div class="col">
-                <input type="number" placeholder="Do" class="form-control" />
+                <input type="number" placeholder="Do" class="form-control" formControlName="durationTo" />
             </div>
         </div>
     </form>

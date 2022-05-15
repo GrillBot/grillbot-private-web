@@ -11,17 +11,23 @@ import { User } from './users';
 export class TextFilter {
     public text: string | null = null;
 
+    get serialized(): any {
+        return {
+            text: this.text
+        };
+    }
+
     getQueryParams(property: string): QueryParam[] {
         return [
             this.text ? new QueryParam(`${property}.Text`, this.text) : null
         ].filter(o => o);
     }
 
-    static create(form: any): TextFilter | null {
-        if (!form) { return null; }
+    static create(data: any): TextFilter | null {
+        if (!data) { return null; }
         const filter = new TextFilter();
 
-        filter.text = form.text;
+        filter.text = data.text;
 
         return filter;
     }
@@ -32,6 +38,15 @@ export class ExecutionFilter {
     public wasSuccess?: boolean;
     public duration: RangeParams<number>;
 
+    get serialized(): any {
+        return {
+            name: this.name,
+            wasSuccess: this.wasSuccess,
+            durationFrom: this.duration?.from,
+            durationTo: this.duration?.to
+        };
+    }
+
     getQueryParams(property: string): QueryParam[] {
         return [
             this.name ? new QueryParam(`${property}.Name`, this.name) : null,
@@ -40,15 +55,15 @@ export class ExecutionFilter {
         ].filter(o => o);
     }
 
-    static create(form: any): ExecutionFilter | null {
-        if (!form) { return null; }
+    static create(data: any): ExecutionFilter | null {
+        if (!data) { return null; }
         const filter = new ExecutionFilter();
 
-        filter.name = form.name;
-        filter.wasSuccess = form.wasSuccess;
+        filter.name = data.name;
+        filter.wasSuccess = data.wasSuccess;
         filter.duration = {
-            from: form.duration_from,
-            to: form.duration_to
+            from: data.durationFrom,
+            to: data.durationTo
         };
 
         return filter;
@@ -104,21 +119,32 @@ export class AuditLogListParams extends FilterBase {
             ignoreBots: this.ignoreBots ?? false,
             processedUsers: this.processedUserIds,
             types: this.types,
+            infoFilter: this.infoFilter?.serialized,
+            warningFilter: this.warningFilter?.serialized,
+            errorFilter: this.errorFilter?.serialized,
+            commandFilter: this.commandFilter?.serialized,
+            interactionsFilter: this.interactionsFilter?.serialized,
+            jobFilter: this.jobFilter?.serialized
         };
     }
 
-    static create(form: any): AuditLogListParams | null {
-        if (!form) { return null; }
+    static create(data: any): AuditLogListParams | null {
+        if (!data) { return null; }
         const params = new AuditLogListParams();
 
-        /* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access */
-        params.guildId = form.guild;
-        params.channelId = form.channel;
-        params.createdFrom = form.createdFrom;
-        params.createdTo = form.createdTo;
-        params.ignoreBots = form.ignoreBots ?? false;
-        params.processedUserIds = form.processedUsers;
-        params.types = form.types;
+        params.guildId = data.guild;
+        params.channelId = data.channel;
+        params.createdFrom = data.createdFrom;
+        params.createdTo = data.createdTo;
+        params.ignoreBots = data.ignoreBots ?? false;
+        params.processedUserIds = data.processedUsers;
+        params.types = data.types;
+        params.infoFilter = data.infoFilter ? TextFilter.create(data.infoFilter) : null
+        params.warningFilter = data.warningFilter ? TextFilter.create(data.warningFilter) : null;
+        params.errorFilter = data.errorFilter ? TextFilter.create(data.errorFilter) : null;
+        params.commandFilter = data.commandFilter ? ExecutionFilter.create(data.commandFilter) : null;
+        params.interactionsFilter = data.interactionsFilter ? ExecutionFilter.create(data.interactionsFilter) : null;
+        params.jobFilter = data.jobFilter ? ExecutionFilter.create(data.jobFilter) : null;
 
         return params;
     }

@@ -1,4 +1,7 @@
-import { ExtendedFiltersModalResult } from './extended-filters/filters-modal-result';
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import { ExtendedFiltersModalData } from './extended-filters/filters-modal-result';
 import { Dictionary } from 'src/app/core/models/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -19,7 +22,7 @@ export class FilterComponent implements OnInit {
 
     form: FormGroup;
     types: Dictionary<number, string>;
-    extendedFilters: ExtendedFiltersModalResult;
+    extendedFilters: ExtendedFiltersModalData;
 
     constructor(
         private fb: FormBuilder,
@@ -64,20 +67,18 @@ export class FilterComponent implements OnInit {
         }
 
         this.filterChanged.emit(filter);
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         this.storage.store<AuditLogListParams>('AuditLogListParams', filter.serialized);
     }
 
     cleanFilter(): void {
         this.extendedFilters = null;
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         this.form.patchValue(AuditLogListParams.empty.serialized);
     }
 
     openExtendedFiltersModal(): void {
         const modal = this.modal.showCustomModal<ExtendedFiltersModalComponent>(ExtendedFiltersModalComponent, 'xl');
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         modal.componentInstance.selectedTypes = this.selectedTypes;
+        modal.componentInstance.result = this.extendedFilters;
 
         modal.onAccept.subscribe(_ => {
             this.extendedFilters = modal.componentInstance.result;
@@ -86,10 +87,8 @@ export class FilterComponent implements OnInit {
     }
 
     private initFilter(filter: AuditLogListParams): void {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         const serialized = filter.serialized;
 
-        /* eslint-disable @typescript-eslint/no-unsafe-member-access */
         this.form = this.fb.group({
             guild: [serialized.guild],
             channel: [serialized.channel],
@@ -99,6 +98,15 @@ export class FilterComponent implements OnInit {
             processedUsers: [serialized.processedUsers],
             types: [serialized.types]
         });
+
+        this.extendedFilters = {
+            commandFilter: filter.commandFilter,
+            errorFilter: filter.errorFilter,
+            infoFilter: filter.infoFilter,
+            interactionFilter: filter.interactionsFilter,
+            jobFilter: filter.jobFilter,
+            warningFilter: filter.warningFilter
+        };
 
         this.form.valueChanges.pipe(debounceTime(300)).subscribe(_ => this.submitForm());
     }

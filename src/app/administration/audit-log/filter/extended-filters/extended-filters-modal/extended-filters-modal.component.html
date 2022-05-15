@@ -1,9 +1,13 @@
 <app-modal [title]="'Pokročilé vyhledávání'" [type]="'filter'">
-    <app-text-filter #info [label]="'Informační zpráva'" *ngIf="canInfo"></app-text-filter>
-    <app-text-filter #warning [label]="'Varování'" *ngIf="canWarning"></app-text-filter>
-    <app-text-filter #error [label]="'Chyba'" *ngIf="canError"></app-text-filter>
+    <form [formGroup]="form">
+        <app-text-filter [label]="'Informační zpráva'" *ngIf="can(auditLogItemType.Info)" formControlName="info"></app-text-filter>
+        <app-text-filter [label]="'Varování'" *ngIf="can(auditLogItemType.Warning)" formControlName="warning"></app-text-filter>
+        <app-text-filter [label]="'Chyba'" *ngIf="can(auditLogItemType.Error)" formControlName="error"></app-text-filter>
 
-    <app-execution-filter #command [label]="'Příkazy'" *ngIf="canCommand"></app-execution-filter>
-    <app-execution-filter #interaction [label]="'Integrovaný příkaz'" *ngIf="canInteraction"></app-execution-filter>
-    <app-execution-filter #job [label]="'Naplánovaná úloha'" *ngIf="canJob"></app-execution-filter>
+        <app-execution-filter [label]="'Příkazy'" *ngIf="can(auditLogItemType.Command)" formControlName="command"></app-execution-filter>
+        <app-execution-filter [label]="'Integrovaný příkaz'" *ngIf="can(auditLogItemType.InteractionCommand)" formControlName="interaction">
+        </app-execution-filter>
+        <app-execution-filter [label]="'Naplánovaná úloha'" *ngIf="can(auditLogItemType.JobCompleted)" formControlName="job">
+        </app-execution-filter>
+    </form>
 </app-modal>
