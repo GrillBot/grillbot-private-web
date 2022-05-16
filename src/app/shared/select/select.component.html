@@ -1,0 +1,4 @@
+<ng-select [closeOnSelect]="!isMultiSelect" [clearable]="true" [multiple]="isMultiSelect" [notFoundText]="'Nenalezena žádná položka'"
+    [searchable]="searchable" [(ngModel)]="selected" [disabled]="disabled" (blur)="onBlur()" (change)="onValueChange($event)">
+    <ng-option *ngFor="let item of items" [value]="item.value">{{item.key}}</ng-option>
+</ng-select>

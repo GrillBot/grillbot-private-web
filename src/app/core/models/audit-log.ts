@@ -48,11 +48,22 @@ export class ExecutionFilter {
     }
 
     getQueryParams(property: string): QueryParam[] {
-        return [
+        const params = [
             this.name ? new QueryParam(`${property}.Name`, this.name) : null,
-            this.wasSuccess != undefined ? new QueryParam(`${property}.WasSuccess`, this.wasSuccess) : null,
-            ...(this.duration ? [new QueryParam(`${property}.Duration.From`, this.duration.from), new QueryParam(`${property}.Duration.To`, this.duration.to)] : [])
-        ].filter(o => o);
+            this.wasSuccess != undefined ? new QueryParam(`${property}.WasSuccess`, this.wasSuccess) : null
+        ];
+
+        if (this.duration) {
+            if (this.duration.from) {
+                params.push(new QueryParam(`${property}.Duration.From`, this.duration.from));
+            }
+
+            if (this.duration.to) {
+                params.push(new QueryParam(`${property}.Duration.To`, this.duration.to));
+            }
+        }
+
+        return params.filter(o => o);
     }
 
     static create(data: any): ExecutionFilter | null {

@@ -14,16 +14,12 @@
             <div class="col-2 d-flex align-items-center">Dokončeno úspěšně</div>
 
             <div class="col">
-                <select class="form-control" formControlName="wasSuccess">
-                    <option [value]="null">Nerozhoduje</option>
-                    <option [value]="true">Ano</option>
-                    <option [value]="false">Ne</option>
-                </select>
+                <app-select [items]="wasSuccessItems" formControlName="wasSuccess"></app-select>
             </div>
         </div>
 
         <div class="row mt-2">
-            <div class="col-2 d-flex align-items-center">Doba trvání</div>
+            <div class="col-2 d-flex align-items-center">Doba trvání (ms)</div>
 
             <div class="col">
                 <input type="number" min="0" placeholder="Od" class="form-control" formControlName="durationFrom" />

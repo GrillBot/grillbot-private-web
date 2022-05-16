@@ -1,3 +1,4 @@
+import { SelectItems } from './../../../../../shared/select/models';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormGroup, FormBuilder } from '@angular/forms';
 import { ExecutionFilter } from './../../../../../core/models/audit-log';
 import { Component, OnInit, Input, forwardRef } from '@angular/core';
@@ -19,6 +20,12 @@ export class ExecutionFilterComponent implements OnInit, ControlValueAccessor {
 
     form: FormGroup;
 
+    wasSuccessItems: SelectItems = [
+        { key: 'Nerozhoduje', value: null },
+        { key: 'Ano', value: true },
+        { key: 'Ne', value: false }
+    ];
+
     private onChange: (obj: ExecutionFilter) => void = noop;
 
     constructor(private fb: FormBuilder) { }
@@ -26,7 +33,7 @@ export class ExecutionFilterComponent implements OnInit, ControlValueAccessor {
     ngOnInit(): void {
         this.form = this.fb.group({
             name: [],
-            wasSuccess: [],
+            wasSuccess: [null],
             durationFrom: [],
             durationTo: []
         });
@@ -45,7 +52,7 @@ export class ExecutionFilterComponent implements OnInit, ControlValueAccessor {
         this.onChange = fn;
     }
 
-    registerOnTouched(fn: () => void): void { noop(); }
+    registerOnTouched(_: () => void): void { noop(); }
 
     setDisabledState?(isDisabled: boolean): void {
         if (isDisabled) {
