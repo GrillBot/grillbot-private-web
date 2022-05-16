@@ -29,8 +29,10 @@
                     <div keyValueItem class="col-3" [key]="'Nadřazený kanál'" [value]="data.parentChannel.fullFormat"
                         *ngIf="data.parentChannel"></div>
                     <div keyValueItem class="col-3" [key]="'Počet zpráv v cache'" [value]="data.cachedMessagesCount.toLocaleString()"></div>
-                    <div keyValueItem class="col-3" [key]="'Počet oprávnění pro role'" [value]="data.rolePermissionCount?.toLocaleString() ?? 'Není známo'"></div>
-                    <div keyValueItem class="col-3" [key]="'Počet oprávnění pro uživatele'" [value]="data.userPermissionCount?.toLocaleString() ?? 'Není známo'"></div>
+                    <div keyValueItem class="col-3" [key]="'Počet oprávnění pro role'"
+                        [value]="data.rolePermissionCount?.toLocaleString() ?? 'Není známo'"></div>
+                    <div keyValueItem class="col-3" [key]="'Počet oprávnění pro uživatele'"
+                        [value]="data.userPermissionCount?.toLocaleString() ?? 'Není známo'"></div>
                 </div>
 
                 <div class="row mt-1">
@@ -46,7 +48,7 @@
         <div class="col">
             <app-card icon="fas fa-cogs" [title]="'Nastavení'">
                 <div class="row">
-                    <div class="col-lg-4 col-sm-9 col-md-6">
+                    <div class="col-lg-auto col-sm-auto col-md-auto">
                         <app-loading [small]="true" [align]="'start'" [text]="'Probíhá ukládání'" *ngIf="settingsSaving"></app-loading>
                         <form [formGroup]="settingsForm">
                             <checkbox-bitmask [options]="flagsOptions" formControlName="flags"></checkbox-bitmask>
