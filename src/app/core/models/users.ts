@@ -106,7 +106,8 @@ export class GetUserListParams extends FilterBase {
     public guildId: string | null = null;
     public flags = 0;
     public haveBirthday = false;
-    public usedInviteCode: string | null;
+    public usedInviteCode: string | null = null;
+    public status: UserStatus | null = null;
 
     get queryParams(): QueryParam[] {
         return [
@@ -115,7 +116,8 @@ export class GetUserListParams extends FilterBase {
             this.flags ? new QueryParam('flags', this.flags) : null,
             new QueryParam('haveBirthday', this.haveBirthday),
             this.usedInviteCode ? new QueryParam('usedInviteCode', this.usedInviteCode) : null,
-            ...super.queryParams
+            ...super.queryParams,
+            this.status !== undefined && this.status !== null ? new QueryParam('status', this.status) : null
         ].filter(o => o);
     }
 
@@ -131,6 +133,7 @@ export class GetUserListParams extends FilterBase {
         params.haveBirthday = (form.flags & UserFilterFlags.HaveBirthday) !== 0;
         params.username = form.username;
         params.usedInviteCode = form.usedInviteCode;
+        params.status = form.status;
 
         return params;
     }
@@ -166,7 +169,8 @@ export class GetUserListParams extends FilterBase {
             guild: this.guildId,
             flags: this.serializeFlags(),
             username: this.username,
-            usedInviteCode: this.usedInviteCode
+            usedInviteCode: this.usedInviteCode,
+            status: this.status
         };
     }
 }

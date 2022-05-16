@@ -1,3 +1,4 @@
+import { SelectItems } from './../../../../shared/select/models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Dictionary } from './../../../../core/models/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
@@ -7,6 +8,7 @@ import { GetUserListParams } from 'src/app/core/models/users';
 import { StorageService } from 'src/app/core/services/storage.service';
 import { Support } from 'src/app/core/lib/support';
 import { UserFilterFlags, UserFilterFlagsTexts } from 'src/app/core/models/enums/user-filter-flags';
+import { UserStatus, getStatusSelectItem } from 'src/app/core/models/enums/user-status';
 
 @Component({
     selector: 'app-filter',
@@ -17,6 +19,12 @@ export class FilterComponent implements OnInit {
 
     form: FormGroup;
     flagsMask: Dictionary<number, string>;
+    statusItems: SelectItems = [
+        getStatusSelectItem(UserStatus.Online),
+        getStatusSelectItem(UserStatus.Idle),
+        getStatusSelectItem(UserStatus.DoNotDisturb),
+        getStatusSelectItem(UserStatus.Offline)
+    ];
 
     constructor(
         private fb: FormBuilder,
@@ -61,7 +69,8 @@ export class FilterComponent implements OnInit {
             username: filter.username,
             guild: filter.guildId,
             flags: filter.flags,
-            usedInviteCode: filter.usedInviteCode
+            usedInviteCode: filter.usedInviteCode,
+            status: filter.status
         });
     }
 
@@ -70,7 +79,8 @@ export class FilterComponent implements OnInit {
             username: [filter.username],
             guild: [filter.guildId],
             flags: [filter.flags],
-            usedInviteCode: [filter.usedInviteCode]
+            usedInviteCode: [filter.usedInviteCode],
+            status: [filter.status]
         });
 
         this.form.valueChanges.pipe(debounceTime(500)).subscribe(_ => this.submitForm());

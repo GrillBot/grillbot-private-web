@@ -50,11 +50,13 @@ export class SelectComponent implements ControlValueAccessor {
     }
 
     onValueChange(_: any | any[]): void {
-        if (Array.isArray(this.selected)) {
-            this.selected = this.selected.map(o => o?.$ngOptionValue !== undefined ? o?.$ngOptionValue : o);
-        } else {
-            if (this.selected.$ngOptionValue !== undefined) {
-                this.selected = this.selected.$ngOptionValue;
+        if (this.selected) {
+            if (Array.isArray(this.selected)) {
+                this.selected = this.selected.map(o => o?.$ngOptionValue !== undefined ? o?.$ngOptionValue : o);
+            } else {
+                if (this.selected.$ngOptionValue !== undefined) {
+                    this.selected = this.selected.$ngOptionValue;
+                }
             }
         }
 

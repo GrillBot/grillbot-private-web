@@ -1,3 +1,6 @@
+import { Support } from '../../lib/support';
+import { SelectItem } from './../../../shared/select/models';
+
 export enum UserStatus {
     Offline = 0,
     Online = 1,
@@ -23,4 +26,14 @@ export enum UserStatusTexts {
     AFK = 'Neaktivní',
     DoNotDisturb = 'Nerušit',
     Invisible = 'Neviditelný'
+}
+
+export const getStatusSelectItem = (status: UserStatus): SelectItem => {
+    const key = Support.getEnumKeyByValue(UserStatus, status);
+
+    return {
+        key: UserStatusTexts[key] as string,
+        value: status,
+        background: StatusColorMapping[key] as string
+    };
 }
