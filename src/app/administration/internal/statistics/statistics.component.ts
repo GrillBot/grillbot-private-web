@@ -24,13 +24,17 @@ export class StatisticsComponent implements OnInit, OnDestroy {
     get isTextCommands(): boolean { return this.type === 'text-commands'; }
     get isInteractions(): boolean { return this.type === 'interactions'; }
     get isJobs(): boolean { return this.type === 'jobs'; }
+    get isApiRequestsByDate(): boolean { return this.type === 'api/date'; }
+    get isApiRequestsByEndpoint(): boolean { return this.type === 'api/endpoint'; }
+    get isApiRequestsByStatusCode(): boolean { return this.type === 'api/status'; }
 
     get isDictLike(): boolean {
-        return this.isDb || this.isAuditLogByType || this.isAuditLogByDate || this.isUnverifyLogByType || this.isUnverifyLogByDate;
+        return this.isDb || this.isAuditLogByType || this.isAuditLogByDate || this.isUnverifyLogByType || this.isUnverifyLogByDate
+            || this.isApiRequestsByStatusCode || this.isApiRequestsByDate;
     }
 
     get isStatLike(): boolean {
-        return this.isTextCommands || this.isInteractions || this.isJobs;
+        return this.isTextCommands || this.isInteractions || this.isJobs || this.isApiRequestsByEndpoint;
     }
 
     get header(): string {
@@ -42,6 +46,9 @@ export class StatisticsComponent implements OnInit, OnDestroy {
         else if (this.isTextCommands) { return 'Statistika textových příkazů'; }
         else if (this.isInteractions) { return 'Statistika interaktivních příkazů'; }
         else if (this.isJobs) { return 'Statistika naplánovaných úloh'; }
+        else if (this.isApiRequestsByDate) { return 'Statistika API požadavků (po měsících)'; }
+        else if (this.isApiRequestsByEndpoint) { return 'Statistika API požadavků (po metodách)'; }
+        else if (this.isApiRequestsByStatusCode) { return 'Statistika API požadavků (podle výsledku)'; }
 
         return '';
     }
@@ -55,6 +62,9 @@ export class StatisticsComponent implements OnInit, OnDestroy {
         else if (this.isTextCommands) { this.statItemsQuery = this.statisticsService.getCommandsStatistics(); }
         else if (this.isInteractions) { this.statItemsQuery = this.statisticsService.getInteractionsStatus(); }
         else if (this.isJobs) { this.statItemsQuery = this.statisticsService.getJobsStatistics(); }
+        else if (this.isApiRequestsByDate) { this.dictQuery = this.statisticsService.getApiRequestsByDate(); }
+        else if (this.isApiRequestsByEndpoint) { this.statItemsQuery = this.statisticsService.getApiRequestsByEndpoint(); }
+        else if (this.isApiRequestsByStatusCode) { this.dictQuery = this.statisticsService.getApiRequestsByStatusCode(); }
     }
 
     ngOnDestroy(): void {

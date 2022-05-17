@@ -5,13 +5,15 @@
                 <th *ngIf="isDb">Název tabulky</th>
                 <th *ngIf="isAuditLogByType">Typ</th>
                 <th *ngIf="isUnverifyLogByType">Operace</th>
-                <th *ngIf="isAuditLogByDate || isUnverifyLogByDate">Období</th>
+                <th *ngIf="isAuditLogByDate || isUnverifyLogByDate || isApiRequestsByDate">Období</th>
+                <th *ngIf="isApiRequestsByStatusCode">Stavový kód</th>
                 <th>Počet záznamů</th>
             </tr>
 
             <tr *ngIf="isStatLike">
                 <th *ngIf="isTextCommands || isInteractions">Příkaz</th>
                 <th *ngIf="isJobs">Název úlohy</th>
+                <th *ngIf="isApiRequestsByEndpoint">Endpoint</th>
                 <th>Poslední volání</th>
                 <th>Úspěšných</th>
                 <th>Chybných</th>

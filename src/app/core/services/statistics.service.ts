@@ -89,4 +89,44 @@ export class StatisticsService {
             catchError((err: HttpErrorResponse) => this.base.catchError(err))
         );
     }
+
+    getApiRequestsByEndpoint(): ObservableList<StatisticItem> {
+        const url = `${environment.apiUrl}/stats/api/endpoint`;
+        const headers = this.base.getHttpHeaders();
+
+        return this.base.http.get<StatisticItem[]>(url, { headers }).pipe(
+            map(data => data.map(o => StatisticItem.create(o))),
+            catchError((err: HttpErrorResponse) => this.base.catchError(err))
+        );
+    }
+
+    getApiRequestsByDate(): ObservableDict<string, number> {
+        const url = `${environment.apiUrl}/stats/api/date`;
+        const headers = this.base.getHttpHeaders();
+
+        return this.base.http.get<Dictionary<string, number>>(url, { headers }).pipe(
+            map(data => Object.keys(data).map(k => ({ key: k, value: data[k] as number }))),
+            catchError((err: HttpErrorResponse) => this.base.catchError(err))
+        );
+    }
+
+    getApiRequestsByStatusCode(): ObservableDict<string, number> {
+        const url = `${environment.apiUrl}/stats/api/status`;
+        const headers = this.base.getHttpHeaders();
+
+        return this.base.http.get<Dictionary<string, number>>(url, { headers }).pipe(
+            map(data => Object.keys(data).map(k => ({ key: k, value: data[k] as number }))),
+            catchError((err: HttpErrorResponse) => this.base.catchError(err))
+        );
+    }
+
+    getApiRequestsByHttpMethod(): ObservableDict<string, number> {
+        const url = `${environment.apiUrl}/stats/api/method`;
+        const headers = this.base.getHttpHeaders();
+
+        return this.base.http.get<Dictionary<string, number>>(url, { headers }).pipe(
+            map(data => Object.keys(data).map(k => ({ key: k, value: data[k] as number }))),
+            catchError((err: HttpErrorResponse) => this.base.catchError(err))
+        );
+    }
 }
