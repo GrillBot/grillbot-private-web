@@ -81,6 +81,66 @@ export class ExecutionFilter {
     }
 }
 
+export class ApiRequestFilter {
+    public controllerName: string | null = null;
+    public actionName: string | null = null;
+    public pathTemplate: string | null = null;
+    public duration?: RangeParams<number> | null;
+    public method: string | null = null;
+    public loggedUserRole: string | null = null;
+
+    get serialized(): any {
+        return {
+            controllerName: this.controllerName,
+            actionName: this.actionName,
+            pathTemplate: this.pathTemplate,
+            durationFrom: this.duration?.from,
+            durationTo: this.duration?.to,
+            method: this.method,
+            loggedUserRole: this.loggedUserRole
+        };
+    }
+
+    get queryParams(): QueryParam[] {
+        const params = [
+            this.controllerName ? new QueryParam('ApiRequestFilter.ControllerName', this.controllerName) : null,
+            this.actionName ? new QueryParam('ApiRequestFilter.ActionName', this.actionName) : null,
+            this.pathTemplate ? new QueryParam('ApiRequestFilter.PathTemplate', this.pathTemplate) : null,
+            this.method ? new QueryParam('ApiRequestFilter.Method', this.method) : null,
+            this.loggedUserRole ? new QueryParam('ApiRequestFilter.LoggedUserRole', this.loggedUserRole) : null
+        ];
+
+        if (this.duration) {
+            if (this.duration.from) {
+                params.push(new QueryParam('ApiRequestFilter.Duration.From', this.duration.from));
+            }
+
+            if (this.duration.to) {
+                params.push(new QueryParam('ApiRequestFilter.Duration.To', this.duration.to));
+            }
+        }
+
+        return params.filter(o => o);
+    }
+
+    static create(data: any): ApiRequestFilter | null {
+        if (!data) { return null; }
+        const filter = new ApiRequestFilter();
+
+        filter.controllerName = data.controllerName;
+        filter.actionName = data.actionName;
+        filter.pathTemplate = data.pathTemplate;
+        filter.duration = {
+            from: data.durationFrom,
+            to: data.durationTo
+        };
+        filter.method = data.method;
+        filter.loggedUserRole = data.loggedUserRole;
+
+        return filter;
+    }
+}
+
 export class AuditLogListParams extends FilterBase {
     public guildId: string | null;
     public processedUserIds: string[] = [];
@@ -97,6 +157,7 @@ export class AuditLogListParams extends FilterBase {
     public commandFilter: ExecutionFilter | null = null;
     public interactionsFilter: ExecutionFilter | null = null;
     public jobFilter: ExecutionFilter | null = null;
+    public apiRequestFilter: ApiRequestFilter | null = null;
 
     static get empty(): AuditLogListParams { return new AuditLogListParams(); }
 
@@ -117,7 +178,8 @@ export class AuditLogListParams extends FilterBase {
 
             ...(this.commandFilter ? this.commandFilter.getQueryParams('CommandFilter') : []),
             ...(this.interactionsFilter ? this.interactionsFilter.getQueryParams('InteractionFilter') : []),
-            ...(this.jobFilter ? this.jobFilter.getQueryParams('JobFilter') : [])
+            ...(this.jobFilter ? this.jobFilter.getQueryParams('JobFilter') : []),
+            ...(this.apiRequestFilter ? this.apiRequestFilter.queryParams : [])
         ].filter(o => o);
     }
 
@@ -135,7 +197,8 @@ export class AuditLogListParams extends FilterBase {
             errorFilter: this.errorFilter?.serialized,
             commandFilter: this.commandFilter?.serialized,
             interactionsFilter: this.interactionsFilter?.serialized,
-            jobFilter: this.jobFilter?.serialized
+            jobFilter: this.jobFilter?.serialized,
+            apiRequestFilter: this.apiRequestFilter?.queryParams
         };
     }
 
@@ -156,6 +219,7 @@ export class AuditLogListParams extends FilterBase {
         params.commandFilter = data.commandFilter ? ExecutionFilter.create(data.commandFilter) : null;
         params.interactionsFilter = data.interactionsFilter ? ExecutionFilter.create(data.interactionsFilter) : null;
         params.jobFilter = data.jobFilter ? ExecutionFilter.create(data.jobFilter) : null;
+        params.apiRequestFilter = data.apiRequestFilter ? ApiRequestFilter.create(data.apiRequestFilter) : null;
 
         return params;
     }
@@ -193,7 +257,8 @@ export class AuditLogListItem {
             AuditLogItemType.GuildUpdated,
             AuditLogItemType.InteractionCommand,
             AuditLogItemType.ThreadDeleted,
-            AuditLogItemType.JobCompleted
+            AuditLogItemType.JobCompleted,
+            AuditLogItemType.API
         ];
 
         return otherTypeWithDetails.includes(this.type);
@@ -218,7 +283,8 @@ export class AuditLogListItem {
             AuditLogItemType.MessageDeleted,
             AuditLogItemType.InteractionCommand,
             AuditLogItemType.ThreadDeleted,
-            AuditLogItemType.JobCompleted
+            AuditLogItemType.JobCompleted,
+            AuditLogItemType.API
         ];
 
         return types.includes(this.type);

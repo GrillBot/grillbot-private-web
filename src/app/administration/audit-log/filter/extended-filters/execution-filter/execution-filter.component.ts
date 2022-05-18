@@ -62,7 +62,6 @@ export class ExecutionFilterComponent implements OnInit, ControlValueAccessor {
         }
     }
 
-
     private submit(): void {
         const filter = ExecutionFilter.create(this.form.value);
         this.onChange(filter);

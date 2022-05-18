@@ -34,9 +34,17 @@ export class FilterComponent implements OnInit {
     get selectedTypes(): AuditLogItemType[] { return this.form.get('types').value as AuditLogItemType[]; }
 
     get allowExtendedFilters(): boolean {
-        return this.selectedTypes.includes(AuditLogItemType.Info) || this.selectedTypes.includes(AuditLogItemType.Warning) ||
-            this.selectedTypes.includes(AuditLogItemType.Error) || this.selectedTypes.includes(AuditLogItemType.Command) ||
-            this.selectedTypes.includes(AuditLogItemType.InteractionCommand) || this.selectedTypes.includes(AuditLogItemType.JobCompleted);
+        const typesWithFilters = [
+            AuditLogItemType.Info,
+            AuditLogItemType.Warning,
+            AuditLogItemType.Error,
+            AuditLogItemType.Command,
+            AuditLogItemType.InteractionCommand,
+            AuditLogItemType.JobCompleted,
+            AuditLogItemType.API
+        ];
+
+        return typesWithFilters.some(o => this.selectedTypes.includes(o));
     }
 
     ngOnInit(): void {
@@ -64,6 +72,7 @@ export class FilterComponent implements OnInit {
             filter.commandFilter = this.extendedFilters.commandFilter;
             filter.interactionsFilter = this.extendedFilters.interactionFilter;
             filter.jobFilter = this.extendedFilters.jobFilter;
+            filter.apiRequestFilter = this.extendedFilters.apiRequestFilter;
         }
 
         this.filterChanged.emit(filter);
@@ -105,7 +114,8 @@ export class FilterComponent implements OnInit {
             infoFilter: filter.infoFilter,
             interactionFilter: filter.interactionsFilter,
             jobFilter: filter.jobFilter,
-            warningFilter: filter.warningFilter
+            warningFilter: filter.warningFilter,
+            apiRequestFilter: filter.apiRequestFilter
         };
 
         this.form.valueChanges.pipe(debounceTime(300)).subscribe(_ => this.submitForm());

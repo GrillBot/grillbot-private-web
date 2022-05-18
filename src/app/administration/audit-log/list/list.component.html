@@ -280,5 +280,11 @@
                 <b>Došlo k chybě</b>
             </p>
         </ng-container>
+
+        <ng-container *ngIf="type === AuditLogItemType.API">
+            <p>Akce: <b>{{data.controllerName}}.{{data.actionName}}</b></p>
+            <p>HTTP akce: <b>{{data.method}} {{data.templatePath}}</b></p>
+            <p *ngIf="data.statusCode">Výsledek: <b>{{data.statusCode}}</b></p>
+        </ng-container>
     </div>
 </ng-template>

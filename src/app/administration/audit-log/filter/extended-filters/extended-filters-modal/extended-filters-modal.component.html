@@ -4,10 +4,11 @@
         <app-text-filter [label]="'Varování'" *ngIf="can(auditLogItemType.Warning)" formControlName="warning"></app-text-filter>
         <app-text-filter [label]="'Chyba'" *ngIf="can(auditLogItemType.Error)" formControlName="error"></app-text-filter>
 
-        <app-execution-filter [label]="'Příkazy'" *ngIf="can(auditLogItemType.Command)" formControlName="command"></app-execution-filter>
+        <app-execution-filter [label]="'Příkaz'" *ngIf="can(auditLogItemType.Command)" formControlName="command"></app-execution-filter>
         <app-execution-filter [label]="'Integrovaný příkaz'" *ngIf="can(auditLogItemType.InteractionCommand)" formControlName="interaction">
         </app-execution-filter>
         <app-execution-filter [label]="'Naplánovaná úloha'" *ngIf="can(auditLogItemType.JobCompleted)" formControlName="job">
         </app-execution-filter>
+        <app-api-request-filter *ngIf="can(auditLogItemType.API)" formControlName="apiRequest"></app-api-request-filter>
     </form>
 </app-modal>

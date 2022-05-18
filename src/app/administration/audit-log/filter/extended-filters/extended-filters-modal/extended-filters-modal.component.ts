@@ -28,7 +28,8 @@ export class ExtendedFiltersModalComponent implements OnInit, AfterViewInit {
             errorFilter: value.error,
             interactionFilter: value.interaction,
             jobFilter: value.job,
-            warningFilter: value.warning
+            warningFilter: value.warning,
+            apiRequestFilter: value.apiRequest
         };
     }
 
@@ -43,7 +44,8 @@ export class ExtendedFiltersModalComponent implements OnInit, AfterViewInit {
             error: [],
             command: [],
             interaction: [],
-            job: []
+            job: [],
+            apiRequest: []
         });
 
         this.fill();
@@ -68,7 +70,8 @@ export class ExtendedFiltersModalComponent implements OnInit, AfterViewInit {
             error: this.tmpData.errorFilter,
             command: this.tmpData.commandFilter,
             interaction: this.tmpData.interactionFilter,
-            job: this.tmpData.jobFilter
+            job: this.tmpData.jobFilter,
+            apiRequest: this.tmpData.apiRequestFilter
         });
 
         this.tmpData = null;

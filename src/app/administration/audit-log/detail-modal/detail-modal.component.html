@@ -47,6 +47,9 @@
                     <ng-container *ngSwitchCase="AuditLogItemType.JobCompleted">
                         <ng-container *ngTemplateOutlet="jobCompleted"></ng-container>
                     </ng-container>
+                    <ng-container *ngSwitchCase="AuditLogItemType.API">
+                        <ng-container *ngTemplateOutlet="api"></ng-container>
+                    </ng-container>
                 </ng-container>
             </tbody>
         </table>
@@ -434,6 +437,76 @@
         <td>Výsledek</td>
         <td>
             <pre class="pt-2 pb-2 alert alert-{{(data.wasError ? 'danger' : 'success')}}">{{data.result}}</pre>
+        </td>
+    </tr>
+</ng-template>
+
+<ng-template #api>
+    <tr>
+        <td>Controller</td>
+        <td>{{data.controllerName}}</td>
+    </tr>
+
+    <tr>
+        <td>Akce</td>
+        <td>{{data.actionName}}</td>
+    </tr>
+
+    <tr>
+        <td>URL</td>
+        <td>{{data.method}} {{data.path}}</td>
+    </tr>
+
+    <tr>
+        <td>Šablona URL</td>
+        <td>{{data.templatePath}}</td>
+    </tr>
+
+    <tr *ngIf="data.loggedUserRole">
+        <td>Role přihlášeného uživatele</td>
+        <td>{{data.loggedUserRole}}</td>
+    </tr>
+
+    <tr *ngIf="data.statusCode">
+        <td>Výsledek</td>
+        <td>{{data.statusCode}}</td>
+    </tr>
+
+    <tr>
+        <td>Začátek</td>
+        <td>{{data.startAt | dateTimeFormatter}}</td>
+    </tr>
+
+    <tr>
+        <td>Konec</td>
+        <td>{{data.endAt | dateTimeFormatter}}</td>
+    </tr>
+
+    <tr>
+        <td>Trvání</td>
+        <td>{{data.endAt | duration:data.startAt}}</td>
+    </tr>
+
+    <tr *ngIf="data.queryParams">
+        <td>Parametry</td>
+        <td>
+            <table class="table table-sm table-bordered auto-column-width mb-0">
+                <tbody>
+                    <tr *ngFor="let param of data.queryParams | keyvalue">
+                        <td>{{param.key}}</td>
+                        <td>
+                            <code>{{param.value}}</code>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+
+    <tr *ngIf="data.bodyContent">
+        <td>Tělo požadavku</td>
+        <td>
+            <pre class="alert alert-secondary">{{data.bodyContent}}</pre>
         </td>
     </tr>
 </ng-template>
