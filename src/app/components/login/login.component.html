@@ -10,11 +10,16 @@
                             </div>
                             <div class="card-body d-flex justify-content-center">
                                 <button class="btn btn-block btn-blurple" (click)="startSession()">
-                                    <i class="fab fa-discord mr-2"></i> Přihlásit přes Discord
+                                    <i class="fab fa-discord mr-2"></i>
+                                    Přihlásit přes Discord
                                 </button>
                             </div>
-                            <div class="card-footer text-center py-3 text-danger" *ngIf="errorMessage">
-                                {{errorMessage}}
+                            <div class="card-footer text-center py-3" *ngIf="errorMessage || loading">
+                                <span class="text-danger" *ngIf="errorMessage">{{errorMessage}}</span>
+                                <span *ngIf="loading">
+                                    <i class="fa fa-circle-notch fa-spin"></i>
+                                    Čekám na připojení
+                                </span>
                             </div>
                         </div>
                     </div>

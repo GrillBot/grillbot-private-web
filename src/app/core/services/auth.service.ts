@@ -6,8 +6,9 @@ import { BaseService } from './base.service';
 import { AuthToken, OAuth2Link } from '../models/auth';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { UserService } from './user.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root'
@@ -58,6 +59,7 @@ export class AuthService {
 
         return this.base.http.get<any>(url).pipe(
             map(data => AuthToken.create(data)),
+            catchError((err: HttpErrorResponse) => this.base.catchError(err, true))
         );
     }
 }
