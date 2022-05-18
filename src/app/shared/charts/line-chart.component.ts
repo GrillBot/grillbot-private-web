@@ -19,7 +19,7 @@ export class LineChartComponent {
             },
             xAxis: {
                 type: 'category',
-                data: this.data ? this.data.reverse().map(o => o.key) : [],
+                data: this.data ? this.data.map(o => o.key) : [],
                 splitLine: { show: true }
             },
             yAxis: {

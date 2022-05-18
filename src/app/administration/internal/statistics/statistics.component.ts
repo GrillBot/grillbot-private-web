@@ -1,3 +1,4 @@
+import { map } from 'rxjs/operators';
 import { ObservableDict, ObservableList } from './../../../core/models/common';
 import { StatisticsService } from './../../../core/services/statistics.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
@@ -68,6 +69,10 @@ export class StatisticsComponent implements OnInit, OnDestroy {
         else if (this.isApiRequestsByDate) { this.dictQuery = this.statisticsService.getApiRequestsByDate(); }
         else if (this.isApiRequestsByEndpoint) { this.statItemsQuery = this.statisticsService.getApiRequestsByEndpoint(); }
         else if (this.isApiRequestsByStatusCode) { this.dictQuery = this.statisticsService.getApiRequestsByStatusCode(); }
+
+        if (this.dictQuery) {
+            this.dictQuery = this.dictQuery.pipe(map(data => data.reverse()));
+        }
     }
 
     ngOnDestroy(): void {
