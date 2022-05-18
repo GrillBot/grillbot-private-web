@@ -1,5 +1,5 @@
+import { EmptyObservable } from './../models/common';
 import { UpdateUserParams } from './../models/users';
-import { PaginatedParams } from 'src/app/core/models/common';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PaginatedResponse } from '../models/common';
@@ -36,12 +36,11 @@ export class UserService {
         );
     }
 
-    updateUser(id: string, params: UpdateUserParams): Observable<UserDetail> {
+    updateUser(id: string, params: UpdateUserParams): EmptyObservable {
         const url = `${environment.apiUrl}/users/${id}`;
         const headers = this.base.getHttpHeaders();
 
-        return this.base.http.put<UserDetail>(url, params, { headers }).pipe(
-            map(data => UserDetail.create(data)),
+        return this.base.http.put<unknown>(url, params, { headers }).pipe(
             catchError((err: HttpErrorResponse) => this.base.catchError(err))
         );
     }

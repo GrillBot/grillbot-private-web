@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UpdateUserParams, UserDetail } from 'src/app/core/models/users';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -30,27 +32,29 @@ export class UserDetailSettingsComponent implements OnInit {
             botAdmin: [this.user.isBotAdmin],
             note: [this.user.note],
             webAdmin: [this.user.haveWebAdmin],
-            selfUnverifyMinimalTime: [this.user.selfUnverifyMinimalTime]
+            selfUnverifyMinimalTime: [this.user.selfUnverifyMinimalTime],
+            commandsDisabled: [this.user.commandsDisabled]
         });
 
         if (this.isCurrentUser || this.user.isBot) {
             this.form.get('botAdmin').disable();
             this.form.get('webAdmin').disable();
+            this.form.get('commandsDisabled').disable();
         }
     }
 
     submitForm(): void {
-        /* eslint-disable @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access */
         const params = new UpdateUserParams(
             this.isCurrentUser || this.user.isBot ? this.user.isBotAdmin : this.form.value.botAdmin,
             this.form.value.note,
             this.isCurrentUser || this.user.isBot ? this.user.haveWebAdmin : this.form.value.webAdmin,
-            this.form.value.selfUnverifyMinimalTime
+            this.form.value.selfUnverifyMinimalTime,
+            this.form.value.commandsDisabled
         );
 
-        this.userService.updateUser(this.user.id, params).subscribe(detail => {
-            this.modalService.showNotification('Nastavení uživatele', 'Nastavení uživatele byla úspěšně změněna.');
-            this.userUpdated.emit(detail);
+        this.userService.updateUser(this.user.id, params).subscribe(_ => {
+            this.modalService.showNotification('Nastavení uživatele', 'Nastavení uživatele byla úspěšně změněna.')
+                .onClose.subscribe(__ => this.userUpdated.emit());
         });
     }
 }

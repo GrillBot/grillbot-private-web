@@ -1,4 +1,8 @@
 .checkboxes-group {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-direction: row;
+
+    & app-checkbox:not(:last-child) {
+        margin-right: 15px;
+    }
 }

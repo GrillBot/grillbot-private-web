@@ -1,12 +1,14 @@
 <app-card [title]="'Nastavení uživatele'" [allowHideButton]="true" icon="fas fa-user-cog">
     <form [formGroup]="form" (ngSubmit)="submitForm()">
         <div class="row">
-            <div class="col-5">
+            <div class="col-auto">
                 <div class="checkboxes-group">
                     <app-checkbox title="Administrátor obdrží plná práva nad GrillBot." [id]="'bot-admin'" [label]="'Administrátor'"
                         formControlName="botAdmin"></app-checkbox>
                     <app-checkbox title="Přístup do webové administrace" [id]="'web-admin'" [label]="'Webová administrace'"
                         formControlName="webAdmin"></app-checkbox>
+                    <app-checkbox title="Zablokovány všechny příkazy." [id]="'commands-disabled'" [label]="'Příkazy deaktivovány'"
+                        formControlName="commandsDisabled"></app-checkbox>
                 </div>
                 <label>Poznámka</label>
                 <textarea class="form-control" formControlName="note"></textarea>

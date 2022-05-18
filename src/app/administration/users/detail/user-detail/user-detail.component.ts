@@ -25,8 +25,13 @@ export class UserDetailComponent implements OnInit {
     get statusText(): string { return UserStatusTexts[Support.getEnumKeyByValue(UserStatus, this.data.status)] as string; }
 
     ngOnInit(): void {
-        const userId: string = this.activatedRoute.snapshot.params.id as string;
+        this.reload();
+    }
 
+    reload(): void {
+        this.data = null;
+
+        const userId: string = this.activatedRoute.snapshot.params.id as string;
         this.userService.getUserDetail(userId).subscribe(detail => {
             if (detail.isPublicAdminOnline) {
                 detail.activeClients.push('UserAdmin');
@@ -38,9 +43,5 @@ export class UserDetailComponent implements OnInit {
 
             this.data = detail;
         });
-    }
-
-    onUserUpdated(detail: UserDetail): void {
-        this.data = detail;
     }
 }

@@ -50,7 +50,7 @@
 
     <div class="row ml-0 mr-0 mt-3">
         <div class="col">
-            <app-user-detail-settings [user]="data" (userUpdated)="onUserUpdated($event)"></app-user-detail-settings>
+            <app-user-detail-settings [user]="data" (userUpdated)="reload()"></app-user-detail-settings>
         </div>
     </div>
 

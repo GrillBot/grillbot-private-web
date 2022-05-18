@@ -190,13 +190,13 @@ export class UserDetail {
     public selfUnverifyMinimalTime: string | null;
     public registeredAt: DateTime | null;
 
-    // tslint:disable: no-bitwise
     get isBotAdmin(): boolean { return (this.flags & UserFlags.BotAdmin) !== 0; }
     get haveWebAdmin(): boolean { return (this.flags & UserFlags.WebAdmin) !== 0; }
     get isBot(): boolean { return (this.flags & UserFlags.NotUser) !== 0; }
     get isWebAdminOnline(): boolean { return (this.flags & UserFlags.WebAdminOnline) !== 0; }
     get isPublicAdminOnline(): boolean { return (this.flags & UserFlags.PublicAdminOnline) !== 0; }
     get fullUsername(): string { return this.username + (!this.discriminator || this.discriminator.length == 0 ? '' : `#${this.discriminator}`); }
+    get commandsDisabled(): boolean { return (this.flags & UserFlags.CommandsDisabled) !== 0; }
 
     static create(data: any): UserDetail | null {
         if (!data) { return null; }
@@ -258,6 +258,7 @@ export class UpdateUserParams {
         public botAdmin: boolean,
         public note: string,
         public webAdminAllowed: boolean,
-        public selfUnverifyMinimalTime: string | null
+        public selfUnverifyMinimalTime: string | null,
+        public commandsDisabled: boolean
     ) { }
 }
