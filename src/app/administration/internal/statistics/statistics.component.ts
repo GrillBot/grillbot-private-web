@@ -28,17 +28,16 @@ export class StatisticsComponent implements OnInit, OnDestroy {
     get isApiRequestsByEndpoint(): boolean { return this.type === 'api/endpoint'; }
     get isApiRequestsByStatusCode(): boolean { return this.type === 'api/status'; }
 
-    get isDictLike(): boolean {
-        return this.isDb || this.isAuditLogByType || this.isUnverifyLogByType || this.isUnverifyLogByDate
-            || this.isApiRequestsByStatusCode || this.isApiRequestsByDate;
-    }
-
     get isStatLike(): boolean {
         return this.isTextCommands || this.isInteractions || this.isJobs || this.isApiRequestsByEndpoint;
     }
 
     get canLineChart(): boolean {
-        return this.isAuditLogByDate;
+        return this.isAuditLogByDate || this.isUnverifyLogByDate || this.isApiRequestsByDate;
+    }
+
+    get canBarChart(): boolean {
+        return this.isDb || this.isAuditLogByType || this.isUnverifyLogByType || this.isApiRequestsByStatusCode;
     }
 
     get header(): string {

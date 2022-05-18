@@ -1,11 +1,11 @@
 import { Dictionary } from 'src/app/core/models/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'app-line-chart',
-    templateUrl: './line-chart.component.html'
+    template: '<div echarts [options]="chartOptions"></div>'
 })
-export class LineChartComponent implements OnInit {
+export class LineChartComponent {
     @Input() data: Dictionary<string, number>;
 
     get chartOptions(): any {
@@ -37,8 +37,4 @@ export class LineChartComponent implements OnInit {
             }
         };
     }
-
-    ngOnInit(): void {
-    }
-
 }

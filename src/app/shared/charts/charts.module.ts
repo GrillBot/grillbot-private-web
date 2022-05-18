@@ -1,6 +1,7 @@
-import { LineChartComponent } from './line-chart/line-chart.component';
+import { LineChartComponent } from './line-chart.component';
 import { NgModule } from '@angular/core';
 import { NgxEchartsModule } from 'ngx-echarts';
+import { BarChartComponent } from './bar-chart.component';
 
 @NgModule({
     imports: [
@@ -9,10 +10,12 @@ import { NgxEchartsModule } from 'ngx-echarts';
         })
     ],
     declarations: [
-        LineChartComponent
+        LineChartComponent,
+        BarChartComponent
     ],
     exports: [
-        LineChartComponent
+        LineChartComponent,
+        BarChartComponent
     ]
 })
 export class ChartsModule { }

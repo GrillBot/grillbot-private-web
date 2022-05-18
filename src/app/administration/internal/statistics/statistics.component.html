@@ -1,15 +1,6 @@
 <app-modal [title]="header">
     <table class="table table-sm table-bordered table-striped auto-column-width">
         <thead>
-            <tr *ngIf="isDictLike">
-                <th *ngIf="isDb">Název tabulky</th>
-                <th *ngIf="isAuditLogByType">Typ</th>
-                <th *ngIf="isUnverifyLogByType">Operace</th>
-                <th *ngIf="isAuditLogByDate || isUnverifyLogByDate || isApiRequestsByDate">Období</th>
-                <th *ngIf="isApiRequestsByStatusCode">Stavový kód</th>
-                <th>Počet záznamů</th>
-            </tr>
-
             <tr *ngIf="isStatLike">
                 <th *ngIf="isTextCommands || isInteractions">Příkaz</th>
                 <th *ngIf="isJobs">Název úlohy</th>
@@ -24,15 +15,6 @@
                 <th>Prům. doba běhu</th>
             </tr>
         </thead>
-
-        <tbody *ngIf="isDictLike">
-            <ng-container *ngIf="dictQuery | async as result; else loading_dictlike">
-                <tr *ngFor="let item of result">
-                    <td>{{item.key}}</td>
-                    <td>{{item.value.toLocaleString()}}</td>
-                </tr>
-            </ng-container>
-        </tbody>
 
         <tbody *ngIf="isStatLike">
             <ng-container *ngIf="statItemsQuery | async as result; else loading_statlike">
@@ -53,6 +35,7 @@
     </table>
 
     <app-line-chart [data]="dictQuery | async" *ngIf="canLineChart"></app-line-chart>
+    <app-bar-chart [data]="dictQuery | async" *ngIf="canBarChart"></app-bar-chart>
 </app-modal>
 
 <ng-template #loading_dictlike>
