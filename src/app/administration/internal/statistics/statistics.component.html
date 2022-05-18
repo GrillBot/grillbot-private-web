@@ -51,6 +51,8 @@
             </ng-container>
         </tbody>
     </table>
+
+    <app-line-chart [data]="dictQuery | async" *ngIf="canLineChart"></app-line-chart>
 </app-modal>
 
 <ng-template #loading_dictlike>

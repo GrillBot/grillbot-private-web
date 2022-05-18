@@ -22,6 +22,7 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { EmotePickerComponent } from './emote-picker/emote-picker.component';
 import { DataListModule } from './data-list/data-list.module';
 import { SelectComponent } from './select/select.component';
+import { ChartsModule } from './charts/charts.module';
 
 @NgModule({
     declarations: [
@@ -50,7 +51,8 @@ import { SelectComponent } from './select/select.component';
         NgSelectModule,
         DirectivesModule,
         PipesModule,
-        DataListModule
+        DataListModule,
+        ChartsModule
     ],
     exports: [
         CommonModule,
@@ -74,7 +76,8 @@ import { SelectComponent } from './select/select.component';
         PipesModule,
         EmotePickerComponent,
         DataListModule,
-        SelectComponent
+        SelectComponent,
+        ChartsModule
     ]
 })
 export class SharedModule { }

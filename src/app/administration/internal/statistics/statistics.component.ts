@@ -29,12 +29,16 @@ export class StatisticsComponent implements OnInit, OnDestroy {
     get isApiRequestsByStatusCode(): boolean { return this.type === 'api/status'; }
 
     get isDictLike(): boolean {
-        return this.isDb || this.isAuditLogByType || this.isAuditLogByDate || this.isUnverifyLogByType || this.isUnverifyLogByDate
+        return this.isDb || this.isAuditLogByType || this.isUnverifyLogByType || this.isUnverifyLogByDate
             || this.isApiRequestsByStatusCode || this.isApiRequestsByDate;
     }
 
     get isStatLike(): boolean {
         return this.isTextCommands || this.isInteractions || this.isJobs || this.isApiRequestsByEndpoint;
+    }
+
+    get canLineChart(): boolean {
+        return this.isAuditLogByDate;
     }
 
     get header(): string {
