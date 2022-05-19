@@ -1,8 +1,8 @@
 import { Support } from '../lib/support';
 import { FilterBase } from './common';
 import { DateTime } from './datetime';
-import { ChannelFlagMapping } from './enums/channel-flags';
-import { ChannelType } from './enums/channel-type';
+import { ChannelFlagMapping, ChannelFlags } from './enums/channel-flags';
+import { ChannelType, ChannelTypeTexts } from './enums/channel-type';
 import { Guild } from './guilds';
 import { QueryParam } from './http';
 import { User } from './users';
@@ -11,6 +11,7 @@ export class Channel {
     public id: string;
     public name: string;
     public type: ChannelType;
+    public flags: number;
 
     get fullFormat(): string {
         return `#${this.name} (${this.id})`;
@@ -21,7 +22,11 @@ export class Channel {
     }
 
     get channelTypeName(): string {
-        return Support.getEnumKeyByValue(ChannelType, this.type);
+        return ChannelTypeTexts[Support.getEnumKeyByValue(ChannelType, this.type)];
+    }
+
+    get isDeleted(): boolean {
+        return (this.flags & ChannelFlags.Deleted) !== 0;
     }
 
     static create(data: any): Channel | null {
@@ -32,6 +37,7 @@ export class Channel {
         channel.name = data.name;
         channel.type = data.type;
         channel.id = data.id;
+        channel.flags = data.flags;
 
         return channel;
     }
@@ -131,23 +137,22 @@ export class GuildChannelListItem extends Channel {
 }
 
 export class ChannelDetail extends GuildChannelListItem {
-    public flags: number;
     public lastMessageFrom: User | null;
     public mostActiveUser: User | null;
     public parentChannel: Channel | null;
+    public threads: Channel[] | null;
 
     static create(data: any): ChannelDetail | null {
         if (!data) { return null; }
-        const base = super.create(data);
         const detail = new ChannelDetail();
 
-        Object.assign(detail, base);
-        detail.flags = data.flags;
+        Object.assign(detail, super.create(data));
         detail.lastMessageFrom = data.lastMessageFrom ? User.create(data.lastMessageFrom) : null;
         detail.mostActiveUser = data.mostActiveUser ? User.create(data.mostActiveUser) : null;
         detail.name = data.name;
         detail.type = data.type;
         detail.parentChannel = data.parentChannel ? Channel.create(data.parentChannel) : null;
+        detail.threads = data.threads ? data.threads.map((o: Channel) => Channel.create(o)) : null;
 
         return detail;
     }

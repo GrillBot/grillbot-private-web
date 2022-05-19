@@ -7,3 +7,13 @@ export enum ChannelType {
     PrivateThread = 12,
     Stage = 13
 }
+
+export enum ChannelTypeTexts {
+    Text = 'Textový kanál',
+    Voice = 'Hlasový kanál',
+    Category = 'Kategorie',
+    News = 'Kanál s novinkami',
+    PublicThread = 'Veřejné vlákno',
+    PrivateThread = 'Soukromé vlákno',
+    Stage = 'Stage'
+}

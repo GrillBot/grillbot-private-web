@@ -1,7 +1,7 @@
 import { FormsHelper } from './../../../core/lib/forms';
 import { SendMessageToChannelParams, UpdateChannelParams } from './../../../core/models/channels';
 import { Dictionary, PaginatedParams } from 'src/app/core/models/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ChannelDetail } from 'src/app/core/models/channels';
@@ -31,8 +31,11 @@ export class ChannelDetailComponent implements OnInit {
         private fb: FormBuilder,
         private activatedRoute: ActivatedRoute,
         private modal: ModalService,
-        private channelService: ChannelService
-    ) { }
+        private channelService: ChannelService,
+        private router: Router
+    ) {
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    }
 
     ngOnInit(): void {
         this.channelId = this.activatedRoute.snapshot.params.id as string;

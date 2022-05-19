@@ -3,14 +3,19 @@
 </div>
 
 <ng-container *ngIf="data">
-    <div class="row ml-0 mr-0 mt-3">
+    <div class="row ms-0 me-0 mt-3">
         <div class="col">
             <app-card icon="fas fa-envelope-open-text" [title]="'Informace o kanálu'">
                 <div class="row">
                     <div keyValueItem class="col" [key]="'Identifikátor'" [value]="data.id"></div>
                     <div keyValueItem class="col" [key]="'Název'" [value]="data.name"></div>
                     <div keyValueItem class="col" [key]="'Typ'" [value]="data.channelTypeName"></div>
-                    <div keyValueItem class="col" [key]="'Server'" [value]="data.guild.name"></div>
+                    <div class="col">
+                        Server<br>
+                        <b>
+                            <a routerLink="/admin/servers/{{data.guild.id}}" class="text-dark">{{data.guild.name}}</a>
+                        </b>
+                    </div>
                 </div>
 
                 <div class="row mt-2">
@@ -19,15 +24,30 @@
                     </div>
                     <div keyValueItem class="col" [key]="'Poslední zpráva v'" [value]="data.lastMessageAt.toLocaleString()"
                         *ngIf="data.lastMessageAt"></div>
-                    <div keyValueItem class="col" [key]="'Poslední zpráva od'" [value]="data.lastMessageFrom.fullUsername"
-                        *ngIf="data.lastMessageFrom"></div>
-                    <div keyValueItem class="col" [key]="'Nejaktivnější uživatel'" [value]="data.mostActiveUser.fullUsername"
-                        *ngIf="data.mostActiveUser"></div>
+                    <div class="col" *ngIf="data.lastMessageFrom">
+                        Poslední zpráva od<br>
+                        <b>
+                            <a routerLink="/admin/users/{{data.lastMessageFrom.id}}"
+                                class="text-dark">{{data.lastMessageFrom.fullUsername}}</a>
+                        </b>
+                    </div>
+                    <div class="col" *ngIf="data.mostActiveUser">
+                        Nejaktivnější uživatel<br>
+                        <b>
+                            <a routerLink="/admin/users/{{data.mostActiveUser.id}}"
+                                class="text-dark">{{data.mostActiveUser.fullUsername}}</a>
+                        </b>
+                    </div>
                 </div>
 
                 <div class="row mt-2">
-                    <div keyValueItem class="col-3" [key]="'Nadřazený kanál'" [value]="data.parentChannel.fullFormat"
-                        *ngIf="data.parentChannel"></div>
+                    <div *ngIf="data.parentChannel" class="col-3">
+                        Nadřazený kanál<br>
+                        <b>
+                            <a routerLink="/admin/channels/{{data.parentChannel.id}}"
+                                class="text-dark">{{data.parentChannel.fullFormat}}</a>
+                        </b>
+                    </div>
                     <div keyValueItem class="col-3" [key]="'Počet zpráv v cache'" [value]="data.cachedMessagesCount.toLocaleString()"></div>
                     <div keyValueItem class="col-3" [key]="'Počet oprávnění pro role'"
                         [value]="data.rolePermissionCount?.toLocaleString() ?? 'Není známo'"></div>
@@ -44,7 +64,7 @@
         </div>
     </div>
 
-    <div class="row mt-3 ml-0 mr-0" *ngIf="settingsForm && !this.data.isThread">
+    <div class="row mt-3 me-0 me-0" *ngIf="settingsForm && !this.data.isThread">
         <div class="col">
             <app-card icon="fas fa-cogs" [title]="'Nastavení'">
                 <div class="row">
@@ -59,7 +79,7 @@
         </div>
     </div>
 
-    <div class="row mt-3 ml-0 mr-0">
+    <div class="row mt-3 ms-0 me-0">
         <div class="col">
             <app-card icon="fas fa-envelope" [title]="'Odeslat zprávu do kanálu'" [allowHideButton]="true">
                 <form [formGroup]="sendMessageForm" (ngSubmit)="sendMessageSubmit()">
@@ -93,7 +113,7 @@
         </div>
     </div>
 
-    <div class="row mt-3 ms-0 me-0 mb-3">
+    <div class="row mt-3 ms-0 me-0">
         <div class="col">
             <app-card [icon]="'fas fa-comment-dots'" [title]="'Aktivita v kanálu'">
                 <app-data-list #channelStats (readData)="readChannelStats($event)">
@@ -112,8 +132,12 @@
                         <tbody>
                             <tr *ngFor="let item of channelStats.items">
                                 <td>{{item.position}}.</td>
-                                <td *ngIf="!item.nickname">{{item.username}}</td>
-                                <td *ngIf="item.nickname">{{item.nickname}} ({{item.username}})</td>
+                                <td>
+                                    <a routerLink="/admin/users/{{item.userId}}" class="text-dark">
+                                        <span *ngIf="!item.nickname">{{item.username}}</span>
+                                        <span *ngIf="item.nickname">{{item.nickname}} ({{item.username}})</span>
+                                    </a>
+                                </td>
                                 <td>{{item.count}}</td>
                                 <td>{{item.firstMessageAt.toLocaleString()}}</td>
                                 <td>{{item.lastMessageAt.toLocaleString()}}</td>
@@ -124,6 +148,29 @@
                         </tbody>
                     </table>
                 </app-data-list>
+            </app-card>
+        </div>
+    </div>
+
+    <div class="row mt-3 ms-0 me-0 mb-3">
+        <div class="col" *ngIf="data.threads && data.threads.length > 0">
+            <app-card [icon]="'fas fa-quote-right'" [title]="'Vlákna'">
+                <table class="table table-bordered table-sm table-striped auto-column-width">
+                    <thead>
+                        <tr>
+                            <th>Název</th>
+                            <th>Typ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let thread of data.threads">
+                            <td>
+                                <a routerLink="/admin/channels/{{thread.id}}" class="text-dark">{{thread.name}}</a>
+                            </td>
+                            <td>{{thread.channelTypeName}}<span *ngIf="thread.isDeleted"> (SMAZÁNO)</span></td>
+                        </tr>
+                    </tbody>
+                </table>
             </app-card>
         </div>
     </div>
