@@ -11,121 +11,71 @@ export class StatisticsService {
     constructor(private base: BaseService) { }
 
     getDbStatus(): ObservableDict<string, number> {
-        const url = `${environment.apiUrl}/stats/db`;
-        const headers = this.base.getHttpHeaders();
+        return this.getDictionaryStatistics(`${environment.apiUrl}/stats/db`);
+    }
 
-        return this.base.http.get<Dictionary<string, number>>(url, { headers }).pipe(
-            map(data => Object.keys(data).map(k => ({ key: k, value: data[k] as number }))),
-            catchError((err: HttpErrorResponse) => this.base.catchError(err))
-        );
+    getDbCacheStatus(): ObservableDict<string, number> {
+        return this.getDictionaryStatistics(`${environment.apiUrl}/stats/db/cache`);
     }
 
     getAuditLogsStatisticsByType(): ObservableDict<string, number> {
-        const url = `${environment.apiUrl}/stats/audit-log/type`;
-        const headers = this.base.getHttpHeaders();
-
-        return this.base.http.get<Dictionary<string, number>>(url, { headers }).pipe(
-            map(data => Object.keys(data).map(k => ({ key: k, value: data[k] as number }))),
-            catchError((err: HttpErrorResponse) => this.base.catchError(err))
-        );
+        return this.getDictionaryStatistics(`${environment.apiUrl}/stats/audit-log/type`)
     }
 
     getAuditLogsStatisticsByDate(): ObservableDict<string, number> {
-        const url = `${environment.apiUrl}/stats/audit-log/date`;
-        const headers = this.base.getHttpHeaders();
-
-        return this.base.http.get<Dictionary<string, number>>(url, { headers }).pipe(
-            map(data => Object.keys(data).map(k => ({ key: k, value: data[k] as number }))),
-            catchError((err: HttpErrorResponse) => this.base.catchError(err))
-        );
+        return this.getDictionaryStatistics(`${environment.apiUrl}/stats/audit-log/date`);
     }
 
     getCommandsStatistics(): ObservableList<StatisticItem> {
-        const url = `${environment.apiUrl}/stats/commands`;
-        const headers = this.base.getHttpHeaders();
-
-        return this.base.http.get<StatisticItem[]>(url, { headers }).pipe(
-            map(data => data.map(o => StatisticItem.create(o))),
-            catchError((err: HttpErrorResponse) => this.base.catchError(err))
-        );
+        return this.getObjectStatistics(`${environment.apiUrl}/stats/commands`);
     }
 
     getInteractionsStatus(): ObservableList<StatisticItem> {
-        const url = `${environment.apiUrl}/stats/interactions`;
-        const headers = this.base.getHttpHeaders();
-
-        return this.base.http.get<StatisticItem[]>(url, { headers }).pipe(
-            map(data => data.map(o => StatisticItem.create(o))),
-            catchError((err: HttpErrorResponse) => this.base.catchError(err))
-        );
+        return this.getObjectStatistics(`${environment.apiUrl}/stats/interactions`);
     }
 
     getUnverifyLogsStatisticsByOperation(): ObservableDict<string, number> {
-        const url = `${environment.apiUrl}/stats/unverify-logs/type`;
-        const headers = this.base.getHttpHeaders();
-
-        return this.base.http.get<Dictionary<string, number>>(url, { headers }).pipe(
-            map(data => Object.keys(data).map(k => ({ key: k, value: data[k] as number }))),
-            catchError((err: HttpErrorResponse) => this.base.catchError(err))
-        );
+        return this.getDictionaryStatistics(`${environment.apiUrl}/stats/unverify-logs/type`);
     }
 
     getUnverifyLogsStatisticsByDate(): ObservableDict<string, number> {
-        const url = `${environment.apiUrl}/stats/unverify-logs/date`;
-        const headers = this.base.getHttpHeaders();
-
-        return this.base.http.get<Dictionary<string, number>>(url, { headers }).pipe(
-            map(data => Object.keys(data).map(k => ({ key: k, value: data[k] as number }))),
-            catchError((err: HttpErrorResponse) => this.base.catchError(err))
-        );
+        return this.getDictionaryStatistics(`${environment.apiUrl}/stats/unverify-logs/date`);
     }
 
     getJobsStatistics(): ObservableList<StatisticItem> {
-        const url = `${environment.apiUrl}/stats/jobs`;
-        const headers = this.base.getHttpHeaders();
-
-        return this.base.http.get<StatisticItem[]>(url, { headers }).pipe(
-            map(data => data.map(o => StatisticItem.create(o))),
-            catchError((err: HttpErrorResponse) => this.base.catchError(err))
-        );
+        return this.getObjectStatistics(`${environment.apiUrl}/stats/jobs`);
     }
 
     getApiRequestsByEndpoint(): ObservableList<StatisticItem> {
-        const url = `${environment.apiUrl}/stats/api/endpoint`;
+        return this.getObjectStatistics(`${environment.apiUrl}/stats/api/endpoint`);
+    }
+
+    getApiRequestsByDate(): ObservableDict<string, number> {
+        return this.getDictionaryStatistics(`${environment.apiUrl}/stats/api/date`);
+    }
+
+    getApiRequestsByStatusCode(): ObservableDict<string, number> {
+        return this.getDictionaryStatistics(`${environment.apiUrl}/stats/api/status`);
+    }
+
+    getApiRequestsByHttpMethod(): ObservableDict<string, number> {
+        return this.getDictionaryStatistics(`${environment.apiUrl}/stats/api/method`);
+    }
+
+    private getDictionaryStatistics(url: string): ObservableDict<string, number> {
+        const headers = this.base.getHttpHeaders();
+
+        return this.base.http.get<Dictionary<string, number>>(url, { headers }).pipe(
+            map(data => Object.keys(data).map(k => ({ key: k, value: data[k] as number }))),
+            catchError((err: HttpErrorResponse) => this.base.catchError(err))
+        );
+    }
+
+    private getObjectStatistics(url: string): ObservableList<StatisticItem> {
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.get<StatisticItem[]>(url, { headers }).pipe(
             map(data => data.map(o => StatisticItem.create(o))),
-            catchError((err: HttpErrorResponse) => this.base.catchError(err))
-        );
-    }
-
-    getApiRequestsByDate(): ObservableDict<string, number> {
-        const url = `${environment.apiUrl}/stats/api/date`;
-        const headers = this.base.getHttpHeaders();
-
-        return this.base.http.get<Dictionary<string, number>>(url, { headers }).pipe(
-            map(data => Object.keys(data).map(k => ({ key: k, value: data[k] as number }))),
-            catchError((err: HttpErrorResponse) => this.base.catchError(err))
-        );
-    }
-
-    getApiRequestsByStatusCode(): ObservableDict<string, number> {
-        const url = `${environment.apiUrl}/stats/api/status`;
-        const headers = this.base.getHttpHeaders();
-
-        return this.base.http.get<Dictionary<string, number>>(url, { headers }).pipe(
-            map(data => Object.keys(data).map(k => ({ key: k, value: data[k] as number }))),
-            catchError((err: HttpErrorResponse) => this.base.catchError(err))
-        );
-    }
-
-    getApiRequestsByHttpMethod(): ObservableDict<string, number> {
-        const url = `${environment.apiUrl}/stats/api/method`;
-        const headers = this.base.getHttpHeaders();
-
-        return this.base.http.get<Dictionary<string, number>>(url, { headers }).pipe(
-            map(data => Object.keys(data).map(k => ({ key: k, value: data[k] as number }))),
             catchError((err: HttpErrorResponse) => this.base.catchError(err))
         );
     }

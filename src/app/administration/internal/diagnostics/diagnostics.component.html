@@ -35,6 +35,7 @@
         <app-card [title]="'Statistiky'" [icon]="'far fa-list-alt'">
             <ul>
                 <li><a href="javascript:;" (click)="openStats('db')" class="text-dark">Stav databáze</a></li>
+                <li><a href="javascript:;" (click)="openStats('db/cache')" class="text-dark">Stav DB cache</a></li>
                 <li><a href="javascript:;" (click)="openStats('audit-log/type')" class="text-dark">Audit log (podle typu)</a></li>
                 <li><a href="javascript:;" (click)="openStats('audit-log/date')" class="text-dark">Audit log (po měsících)</a></li>
                 <li><a href="javascript:;" (click)="openStats('unverify-logs/type')" class="text-dark">Unverify log (podle typu)</a></li>

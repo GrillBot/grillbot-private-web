@@ -18,6 +18,7 @@ export class StatisticsComponent implements OnInit, OnDestroy {
     constructor(private statisticsService: StatisticsService) { }
 
     get isDb(): boolean { return this.type === 'db'; }
+    get isDbCache(): boolean { return this.type === 'db/cache'; }
     get isAuditLogByType(): boolean { return this.type === 'audit-log/type'; }
     get isAuditLogByDate(): boolean { return this.type === 'audit-log/date'; }
     get isUnverifyLogByType(): boolean { return this.type === 'unverify-logs/type'; }
@@ -38,11 +39,12 @@ export class StatisticsComponent implements OnInit, OnDestroy {
     }
 
     get canBarChart(): boolean {
-        return this.isDb || this.isAuditLogByType || this.isUnverifyLogByType || this.isApiRequestsByStatusCode;
+        return this.isDb || this.isDbCache || this.isAuditLogByType || this.isUnverifyLogByType || this.isApiRequestsByStatusCode;
     }
 
     get header(): string {
         if (this.isDb) { return 'Statistika databáze'; }
+        else if (this.isDbCache) { return 'Statistika DB cache'; }
         else if (this.isAuditLogByType) { return 'Statistika audit logu (podle typu)'; }
         else if (this.isAuditLogByDate) { return 'Statistika audit logu (po měsících)'; }
         else if (this.isUnverifyLogByType) { return 'Statistika unverify logu (podle typu)'; }
@@ -59,6 +61,7 @@ export class StatisticsComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         if (this.isDb) { this.dictQuery = this.statisticsService.getDbStatus(); }
+        else if (this.isDbCache) { this.dictQuery = this.statisticsService.getDbCacheStatus(); }
         else if (this.isAuditLogByType) { this.dictQuery = this.statisticsService.getAuditLogsStatisticsByType(); }
         else if (this.isAuditLogByDate) { this.dictQuery = this.statisticsService.getAuditLogsStatisticsByDate(); }
         else if (this.isUnverifyLogByType) { this.dictQuery = this.statisticsService.getUnverifyLogsStatisticsByOperation(); }
