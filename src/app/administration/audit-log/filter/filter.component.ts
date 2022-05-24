@@ -4,7 +4,7 @@
 import { ExtendedFiltersModalData } from './extended-filters/filters-modal-result';
 import { Dictionary } from 'src/app/core/models/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuditLogListParams } from 'src/app/core/models/audit-log';
 import { StorageService } from 'src/app/core/services/storage.service';
 import { AuditLogItemType, AuditLogItemTypeTexts } from 'src/app/core/models/enums/audit-log-item-type';
@@ -62,6 +62,10 @@ export class FilterComponent implements OnInit {
     }
 
     submitForm(): void {
+        if (this.form.invalid) {
+            return;
+        }
+
         const filter = AuditLogListParams.create(this.form.value);
 
         if (this.extendedFilters) {
@@ -95,8 +99,8 @@ export class FilterComponent implements OnInit {
         });
     }
 
-    private initFilter(filter: AuditLogListParams): void {
-        const serialized = filter.serialized;
+    private initFilter(filterData: AuditLogListParams): void {
+        const serialized = filterData.serialized;
 
         this.form = this.fb.group({
             guild: [serialized.guild],
@@ -105,17 +109,18 @@ export class FilterComponent implements OnInit {
             createdTo: [serialized.createdTo],
             ignoreBots: [serialized.ignoreBots],
             processedUsers: [serialized.processedUsers],
-            types: [serialized.types]
+            types: [serialized.types],
+            ids: [serialized.ids, Validators.pattern('^[0-9,]*$')]
         });
 
         this.extendedFilters = {
-            commandFilter: filter.commandFilter,
-            errorFilter: filter.errorFilter,
-            infoFilter: filter.infoFilter,
-            interactionFilter: filter.interactionsFilter,
-            jobFilter: filter.jobFilter,
-            warningFilter: filter.warningFilter,
-            apiRequestFilter: filter.apiRequestFilter
+            commandFilter: filterData.commandFilter,
+            errorFilter: filterData.errorFilter,
+            infoFilter: filterData.infoFilter,
+            interactionFilter: filterData.interactionsFilter,
+            jobFilter: filterData.jobFilter,
+            warningFilter: filterData.warningFilter,
+            apiRequestFilter: filterData.apiRequestFilter
         };
 
         this.form.valueChanges.pipe(debounceTime(300)).subscribe(_ => this.submitForm());

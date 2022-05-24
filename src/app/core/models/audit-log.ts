@@ -149,6 +149,7 @@ export class AuditLogListParams extends FilterBase {
     public createdTo: string | null;
     public ignoreBots: boolean;
     public channelId: string | null;
+    public ids: string | null;
 
     public infoFilter: TextFilter | null = null;
     public warningFilter: TextFilter | null = null;
@@ -171,15 +172,14 @@ export class AuditLogListParams extends FilterBase {
             new QueryParam('ignoreBots', this.ignoreBots),
             this.channelId ? new QueryParam('channelId', this.channelId) : null,
             ...super.queryParams,
-
             ...(this.infoFilter ? this.infoFilter.getQueryParams('InfoFilter') : []),
             ...(this.warningFilter ? this.warningFilter.getQueryParams('WarningFilter') : []),
             ...(this.errorFilter ? this.errorFilter.getQueryParams('ErrorFilter') : []),
-
             ...(this.commandFilter ? this.commandFilter.getQueryParams('CommandFilter') : []),
             ...(this.interactionsFilter ? this.interactionsFilter.getQueryParams('InteractionFilter') : []),
             ...(this.jobFilter ? this.jobFilter.getQueryParams('JobFilter') : []),
-            ...(this.apiRequestFilter ? this.apiRequestFilter.queryParams : [])
+            ...(this.apiRequestFilter ? this.apiRequestFilter.queryParams : []),
+            this.ids ? new QueryParam('ids', this.ids) : null
         ].filter(o => o);
     }
 
@@ -198,7 +198,8 @@ export class AuditLogListParams extends FilterBase {
             commandFilter: this.commandFilter?.serialized,
             interactionsFilter: this.interactionsFilter?.serialized,
             jobFilter: this.jobFilter?.serialized,
-            apiRequestFilter: this.apiRequestFilter?.queryParams
+            apiRequestFilter: this.apiRequestFilter?.queryParams,
+            ids: this.ids
         };
     }
 
@@ -220,6 +221,7 @@ export class AuditLogListParams extends FilterBase {
         params.interactionsFilter = data.interactionsFilter ? ExecutionFilter.create(data.interactionsFilter) : null;
         params.jobFilter = data.jobFilter ? ExecutionFilter.create(data.jobFilter) : null;
         params.apiRequestFilter = data.apiRequestFilter ? ApiRequestFilter.create(data.apiRequestFilter) : null;
+        params.ids = data.ids;
 
         return params;
     }

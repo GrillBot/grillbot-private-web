@@ -1,6 +1,14 @@
-<app-card [title]="'Vyhledávání'" [icon]="'fas fa-search'" [size]="'md'" [allowHideButton]="true">
+<app-card [title]="'Vyhledávání'" [icon]="'fas fa-search'" [allowHideButton]="true">
     <form [formGroup]="form">
         <div class="row">
+            <div class="col form-group">
+                <label>ID záznamů (oddělovat čárkou)</label>
+                <input type="text" formControlName="ids" class="form-control" />
+                <small class="text-danger" *ngIf="form.invalid">
+                    <span *ngIf="form.get('ids').hasError('pattern')">Zadání obsahuje nepovolené znaky.</span>
+                </small>
+            </div>
+
             <div class="col form-group">
                 <label>Server</label>
                 <app-search-input [searchSource]="'guilds'" formControlName="guild"></app-search-input>
@@ -27,11 +35,9 @@
                 <label>Zapsáno do</label>
                 <input type="datetime-local" class="form-control" formControlName="createdTo" />
             </div>
-        </div>
 
-        <div class="row">
             <div class="col form-group">
-                <label>Typy operací</label>
+                <label>Typy operací (zohlednit)</label>
                 <ng-select [bindValue]="'key'" [bindLabel]="'value'" [closeOnSelect]="false" [clearable]="true" [items]="types"
                     [multiple]="true" [notFoundText]="'Nenalezen žádný typ'" [searchable]="true" formControlName="types"></ng-select>
             </div>
@@ -43,7 +49,8 @@
             </div>
 
             <div class="col d-flex align-items-center justify-content-center">
-                <button *ngIf="allowExtendedFilters" class="btn btn-link" type="button" (click)="openExtendedFiltersModal()">Pokročilé vyhledávání</button>
+                <button *ngIf="allowExtendedFilters" class="btn btn-link" type="button" (click)="openExtendedFiltersModal()">Pokročilé
+                    vyhledávání</button>
             </div>
 
             <div class="col d-flex justify-content-end">
