@@ -32,6 +32,7 @@ export class FilterComponent implements OnInit {
 
     get guildId(): string { return this.form.get('guild').value as string; }
     get selectedTypes(): AuditLogItemType[] { return this.form.get('types').value as AuditLogItemType[]; }
+    get excludedTypes(): AuditLogItemType[] { return this.form.get('excludedTypes').value as AuditLogItemType[]; }
 
     get allowExtendedFilters(): boolean {
         const typesWithFilters = [
@@ -44,7 +45,8 @@ export class FilterComponent implements OnInit {
             AuditLogItemType.API
         ];
 
-        return typesWithFilters.some(o => this.selectedTypes.includes(o));
+        const selected = [...this.selectedTypes].filter(o => !this.excludedTypes.includes(o));
+        return typesWithFilters.some(o => selected.includes(o));
     }
 
     ngOnInit(): void {
@@ -110,7 +112,8 @@ export class FilterComponent implements OnInit {
             ignoreBots: [serialized.ignoreBots],
             processedUsers: [serialized.processedUsers],
             types: [serialized.types],
-            ids: [serialized.ids, Validators.pattern('^[0-9,]*$')]
+            ids: [serialized.ids, Validators.pattern('^[0-9,]*$')],
+            excludedTypes: [serialized.excludedTypes]
         });
 
         this.extendedFilters = {

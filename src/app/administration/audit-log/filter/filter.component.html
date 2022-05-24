@@ -37,9 +37,15 @@
             </div>
 
             <div class="col form-group">
-                <label>Typy operací (zohlednit)</label>
+                <label>Typy operací (k zobrazení)</label>
                 <ng-select [bindValue]="'key'" [bindLabel]="'value'" [closeOnSelect]="false" [clearable]="true" [items]="types"
                     [multiple]="true" [notFoundText]="'Nenalezen žádný typ'" [searchable]="true" formControlName="types"></ng-select>
+            </div>
+
+            <div class="col form-group">
+                <label>Typy operací (k vynechání)</label>
+                <ng-select [bindValue]="'key'" [bindLabel]="'value'" [closeOnSelect]="false" [clearable]="true" [items]="types"
+                    [multiple]="true" [notFoundText]="'Nenalezen žádný typ'" [searchable]="true" formControlName="excludedTypes"></ng-select>
             </div>
         </div>
 

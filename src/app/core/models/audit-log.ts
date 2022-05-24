@@ -150,7 +150,7 @@ export class AuditLogListParams extends FilterBase {
     public ignoreBots: boolean;
     public channelId: string | null;
     public ids: string | null;
-
+    public excludedTypes: AuditLogItemType[] = [];
     public infoFilter: TextFilter | null = null;
     public warningFilter: TextFilter | null = null;
     public errorFilter: TextFilter | null = null;
@@ -160,13 +160,19 @@ export class AuditLogListParams extends FilterBase {
     public jobFilter: ExecutionFilter | null = null;
     public apiRequestFilter: ApiRequestFilter | null = null;
 
-    static get empty(): AuditLogListParams { return new AuditLogListParams(); }
+    static get empty(): AuditLogListParams {
+        const params = new AuditLogListParams();
+        params.excludedTypes = [AuditLogItemType.API, AuditLogItemType.JobCompleted];
+
+        return params;
+    }
 
     get queryParams(): QueryParam[] {
         return [
             this.guildId ? new QueryParam('guildId', this.guildId) : null,
             ...(this.processedUserIds ? this.processedUserIds.map(o => new QueryParam('processedUserIds', o)) : []),
             ...(this.types && this.types.length > 0 ? this.types.map(o => new QueryParam('types', o)) : []),
+            ...(this.excludedTypes && this.excludedTypes.length > 0 ? this.excludedTypes.map(o => new QueryParam('excludedTypes', o)) : []),
             this.createdFrom ? new QueryParam('createdFrom', this.createdFrom) : null,
             this.createdTo ? new QueryParam('createdTo', this.createdTo) : null,
             new QueryParam('ignoreBots', this.ignoreBots),
@@ -192,6 +198,7 @@ export class AuditLogListParams extends FilterBase {
             ignoreBots: this.ignoreBots ?? false,
             processedUsers: this.processedUserIds,
             types: this.types,
+            excludedTypes: this.excludedTypes,
             infoFilter: this.infoFilter?.serialized,
             warningFilter: this.warningFilter?.serialized,
             errorFilter: this.errorFilter?.serialized,
@@ -222,6 +229,7 @@ export class AuditLogListParams extends FilterBase {
         params.jobFilter = data.jobFilter ? ExecutionFilter.create(data.jobFilter) : null;
         params.apiRequestFilter = data.apiRequestFilter ? ApiRequestFilter.create(data.apiRequestFilter) : null;
         params.ids = data.ids;
+        params.excludedTypes = data.excludedTypes;
 
         return params;
     }
