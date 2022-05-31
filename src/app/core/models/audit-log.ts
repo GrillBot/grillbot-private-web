@@ -337,3 +337,11 @@ export class AuditLogFileMetadata {
 
 export type SortingTypes = 'guild' | 'processed' | 'type' | 'channel' | 'createdat';
 
+export class ClientLogItemRequest {
+    constructor(
+        public isInfo: boolean,
+        public isWarning: boolean,
+        public isError: boolean,
+        public content: string
+    ) { }
+}

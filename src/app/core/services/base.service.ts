@@ -47,7 +47,7 @@ export class BaseService {
             }
         }
 
-        return throwError(err);
+        return throwError(() => err);
     }
 
     isAuthError(err: HttpErrorResponse): boolean {

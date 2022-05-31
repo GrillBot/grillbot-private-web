@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { PaginatedResponse } from './../models/common';
-import { AuditLogFileMetadata, AuditLogListItem, SortingTypes } from './../models/audit-log';
+import { EmptyObservable, PaginatedResponse } from './../models/common';
+import { AuditLogFileMetadata, AuditLogListItem, ClientLogItemRequest, SortingTypes } from './../models/audit-log';
 import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
 import { AuditLogListParams } from '../models/audit-log';
