@@ -197,8 +197,8 @@ export class AuditLogListParams extends FilterBase {
             createdTo: this.createdTo,
             ignoreBots: this.ignoreBots ?? false,
             processedUsers: this.processedUserIds,
-            types: this.types,
-            excludedTypes: this.excludedTypes,
+            types: this.types ? this.types : [],
+            excludedTypes: this.excludedTypes ? this.excludedTypes : [],
             infoFilter: this.infoFilter?.serialized,
             warningFilter: this.warningFilter?.serialized,
             errorFilter: this.errorFilter?.serialized,
@@ -220,7 +220,7 @@ export class AuditLogListParams extends FilterBase {
         params.createdTo = data.createdTo;
         params.ignoreBots = data.ignoreBots ?? false;
         params.processedUserIds = data.processedUsers;
-        params.types = data.types;
+        params.types = data.types ? data.types : [];
         params.infoFilter = data.infoFilter ? TextFilter.create(data.infoFilter) : null
         params.warningFilter = data.warningFilter ? TextFilter.create(data.warningFilter) : null;
         params.errorFilter = data.errorFilter ? TextFilter.create(data.errorFilter) : null;
@@ -229,7 +229,7 @@ export class AuditLogListParams extends FilterBase {
         params.jobFilter = data.jobFilter ? ExecutionFilter.create(data.jobFilter) : null;
         params.apiRequestFilter = data.apiRequestFilter ? ApiRequestFilter.create(data.apiRequestFilter) : null;
         params.ids = data.ids;
-        params.excludedTypes = data.excludedTypes;
+        params.excludedTypes = data.excludedTypes ? data.excludedTypes : [];
 
         return params;
     }

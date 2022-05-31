@@ -45,7 +45,13 @@ export class FilterComponent implements OnInit {
             AuditLogItemType.API
         ];
 
-        const selected = [...this.selectedTypes].filter(o => !this.excludedTypes.includes(o));
+        let selTypes = this.selectedTypes;
+        if (!selTypes) { selTypes = []; }
+
+        let exclTypes = this.excludedTypes;
+        if (!exclTypes) { exclTypes = []; }
+
+        const selected = [...selTypes].filter(o => !exclTypes.includes(o));
         return typesWithFilters.some(o => selected.includes(o));
     }
 
