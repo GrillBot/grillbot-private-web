@@ -45,15 +45,6 @@ export class UserService {
         );
     }
 
-    hearthbeat(): Observable<unknown> {
-        const url = `${environment.apiUrl}/users/hearthbeat`;
-        const headers = this.base.getHttpHeaders();
-
-        return this.base.http.post(url, null, { headers }).pipe(
-            catchError((err: HttpErrorResponse) => this.base.catchError(err, true))
-        );
-    }
-
     hearthbeatOff(): Observable<unknown> {
         const url = `${environment.apiUrl}/users/hearthbeat`;
         const headers = this.base.getHttpHeaders();
