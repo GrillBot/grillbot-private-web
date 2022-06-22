@@ -12,6 +12,19 @@
                     Uživatel nebyl na tomto serveru nalezen.
                 </div>
 
+                <div class="alert alert-info" *ngIf="guild.unverify">
+                    <i class="fas fa-info-circle"></i>
+                    Uděleno
+                    <ng-container *ngIf="!guild.unverify.isSelfUnverify">
+                        unverify od <b>{{guild.unverify.start.binding}}</b> do <b>{{guild.unverify.end.binding}}</b>. Důvod odebrání
+                        přístupu: <b>{{guild.unverify.reason}}</b>
+                    </ng-container>
+
+                    <ng-container *ngIf="guild.unverify.isSelfUnverify">
+                        selfunverify od <b>{{guild.unverify.start.binding}}</b> do <b>{{guild.unverify.end.binding}}</b>.
+                    </ng-container>
+                </div>
+
                 <div class="row mb-3">
                     <div keyValueItem class="col-2" [key]="'Server'" [value]="guild.guild.name"></div>
                     <div keyValueItem class="col-2" [key]="'Serverový nick'" [value]="guild.nickname ?? 'Nenastaven'"></div>

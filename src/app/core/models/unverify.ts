@@ -5,9 +5,30 @@ import { GuildUser, User } from './users';
 import { Guild } from './guilds';
 import { QueryParam } from './http';
 import { Support } from '../lib/support';
-import { PaginatedParams, SortParams, FilterBase } from './common';
+import { FilterBase } from './common';
 
-export class UnverifyUserProfile {
+export class UnverifyInfo {
+    public start: DateTime;
+    public end: DateTime;
+    public endTo: string;
+    public reason: string | null;
+    public isSelfUnverify: boolean;
+
+    static create(data: any): UnverifyInfo | null {
+        if (!data) { return null; }
+
+        const info = new UnverifyInfo();
+        info.start = DateTime.fromISOString(data.start);
+        info.end = DateTime.fromISOString(data.end);
+        info.endTo = data.endTo;
+        info.reason = data.reason;
+        info.isSelfUnverify = data.isSelfUnverify;
+
+        return info;
+    }
+}
+
+export class UnverifyUserProfile extends UnverifyInfo {
     public user: User;
     public start: DateTime;
     public end: DateTime;
@@ -24,16 +45,12 @@ export class UnverifyUserProfile {
         if (!data) { return null; }
         const profile = new UnverifyUserProfile();
 
+        Object.assign(profile, super.create(data));
         profile.user = User.create(data.user);
-        profile.start = DateTime.fromISOString(data.start);
-        profile.end = DateTime.fromISOString(data.end);
-        profile.endTo = data.endTo;
         profile.rolesToKeep = data.rolesToKeep.map((o: any) => Role.create(o));
         profile.rolesToRemove = data.rolesToRemove.map((o: any) => Role.create(o));
         profile.channelsToKeep = data.channelsToKeep.map((o: any) => o as string);
         profile.channelsToRemove = data.channelsToRemove.map((o: any) => o as string);
-        profile.reason = data.reason;
-        profile.isSelfUnverify = data.isSelfUnverify;
         profile.guild = Guild.create(data.guild);
 
         return profile;

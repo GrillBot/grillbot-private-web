@@ -10,6 +10,7 @@ import { StatusColorMapping, UserStatus, UserStatusTexts } from './enums/user-st
 import { Guild } from './guilds';
 import { QueryParam } from './http';
 import { Invite, InviteBase } from './invites';
+import { UnverifyInfo } from './unverify';
 
 export class User {
     public id: string;
@@ -232,6 +233,7 @@ export class GuildUserDetail {
     public isGuildKnown: boolean;
     public isUserInGuild: boolean;
     public emotes: EmoteStatItem[];
+    public unverify: UnverifyInfo | null;
 
     static create(data: any): GuildUserDetail | null {
         if (!data) { return null; }
@@ -248,6 +250,7 @@ export class GuildUserDetail {
         detail.isGuildKnown = data.isGuildKnown;
         detail.isUserInGuild = data.isUserInGuild;
         detail.emotes = data.emotes?.map((o: any) => EmoteStatItem.create(o)).filter((o: EmoteStatItem) => o);
+        detail.unverify = data.unverify ? UnverifyInfo.create(data.unverify) : null;
 
         return detail;
     }
