@@ -9,6 +9,7 @@ import { ExtendedFiltersModalComponent } from './filter/extended-filters/extende
 import { TextFilterComponent } from './filter/extended-filters/text-filter/text-filter.component';
 import { ExecutionFilterComponent } from './filter/extended-filters/execution-filter/execution-filter.component';
 import { ApiRequestFilterComponent } from './filter/extended-filters/api-request-filter/api-request-filter.component';
+import { TargetIdFilterComponent } from './filter/extended-filters/target-id-filter/target-id-filter.component';
 
 const routes: Routes = [
     { path: '', component: DashboardComponent }
@@ -23,7 +24,8 @@ const routes: Routes = [
         ExtendedFiltersModalComponent,
         TextFilterComponent,
         ExecutionFilterComponent,
-        ApiRequestFilterComponent
+        ApiRequestFilterComponent,
+        TargetIdFilterComponent
     ],
     imports: [
         SharedModule,

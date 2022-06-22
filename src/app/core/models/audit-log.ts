@@ -141,6 +141,31 @@ export class ApiRequestFilter {
     }
 }
 
+export class TargetIdFilter {
+    public targetId: string;
+
+    get serialized(): any {
+        return {
+            targetId: this.targetId
+        };
+    }
+
+    getQueryParams(propertyName: string): QueryParam[] {
+        return [
+            this.targetId ? new QueryParam(`${propertyName}.TargetId`, this.targetId) : null
+        ].filter(o => o);
+    }
+
+    static create(data: any): TargetIdFilter | null {
+        if (!data) { return null; }
+        const filter = new TargetIdFilter();
+
+        filter.targetId = data.targetId;
+
+        return filter;
+    }
+}
+
 export class AuditLogListParams extends FilterBase {
     public guildId: string | null;
     public processedUserIds: string[] = [];
@@ -154,11 +179,15 @@ export class AuditLogListParams extends FilterBase {
     public infoFilter: TextFilter | null = null;
     public warningFilter: TextFilter | null = null;
     public errorFilter: TextFilter | null = null;
-
     public commandFilter: ExecutionFilter | null = null;
     public interactionsFilter: ExecutionFilter | null = null;
     public jobFilter: ExecutionFilter | null = null;
     public apiRequestFilter: ApiRequestFilter | null = null;
+    public overwriteCreatedFilter: TargetIdFilter | null = null;
+    public overwriteUpdatedFilter: TargetIdFilter | null = null;
+    public overwriteDeletedFilter: TargetIdFilter | null = null;
+    public memberUpdatedFilter: TargetIdFilter | null = null;
+    public memberRoleUpdatedFilter: TargetIdFilter | null = null;
 
     static get empty(): AuditLogListParams {
         const params = new AuditLogListParams();
@@ -185,7 +214,12 @@ export class AuditLogListParams extends FilterBase {
             ...(this.interactionsFilter ? this.interactionsFilter.getQueryParams('InteractionFilter') : []),
             ...(this.jobFilter ? this.jobFilter.getQueryParams('JobFilter') : []),
             ...(this.apiRequestFilter ? this.apiRequestFilter.queryParams : []),
-            this.ids ? new QueryParam('ids', this.ids) : null
+            this.ids ? new QueryParam('ids', this.ids) : null,
+            ...(this.overwriteCreatedFilter ? this.overwriteCreatedFilter.getQueryParams('OverwriteCreatedFilter') : []),
+            ...(this.overwriteDeletedFilter ? this.overwriteDeletedFilter.getQueryParams('OverwriteDeletedFilter') : []),
+            ...(this.overwriteUpdatedFilter ? this.overwriteUpdatedFilter.getQueryParams('OverwriteUpdatedFilter') : []),
+            ...(this.memberUpdatedFilter ? this.memberUpdatedFilter.getQueryParams('MemberUpdatedFilter') : []),
+            ...(this.memberRoleUpdatedFilter ? this.memberRoleUpdatedFilter.getQueryParams('MemberRolesUpdatedFilter') : [])
         ].filter(o => o);
     }
 
@@ -205,8 +239,13 @@ export class AuditLogListParams extends FilterBase {
             commandFilter: this.commandFilter?.serialized,
             interactionsFilter: this.interactionsFilter?.serialized,
             jobFilter: this.jobFilter?.serialized,
-            apiRequestFilter: this.apiRequestFilter?.queryParams,
-            ids: this.ids
+            apiRequestFilter: this.apiRequestFilter?.serialized,
+            ids: this.ids,
+            overwriteCreatedFilter: this.overwriteCreatedFilter?.serialized,
+            overwriteUpdatedFilter: this.overwriteUpdatedFilter?.serialized,
+            overwriteDeletedFilter: this.overwriteDeletedFilter?.serialized,
+            memberUpdatedFilter: this.memberUpdatedFilter?.serialized,
+            memberRoleUpdatedFilter: this.memberRoleUpdatedFilter?.serialized
         };
     }
 
@@ -230,6 +269,11 @@ export class AuditLogListParams extends FilterBase {
         params.apiRequestFilter = data.apiRequestFilter ? ApiRequestFilter.create(data.apiRequestFilter) : null;
         params.ids = data.ids;
         params.excludedTypes = data.excludedTypes ? data.excludedTypes : [];
+        params.overwriteCreatedFilter = data.overwriteCreatedFilter ? TargetIdFilter.create(data.overwriteCreatedFilter) : null;
+        params.overwriteDeletedFilter = data.overwriteDeletedFilter ? TargetIdFilter.create(data.overwriteDeletedFilter) : null;
+        params.overwriteUpdatedFilter = data.overwriteUpdatedFilter ? TargetIdFilter.create(data.overwriteUpdatedFilter) : null;
+        params.memberUpdatedFilter = data.memberUpdatedFilter ? TargetIdFilter.create(data.memberUpdatedFilter) : null;
+        params.memberRoleUpdatedFilter = data.memberRoleUpdatedFilter ? TargetIdFilter.create(data.memberRoleUpdatedFilter) : null;
 
         return params;
     }

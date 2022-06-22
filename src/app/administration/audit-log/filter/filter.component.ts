@@ -42,7 +42,12 @@ export class FilterComponent implements OnInit {
             AuditLogItemType.Command,
             AuditLogItemType.InteractionCommand,
             AuditLogItemType.JobCompleted,
-            AuditLogItemType.API
+            AuditLogItemType.API,
+            AuditLogItemType.OverwriteCreated,
+            AuditLogItemType.OverwriteDeleted,
+            AuditLogItemType.OverwriteUpdated,
+            AuditLogItemType.MemberRoleUpdated,
+            AuditLogItemType.MemberUpdated
         ];
 
         let selTypes = this.selectedTypes;
@@ -85,6 +90,11 @@ export class FilterComponent implements OnInit {
             filter.interactionsFilter = this.extendedFilters.interactionFilter;
             filter.jobFilter = this.extendedFilters.jobFilter;
             filter.apiRequestFilter = this.extendedFilters.apiRequestFilter;
+            filter.overwriteCreatedFilter = this.extendedFilters.overwriteCreatedFilter;
+            filter.overwriteDeletedFilter = this.extendedFilters.overwriteDeletedFilter;
+            filter.overwriteUpdatedFilter = this.extendedFilters.overwriteUpdatedFilter;
+            filter.memberRoleUpdatedFilter = this.extendedFilters.memberRoleUpdatedFilter;
+            filter.memberUpdatedFilter = this.extendedFilters.memberUpdatedFilter;
         }
 
         this.filterChanged.emit(filter);
@@ -129,7 +139,12 @@ export class FilterComponent implements OnInit {
             interactionFilter: filterData.interactionsFilter,
             jobFilter: filterData.jobFilter,
             warningFilter: filterData.warningFilter,
-            apiRequestFilter: filterData.apiRequestFilter
+            apiRequestFilter: filterData.apiRequestFilter,
+            overwriteCreatedFilter: filterData.overwriteCreatedFilter,
+            overwriteDeletedFilter: filterData.overwriteDeletedFilter,
+            overwriteUpdatedFilter: filterData.overwriteUpdatedFilter,
+            memberRoleUpdatedFilter: filterData.memberRoleUpdatedFilter,
+            memberUpdatedFilter: filterData.memberUpdatedFilter
         };
 
         this.form.valueChanges.pipe(debounceTime(300)).subscribe(_ => this.submitForm());

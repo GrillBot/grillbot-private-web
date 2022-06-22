@@ -29,7 +29,12 @@ export class ExtendedFiltersModalComponent implements OnInit, AfterViewInit {
             interactionFilter: value.interaction,
             jobFilter: value.job,
             warningFilter: value.warning,
-            apiRequestFilter: value.apiRequest
+            apiRequestFilter: value.apiRequest,
+            overwriteCreatedFilter: value.overwriteCreated,
+            overwriteDeletedFilter: value.overwriteDeleted,
+            overwriteUpdatedFilter: value.overwriteUpdated,
+            memberRoleUpdatedFilter: value.memberRoleUpdated,
+            memberUpdatedFilter: value.memberUpdated
         };
     }
 
@@ -45,7 +50,12 @@ export class ExtendedFiltersModalComponent implements OnInit, AfterViewInit {
             command: [],
             interaction: [],
             job: [],
-            apiRequest: []
+            apiRequest: [],
+            overwriteCreated: [],
+            overwriteDeleted: [],
+            overwriteUpdated: [],
+            memberUpdated: [],
+            memberRoleUpdated: []
         });
 
         this.fill();
@@ -71,7 +81,12 @@ export class ExtendedFiltersModalComponent implements OnInit, AfterViewInit {
             command: this.tmpData.commandFilter,
             interaction: this.tmpData.interactionFilter,
             job: this.tmpData.jobFilter,
-            apiRequest: this.tmpData.apiRequestFilter
+            apiRequest: this.tmpData.apiRequestFilter,
+            overwriteCreated: this.tmpData.overwriteCreatedFilter,
+            overwriteDeleted: this.tmpData.overwriteDeletedFilter,
+            overwriteUpdated: this.tmpData.overwriteUpdatedFilter,
+            memberUpdated: this.tmpData.memberUpdatedFilter,
+            memberRoleUpdated: this.tmpData.memberRoleUpdatedFilter
         });
 
         this.tmpData = null;

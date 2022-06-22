@@ -10,5 +10,15 @@
         <app-execution-filter [label]="'Naplánovaná úloha'" *ngIf="can(auditLogItemType.JobCompleted)" formControlName="job">
         </app-execution-filter>
         <app-api-request-filter *ngIf="can(auditLogItemType.API)" formControlName="apiRequest"></app-api-request-filter>
+        <app-target-id-filter *ngIf="can(auditLogItemType.OverwriteCreated)" formControlName="overwriteCreated"
+            [label]="'Vytvořena výjimka do kanálu'"></app-target-id-filter>
+        <app-target-id-filter *ngIf="can(auditLogItemType.OverwriteDeleted)" formControlName="overwriteDeleted"
+            [label]="'Smazána výjimka do kanálu'"></app-target-id-filter>
+        <app-target-id-filter *ngIf="can(auditLogItemType.OverwriteUpdated)" formControlName="overwriteUpdated"
+            [label]="'Upravena výjimka do kanálu'"></app-target-id-filter>
+        <app-target-id-filter *ngIf="can(auditLogItemType.MemberRoleUpdated)" formControlName="memberRoleUpdated"
+            [label]="'Upraveny role uživatele'"></app-target-id-filter>
+        <app-target-id-filter *ngIf="can(auditLogItemType.MemberUpdated)" formControlName="memberUpdated" [label]="'Upraven uživatel'">
+        </app-target-id-filter>
     </form>
 </app-modal>
