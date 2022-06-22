@@ -44,21 +44,13 @@ export class EmoteStatItem {
 
 export class EmotesListParams extends FilterBase {
     public guildId: string;
-    public useCount: RangeParams<number>;
-    public firstOccurence: RangeParams<DateTime>;
-    public lastOccurence: RangeParams<DateTime>;
-    public filterAnimated: boolean;
+    public useCount: RangeParams<number> = {};
+    public firstOccurence: RangeParams<DateTime> = {};
+    public lastOccurence: RangeParams<DateTime> = {};
+    public filterAnimated: boolean = false;
+    public emoteName: string;
 
-    static get empty(): EmotesListParams {
-        const params = new EmotesListParams();
-
-        params.firstOccurence = {};
-        params.lastOccurence = {};
-        params.useCount = {};
-        params.filterAnimated = false;
-
-        return params;
-    }
+    static get empty(): EmotesListParams { return new EmotesListParams(); }
 
     get queryParams(): QueryParam[] {
         return [
@@ -70,7 +62,8 @@ export class EmotesListParams extends FilterBase {
             this.lastOccurence.from != null ? new QueryParam('lastOccurence.from', this.lastOccurence.from) : null,
             this.lastOccurence.to != null ? new QueryParam('lastOccurence.to', this.lastOccurence.to) : null,
             ...super.queryParams,
-            new QueryParam('filterAnimated', this.filterAnimated)
+            new QueryParam('filterAnimated', this.filterAnimated),
+            this.emoteName ? new QueryParam('emoteName', this.emoteName) : null
         ].filter(o => o);
     }
 
@@ -89,11 +82,11 @@ export class EmotesListParams extends FilterBase {
             from: data.firstOccurence.from,
             to: data.firstOccurence.to
         };
-
         params.lastOccurence = {
             from: data.lastOccurence.from,
             to: data.lastOccurence.to
         };
+        params.emoteName = data.emoteName;
 
         return params;
     }
@@ -105,6 +98,7 @@ export class EmotesListParams extends FilterBase {
 
         params.guildId = form.guildId;
         params.filterAnimated = form.filterAnimated ?? false;
+        params.emoteName = form.emoteName;
 
         params.useCount = {
             from: form.useCountFrom,

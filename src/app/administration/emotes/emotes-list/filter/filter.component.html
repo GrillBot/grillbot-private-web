@@ -2,6 +2,11 @@
     <form [formGroup]="form">
         <div class="row">
             <div class="col form-group">
+                <label>Název emote</label>
+                <input type="text" formControlName="emoteName" class="form-control" />
+            </div>
+
+            <div class="col form-group">
                 <label>Server</label>
                 <app-search-input [searchSource]="'guilds'" formControlName="guildId"></app-search-input>
             </div>
@@ -15,14 +20,14 @@
                 <label>Počet použití do</label>
                 <input type="number" min="0" formControlName="useCountTo" class="form-control" />
             </div>
+        </div>
 
+        <div class="row">
             <div class="col form-group">
                 <label>První výskyt od</label>
                 <input type="datetime-local" formControlName="firstOccurenceFrom" class="form-control" />
             </div>
-        </div>
 
-        <div class="row">
             <div class="col form-group">
                 <label>První výskyt do</label>
                 <input type="datetime-local" formControlName="firstOccurenceTo" class="form-control" />
@@ -37,8 +42,10 @@
                 <label>Poslední výskyt do</label>
                 <input type="datetime-local" formControlName="lastOccurenceTo" class="form-control" />
             </div>
+        </div>
 
-            <div class="col d-flex align-items-end justify-content-between">
+        <div class="row mt-2">
+            <div class="col d-flex justify-content-between">
                 <app-checkbox [id]="'filterAnimated'" [label]="'Skrýt animované'" formControlName="filterAnimated"></app-checkbox>
 
                 <div>

@@ -44,7 +44,8 @@ export class FilterComponent implements OnInit {
             firstOccurenceTo: filter.firstOccurence.to,
             lastOccurenceFrom: filter.lastOccurence.from,
             lastOccurenceTo: filter.lastOccurence.to,
-            filterAnimated: filter.filterAnimated
+            filterAnimated: filter.filterAnimated,
+            emoteName: filter.emoteName
         });
     }
 
@@ -57,7 +58,8 @@ export class FilterComponent implements OnInit {
             firstOccurenceTo: [filter.firstOccurence.to],
             lastOccurenceFrom: [filter.lastOccurence.from],
             lastOccurenceTo: [filter.lastOccurence.to],
-            filterAnimated: [filter.filterAnimated]
+            filterAnimated: [filter.filterAnimated],
+            emoteName: [filter.emoteName]
         });
 
         this.form.valueChanges.pipe(debounceTime(300)).subscribe(_ => this.submitForm());
