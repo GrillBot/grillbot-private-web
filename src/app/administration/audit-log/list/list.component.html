@@ -47,7 +47,8 @@
         </div>
 
         <div class="col d-flex flex-column">
-            <button class="btn btn-outline-primary" *ngIf="item.canOpenDetail" (click)="openDetail(item)">Zobrazit detail záznamu</button>
+            <button class="btn btn-outline-primary" *ngIf="item.canOpenDetail" (click)="openDetail(item, false)">Zobrazit detail záznamu</button>
+            <button class="btn btn-outline-primary mt-2" (click)="openDetail(item, true)">Zobrazit data</button>
             <button class="btn btn-outline-danger mt-2" (click)="removeItem(item.id)">Smazat záznam</button>
         </div>
     </div>

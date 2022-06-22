@@ -1,4 +1,4 @@
-<app-modal [title]="'Detail záznamu #' + item.id">
+<app-modal [title]="(rawView ? 'Detail' : 'Data') + ' záznamu #' + item.id">
     <pre *ngIf="isTextView">{{data}}</pre>
 
     <ng-container *ngIf="!isTextView">

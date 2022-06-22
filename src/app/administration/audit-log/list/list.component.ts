@@ -55,9 +55,10 @@ export class ListComponent {
             .onAccept.subscribe(_ => this.auditLogService.removeItem(id).subscribe(__ => this.list.filterChanged()));
     }
 
-    openDetail(item: AuditLogListItem): void {
+    openDetail(item: AuditLogListItem, raw: boolean): void {
         const modal = this.modalService.showCustomModal<DetailModalComponent>(DetailModalComponent, 'xl');
         modal.componentInstance.item = item;
+        modal.componentInstance.rawView = raw;
     }
 
     downloadFile(id: number, file: AuditLogFileMetadata): void {

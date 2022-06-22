@@ -9,13 +9,14 @@ import { AuditLogListItem } from 'src/app/core/models/audit-log';
 })
 export class DetailModalComponent implements OnInit {
     @Input() item: AuditLogListItem;
+    @Input() rawView = false;
     data: any;
 
     // eslint-disable-next-line @typescript-eslint/naming-convention
     get AuditLogItemType(): typeof AuditLogItemType { return AuditLogItemType; }
 
     get isTextView(): boolean {
-        return [AuditLogItemType.Info, AuditLogItemType.Error, AuditLogItemType.Warning].includes(this.item.type);
+        return this.rawView || [AuditLogItemType.Info, AuditLogItemType.Error, AuditLogItemType.Warning].includes(this.item.type);
     }
 
     get isDiff(): boolean {
@@ -29,7 +30,12 @@ export class DetailModalComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        this.data = this.item.data;
+        if (this.rawView) {
+            this.data = JSON.stringify(this.item.data);
+        } else {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+            this.data = this.item.data;
+        }
+
     }
 }
