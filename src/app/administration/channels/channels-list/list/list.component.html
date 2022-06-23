@@ -15,28 +15,38 @@
                     <th>První zpráva</th>
                     <th>Posl. zpráva</th>
                     <th>Server</th>
-                    <th>Počet práv (role)</th>
-                    <th>Počet práv (uživatel)</th>
+                    <th sortable (clicked)="setSort($any($event))" [key]="'RolePermissions'" [current]="sort.orderBy"
+                        [sortDesc]="sort.descending">Počet práv (role)</th>
+                    <th sortable (clicked)="setSort($any($event))" [key]="'UserPermissions'" [current]="sort.orderBy"
+                        [sortDesc]="sort.descending">Počet práv (uživatel)</th>
                     <th>Akce</th>
                 </tr>
             </thead>
             <tbody>
                 <tr route-click *ngFor="let item of list.items" [route]="'/admin/channels/' + item.id">
-                    <td>{{item.name}}</td>
+                    <td [class.text-danger]="item.isDeleted">{{item.name}}</td>
                     <td>{{item.channelTypeName}}</td>
-                    <td>{{item.messagesCount.toLocaleString()}}</td>
-                    <td>{{item.cachedMessagesCount.toLocaleString()}}</td>
-                    <td>{{item.firstMessageAt?.binding ?? ''}}</td>
-                    <td>{{item.lastMessageAt?.binding ?? ''}}</td>
+                    <td>
+                        <ng-container *ngIf="!item.isCategory">{{item.messagesCount.toLocaleString()}}</ng-container>
+                    </td>
+                    <td>
+                        <ng-container *ngIf="!item.isCategory">{{item.cachedMessagesCount.toLocaleString()}}</ng-container>
+                    </td>
+                    <td>
+                        <ng-container *ngIf="!item.isCategory">{{item.firstMessageAt?.binding ?? ''}}</ng-container>
+                    </td>
+                    <td>
+                        <ng-container *ngIf="!item.isCategory">{{item.lastMessageAt?.binding ?? ''}}</ng-container>
+                    </td>
                     <td>{{item.guild.name}}</td>
-                    <td>{{item.rolePermissionCount?.toLocaleString()}}</td>
-                    <td>{{item.userPermissionCount?.toLocaleString()}}</td>
+                    <td>{{item.rolePermissionsCount?.toLocaleString()}}</td>
+                    <td>{{item.userPermissionsCount?.toLocaleString()}}</td>
                     <td>
                         <list-button [link]="'/admin/channels/' + item.id" [icon]="'info'"></list-button>
                     </td>
                 </tr>
                 <tr *ngIf="list.items.length === 0">
-                    <td colspan="4">Pro zadaný filtr nebyly nalezeny žádné kanály.</td>
+                    <td colspan="10">Pro zadaný filtr nebyly nalezeny žádné kanály.</td>
                 </tr>
             </tbody>
         </table>

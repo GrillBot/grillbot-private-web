@@ -116,8 +116,10 @@ export class GuildChannelListItem extends Channel {
     public lastMessageAt: DateTime | null;
     public messagesCount: number;
     public guild: Guild;
-    public rolePermissionCount?: number;
-    public userPermissionCount?: number;
+    public rolePermissionsCount?: number;
+    public userPermissionsCount?: number;
+
+    get isCategory(): boolean { return this.type === ChannelType.Category; }
 
     static create(data: any): GuildChannelListItem | null {
         if (!data) { return null; }
@@ -129,8 +131,8 @@ export class GuildChannelListItem extends Channel {
         channel.lastMessageAt = data.lastMessageAt ? DateTime.fromISOString(data.lastMessageAt) : null;
         channel.messagesCount = data.messagesCount;
         channel.guild = data.guild ? Guild.create(data.guild) : null;
-        channel.rolePermissionCount = data.rolePermissionCount;
-        channel.userPermissionCount = data.userPermissionCount;
+        channel.rolePermissionsCount = data.rolePermissionsCount;
+        channel.userPermissionsCount = data.userPermissionsCount;
 
         return channel;
     }

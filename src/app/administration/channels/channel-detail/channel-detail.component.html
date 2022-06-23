@@ -48,14 +48,15 @@
                                 class="text-dark">{{data.parentChannel.fullFormat}}</a>
                         </b>
                     </div>
-                    <div keyValueItem class="col-3" [key]="'Počet zpráv v cache'" [value]="data.cachedMessagesCount.toLocaleString()"></div>
-                    <div keyValueItem class="col-3" [key]="'Počet oprávnění pro role'"
-                        [value]="data.rolePermissionCount?.toLocaleString() ?? 'Není známo'"></div>
-                    <div keyValueItem class="col-3" [key]="'Počet oprávnění pro uživatele'"
-                        [value]="data.userPermissionCount?.toLocaleString() ?? 'Není známo'"></div>
+                    <div keyValueItem class="col-3" *ngIf="!data.isCategory && !data.isDeleted" [key]="'Počet zpráv v cache'"
+                        [value]="data.cachedMessagesCount.toLocaleString()"></div>
+                    <div keyValueItem class="col-3" [key]="'Počet oprávnění pro role'" *ngIf="!data.isDeleted"
+                        [value]="data.rolePermissionsCount?.toLocaleString() ?? 'Není známo'"></div>
+                    <div keyValueItem class="col-3" [key]="'Počet oprávnění pro uživatele'" *ngIf="!data.isDeleted"
+                        [value]="data.userPermissionsCount?.toLocaleString() ?? 'Není známo'"></div>
                 </div>
 
-                <div class="row mt-1">
+                <div class="row mt-1" *ngIf="!data.isCategory && !data.isDeleted">
                     <div class="col">
                         <button class="btn btn-danger btn-sm" type="button" (click)="cleanCache()">Vyčistit cache</button>
                     </div>
@@ -64,7 +65,7 @@
         </div>
     </div>
 
-    <div class="row mt-3 me-0 me-0" *ngIf="settingsForm && !this.data.isThread">
+    <div class="row mt-3 ms-0 me-0" *ngIf="settingsForm && !this.data.isThread && !data.isCategory && !data.isDeleted">
         <div class="col">
             <app-card icon="fas fa-cogs" [title]="'Nastavení'">
                 <div class="row">
@@ -79,7 +80,7 @@
         </div>
     </div>
 
-    <div class="row mt-3 ms-0 me-0">
+    <div class="row mt-3 ms-0 me-0" *ngIf="!data.isCategory && !data.isDeleted">
         <div class="col">
             <app-card icon="fas fa-envelope" [title]="'Odeslat zprávu do kanálu'" [allowHideButton]="true">
                 <form [formGroup]="sendMessageForm" (ngSubmit)="sendMessageSubmit()">
@@ -113,7 +114,7 @@
         </div>
     </div>
 
-    <div class="row mt-3 ms-0 me-0">
+    <div class="row mt-3 ms-0 me-0" *ngIf="!data.isCategory">
         <div class="col">
             <app-card [icon]="'fas fa-comment-dots'" [title]="'Aktivita v kanálu'">
                 <app-data-list #channelStats (readData)="readChannelStats($event)">
@@ -153,7 +154,7 @@
     </div>
 
     <div class="row mt-3 ms-0 me-0 mb-3">
-        <div class="col" *ngIf="data.threads && data.threads.length > 0">
+        <div class="col" *ngIf="!data.isCategory && data.threads && data.threads.length > 0">
             <app-card [icon]="'fas fa-quote-right'" [title]="'Vlákna'">
                 <table class="table table-bordered table-sm table-striped auto-column-width">
                     <thead>
