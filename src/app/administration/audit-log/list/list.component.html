@@ -47,7 +47,8 @@
         </div>
 
         <div class="col d-flex flex-column">
-            <button class="btn btn-outline-primary" *ngIf="item.canOpenDetail" (click)="openDetail(item, false)">Zobrazit detail záznamu</button>
+            <button class="btn btn-outline-primary" *ngIf="item.canOpenDetail" (click)="openDetail(item, false)">Zobrazit detail
+                záznamu</button>
             <button class="btn btn-outline-primary mt-2" (click)="openDetail(item, true)">Zobrazit data</button>
             <button class="btn btn-outline-danger mt-2" (click)="removeItem(item.id)">Smazat záznam</button>
         </div>
@@ -78,62 +79,95 @@
         <ng-container *ngIf="item.canShowColumn">
             <ng-container *ngTemplateOutlet="logDataCol;context:{data:item.data,type:item.type}"></ng-container>
         </ng-container>
+    </div>
 
-        <div class="col" *ngIf="item.files && item.files.length > 0">
-            <ul>
+    <ng-container *ngIf="item.data">
+        <ng-container *ngTemplateOutlet="logDataRow;context:{item:item}"></ng-container>
+    </ng-container>
+</ng-template>
+
+<ng-template #logDataRow let-item="item">
+    <div class="log-data-row">
+        <pre class="alert alert-secondary" *ngIf="item.type === AuditLogItemType.Info">{{item.data}}</pre>
+        <pre class="alert alert-warning" *ngIf="item.type === AuditLogItemType.Warning">{{item.data}}</pre>
+        <pre class="alert alert-danger" *ngIf="item.type === AuditLogItemType.Error">{{Support.cut(item.data, 1000)}}</pre>
+
+        <div *ngIf="item.type === AuditLogItemType.MemberRoleUpdated">
+            <span class="badge bg-{{(role.added ? 'success' : 'danger')}} me-1" *ngFor="let role of item.data.roles">{{(role.added ? '+' :
+                '-')}} {{role.name}}</span>
+        </div>
+
+        <table *ngIf="item.type === AuditLogItemType.MessageEdited" class="table table-sm table-bordered mt-2 auto-column-width">
+            <tr>
+                <td>Obsah před</td>
+                <td>
+                    <pre>{{item.data.diff.before}}</pre>
+                </td>
+            </tr>
+            <tr>
+                <td>Obsah po</td>
+                <td>
+                    <pre>{{item.data.diff.after}}</pre>
+                </td>
+            </tr>
+            <tr>
+                <td>Rozdíly</td>
+                <td>
+                    <pre>{{Support.createDiff(item.data.diff.before, item.data.diff.after).join('\n')}}</pre>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <a [href]="item.data.jumpUrl" class="btn btn-link text-dark" target="_blank">Skočit na zprávu</a>
+                </td>
+            </tr>
+        </table>
+
+        <div *ngIf="item.type === AuditLogItemType.MessageDeleted">
+            <pre class="alert alert-secondary" *ngIf="item.data.data.content?.length > 0">{{item.data.data.content}}</pre>
+
+            <div *ngIf="item.data.data.embeds && item.data.data.embeds.length > 0">
+                <app-card *ngFor="let embed of item.data.data.embeds; let i = index" [header]="false" [classes]="['mt-2']">
+                    <h6>Informace o embedu (#{{i}})</h6>
+
+                    <div class="row">
+                        <div class="col" *ngIf="embed.title">Titulek: <b>{{embed.title}}</b></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-3">Typ: <b>{{embed.type}}</b></div>
+                        <div class="col-3">Počet polí: <b>{{embed.fieldsCount.toLocaleString()}}</b></div>
+                        <div class="col-3">Obsahuje patičku: <b>{{embed.containsFooter | czechBooleanPipe}}</b></div>
+                        <div class="col-3" *ngIf="embed.providerName">Poskytovatel: <b>{{embed.providerName}}</b></div>
+                    </div>
+
+                    <div class="row" *ngIf="embed.authorName">
+                        <div class="col">Autor: <b>{{embed.authorName}}</b></div>
+                    </div>
+
+                    <div class="row" *ngIf="embed.imageInfo">
+                        <div class="col">Obrázek: <b>{{embed.imageInfo}}</b></div>
+                    </div>
+
+                    <div class="row" *ngIf="embed.videoInfo">
+                        <div class="col">Video: <b>{{embed.videoInfo}}</b></div>
+                    </div>
+
+                    <div class="row" *ngIf="embed.thumbnailInfo">
+                        <div class="col">Náhled: <b>{{embed.thumbnailInfo}}</b></div>
+                    </div>
+                </app-card>
+            </div>
+        </div>
+
+        <div *ngIf="item.files && item.files.length > 0">
+            <ul class="mb-0 mt-1">
                 <li *ngFor="let file of item.files">
                     <a (click)="downloadFile(item.id, file)" class="text-dark cursor-ptr">
                         {{file.filename}} ({{file.size | filesize}})
                     </a>
                 </li>
             </ul>
-        </div>
-    </div>
-
-    <ng-container *ngIf="item.data">
-        <ng-container *ngTemplateOutlet="logDataRow;context:{data:item.data,type:item.type}"></ng-container>
-    </ng-container>
-</ng-template>
-
-<ng-template #logDataRow let-data="data" let-type="type">
-    <div class="log-data-row">
-        <pre class="alert alert-secondary" *ngIf="type === AuditLogItemType.Info">{{data}}</pre>
-        <pre class="alert alert-warning" *ngIf="type === AuditLogItemType.Warning">{{data}}</pre>
-        <pre class="alert alert-danger" *ngIf="type === AuditLogItemType.Error">{{Support.cut(data, 1000)}}</pre>
-
-        <div *ngIf="type === AuditLogItemType.MemberRoleUpdated">
-            <span class="badge bg-{{(role.added ? 'success' : 'danger')}} me-1" *ngFor="let role of data.roles">{{(role.added ? '+' : '-')}}
-                {{role.name}}</span>
-        </div>
-
-        <table *ngIf="type === AuditLogItemType.MessageEdited" class="table table-sm table-bordered mt-2 auto-column-width">
-            <tr>
-                <td>Obsah před</td>
-                <td>
-                    <pre>{{data.diff.before}}</pre>
-                </td>
-            </tr>
-            <tr>
-                <td>Obsah po</td>
-                <td>
-                    <pre>{{data.diff.after}}</pre>
-                </td>
-            </tr>
-            <tr>
-                <td>Rozdíly</td>
-                <td>
-                    <pre>{{Support.createDiff(data.diff.before, data.diff.after).join('\n')}}</pre>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <a [href]="data.jumpUrl" class="btn btn-link text-dark" target="_blank">Skočit na zprávu</a>
-                </td>
-            </tr>
-        </table>
-
-        <div *ngIf="type === AuditLogItemType.MessageDeleted && data.data.content?.length > 0">
-            <pre class="alert alert-secondary">{{data.data.content}}</pre>
         </div>
     </div>
 </ng-template>
