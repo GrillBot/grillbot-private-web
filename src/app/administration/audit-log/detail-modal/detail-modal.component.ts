@@ -31,7 +31,7 @@ export class DetailModalComponent implements OnInit {
 
     ngOnInit(): void {
         if (this.rawView) {
-            this.data = JSON.stringify(this.item.data);
+            this.data = JSON.stringify(this.item.data, undefined, 2);
         } else {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             this.data = this.item.data;
