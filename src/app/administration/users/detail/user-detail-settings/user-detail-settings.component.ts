@@ -33,13 +33,15 @@ export class UserDetailSettingsComponent implements OnInit {
             note: [this.user.note],
             webAdmin: [this.user.haveWebAdmin],
             selfUnverifyMinimalTime: [this.user.selfUnverifyMinimalTime],
-            commandsDisabled: [this.user.commandsDisabled]
+            commandsDisabled: [this.user.commandsDisabled],
+            pointsDisabled: [this.user.pointsDisabled]
         });
 
         if (this.isCurrentUser || this.user.isBot) {
             this.form.get('botAdmin').disable();
             this.form.get('webAdmin').disable();
             this.form.get('commandsDisabled').disable();
+            this.form.get('pointsDisabled').disable();
         }
     }
 
@@ -49,7 +51,8 @@ export class UserDetailSettingsComponent implements OnInit {
             this.form.value.note,
             this.isCurrentUser || this.user.isBot ? this.user.haveWebAdmin : this.form.value.webAdmin,
             this.form.value.selfUnverifyMinimalTime,
-            this.form.value.commandsDisabled
+            this.form.value.commandsDisabled,
+            this.form.value.pointsDisabled
         );
 
         this.userService.updateUser(this.user.id, params).subscribe(_ => {

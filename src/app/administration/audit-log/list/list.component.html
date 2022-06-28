@@ -217,6 +217,7 @@
             <b *ngIf="data.before.isNsfw != undefined || data.after.isNsfw != undefined">NSFW stav </b>
             <b *ngIf="data.before.bitrate || data.after.bitrate">Bitrate</b>
             <b *ngIf="data.before.topic || data.after.topic">Popis</b>
+            <b *ngIf="data.before.flags != undefined || data.after.flags != undefined">Příznaky</b>
         </ng-container>
 
         <ng-container *ngIf="type === AuditLogItemType.EmojiDeleted">

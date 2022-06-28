@@ -187,6 +187,12 @@
         <td>{{data.before.topic}}</td>
         <td>{{data.after.topic}}</td>
     </tr>
+
+    <tr *ngIf="data.before.flags != undefined || data.after.flags != undefined">
+        <td>Příznaky</td>
+        <td>{{data.before.flags}} ({{data.before.flags | bitmaskToString:32}})</td>
+        <td>{{data.after.flags}} ({{data.after.flags | bitmaskToString:32}})</td>
+    </tr>
 </ng-template>
 
 <ng-template #overwriteUpdated>

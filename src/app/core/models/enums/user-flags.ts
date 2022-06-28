@@ -6,7 +6,8 @@ export enum UserFlags {
     WebAdminOnline = 8,
     PublicAdministrationBlocked = 16,
     PublicAdminOnline = 32,
-    CommandsDisabled = 64
+    CommandsDisabled = 64,
+    PointsDisabled = 128
 }
 
 export enum UserFlagsTexts {
@@ -15,5 +16,6 @@ export enum UserFlagsTexts {
     WebAdmin = 'Přístup do webové administrace',
     NotUser = 'Není uživatel',
     WebAdminOnline = 'Přihlášen do webové administrace',
-    CommandsDisabled = 'Zablokovány všechny příkazy'
+    CommandsDisabled = 'Zablokovány všechny příkazy',
+    PointsDisabled = 'Výpočet bodů deaktivován'
 }

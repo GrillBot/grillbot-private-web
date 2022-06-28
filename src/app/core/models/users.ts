@@ -198,6 +198,7 @@ export class UserDetail {
     get isPublicAdminOnline(): boolean { return (this.flags & UserFlags.PublicAdminOnline) !== 0; }
     get fullUsername(): string { return this.username + (!this.discriminator || this.discriminator.length == 0 ? '' : `#${this.discriminator}`); }
     get commandsDisabled(): boolean { return (this.flags & UserFlags.CommandsDisabled) !== 0; }
+    get pointsDisabled(): boolean { return (this.flags & UserFlags.PointsDisabled) !== 0; }
 
     static create(data: any): UserDetail | null {
         if (!data) { return null; }
@@ -262,6 +263,7 @@ export class UpdateUserParams {
         public note: string,
         public webAdminAllowed: boolean,
         public selfUnverifyMinimalTime: string | null,
-        public commandsDisabled: boolean
+        public commandsDisabled: boolean,
+        public pointsDisabled: boolean
     ) { }
 }
