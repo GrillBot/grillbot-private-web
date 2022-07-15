@@ -46,10 +46,10 @@
                     </div>
                 </div>
 
-                <div class="row" *ngIf="guild.createdInvites && guild.createdInvites.length > 0">
+                <div class="row">
                     <div class="col-6 mb-3">
                         <span class="d-block">
-                            Seznam vytvořených pozvánek
+                            Vytvořené pozvánky
                             <a class="smaller" href="javascript:;" (click)="toggleVisibility('invites', i)">{{visibilityText('invites',
                                 i)}}</a>
                         </span>
@@ -67,6 +67,21 @@
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
+
+                    <div class="col" *ngIf="guild.nicknameHistory.length > 0">
+                        <span class="d-block">
+                            Dřívější přezdívky
+                            <a class="smaller" href="javascript:;"
+                                (click)="toggleVisibility('nicknameHistory', i)">{{visibilityText('nicknameHistory', i)}}</a>
+                        </span>
+                        <span class="nicknames" *ngIf="isVisible('nicknameHistory', i)">
+                            <ol>
+                                <li *ngFor="let nickname of guild.nicknameHistory">
+                                    <b>{{nickname}}</b>
+                                </li>
+                            </ol>
+                        </span>
                     </div>
                 </div>
 
