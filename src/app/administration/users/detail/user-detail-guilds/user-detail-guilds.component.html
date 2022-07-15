@@ -75,7 +75,7 @@
                             <a class="smaller" href="javascript:;"
                                 (click)="toggleVisibility('nicknameHistory', i)">{{visibilityText('nicknameHistory', i)}}</a>
                         </span>
-                        <span class="nicknames" *ngIf="isVisible('nicknameHistory', i)">
+                        <span *ngIf="isVisible('nicknameHistory', i)">
                             <ol>
                                 <li *ngFor="let nickname of guild.nicknameHistory">
                                     <b>{{nickname}}</b>
