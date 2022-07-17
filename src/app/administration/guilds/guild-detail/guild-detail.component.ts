@@ -30,7 +30,8 @@ export class GuildDetailComponent implements OnInit {
             this.form = this.fb.group({
                 mutedRole: [this.data.mutedRole?.id ?? null],
                 adminChannel: [this.data.adminChannel?.id ?? null],
-                emoteSuggestionChannel: [this.data.emoteSuggestionChannel?.id ?? null]
+                emoteSuggestionChannel: [this.data.emoteSuggestionChannel?.id ?? null],
+                voteChannel: [this.data.voteChannel?.id ?? null]
             });
         });
     }
@@ -40,7 +41,8 @@ export class GuildDetailComponent implements OnInit {
         const params = new UpdateGuildParams(
             this.form.value.mutedRole,
             this.form.value.adminChannel,
-            this.form.value.emoteSuggestionChannel
+            this.form.value.emoteSuggestionChannel,
+            this.form.value.voteChannel
         );
 
         this.guildService.updateGuild(this.data.id, params).subscribe(_ => {

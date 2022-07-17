@@ -17,44 +17,38 @@
     </div>
 
     <div class="row ml-0 mr-0" *ngIf="data.isConnected">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xl-2 mb-3">
+            <app-card [header]="false">
+                <div class="d-flex justify-content-center server-pfp">
+                    <img width="150" height="150" [src]="data.iconUrl" [alt]="data.name" class="rounded-circle border" />
+                </div>
+
+                <div keyValueItem class="border-bottom mt-2" [key]="'Název'" [value]="data.name"></div>
+                <div keyValueItem class="border-bottom mt-2" [key]="'Identifikátor'" [value]="data.id"></div>
+                <div keyValueItem class="border-bottom mt-2" [key]="'Vytvořen'" [value]="data.createdAt.toLocaleString()"></div>
+                <div keyValueItem class="border-bottom mt-2" [key]="'Vlastník'" [value]="data.owner.fullUsername"></div>
+                <div keyValueItem class="border-bottom mt-2" [key]="'Úroveň vylepšení'" [value]="'Level ' + data.premiumTier"></div>
+                <div keyValueItem class="border-bottom mt-2" [key]="'Univerzální pozvánka'" [value]="data.vanityUrl ?? 'Neexistuje'"></div>
+                <div keyValueItem class="mt-2" [key]="'Booster role'" [value]="data.boosterRole?.name ?? 'Neexistuje'"></div>
+            </app-card>
+        </div>
+
         <div class="col">
             <app-card icon="fas fa-server" [title]="'Informace o serveru'">
                 <div class="row">
-                    <div class="col-3 server-pfp">
-                        <img width="150" height="150" [src]="data.iconUrl" [alt]="data.name" class="rounded-circle border" />
-                    </div>
-
-                    <div class="col mt-1">
+                    <div class="col">
                         <div class="row">
-                            <div keyValueItem class="col-3" [key]="'Identifikátor'" [value]="data.id"></div>
-                            <div keyValueItem class="col-3" [key]="'Název'" [value]="data.name"></div>
-                            <div keyValueItem class="col-3" [key]="'Vytvořen'" [value]="data.createdAt.toLocaleString()"></div>
-                            <div keyValueItem class="col-3" [key]="'Vlastník'" [value]="data.owner.fullUsername"></div>
-                        </div>
-
-                        <div class="row mt-2">
-                            <div keyValueItem class="col-3" [key]="'Úroveň vylepšení'" [value]="'Level ' + data.premiumTier"></div>
-                            <div keyValueItem class="col-3" [key]="'Univerzální pozvánka'" [value]="data.vanityUrl ?? 'Neexistuje'"></div>
-                            <div keyValueItem class="col-3" [key]="'Booster role'" [value]="data.boosterRole?.name ?? 'Neexistuje'"></div>
-                        </div>
-
-                        <div class="row mt-2 border-top">
                             <p class="fw-bold mb-0">Omezení serveru</p>
                         </div>
 
-                        <div class="row">
-                            <div keyValueItem class="col-3" [key]="'Maximum členů'"
-                                [value]="data.maxMembers?.toLocaleString() ?? 'Není známo'"></div>
-                            <div keyValueItem class="col-3" [key]="'Maximum online uživatelů'"
-                                [value]="data.maxPresences?.toLocaleString() ?? 'Není známo'"></div>
-                            <div keyValueItem class="col-3" [key]="'Maximum akt. uživatelů s webkamerou'"
+                        <div class="grid">
+                            <div keyValueItem [key]="'Max. členů'" [value]="data.maxMembers?.toLocaleString() ?? 'Neznámé'"></div>
+                            <div keyValueItem [key]="'Max. online uživatelů'" [value]="data.maxPresences?.toLocaleString() ?? 'Neznámé'">
+                            </div>
+                            <div keyValueItem [key]="'Maxi. uživatelů s webkamerou'"
                                 [value]="data.maxVideoChannelUsers?.toLocaleString() ?? 'Není známo'"></div>
-                            <div keyValueItem class="col-3" [key]="'Maximální bitrate'" [value]="data.maxBitrate + ' kbps'"></div>
-                        </div>
-
-                        <div class="row">
-                            <div keyValueItem class="col-3" [key]="'Maximální velikost souboru (nahrávání)'"
-                                [value]="data.maxUploadLimit + ' MB'"></div>
+                            <div keyValueItem [key]="'Max. bitrate'" [value]="data.maxBitrate + ' kbps'"></div>
+                            <div keyValueItem [key]="'Max. velikost souboru'" [value]="data.maxUploadLimit + ' MB'"></div>
                         </div>
 
                         <ng-container *ngIf="data.userStatusReport">
@@ -62,14 +56,10 @@
                                 <p class="fw-bold mb-0">Statistiky uživatelů</p>
                             </div>
 
-                            <div class="row">
-                                <div keyValueItem class="col-3" [key]="'Online'" [value]="data.userStatusReport.online.toLocaleString()">
-                                </div>
-                                <div keyValueItem class="col-3" [key]="'Neaktivní'" [value]="data.userStatusReport.idle.toLocaleString()">
-                                </div>
-                                <div keyValueItem class="col-3" [key]="'Nerušit'"
-                                    [value]="data.userStatusReport.doNotDisturb.toLocaleString()">
-                                </div>
+                            <div class="grid">
+                                <div keyValueItem [key]="'Online'" [value]="data.userStatusReport.online.toLocaleString()"></div>
+                                <div keyValueItem [key]="'Neaktivní'" [value]="data.userStatusReport.idle.toLocaleString()"></div>
+                                <div keyValueItem [key]="'Nerušit'" [value]="data.userStatusReport.doNotDisturb.toLocaleString()"></div>
                             </div>
                         </ng-container>
 
@@ -78,12 +68,10 @@
                                 <p class="fw-bold mb-0">Statistiky aktivních zařízení</p>
                             </div>
 
-                            <div class="row">
-                                <div keyValueItem class="col-3" [key]="'Desktop'" [value]="data.clientTypeReport.desktop.toLocaleString()">
-                                </div>
-                                <div keyValueItem class="col-3" [key]="'Telefon'" [value]="data.clientTypeReport.mobile.toLocaleString()">
-                                </div>
-                                <div keyValueItem class="col-3" [key]="'Web'" [value]="data.clientTypeReport.web.toLocaleString()"></div>
+                            <div class="grid">
+                                <div keyValueItem [key]="'Desktop'" [value]="data.clientTypeReport.desktop.toLocaleString()"></div>
+                                <div keyValueItem [key]="'Telefon'" [value]="data.clientTypeReport.mobile.toLocaleString()"></div>
+                                <div keyValueItem [key]="'Web'" [value]="data.clientTypeReport.web.toLocaleString()"></div>
                             </div>
                         </ng-container>
 
@@ -92,26 +80,15 @@
                                 <p class="fw-bold mb-0">Statistiky databáze</p>
                             </div>
 
-                            <div class="row">
-                                <div keyValueItem class="col-3" [key]="'Logy'" [value]="data.databaseReport.auditLogs.toLocaleString()">
-                                </div>
-                                <div keyValueItem class="col-3" [key]="'Kanály'" [value]="data.databaseReport.channels.toLocaleString()">
-                                </div>
-                                <div keyValueItem class="col-3" [key]="'Pozvánky'" [value]="data.databaseReport.invites.toLocaleString()">
-                                </div>
-                                <div keyValueItem class="col-3" [key]="'Hledání'" [value]="data.databaseReport.searches.toLocaleString()">
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div keyValueItem class="col-3" [key]="'Unverify'"
-                                    [value]="data.databaseReport.unverifies.toLocaleString()"></div>
-                                <div keyValueItem class="col-3" [key]="'Unverify logy'"
-                                    [value]="data.databaseReport.unverifyLogs.toLocaleString()"></div>
-                                <div keyValueItem class="col-3" [key]="'Uživatelé'" [value]="data.databaseReport.users.toLocaleString()">
-                                </div>
-                                <div keyValueItem class="col-3" [key]="'Cache zpráv'"
-                                    [value]="data.databaseReport.cacheIndexes.toLocaleString()"></div>
+                            <div class="grid">
+                                <div keyValueItem [key]="'Logy'" [value]="data.databaseReport.auditLogs.toLocaleString()"></div>
+                                <div keyValueItem [key]="'Kanály'" [value]="data.databaseReport.channels.toLocaleString()"></div>
+                                <div keyValueItem [key]="'Pozvánky'" [value]="data.databaseReport.invites.toLocaleString()"></div>
+                                <div keyValueItem [key]="'Hledání'" [value]="data.databaseReport.searches.toLocaleString()"></div>
+                                <div keyValueItem [key]="'Unverify'" [value]="data.databaseReport.unverifies.toLocaleString()"></div>
+                                <div keyValueItem [key]="'Unverify logy'" [value]="data.databaseReport.unverifyLogs.toLocaleString()"></div>
+                                <div keyValueItem [key]="'Uživatelé'" [value]="data.databaseReport.users.toLocaleString()"></div>
+                                <div keyValueItem [key]="'Cache zpráv'" [value]="data.databaseReport.cacheIndexes.toLocaleString()"></div>
                             </div>
                         </ng-container>
                     </div>
@@ -120,30 +97,41 @@
 
             <div class="mt-3">
                 <app-card icon="fas fa-cogs" [title]="'Nastavení'">
-                    <form [formGroup]="form" class="row" (ngSubmit)="submitSettings()">
-                        <div class="col form-group">
-                            <label>
-                                Umlčující role
-                                <i class="fas fa-info-circle"
-                                    title="Role, která zablokuje přístup do veřejných kanálů, znemožní psaní, ..."></i>
-                            </label>
-                            <app-search-input [searchSource]="'roles'" [guildId]="data.id" formControlName="mutedRole"></app-search-input>
+                    <form [formGroup]="form" (ngSubmit)="submitSettings()">
+                        <div class="row">
+                            <div class="col form-group">
+                                <label>
+                                    Umlčující role
+                                    <i class="fas fa-info-circle"
+                                        title="Role, která zablokuje přístup do veřejných kanálů, znemožní psaní, ..."></i>
+                                </label>
+                                <app-search-input [searchSource]="'roles'" [guildId]="data.id" formControlName="mutedRole">
+                                </app-search-input>
+                            </div>
+
+                            <div class="col form-group">
+                                <label>Administrátorský kanál</label>
+                                <app-search-input [searchSource]="'channels-no-threads'" [guildId]="data.id" formControlName="adminChannel">
+                                </app-search-input>
+                            </div>
+
+                            <div class="col form-group">
+                                <label>Kanál pro návrhy emotů</label>
+                                <app-search-input [searchSource]="'channels-no-threads'" [guildId]="data.id"
+                                    formControlName="emoteSuggestionChannel"></app-search-input>
+                            </div>
+
+                            <div class="col form-group">
+                                <label>Kanál pro veřejná hlasování</label>
+                                <app-search-input [searchSource]="'channels-no-threads'" [guildId]="data.id" formControlName="voteChannel">
+                                </app-search-input>
+                            </div>
                         </div>
 
-                        <div class="col form-group">
-                            <label>Administrátorský kanál</label>
-                            <app-search-input [searchSource]="'channels-no-threads'" [guildId]="data.id" formControlName="adminChannel">
-                            </app-search-input>
-                        </div>
-
-                        <div class="col form-group">
-                            <label>Kanál pro návrhy emotů</label>
-                            <app-search-input [searchSource]="'channels-no-threads'" [guildId]="data.id"
-                                formControlName="emoteSuggestionChannel"></app-search-input>
-                        </div>
-
-                        <div class="col-2 d-flex align-items-end">
-                            <button class="btn btn-success" type="submit">Uložit změny</button>
+                        <div class="row mt-2">
+                            <div class="col d-flex align-items-end justify-content-end">
+                                <button class="btn btn-success" type="submit">Uložit změny</button>
+                            </div>
                         </div>
                     </form>
                 </app-card>

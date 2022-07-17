@@ -118,6 +118,7 @@ export class GuildDetail extends Guild {
     public boosterRole?: Role;
     public adminChannel?: Channel;
     public emoteSuggestionChannel?: Channel;
+    public voteChannel?: Channel;
     public maxMembers?: number;
     public maxPresences?: number;
     public maxVideoChannelUsers?: number;
@@ -149,6 +150,7 @@ export class GuildDetail extends Guild {
         if (data.createdAt) { guild.createdAt = DateTime.fromISOString(data.createdAt); }
         if (data.boosterRole) { guild.boosterRole = Role.create(data.boosterRole); }
         if (data.emoteSuggestionChannel) { guild.emoteSuggestionChannel = Channel.create(data.emoteSuggestionChannel); }
+        if (data.voteChannel) { guild.voteChannel = Channel.create(data.voteChannel); }
         if (data.mutedRole) { guild.mutedRole = Role.create(data.mutedRole); }
         if (data.owner) { guild.owner = User.create(data.owner); }
         if (data.clientTypeReport) { guild.clientTypeReport = ClientTypeReport.create(data.clientTypeReport); }
@@ -163,6 +165,7 @@ export class UpdateGuildParams {
     constructor(
         public muteRoleId: string,
         public adminChannelId: string,
-        public emoteSuggestionChannelId: string
+        public emoteSuggestionChannelId: string,
+        public voteChannelId: string
     ) { }
 }
