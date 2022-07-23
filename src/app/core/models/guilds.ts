@@ -4,7 +4,7 @@ import { DateTime } from './datetime';
 import { PremiumTier } from './enums/premium-tier';
 import { Role } from './roles';
 import { User } from './users';
-import { FilterBase } from './common';
+import { FilterBase, RangeParams } from './common';
 
 export class GuildListFilter extends FilterBase {
     public nameQuery: string | null;
@@ -108,6 +108,32 @@ export class UserStatusReport {
     }
 }
 
+export class GuildEvent {
+    public id: string;
+    public validity: RangeParams<string>;
+
+    get validFrom(): DateTime {
+        return DateTime.fromISOString(this.validity.from);
+    }
+
+    get validTo(): DateTime {
+        return DateTime.fromISOString(this.validity.to);
+    }
+
+    static create(data: any): GuildEvent | null {
+        if (!data) { return null; }
+        const guildEvent = new GuildEvent();
+
+        guildEvent.id = data.id;
+        guildEvent.validity = {
+            from: data.validity.from,
+            to: data.validity.to
+        };
+
+        return guildEvent;
+    }
+}
+
 export class GuildDetail extends Guild {
     public createdAt?: DateTime;
     public iconUrl?: string;
@@ -127,6 +153,7 @@ export class GuildDetail extends Guild {
     public clientTypeReport?: ClientTypeReport;
     public databaseReport?: GuildDatabaseReport;
     public userStatusReport?: UserStatusReport;
+    public guildEvents: GuildEvent[];
 
     static create(data: any): GuildDetail | null {
         if (!data) { return null; }
@@ -145,6 +172,7 @@ export class GuildDetail extends Guild {
         guild.maxVideoChannelUsers = data.maxVideoChannelUsers;
         guild.maxBitrate = data.maxBitrate;
         guild.maxUploadLimit = data.maxUploadLimit;
+        guild.guildEvents = data.guildEvents.map((o: any) => GuildEvent.create(o));
 
         if (data.adminChannel) { guild.adminChannel = Channel.create(data.adminChannel); }
         if (data.createdAt) { guild.createdAt = DateTime.fromISOString(data.createdAt); }
@@ -166,6 +194,7 @@ export class UpdateGuildParams {
         public muteRoleId: string,
         public adminChannelId: string,
         public emoteSuggestionChannelId: string,
-        public voteChannelId: string
+        public voteChannelId: string,
+        public emoteSuggestionsValidity: RangeParams<DateTime>
     ) { }
 }
