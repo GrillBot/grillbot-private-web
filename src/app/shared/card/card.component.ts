@@ -14,6 +14,7 @@ export class CardComponent {
     @Input() classes: string[];
     @Input() maxWidth?: string;
     @Input() recordsCount?: number;
+    @Input() bodyClasses: string[];
 
     visible = true;
 

@@ -1,139 +1,132 @@
 <app-card [title]="'Servery'" icon="fas fa-server" [allowHideButton]="true">
-    <div class="row" [class.mt-3]="i > 0" *ngFor="let guild of userGuilds; let i = index">
-        <div class="col">
-            <app-card [header]="false">
-                <div class="alert alert-warning" *ngIf="!guild.isGuildKnown">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    GrillBot se nenachází na tomto serveru. Data mohou být nekompletní.
-                </div>
+    <div [class.mt-3]="i > 0" *ngFor="let guild of userGuilds; let i = index">
+        <app-card [header]="false">
+            <div class="alert alert-warning" *ngIf="!guild.isGuildKnown">
+                <i class="fas fa-exclamation-triangle"></i>
+                GrillBot se nenachází na tomto serveru. Data mohou být nekompletní.
+            </div>
 
-                <div class="alert alert-warning" *ngIf="guild.isGuildKnown && !guild.isUserInGuild">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    Uživatel nebyl na tomto serveru nalezen.
-                </div>
+            <div class="alert alert-warning" *ngIf="guild.isGuildKnown && !guild.isUserInGuild">
+                <i class="fas fa-exclamation-triangle"></i>
+                Uživatel nebyl na tomto serveru nalezen.
+            </div>
 
-                <div class="alert alert-info" *ngIf="guild.unverify">
-                    <i class="fas fa-info-circle"></i>
-                    Uděleno
-                    <ng-container *ngIf="!guild.unverify.isSelfUnverify">
-                        unverify od <b>{{guild.unverify.start.binding}}</b> do <b>{{guild.unverify.end.binding}}</b>. Důvod odebrání
-                        přístupu: <b>{{guild.unverify.reason}}</b>
+            <div class="alert alert-info" *ngIf="guild.unverify">
+                <i class="fas fa-info-circle"></i>
+                Uděleno
+                <ng-container *ngIf="!guild.unverify.isSelfUnverify">
+                    unverify od <b>{{guild.unverify.start.binding}}</b> do <b>{{guild.unverify.end.binding}}</b>. Důvod odebrání
+                    přístupu: <b>{{guild.unverify.reason}}</b>
+                </ng-container>
+
+                <ng-container *ngIf="guild.unverify.isSelfUnverify">
+                    selfunverify od <b>{{guild.unverify.start.binding}}</b> do <b>{{guild.unverify.end.binding}}</b>.
+                </ng-container>
+            </div>
+
+            <div class="grid mb-2">
+                <div keyValueItem [key]="'Serverový nick'" [value]="guild.nickname ?? 'Nenastaven'"></div>
+                <div keyValueItem [key]="'Server'" [value]="guild.guild.name"></div>
+                <div keyValueItem [key]="'Body'" [value]="guild.points.toLocaleString()"></div>
+                <div keyValueItem [key]="'Počet udělených reakcí'" [value]="guild.givenReactions.toLocaleString()"></div>
+                <div keyValueItem [key]="'Počet obdržených reakcí'" [value]="guild.obtainedReactions.toLocaleString()"></div>
+            </div>
+
+            <div *ngIf="guild.usedInvite" class="mb-2">
+                <span class="d-block">Použitá pozvánka</span>
+                <b>
+                    {{guild.usedInvite.code}}
+                    <ng-container *ngIf="guild.usedInvite.creator">({{guild.usedInvite.creator.fullUsername}}) </ng-container>
+                    <ng-container *ngIf="guild.usedInvite.createdAt">({{guild.usedInvite.createdAt.toLocaleString()}})
                     </ng-container>
+                </b>
+            </div>
 
-                    <ng-container *ngIf="guild.unverify.isSelfUnverify">
-                        selfunverify od <b>{{guild.unverify.start.binding}}</b> do <b>{{guild.unverify.end.binding}}</b>.
-                    </ng-container>
+            <div class="row">
+                <div class="col-md-4 mb-3" *ngIf="guild.createdInvites && guild.createdInvites.length > 0">
+                    <span class="d-block">
+                        Vytvořené pozvánky
+                        <a class="smaller" href="javascript:;" (click)="toggleVisibility('invites', i)">{{visibilityText('invites', i)}}</a>
+                    </span>
+                    <table class="table table-sm table-bordered table-striped auto-column-width mb-0" *ngIf="isVisible('invites', i)">
+                        <thead>
+                            <tr>
+                                <th>Kód</th>
+                                <th>Vytvořeno</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let invite of guild.createdInvites">
+                                <td>{{invite.code}}</td>
+                                <td>{{invite.createdAt.toLocaleString()}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
 
-                <div class="row mb-3">
-                    <div keyValueItem class="col-2" [key]="'Server'" [value]="guild.guild.name"></div>
-                    <div keyValueItem class="col-2" [key]="'Serverový nick'" [value]="guild.nickname ?? 'Nenastaven'"></div>
-                    <div keyValueItem class="col-2" [key]="'Body'" [value]="guild.points.toLocaleString()"></div>
-                    <div keyValueItem class="col-2" [key]="'Počet udělených reakcí'" [value]="guild.givenReactions.toLocaleString()"></div>
-                    <div keyValueItem class="col-2" [key]="'Počet obdržených reakcí'" [value]="guild.obtainedReactions.toLocaleString()">
-                    </div>
+                <div class="col" *ngIf="guild.nicknameHistory.length > 0">
+                    <span class="d-block">
+                        Dřívější přezdívky
+                        <a class="smaller" href="javascript:;"
+                            (click)="toggleVisibility('nicknameHistory', i)">{{visibilityText('nicknameHistory', i)}}</a>
+                    </span>
+                    <span *ngIf="isVisible('nicknameHistory', i)">
+                        <ol>
+                            <li *ngFor="let nickname of guild.nicknameHistory">
+                                <b>{{nickname}}</b>
+                            </li>
+                        </ol>
+                    </span>
                 </div>
+            </div>
 
-                <div class="row mb-3" *ngIf="guild.usedInvite">
-                    <div class="col">
-                        <span class="d-block">Použitá pozvánka</span>
-                        <b>
-                            {{guild.usedInvite.code}}
-                            <ng-container *ngIf="guild.usedInvite.creator">({{guild.usedInvite.creator.fullUsername}}) </ng-container>
-                            <ng-container *ngIf="guild.usedInvite.createdAt">({{guild.usedInvite.createdAt.toLocaleString()}})
-                            </ng-container>
-                        </b>
-                    </div>
+            <div class="row" *ngIf="guild.channels && guild.channels.length > 0">
+                <div class="col mb-3">
+                    <span class="d-block">
+                        Aktivita v kanálech
+                        <a class="smaller" href="javascript:;" (click)="toggleVisibility('channels', i)">{{visibilityText('channels',
+                            i)}}</a>
+                    </span>
+                    <table class="table table-sm table-bordered table-striped mb-0 auto-column-width" *ngIf="isVisible('channels', i)">
+                        <thead>
+                            <tr>
+                                <th>Kanál</th>
+                                <th>Počet zpráv</th>
+                                <th>První zpráva</th>
+                                <th>Poslední zpráva</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let channel of guild.channels">
+                                <td>{{channel.channel.name}}</td>
+                                <td>{{channel.count.toLocaleString()}}</td>
+                                <td>{{channel.firstMessageAt.toLocaleString()}}</td>
+                                <td>{{channel.lastMessageAt.toLocaleString()}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
+            </div>
 
-                <div class="row">
-                    <div class="col-6 mb-3">
-                        <span class="d-block">
-                            Vytvořené pozvánky
-                            <a class="smaller" href="javascript:;" (click)="toggleVisibility('invites', i)">{{visibilityText('invites',
-                                i)}}</a>
-                        </span>
-                        <table class="table table-sm table-bordered table-striped auto-column-width mb-0" *ngIf="isVisible('invites', i)">
-                            <thead>
-                                <tr>
-                                    <th>Kód</th>
-                                    <th>Vytvořeno</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let invite of guild.createdInvites">
-                                    <td>{{invite.code}}</td>
-                                    <td>{{invite.createdAt.toLocaleString()}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="col" *ngIf="guild.nicknameHistory.length > 0">
-                        <span class="d-block">
-                            Dřívější přezdívky
-                            <a class="smaller" href="javascript:;"
-                                (click)="toggleVisibility('nicknameHistory', i)">{{visibilityText('nicknameHistory', i)}}</a>
-                        </span>
-                        <span *ngIf="isVisible('nicknameHistory', i)">
-                            <ol>
-                                <li *ngFor="let nickname of guild.nicknameHistory">
-                                    <b>{{nickname}}</b>
-                                </li>
-                            </ol>
-                        </span>
-                    </div>
-                </div>
-
-                <div class="row" *ngIf="guild.channels && guild.channels.length > 0">
-                    <div class="col mb-3">
-                        <span class="d-block">
-                            Aktivita v kanálech
-                            <a class="smaller" href="javascript:;" (click)="toggleVisibility('channels', i)">{{visibilityText('channels',
-                                i)}}</a>
-                        </span>
-                        <table class="table table-sm table-bordered table-striped mb-0 auto-column-width" *ngIf="isVisible('channels', i)">
-                            <thead>
-                                <tr>
-                                    <th>Kanál</th>
-                                    <th>Počet zpráv</th>
-                                    <th>První zpráva</th>
-                                    <th>Poslední zpráva</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let channel of guild.channels">
-                                    <td>{{channel.channel.name}}</td>
-                                    <td>{{channel.count.toLocaleString()}}</td>
-                                    <td>{{channel.firstMessageAt.toLocaleString()}}</td>
-                                    <td>{{channel.lastMessageAt.toLocaleString()}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="row" *ngIf="guild.emotes && guild.emotes.length > 0">
-                    <div class="col">
-                        <span class="d-block">
-                            Použité emotikony
-                            <a class="smaller" href="javascript:;" (click)="toggleVisibility('emotes', i)">{{visibilityText('emotes',
-                                i)}}</a>
-                        </span>
-                        <div class="border rounded guild-emote-list" *ngIf="isVisible('emotes', i)">
-                            <div class="border rounded m-2 guild-emote-list-item" *ngFor="let emote of guild.emotes">
-                                <img class="card-img-top" [src]="emote.emote.imageUrl" [alt]="emote.emote.name">
-                                <div class="card-body pt-0 ps-1 pb-1 d-flex flex-column">
-                                    <b>{{emote.emote.name}}</b>
-                                    <span>Použito: <b>{{emote.useCount.toLocaleString()}}x</b></span>
-                                    <span>Poprvé: <b>{{emote.firstOccurence.toLocaleString()}}</b></span>
-                                    <span>Naposledy: <b>{{emote.lastOccurence.toLocaleString()}}</b></span>
-                                </div>
+            <div class="row" *ngIf="guild.emotes && guild.emotes.length > 0">
+                <div class="col">
+                    <span class="d-block">
+                        Použité emotikony
+                        <a class="smaller" href="javascript:;" (click)="toggleVisibility('emotes', i)">{{visibilityText('emotes',
+                            i)}}</a>
+                    </span>
+                    <div class="border rounded guild-emote-list" *ngIf="isVisible('emotes', i)">
+                        <div class="border rounded m-2 guild-emote-list-item" *ngFor="let emote of guild.emotes">
+                            <img class="card-img-top" [src]="emote.emote.imageUrl" [alt]="emote.emote.name">
+                            <div class="card-body pt-0 ps-1 pb-1 d-flex flex-column">
+                                <b>{{emote.emote.name}} ({{emote.useCount.toLocaleString()}}x)</b>
+                                <span>Poprvé: <b>{{emote.firstOccurence.toLocaleString()}}</b></span>
+                                <span>Naposledy: <b>{{emote.lastOccurence.toLocaleString()}}</b></span>
                             </div>
                         </div>
                     </div>
                 </div>
-            </app-card>
-        </div>
+            </div>
+        </app-card>
     </div>
 </app-card>

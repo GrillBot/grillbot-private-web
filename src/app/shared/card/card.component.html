@@ -17,7 +17,7 @@
 
         </div>
     </div>
-    <div class="card-body" *ngIf="visible">
+    <div class="card-body" [ngClass]="bodyClasses" *ngIf="visible">
         <ng-content></ng-content>
     </div>
 </div>

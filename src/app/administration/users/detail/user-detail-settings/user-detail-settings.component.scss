@@ -1,6 +1,6 @@
 .checkboxes-group {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 
     & app-checkbox:not(:last-child) {
         margin-right: 15px;

@@ -1,4 +1,4 @@
-<app-card [title]="'Nastavení uživatele'" [allowHideButton]="true" icon="fas fa-user-cog">
+<app-card [title]="'Nastavení uživatele'" [allowHideButton]="true" icon="fas fa-user-cog" [classes]="['mb-3']" [bodyClasses]="['pt-2']">
     <form [formGroup]="form" (ngSubmit)="submitForm()">
         <div class="row">
             <div class="col-auto">
@@ -12,11 +12,14 @@
                     <app-checkbox title="Výpočet bodů deaktivován" [id]="'points-disabled'" [label]="'Body deaktivovány'"
                         formControlName="pointsDisabled"></app-checkbox>
                 </div>
-                <label>Poznámka</label>
+            </div>
+
+            <div class="col-md-4">
+                <label class="fw-bold">Poznámka</label>
                 <textarea class="form-control" formControlName="note"></textarea>
             </div>
 
-            <div class="col-3">
+            <div class="col-md-4">
                 <b>Minimální čas pro selfunverify</b>
                 <app-time-span-input formControlName="selfUnverifyMinimalTime"></app-time-span-input>
             </div>

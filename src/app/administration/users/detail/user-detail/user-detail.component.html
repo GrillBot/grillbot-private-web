@@ -1,61 +1,50 @@
-<div class="d-flex justify-content-center">
+<div class="d-flex justify-content-center mt-2">
     <app-loading *ngIf="!data"></app-loading>
 </div>
 
 <ng-container *ngIf="data">
-    <div class="row ml-0 mr-0 mt-2">
-        <div class="col">
-            <app-card icon="fas fa-user" [title]="'Informace o uživateli'">
-                <div class="row">
-                    <div class="col-3 server-pfp">
-                        <img width="150" height="150" [src]="data.avatarUrl" [alt]="data.username"
-                            class="rounded-circle border border-{{statusColor}}" />
-                    </div>
+    <div class="row ms-0 me-0">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xl-2 mb-3">
+            <app-card [header]="false">
+                <div class="d-flex justify-content-center server-pfp">
+                    <img width="150" height="150" [src]="data.avatarUrl" [alt]="data.username"
+                        class="rounded-circle border border-{{statusColor}}" />
+                </div>
 
-                    <div class="col mt-1">
-                        <div class="row">
-                            <div keyValueItem class="col-3" [key]="'Identifikátor'" [value]="data.id"></div>
-                            <div keyValueItem class="col-3" [key]="'Uživatelské jméno'" [value]="data.fullUsername"></div>
-                            <div keyValueItem class="col-3" [key]="'Stav'" [value]="statusText"></div>
-                            <div keyValueItem class="col-3" [key]="'Aktivní zařízení'"
-                                [value]="(data.activeClients.length == 0 ? ['Žádné'] : data.activeClients).join(', ')"></div>
-                        </div>
-
-                        <div class="row mt-3">
-                            <div keyValueItem class="col-3" [key]="'Datum a čas registrace'"
-                                [value]="(data.registeredAt?.binding ?? 'Není známo')"></div>
-                            <div class="col flags">
-                                <span class="badge bg-{{(data.haveBirthday ? 'success' : 'danger')}}"
-                                    title="Uživatel {{(data.haveBirthday ? 'má' : 'nemá')}} uložené datum narození">Narozeniny</span>
-                                <span class="badge bg-{{(data.isBotAdmin ? 'success' : 'danger')}}"
-                                    title="Uživatel {{(data.isBotAdmin ? 'je' : 'není')}} administrátor bota">BotAdmin</span>
-                                <span class="badge bg-{{(data.haveWebAdmin ? 'success' : 'danger')}}"
-                                    title="Uživatel {{(data.haveWebAdmin ? 'má' : 'nemá')}} přístup do webové administrace">WebAdmin</span>
-                            </div>
-                        </div>
-
-                        <div class="row mt-3" *ngIf="!data.isKnown">
-                            <div class="col">
-                                <div class="alert alert-warning">
-                                    <i class="fas fa-exclamation-triangle"></i>
-                                    Tento uživatel není na žádném serveru na kterém se nachází GrillBot. Data mohou být neúplná.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div keyValueItem class="border-bottom mt-2" [key]="'Identifikátor'" [value]="data.id"></div>
+                <div keyValueItem class="border-bottom mt-2" [key]="'Uživatelské jméno'" [value]="data.fullUsername"></div>
+                <div keyValueItem class="border-bottom mt-2" [key]="'Stav'" [value]="statusText"></div>
+                <div keyValueItem class="border-bottom mt-2" [key]="'Aktivní zařízení'"
+                    [value]="(data.activeClients.length == 0 ? ['Žádné'] : data.activeClients).join(', ')"></div>
+                <div keyValueItem class="border-bottom mt-2" [key]="'Datum a čas registrace'"
+                    [value]="(data.registeredAt?.binding ?? 'Není známo')"></div>
+                <div class="flags">
+                    <span class="badge bg-{{(data.haveBirthday ? 'success' : 'danger')}}"
+                        title="Uživatel {{(data.haveBirthday ? 'má' : 'nemá')}} uložené datum narození">
+                        <i class="fas" [class.fa-times]="!data.haveBirthday" [class.fa-check]="data.haveBirthday"></i>
+                        Narozeniny
+                    </span>
+                    <span class="badge bg-{{(data.isBotAdmin ? 'success' : 'danger')}}"
+                        title="Uživatel {{(data.isBotAdmin ? 'je' : 'není')}} administrátor bota">
+                        <i class="fas" [class.fa-times]="!data.isBotAdmin" [class.fa-check]="data.isBotAdmin"></i>
+                        BotAdmin
+                    </span>
+                    <span class="badge bg-{{(data.haveWebAdmin ? 'success' : 'danger')}}"
+                        title="Uživatel {{(data.haveWebAdmin ? 'má' : 'nemá')}} přístup do webové administrace">
+                        <i class="fas" [class.fa-times]="!data.haveWebAdmin" [class.fa-check]="data.haveWebAdmin"></i>
+                        WebAdmin
+                    </span>
                 </div>
             </app-card>
         </div>
-    </div>
 
-    <div class="row ml-0 mr-0 mt-3">
         <div class="col">
+            <div class="alert alert-warning mb-3" *ngIf="!data.isKnown">
+                <i class="fas fa-exclamation-triangle"></i>
+                Tento uživatel si pravděpodobně zrušil účet. Data mohou být neúplná.
+            </div>
+
             <app-user-detail-settings [user]="data" (userUpdated)="reload()"></app-user-detail-settings>
-        </div>
-    </div>
-
-    <div class="row ml-0 mr-0 mt-3">
-        <div class="col">
             <app-user-detail-guilds [userGuilds]="data.guilds"></app-user-detail-guilds>
         </div>
     </div>
