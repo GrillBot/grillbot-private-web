@@ -6,8 +6,7 @@ import { StorageService } from 'src/app/core/services/storage.service';
 
 @Component({
     selector: 'app-filter',
-    templateUrl: './filter.component.html',
-    styleUrls: ['./filter.component.scss']
+    templateUrl: './filter.component.html'
 })
 export class FilterComponent implements OnInit {
     @Output() filterChanged = new EventEmitter<EmotesListParams>();

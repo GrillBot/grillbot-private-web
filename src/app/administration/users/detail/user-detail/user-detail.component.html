@@ -19,17 +19,17 @@
                 <div keyValueItem class="border-bottom mt-2" [key]="'Datum a čas registrace'"
                     [value]="(data.registeredAt?.binding ?? 'Není známo')"></div>
                 <div class="flags">
-                    <span class="badge bg-{{(data.haveBirthday ? 'success' : 'danger')}}"
+                    <span class="badge bg-{{(data.haveBirthday ? 'success' : 'danger')}} original"
                         title="Uživatel {{(data.haveBirthday ? 'má' : 'nemá')}} uložené datum narození">
                         <i class="fas" [class.fa-times]="!data.haveBirthday" [class.fa-check]="data.haveBirthday"></i>
                         Narozeniny
                     </span>
-                    <span class="badge bg-{{(data.isBotAdmin ? 'success' : 'danger')}}"
+                    <span class="badge bg-{{(data.isBotAdmin ? 'success' : 'danger')}} original"
                         title="Uživatel {{(data.isBotAdmin ? 'je' : 'není')}} administrátor bota">
                         <i class="fas" [class.fa-times]="!data.isBotAdmin" [class.fa-check]="data.isBotAdmin"></i>
                         BotAdmin
                     </span>
-                    <span class="badge bg-{{(data.haveWebAdmin ? 'success' : 'danger')}}"
+                    <span class="badge bg-{{(data.haveWebAdmin ? 'success' : 'danger')}} original"
                         title="Uživatel {{(data.haveWebAdmin ? 'má' : 'nemá')}} přístup do webové administrace">
                         <i class="fas" [class.fa-times]="!data.haveWebAdmin" [class.fa-check]="data.haveWebAdmin"></i>
                         WebAdmin

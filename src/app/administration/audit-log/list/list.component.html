@@ -100,7 +100,7 @@
         <pre class="alert alert-danger" *ngIf="item.type === AuditLogItemType.Error">{{Support.cut(item.data, 1000)}}</pre>
 
         <div *ngIf="item.type === AuditLogItemType.MemberRoleUpdated">
-            <span class="badge bg-{{(role.added ? 'success' : 'danger')}} me-1" *ngFor="let role of item.data.roles">{{(role.added ? '+' :
+            <span class="badge bg-{{(role.added ? 'success' : 'danger')}} me-1 original" *ngFor="let role of item.data.roles">{{(role.added ? '+' :
                 '-')}} {{role.name}}</span>
         </div>
 

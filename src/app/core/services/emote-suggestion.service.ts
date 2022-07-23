@@ -1,0 +1,25 @@
+import { HttpErrorResponse } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
+import { map, Observable } from 'rxjs';
+import { EmoteSuggestion, GetSuggestionListParams } from 'src/app/core/models/suggestions';
+import { PaginatedResponse } from '../models/common';
+import { BaseService } from './base.service';
+import { Injectable } from '@angular/core';
+
+@Injectable({ providedIn: 'root' })
+export class EmoteSuggestionService {
+    constructor(
+        private base: BaseService
+    ) { }
+
+    getSuggestionList(params: GetSuggestionListParams): Observable<PaginatedResponse<EmoteSuggestion>> {
+        const url = `${environment.apiUrl}/emotes/suggestion?${params.queryParams.map(o => o.toString()).join('&')}`;
+        const headers = this.base.getHttpHeaders();
+
+        return this.base.http.get<PaginatedResponse<EmoteSuggestion>>(url, { headers }).pipe(
+            map(data => PaginatedResponse.create(data, entity => EmoteSuggestion.create(entity))),
+            catchError((err: HttpErrorResponse) => this.base.catchError(err))
+        );
+    }
+}

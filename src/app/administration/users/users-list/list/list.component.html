@@ -19,11 +19,11 @@
                     <td>
                         {{item.username}}
                         <span class="badge bg-secondary" *ngIf="item.isBot">Bot</span>
-                        <span class="badge bg-success" *ngIf="item.isWebAdminOnline"
+                        <span class="badge bg-success original" *ngIf="item.isWebAdminOnline"
                             title="Uživatel je přihlášen do administrace">WebAdmin</span>
                     </td>
                     <td class="badge-list">
-                        <span class="badge bg-{{item.statusColor}}">{{item.status}}</span>
+                        <span class="badge bg-{{item.statusColor}} original">{{item.status}}</span>
                     </td>
                     <td>
                         <div class="d-flex flex-column">
@@ -32,11 +32,11 @@
                     </td>
                     <td>{{(item.registeredAt?.binding ?? '')}}</td>
                     <td class="badge-list">
-                        <span class="badge bg-{{(item.haveBirthday ? 'success' : 'danger')}}"
+                        <span class="badge bg-{{(item.haveBirthday ? 'success' : 'danger')}} original"
                             title="Uživatel {{(item.haveBirthday ? 'má' : 'nemá')}} uložené datum narození">Narozeniny</span>
-                        <span class="badge bg-{{(item.isBotAdmin ? 'success' : 'danger')}}"
+                        <span class="badge bg-{{(item.isBotAdmin ? 'success' : 'danger')}} original"
                             title="Uživatel {{(item.isBotAdmin ? 'je' : 'není')}} administrátor bota">BotAdmin</span>
-                        <span class="badge bg-{{(item.haveWebAdmin ? 'success' : 'danger')}}"
+                        <span class="badge bg-{{(item.haveWebAdmin ? 'success' : 'danger')}} original"
                             title="Uživatel {{(item.haveWebAdmin ? 'má' : 'nemá')}} přístup do webové administrace">WebAdmin</span>
                     </td>
                     <td>

@@ -78,6 +78,11 @@ const routes: Routes = [
                 path: 'emotes',
                 loadChildren: () => import('./emotes/emotes.module').then(mod => mod.EmotesModule),
                 data: { title: 'Správa emotů', id: 'emotes' }
+            },
+            {
+                path: 'emoteSuggestions',
+                loadChildren: () => import('./emote-suggestions/emote-suggestions.module').then(mod => mod.EmoteSuggestionsModule),
+                data: { title: 'Návrhy na emoty', id: 'emoteSuggestions' }
             }
         ]
     },
