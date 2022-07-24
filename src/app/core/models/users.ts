@@ -1,7 +1,7 @@
 import { FilterBase } from './common';
 import { Dictionary } from 'src/app/core/models/common';
 import { Support } from '../lib/support';
-import { ChannelStatItem } from './channels';
+import { Channel, ChannelStatItem } from './channels';
 import { DateTime } from './datetime';
 import { EmoteStatItem } from './emotes';
 import { UserFilterFlags, UserFilterMapping } from './enums/user-filter-flags';
@@ -236,6 +236,7 @@ export class GuildUserDetail {
     public emotes: EmoteStatItem[];
     public unverify: UnverifyInfo | null;
     public nicknameHistory: string[];
+    public visibleChannels: Channel[];
 
     static create(data: any): GuildUserDetail | null {
         if (!data) { return null; }
@@ -254,6 +255,7 @@ export class GuildUserDetail {
         detail.emotes = data.emotes?.map((o: any) => EmoteStatItem.create(o)).filter((o: EmoteStatItem) => o);
         detail.unverify = data.unverify ? UnverifyInfo.create(data.unverify) : null;
         detail.nicknameHistory = data.nicknameHistory ? data.nicknameHistory.map((o: string) => o) : [];
+        detail.visibleChannels = data.visibleChannels ? data.visibleChannels.map((o: any) => Channel.create(o)) : [];
 
         return detail;
     }

@@ -80,6 +80,21 @@
                 </div>
             </div>
 
+            <div class="row" *ngIf="guild.visibleChannels.length > 0">
+                <div class="col mb-3">
+                    <span class="d-block">
+                        Přístupné kanály
+                        <a class="smaller" href="javascript:;"
+                            (click)="toggleVisibility('visibleChannels', i)">{{visibilityText('visibleChannels', i)}}</a>
+                    </span>
+                    <div *ngIf="isVisible('visibleChannels', i)">
+                        <span class="badge bg-secondary me-1" *ngFor="let channel of guild.visibleChannels">
+                            <a routerLink="/admin/channels/{{channel.id}}" class="text-white">{{channel.name}}</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
             <div class="row" *ngIf="guild.channels && guild.channels.length > 0">
                 <div class="col mb-3">
                     <span class="d-block">
