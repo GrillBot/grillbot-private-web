@@ -2,49 +2,53 @@ import { Support } from './../../../core/lib/support';
 import { UnverifyOperation, UnverifyOperationTexts } from './../../../core/models/enums/unverify-operation';
 import { StorageService } from 'src/app/core/services/storage.service';
 import { Dictionary } from './../../../core/models/common';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { UnverifyLogParams } from 'src/app/core/models/unverify';
-import { debounceTime } from 'rxjs/operators';
+import { FilterComponentBase } from 'src/app/shared/common-page/filter-component-base';
 
 @Component({
     selector: 'app-filter',
     templateUrl: './filter.component.html'
 })
-export class FilterComponent implements OnInit {
-    @Output() filterChanged = new EventEmitter<UnverifyLogParams>();
-    form: FormGroup;
+export class FilterComponent extends FilterComponentBase<UnverifyLogParams> {
     operations: Dictionary<string, string>;
 
-    constructor(
-        private fb: FormBuilder,
-        private storage: StorageService
-    ) { }
+    constructor(fb: FormBuilder, storage: StorageService) {
+        super(fb, storage);
+    }
 
-    ngOnInit(): void {
+    configure(): void {
+        this.filterId = 'UnverifyLog';
+
         this.operations = Object.keys(UnverifyOperation).map(o => parseInt(o, 10)).filter(o => !isNaN(o))
             .map(o => ({ key: o.toString(), value: UnverifyOperationTexts[Support.getEnumKeyByValue(UnverifyOperation, o)] as string }));
-
-        const filter = UnverifyLogParams.create(
-            this.storage.read<UnverifyLogParams>('UnverifyLogParams')
-        ) || UnverifyLogParams.empty;
-
-        this.initFilter(filter);
-        this.submitForm();
     }
 
-    submitForm(): void {
-        const filter = UnverifyLogParams.create(this.form.value);
-
-        this.filterChanged.emit(filter);
-        this.storage.store<UnverifyLogParams>('UnverifyLogParams', filter);
+    deserializeData(data: any): UnverifyLogParams {
+        return UnverifyLogParams.create(data);
     }
 
-    reset(): void {
-        this.form.patchValue(UnverifyLogParams.empty);
+    createData(empty: boolean): UnverifyLogParams {
+        if (empty) {
+            return UnverifyLogParams.empty;
+        } else {
+            return UnverifyLogParams.create(this.form.value);
+        }
     }
 
-    private initFilter(filter: UnverifyLogParams): void {
+    updateForm(filter: UnverifyLogParams): void {
+        this.form.patchValue({
+            operation: filter.operation,
+            guildId: filter.guildId,
+            fromUserId: filter.fromUserId,
+            toUserId: filter.toUserId,
+            createdFrom: filter.createdFrom,
+            createdTo: filter.createdTo
+        });
+    }
+
+    initForm(filter: UnverifyLogParams): void {
         this.form = this.fb.group({
             operation: [filter.operation],
             guildId: [filter.guildId],
@@ -53,7 +57,5 @@ export class FilterComponent implements OnInit {
             createdFrom: [filter.createdFrom],
             createdTo: [filter.createdTo]
         });
-
-        this.form.valueChanges.pipe(debounceTime(500)).subscribe(_ => this.submitForm());
     }
 }

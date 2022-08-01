@@ -1,52 +1,51 @@
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FilterComponentBase } from 'src/app/shared/common-page/filter-component-base';
+import { FormBuilder } from '@angular/forms';
+import { Component } from '@angular/core';
 import { GetSearchingListParams } from 'src/app/core/models/searching';
 import { StorageService } from 'src/app/core/services/storage.service';
-import { debounceTime } from 'rxjs/operators';
 
 @Component({
     selector: 'app-filter',
     templateUrl: './filter.component.html'
 })
-export class FilterComponent implements OnInit {
-    @Output() filterChanged = new EventEmitter<GetSearchingListParams>();
-    form: FormGroup;
-
-    constructor(
-        private fb: FormBuilder,
-        private storage: StorageService
-    ) { }
+export class FilterComponent extends FilterComponentBase<GetSearchingListParams> {
+    constructor(fb: FormBuilder, storage: StorageService) {
+        super(fb, storage);
+    }
 
     get guildId(): string { return this.form.get('guildId').value as string; }
 
-    ngOnInit(): void {
-        const filter = GetSearchingListParams.create(
-            this.storage.read<GetSearchingListParams>('SearchingListParams')
-        ) || GetSearchingListParams.empty;
-
-        this.initFilter(filter);
-        this.submitForm();
+    configure(): void {
+        this.filterId = 'SearchingList';
     }
 
-    submitForm(): void {
-        const filter = GetSearchingListParams.create(this.form.value);
-
-        this.filterChanged.emit(filter);
-        this.storage.store<GetSearchingListParams>('SearchingListParams', filter);
+    deserializeData(data: any): GetSearchingListParams {
+        return GetSearchingListParams.create(data);
     }
 
-    reset(): void {
-        this.form.patchValue(GetSearchingListParams.empty);
+    createData(empty: boolean): GetSearchingListParams {
+        if (empty) {
+            return GetSearchingListParams.empty;
+        } else {
+            return GetSearchingListParams.create(this.form.value);
+        }
     }
 
-    private initFilter(filter: GetSearchingListParams): void {
+    updateForm(filter: GetSearchingListParams): void {
+        this.form.patchValue({
+            guildId: filter.guildId,
+            channelId: filter.channelId,
+            userId: filter.userId,
+            messageQuery: filter.messageQuery
+        });
+    }
+
+    initForm(filter: GetSearchingListParams): void {
         this.form = this.fb.group({
             guildId: [filter.guildId],
             channelId: [filter.channelId],
             userId: [filter.userId],
             messageQuery: [filter.messageQuery]
         });
-
-        this.form.valueChanges.pipe(debounceTime(500)).subscribe(_ => this.submitForm());
     }
 }

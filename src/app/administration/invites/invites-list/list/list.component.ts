@@ -1,44 +1,27 @@
-import { SortParams } from './../../../../core/models/common';
-import { Component, ViewChild } from '@angular/core';
+import { ListComponentBase } from 'src/app/shared/common-page/list-component-base';
+import { PaginatedResponse } from './../../../../core/models/common';
+import { Component } from '@angular/core';
 import { PaginatedParams } from 'src/app/core/models/common';
-import { GetInviteListParams, InviteListSortTypes } from 'src/app/core/models/invites';
+import { GetInviteListParams } from 'src/app/core/models/invites';
 import { InviteService } from 'src/app/core/services/invite.service';
-import { DataListComponent } from 'src/app/shared/data-list/data-list.component';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-list',
     templateUrl: './list.component.html'
 })
-export class ListComponent {
-    @ViewChild('list', { static: false }) list: DataListComponent;
-
-    sort: SortParams = { orderBy: 'CreatedAt', descending: true };
-
-    private filter: GetInviteListParams;
-
+export class ListComponent extends ListComponentBase<GetInviteListParams> {
     constructor(
         private inviteService: InviteService
-    ) { }
+    ) { super(); }
 
-    filterChanged(filter: GetInviteListParams): void {
-        this.filter = filter;
-        if (this.list) { this.list.filterChanged(); }
+    configure(): void {
+        this.sort.descending = true;
+        this.sort.orderBy = 'CreatedAt';
     }
 
-    readData(pagination: PaginatedParams): void {
-        if (!this.filter) { return; }
-
+    getRequest(pagination: PaginatedParams): Observable<PaginatedResponse<any>> {
         this.filter.set(pagination, this.sort);
-        this.inviteService.getInviteList(this.filter).subscribe(list => this.list.setData(list));
-    }
-
-    setSort(sortBy: InviteListSortTypes): void {
-        if (this.sort.orderBy !== sortBy) {
-            this.sort.orderBy = sortBy;
-        } else {
-            this.sort.descending = !this.sort.descending;
-        }
-
-        if (this.list) { this.list.filterChanged(); }
+        return this.inviteService.getInviteList(this.filter);
     }
 }

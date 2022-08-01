@@ -1,46 +1,29 @@
-import { Component, ViewChild } from '@angular/core';
-import { PaginatedParams, SortParams } from 'src/app/core/models/common';
-import { GetReminderListParams, RemindListSortTypes, RemindMessage } from 'src/app/core/models/reminder';
+import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+import { PaginatedParams, PaginatedResponse } from 'src/app/core/models/common';
+import { GetReminderListParams, RemindMessage } from 'src/app/core/models/reminder';
 import { ReminderService } from 'src/app/core/services/reminder.service';
-import { DataListComponent } from 'src/app/shared/data-list/data-list.component';
+import { ListComponentBase } from 'src/app/shared/common-page/list-component-base';
 import { ModalService } from 'src/app/shared/modal';
 
 @Component({
     selector: 'app-list',
     templateUrl: './list.component.html'
 })
-export class ListComponent {
-    @ViewChild('list', { static: false }) list: DataListComponent;
-
-    sort: SortParams = { orderBy: 'Id', descending: true };
-
-    private filter: GetReminderListParams;
-
+export class ListComponent extends ListComponentBase<GetReminderListParams> {
     constructor(
         private reminderService: ReminderService,
         private modalService: ModalService
-    ) { }
+    ) { super(); }
 
-    filterChanged(filter: GetReminderListParams): void {
-        this.filter = filter;
-        if (this.list) { this.list.filterChanged(); }
+    configure(): void {
+        this.sort.orderBy = 'Id';
+        this.sort.descending = true;
     }
 
-    readData(pagination: PaginatedParams): void {
-        if (!this.filter) { return; }
-
+    getRequest(pagination: PaginatedParams): Observable<PaginatedResponse<any>> {
         this.filter.set(pagination, this.sort);
-        this.reminderService.getReminderList(this.filter).subscribe(list => this.list.setData(list));
-    }
-
-    setSort(sortBy: RemindListSortTypes): void {
-        if (this.sort.orderBy !== sortBy) {
-            this.sort.orderBy = sortBy;
-        } else {
-            this.sort.descending = !this.sort.descending;
-        }
-
-        if (this.list) { this.list.filterChanged(); }
+        return this.reminderService.getReminderList(this.filter);
     }
 
     cancel(item: RemindMessage, notify: boolean): void {

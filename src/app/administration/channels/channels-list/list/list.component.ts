@@ -1,43 +1,26 @@
-import { Component, ViewChild } from '@angular/core';
-import { ChannelListSortTypes, GetChannelListParams } from 'src/app/core/models/channels';
-import { PaginatedParams, SortParams } from 'src/app/core/models/common';
+import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+import { GetChannelListParams } from 'src/app/core/models/channels';
+import { PaginatedParams, PaginatedResponse } from 'src/app/core/models/common';
 import { ChannelService } from 'src/app/core/services/channel.service';
-import { DataListComponent } from 'src/app/shared/data-list/data-list.component';
+import { ListComponentBase } from 'src/app/shared/common-page/list-component-base';
 
 @Component({
     selector: 'app-list',
     templateUrl: './list.component.html'
 })
-export class ListComponent {
-    @ViewChild('list', { static: false }) list: DataListComponent;
-
-    sort: SortParams = { orderBy: 'Name', descending: false };
-
-    private filter: GetChannelListParams;
-
+export class ListComponent extends ListComponentBase<GetChannelListParams> {
     constructor(
         private channelService: ChannelService
-    ) { }
+    ) { super(); }
 
-    filterChanged(filter: GetChannelListParams): void {
-        this.filter = filter;
-        if (this.list) { this.list.filterChanged(); }
+    configure(): void {
+        this.sort.descending = false;
+        this.sort.orderBy = 'Name';
     }
 
-    readData(pagination: PaginatedParams): void {
-        if (!this.filter) { return; }
-
+    getRequest(pagination: PaginatedParams): Observable<PaginatedResponse<any>> {
         this.filter.set(pagination, this.sort);
-        this.channelService.getChannelsList(this.filter).subscribe(list => this.list.setData(list));
-    }
-
-    setSort(sortBy: ChannelListSortTypes): void {
-        if (this.sort.orderBy !== sortBy) {
-            this.sort.orderBy = sortBy;
-        } else {
-            this.sort.descending = !this.sort.descending;
-        }
-
-        if (this.list) { this.list.filterChanged(); }
+        return this.channelService.getChannelsList(this.filter);
     }
 }

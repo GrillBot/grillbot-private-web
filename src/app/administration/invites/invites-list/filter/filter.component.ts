@@ -1,40 +1,35 @@
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { Component } from '@angular/core';
 import { GetInviteListParams } from 'src/app/core/models/invites';
 import { StorageService } from 'src/app/core/services/storage.service';
-import { debounceTime } from 'rxjs/operators';
+import { FilterComponentBase } from 'src/app/shared/common-page/filter-component-base';
 
 @Component({
     selector: 'app-filter',
     templateUrl: './filter.component.html'
 })
-export class FilterComponent implements OnInit {
-    @Output() filterChanged = new EventEmitter<GetInviteListParams>();
-    form: FormGroup;
-
-    constructor(
-        private fb: FormBuilder,
-        private storage: StorageService
-    ) { }
-
-    ngOnInit(): void {
-        const filter = GetInviteListParams.create(this.storage.read<GetInviteListParams>('InviteListParams')) ||
-            GetInviteListParams.empty;
-
-        this.initFilter(filter);
-        this.submitForm();
+export class FilterComponent extends FilterComponentBase<GetInviteListParams> {
+    constructor(fb: FormBuilder, storage: StorageService) {
+        super(fb, storage);
     }
 
-    submitForm(): void {
-        const filter = GetInviteListParams.create(this.form.value);
-
-        this.filterChanged.emit(filter);
-        this.storage.store<GetInviteListParams>('InviteListParams', filter);
+    configure(): void {
+        this.filterId = 'InviteList';
     }
 
-    reset(): void {
-        const filter = GetInviteListParams.empty;
+    deserializeData(data: any): GetInviteListParams {
+        return GetInviteListParams.create(data);
+    }
 
+    createData(empty: boolean): GetInviteListParams {
+        if (empty) {
+            return GetInviteListParams.empty;
+        } else {
+            return GetInviteListParams.create(this.form.value);
+        }
+    }
+
+    updateForm(filter: GetInviteListParams): void {
         this.form.patchValue({
             code: filter.code,
             createdFrom: filter.createdFrom,
@@ -44,7 +39,7 @@ export class FilterComponent implements OnInit {
         });
     }
 
-    private initFilter(filter: GetInviteListParams): void {
+    initForm(filter: GetInviteListParams): void {
         this.form = this.fb.group({
             code: [filter.code],
             createdFrom: [filter.createdFrom],
@@ -52,7 +47,5 @@ export class FilterComponent implements OnInit {
             creatorId: [filter.creatorId],
             guildId: [filter.guildId]
         });
-
-        this.form.valueChanges.pipe(debounceTime(500)).subscribe(_ => this.submitForm());
     }
 }

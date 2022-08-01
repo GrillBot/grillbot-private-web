@@ -11,9 +11,9 @@ import { ModalService } from 'src/app/shared/modal';
     styleUrls: ['./list.component.scss']
 })
 export class ListComponent {
-    private filter: GetExplicitPermissionListParams;
-
     data: ExplicitPermission[];
+
+    private filter: GetExplicitPermissionListParams;
 
     constructor(
         private permissionService: PermissionService,

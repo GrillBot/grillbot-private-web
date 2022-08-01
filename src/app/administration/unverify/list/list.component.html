@@ -9,16 +9,12 @@
                         <thead>
                             <tr>
                                 <th>Seřadit podle: </th>
-                                <th sortable style="width: 150px" (clicked)="setSort($any($event))" [key]="'Operation'"
-                                    [current]="sort.orderBy" [sortDesc]="sort.descending">Operace</th>
-                                <th sortable style="width: 150px;" (clicked)="setSort($any($event))" [key]="'Guild'"
-                                    [current]="sort.orderBy" [sortDesc]="sort.descending">Server</th>
-                                <th sortable style="width: 150px" (clicked)="setSort($any($event))" [key]="'FromUser'"
-                                    [current]="sort.orderBy" [sortDesc]="sort.descending">Provedl</th>
-                                <th sortable style="width: 250px" (clicked)="setSort($any($event))" [key]="'ToUser'"
-                                    [current]="sort.orderBy" [sortDesc]="sort.descending">Cílový uživatel</th>
-                                <th sortable (clicked)="setSort($any($event))" [key]="'CreatedAt'" [current]="sort.orderBy"
-                                    [sortDesc]="sort.descending">Datum a čas provedení</th>
+                                <th sortable style="width: 150px" (clicked)="setSort($event)" [key]="'Operation'" [sort]="sort">Operace</th>
+                                <th sortable style="width: 150px;" (clicked)="setSort($event)" [key]="'Guild'" [sort]="sort">Server</th>
+                                <th sortable style="width: 150px" (clicked)="setSort($event)" [key]="'FromUser'" [sort]="sort">Provedl</th>
+                                <th sortable style="width: 250px" (clicked)="setSort($event)" [key]="'ToUser'" [sort]="sort">Cílový uživatel
+                                </th>
+                                <th sortable (clicked)="setSort($event)" [key]="'CreatedAt'" [sort]="sort">Datum a čas provedení</th>
                             </tr>
                         </thead>
                     </table>

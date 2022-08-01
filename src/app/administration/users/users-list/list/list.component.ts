@@ -1,37 +1,25 @@
-import { DataListComponent } from './../../../../shared/data-list/data-list.component';
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { GetUserListParams } from 'src/app/core/models/users';
 import { UserService } from 'src/app/core/services/user.service';
-import { PaginatedParams } from 'src/app/core/models/common';
+import { PaginatedParams, PaginatedResponse } from 'src/app/core/models/common';
+import { ListComponentBase } from 'src/app/shared/common-page/list-component-base';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-list',
     templateUrl: './list.component.html'
 })
-export class ListComponent {
-    @ViewChild('list', { static: false }) list: DataListComponent;
-
-    sortDesc = false;
-    private filter: GetUserListParams;
-
+export class ListComponent extends ListComponentBase<GetUserListParams> {
     constructor(
         private userService: UserService
-    ) { }
+    ) { super(); }
 
-    filterChanged(filter: GetUserListParams): void {
-        this.filter = filter;
-        if (this.list) { this.list.filterChanged(); }
+    configure(): void {
+        this.sort.descending = false;
     }
 
-    readData(pagination: PaginatedParams): void {
-        if (!this.filter) { return; }
-
-        this.filter.set(pagination, { descending: this.sortDesc });
-        this.userService.getUsersList(this.filter).subscribe(list => this.list.setData(list));
-    }
-
-    toggleSort(): void {
-        this.sortDesc = !this.sortDesc;
-        this.list.filterChanged();
+    getRequest(pagination: PaginatedParams): Observable<PaginatedResponse<any>> {
+        this.filter.set(pagination, this.sort);
+        return this.userService.getUsersList(this.filter);
     }
 }

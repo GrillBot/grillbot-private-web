@@ -5,7 +5,7 @@
         <table class="table table-sm table-bordered table-striped clickable auto-column-width" *ngIf="list.isDataLoaded">
             <thead>
                 <tr>
-                    <th sortable (clicked)="toggleSort()" [key]="'username'" [current]="'username'" [sortDesc]='sortDesc'>Uživatelské jméno
+                    <th sortable (clicked)="setSort()" [sort]="sort">Uživatelské jméno
                     </th>
                     <th>Stav</th>
                     <th>Servery</th>
@@ -45,7 +45,7 @@
                     </td>
                 </tr>
                 <tr *ngIf="list.items.length === 0">
-                    <td colspan="6">Zadanému filtru neodpovídají žádní uživatelé.</td>
+                    <td colspan="6">Nebyly nalezeni žádní uživatelé.</td>
                 </tr>
             </tbody>
         </table>

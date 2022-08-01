@@ -5,14 +5,11 @@
         <table class="table table-bordered table-sm table-striped auto-column-width" *ngIf="list.isDataLoaded">
             <thead>
                 <tr>
-                    <th sortable (clicked)="setSort($any($event))" [key]="'Code'" [current]="sort.orderBy" [sortDesc]="sort.descending">Kód
-                    </th>
-                    <th sortable (clicked)="setSort($any($event))" [key]="'CreatedAt'" [current]="sort.orderBy"
-                        [sortDesc]="sort.descending">Vytvořeno</th>
-                    <th sortable (clicked)="setSort($any($event))" [key]="'Creator'" [current]="sort.orderBy" [sortDesc]="sort.descending">
-                        Vytvořil</th>
-                    <th>Použilo uživatelů</th>
+                    <th sortable (clicked)="setSort($event)" [key]="'Code'" [sort]="sort">Kód</th>
+                    <th sortable (clicked)="setSort($event)" [key]="'CreatedAt'" [sort]="sort">Vytvořeno</th>
+                    <th sortable (clicked)="setSort($event)" [key]="'Creator'" [sort]="sort">Vytvořil</th>
                     <th>Server</th>
+                    <th>Použilo uživatelů</th>
                 </tr>
             </thead>
             <tbody>
@@ -21,9 +18,14 @@
                         <a routerLink="/admin/users" [queryParams]="{usedInviteCode: item.code}" class="text-dark">{{item.code}}</a>
                     </td>
                     <td>{{item.createdAt?.toLocaleString()}}</td>
-                    <td>{{item.creator?.fullUsername}}</td>
+                    <td>
+                        <a routerLink="/admin/users/{{item.creator.id}}" class="text-dark"
+                            *ngIf="item.creator">{{item.creator.fullUsername}}</a>
+                    </td>
+                    <td>
+                        <a routerLink="/admin/servers/{{item.guild.id}}" class="text-dark" *ngIf="item.guild">{{item.guild.name}}</a>
+                    </td>
                     <td>{{item.usedUsersCount}}</td>
-                    <td>{{item.guild?.name}}</td>
                 </tr>
                 <tr *ngIf="list.items.length === 0">
                     <td colspan="5">Pro zadaný filtr nebyly nalezeny žádné pozvánky.</td>
