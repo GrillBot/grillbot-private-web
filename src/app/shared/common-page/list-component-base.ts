@@ -1,11 +1,11 @@
 import { Observable } from 'rxjs';
-import { Directive, ViewChild } from '@angular/core';
+import { Directive, ViewChild, OnInit } from '@angular/core';
 import { PaginatedParams, PaginatedResponse, SortParams } from 'src/app/core/models/common';
 import { DataListComponent } from '../data-list/data-list.component';
 import { ModalService } from '../modal';
 
 @Directive()
-export abstract class ListComponentBase<TFilter> {
+export abstract class ListComponentBase<TFilter> implements OnInit {
     @ViewChild('list', { static: false }) list: DataListComponent;
 
     sort: SortParams = {};
@@ -15,7 +15,9 @@ export abstract class ListComponentBase<TFilter> {
 
     constructor(
         protected modalService: ModalService
-    ) {
+    ) { }
+
+    ngOnInit(): void {
         this.configure();
     }
 

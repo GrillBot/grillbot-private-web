@@ -8,14 +8,12 @@
                 <thead>
                     <tr>
                         <td>Seřadit podle: </td>
-                        <th style="width: 200px" sortable (clicked)="setSort($any($event))" [key]="'UseCount'" [current]="sort.orderBy"
-                            [sortDesc]="sort.descending">Počtu použití</th>
-                        <th style="width: 250px" sortable (clicked)="setSort($any($event))" [key]="'FirstOccurence'"
-                            [current]="sort.orderBy" [sortDesc]="sort.descending">Data prvního výskytu</th>
-                        <th style="width: 250px" sortable (clicked)="setSort($any($event))" [key]="'LastOccurence'" [current]="sort.orderBy"
-                            [sortDesc]="sort.descending">Data posledního výskytu</th>
-                        <th style="width: 200px" sortable (clicked)="setSort($any($event))" [key]="'EmoteId'" [current]="sort.orderBy"
-                            [sortDesc]="sort.descending">Názvu</th>
+                        <th style="width: 200px" sortable (clicked)="setSort($event)" [key]="'UseCount'" [sort]="sort">Počtu použití</th>
+                        <th style="width: 250px" sortable (clicked)="setSort($event)" [key]="'FirstOccurence'" [sort]="sort">Data prvního
+                            výskytu</th>
+                        <th style="width: 250px" sortable (clicked)="setSort($event)" [key]="'LastOccurence'" [sort]="sort">Data posledního
+                            výskytu</th>
+                        <th style="width: 200px" sortable (clicked)="setSort($event)" [key]="'EmoteId'" [sort]="sort">Názvu</th>
                     </tr>
                 </thead>
             </table>

@@ -1,66 +1,59 @@
-import { debounceTime } from 'rxjs/operators';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
 import { EmotesListParams } from 'src/app/core/models/emotes';
 import { StorageService } from 'src/app/core/services/storage.service';
+import { FilterComponentBase } from 'src/app/shared/common-page/filter-component-base';
 
 @Component({
     selector: 'app-filter',
     templateUrl: './filter.component.html'
 })
-export class FilterComponent implements OnInit {
-    @Output() filterChanged = new EventEmitter<EmotesListParams>();
-
-    form: FormGroup;
-
-    constructor(
-        private fb: FormBuilder,
-        private storage: StorageService
-    ) { }
-
-    ngOnInit(): void {
-        const filter = EmotesListParams.deserialize(this.storage.read<EmotesListParams>('EmotesListParams')) || EmotesListParams.empty;
-
-        this.initFilter(filter);
-        this.submitForm();
+export class FilterComponent extends FilterComponentBase<EmotesListParams> {
+    constructor(fb: FormBuilder, storage: StorageService) {
+        super(fb, storage);
     }
 
-    submitForm(): void {
-        const filter = EmotesListParams.create(this.form.value);
-
-        this.filterChanged.emit(filter);
-        this.storage.store<EmotesListParams>('EmotesListParams', filter);
+    configure(): void {
+        this.filterId = 'EmotesList';
     }
 
-    cleanFilter(): void {
-        const filter = EmotesListParams.empty;
+    deserializeData(data: any): EmotesListParams {
+        return EmotesListParams.create(data);
+    }
 
+    createData(empty: boolean): EmotesListParams {
+        if (empty) {
+            return EmotesListParams.empty;
+        } else {
+            return EmotesListParams.create(this.form.value);
+        }
+    }
+
+    updateForm(filter: EmotesListParams): void {
         this.form.patchValue({
             guildId: filter.guildId,
-            useCountFrom: filter.useCount.from,
-            useCountTo: filter.useCount.to,
-            firstOccurenceFrom: filter.firstOccurence.from,
-            firstOccurenceTo: filter.firstOccurence.to,
-            lastOccurenceFrom: filter.lastOccurence.from,
-            lastOccurenceTo: filter.lastOccurence.to,
+            useCountFrom: filter.useCountFrom,
+            useCountTo: filter.useCountTo,
+            firstOccurenceFrom: filter.firstOccurenceFrom,
+            firstOccurenceTo: filter.firstOccurenceTo,
+            lastOccurenceFrom: filter.lastOccurenceFrom,
+            lastOccurenceTo: filter.lastOccurenceTo,
             filterAnimated: filter.filterAnimated,
             emoteName: filter.emoteName
         });
     }
 
-    private initFilter(filter: EmotesListParams): void {
+    initForm(filter: EmotesListParams): void {
         this.form = this.fb.group({
             guildId: [filter.guildId],
-            useCountFrom: [filter.useCount.from, Validators.min(0)],
-            useCountTo: [filter.useCount.to, Validators.min(0)],
-            firstOccurenceFrom: [filter.firstOccurence.from],
-            firstOccurenceTo: [filter.firstOccurence.to],
-            lastOccurenceFrom: [filter.lastOccurence.from],
-            lastOccurenceTo: [filter.lastOccurence.to],
+            useCountFrom: [filter.useCountFrom, Validators.min(0)],
+            useCountTo: [filter.useCountTo, Validators.min(0)],
+            firstOccurenceFrom: [filter.firstOccurenceFrom],
+            firstOccurenceTo: [filter.firstOccurenceTo],
+            lastOccurenceFrom: [filter.lastOccurenceFrom],
+            lastOccurenceTo: [filter.lastOccurenceTo],
             filterAnimated: [filter.filterAnimated],
             emoteName: [filter.emoteName]
         });
-
-        this.form.valueChanges.pipe(debounceTime(300)).subscribe(_ => this.submitForm());
     }
 }

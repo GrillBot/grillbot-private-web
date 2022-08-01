@@ -44,9 +44,12 @@ export class EmoteStatItem {
 
 export class EmotesListParams extends FilterBase {
     public guildId: string;
-    public useCount: RangeParams<number> = {};
-    public firstOccurence: RangeParams<DateTime> = {};
-    public lastOccurence: RangeParams<DateTime> = {};
+    public useCountFrom: number | null;
+    public useCountTo: number | null;
+    public firstOccurenceFrom: string | null;
+    public firstOccurenceTo: string | null;
+    public lastOccurenceFrom: string | null;
+    public lastOccurenceTo: string | null;
     public filterAnimated: boolean = false;
     public emoteName: string;
 
@@ -55,40 +58,16 @@ export class EmotesListParams extends FilterBase {
     get queryParams(): QueryParam[] {
         return [
             this.guildId ? new QueryParam('guildId', this.guildId) : null,
-            this.useCount.from != null ? new QueryParam('useCount.from', this.useCount.from) : null,
-            this.useCount.to != null ? new QueryParam('useCount.to', this.useCount.to) : null,
-            this.firstOccurence.from != null ? new QueryParam('firstOccurence.from', this.firstOccurence.from) : null,
-            this.firstOccurence.to != null ? new QueryParam('firstOccurence.to', this.firstOccurence.to) : null,
-            this.lastOccurence.from != null ? new QueryParam('lastOccurence.from', this.lastOccurence.from) : null,
-            this.lastOccurence.to != null ? new QueryParam('lastOccurence.to', this.lastOccurence.to) : null,
+            this.useCountFrom != null ? new QueryParam('useCount.from', this.useCountFrom) : null,
+            this.useCountTo != null ? new QueryParam('useCount.to', this.useCountTo) : null,
+            this.firstOccurenceFrom != null ? new QueryParam('firstOccurence.from', this.firstOccurenceFrom) : null,
+            this.firstOccurenceTo != null ? new QueryParam('firstOccurence.to', this.firstOccurenceTo) : null,
+            this.lastOccurenceFrom != null ? new QueryParam('lastOccurence.from', this.lastOccurenceFrom) : null,
+            this.lastOccurenceTo != null ? new QueryParam('lastOccurence.to', this.lastOccurenceTo) : null,
             ...super.queryParams,
             new QueryParam('filterAnimated', this.filterAnimated),
             this.emoteName ? new QueryParam('emoteName', this.emoteName) : null
         ].filter(o => o);
-    }
-
-    static deserialize(data: EmotesListParams): EmotesListParams {
-        if (!data) { return null; }
-
-        const params = new EmotesListParams();
-
-        params.guildId = data.guildId;
-        params.filterAnimated = data.filterAnimated;
-        params.useCount = {
-            from: data.useCount.from,
-            to: data.useCount.to
-        };
-        params.firstOccurence = {
-            from: data.firstOccurence.from,
-            to: data.firstOccurence.to
-        };
-        params.lastOccurence = {
-            from: data.lastOccurence.from,
-            to: data.lastOccurence.to
-        };
-        params.emoteName = data.emoteName;
-
-        return params;
     }
 
     static create(form: any): EmotesListParams {
@@ -99,22 +78,12 @@ export class EmotesListParams extends FilterBase {
         params.guildId = form.guildId;
         params.filterAnimated = form.filterAnimated ?? false;
         params.emoteName = form.emoteName;
-
-        params.useCount = {
-            from: form.useCountFrom,
-            to: form.useCountTo
-        };
-
-        params.firstOccurence = {
-            from: form.firstOccurenceFrom,
-            to: form.firstOccurenceTo
-        };
-
-        params.lastOccurence = {
-            from: form.lastOccurenceFrom,
-            to: form.lastOccurenceTo
-        };
-
+        params.useCountFrom = form.useCountFrom;
+        params.useCountTo = form.useCountTo;
+        params.firstOccurenceFrom = form.firstOccurenceFrom;
+        params.firstOccurenceTo = form.firstOccurenceTo;
+        params.lastOccurenceFrom = form.lastOccurenceFrom;
+        params.lastOccurenceTo = form.lastOccurenceTo;
         return params;
     }
 }

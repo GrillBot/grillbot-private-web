@@ -1,10 +1,10 @@
+import { ListComponentBase } from 'src/app/shared/common-page/list-component-base';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { PaginatedParams, PaginatedResponse, SortParams } from 'src/app/core/models/common';
-import { EmotesListParams, EmoteStatItem, SortingTypes } from 'src/app/core/models/emotes';
+import { Component } from '@angular/core';
+import { PaginatedParams, PaginatedResponse } from 'src/app/core/models/common';
+import { EmotesListParams, EmoteStatItem } from 'src/app/core/models/emotes';
 import { EmotesService } from 'src/app/core/services/emotes.service';
-import { DataListComponent } from 'src/app/shared/data-list/data-list.component';
 import { ModalService } from 'src/app/shared/modal';
 import { MergeModalComponent } from '../../merge-modal/merge-modal.component';
 
@@ -13,52 +13,29 @@ import { MergeModalComponent } from '../../merge-modal/merge-modal.component';
     templateUrl: './list.component.html',
     styleUrls: ['./list.component.scss']
 })
-export class ListComponent implements OnInit {
-    @ViewChild('list', { static: false }) list: DataListComponent;
-
-    sort: SortParams = { orderBy: 'UseCount', descending: true };
+export class ListComponent extends ListComponentBase<EmotesListParams> {
     unsupported = false;
-
-    private filter: EmotesListParams;
 
     constructor(
         private emotesService: EmotesService,
-        private modalService: ModalService,
+        modalService: ModalService,
         private activatedRoute: ActivatedRoute
-    ) { }
+    ) { super(modalService); }
 
-    filterChanged(filter: EmotesListParams): void {
-        this.filter = filter;
-        if (this.list) { this.list.filterChanged(); }
-    }
-
-    ngOnInit(): void {
+    configure(): void {
+        this.sort.orderBy = 'UseCount';
+        this.sort.descending = true;
         this.unsupported = this.activatedRoute.snapshot.routeConfig.path === 'unsupported';
     }
 
-    readData(pagination: PaginatedParams): void {
-        if (!this.filter) { return; }
-
+    getRequest(pagination: PaginatedParams): Observable<PaginatedResponse<any>> {
         this.filter.set(pagination, this.sort);
 
-        let request: Observable<PaginatedResponse<EmoteStatItem>>;
         if (this.unsupported) {
-            request = this.emotesService.getStatsOfUnsupportedEmotes(this.filter);
+            return this.emotesService.getStatsOfUnsupportedEmotes(this.filter);
         } else {
-            request = this.emotesService.getStatsOfSupportedEmotes(this.filter);
+            return this.emotesService.getStatsOfSupportedEmotes(this.filter);
         }
-
-        request.subscribe(data => this.list.setData(data));
-    }
-
-    setSort(sortBy: SortingTypes): void {
-        if (this.sort.orderBy !== sortBy) {
-            this.sort.orderBy = sortBy;
-        } else {
-            this.sort.descending = !this.sort.descending;
-        }
-
-        if (this.list) { this.list.filterChanged(); }
     }
 
     mergeStatsToAnother(row: EmoteStatItem): void {
