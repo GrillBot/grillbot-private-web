@@ -26,10 +26,6 @@ export class ListComponent implements OnInit {
 
     removeItem(item: AutoReplyItem): void {
         this.modalService.showQuestion('Smazání automatické odpovědi', `Opravdu si přeješ smazat automatickou odpověď s ID ${item.id}?`)
-            .onAccept.subscribe(_ => {
-                this.autoReplyService.removeItem(item.id).subscribe(__ => {
-                    this.reloadData();
-                });
-            });
+            .onAccept.subscribe(_ => this.autoReplyService.removeItem(item.id).subscribe(__ => this.reloadData()));
     }
 }
