@@ -1,48 +1,43 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { debounceTime } from 'rxjs/operators';
+import { Component } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { GuildListFilter } from 'src/app/core/models/guilds';
 import { StorageService } from 'src/app/core/services/storage.service';
+import { FilterComponentBase } from 'src/app/shared/common-page/filter-component-base';
 
 @Component({
     selector: 'app-filter',
     templateUrl: './filter.component.html'
 })
-export class FilterComponent implements OnInit {
-    @Output() filterChanged = new EventEmitter<GuildListFilter>();
-
-    form: FormGroup;
-
-    constructor(
-        private fb: FormBuilder,
-        private storage: StorageService
-    ) { }
-
-    ngOnInit(): void {
-        const filter = GuildListFilter.create(this.storage.read<GuildListFilter>('GuildListFilter') || GuildListFilter.empty);
-
-        this.initFilter(filter);
-        this.submitForm();
+export class FilterComponent extends FilterComponentBase<GuildListFilter> {
+    constructor(fb: FormBuilder, storage: StorageService) {
+        super(fb, storage);
     }
 
-    private initFilter(filter: GuildListFilter): void {
+    configure(): void {
+        this.filterId = 'GuildList';
+    }
+
+    deserializeData(data: any): GuildListFilter {
+        return GuildListFilter.create(data);
+    }
+
+    createData(empty: boolean): GuildListFilter {
+        if (empty) {
+            return GuildListFilter.empty;
+        } else {
+            return GuildListFilter.create(this.form.value);
+        }
+    }
+
+    initForm(filter: GuildListFilter): void {
         this.form = this.fb.group({
             nameQuery: [filter.nameQuery]
         });
-
-        this.form.valueChanges.pipe(debounceTime(600)).subscribe(_ => this.submitForm());
     }
 
-    submitForm(): void {
-        const filter = GuildListFilter.create(this.form.value);
-
-        this.filterChanged.emit(filter);
-        this.storage.store<GuildListFilter>('GuildListFilter', filter);
-    }
-
-    reset(): void {
+    updateForm(filter: GuildListFilter): void {
         this.form.patchValue({
-            nameQuery: GuildListFilter.empty.nameQuery
+            nameQuery: filter.nameQuery
         });
     }
 }

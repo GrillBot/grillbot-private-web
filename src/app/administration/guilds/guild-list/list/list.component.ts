@@ -1,31 +1,23 @@
+import { noop, Observable } from 'rxjs';
 import { GuildListFilter } from './../../../../core/models/guilds';
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { GuildService } from 'src/app/core/services/guild.service';
-import { PaginatedParams } from 'src/app/core/models/common';
-import { DataListComponent } from 'src/app/shared/data-list/data-list.component';
+import { PaginatedParams, PaginatedResponse } from 'src/app/core/models/common';
+import { ListComponentBase } from 'src/app/shared/common-page/list-component-base';
 
 @Component({
     selector: 'app-list',
     templateUrl: './list.component.html'
 })
-export class ListComponent {
-    @ViewChild('list', { static: false }) list: DataListComponent;
-
-    private filter: GuildListFilter;
-
+export class ListComponent extends ListComponentBase<GuildListFilter> {
     constructor(
         private guildService: GuildService
-    ) { }
+    ) { super(null); }
 
-    filterChanged(filter: GuildListFilter): void {
-        this.filter = filter;
-        if (this.list) { this.list.filterChanged(); }
-    }
+    configure(): void { noop(); }
 
-    readData(pagination: PaginatedParams): void {
-        if (!this.filter) { return; }
-
+    getRequest(pagination: PaginatedParams): Observable<PaginatedResponse<any>> {
         this.filter.set(pagination, null);
-        this.guildService.getGuildList(this.filter).subscribe(response => this.list.setData(response));
+        return this.guildService.getGuildList(this.filter);
     }
 }

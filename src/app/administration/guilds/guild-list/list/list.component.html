@@ -16,14 +16,17 @@
                     <td>{{item.id}}</td>
                     <td>
                         {{item.name}}
-                        <small class="badge bg-danger original" title="Bot není připojen na server" *ngIf="!item.isConnected">Nepřipojen</small>
+                        <small class="badge bg-danger original" title="Bot není připojen na server"
+                            *ngIf="!item.isConnected">Nepřipojen</small>
                     </td>
                     <td>{{item.memberCount}}</td>
                     <td>
                         <list-button link="/admin/servers/{{item.id}}" title="Detail serveru {{item.name}}" icon="info"
-                            *ngIf="item.isConnected">
-                        </list-button>
+                            *ngIf="item.isConnected"></list-button>
                     </td>
+                </tr>
+                <tr *ngIf="list.isEmpty">
+                    <td colspan="4">Nebyly nalezeny žádné servery.</td>
                 </tr>
             </tbody>
         </table>
