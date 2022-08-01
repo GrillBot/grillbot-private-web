@@ -24,6 +24,11 @@
 
         <div class="row">
             <div class="col-md form-group">
+                <label>ID zprávy</label>
+                <input type="text" formControlName="messageId" class="form-control" />
+            </div>
+
+            <div class="col-md form-group">
                 <app-checkbox [id]="'only-messages'" formControlName="onlyMessages" [label]="'Pouze transakce ze zpráv'"></app-checkbox>
             </div>
 
@@ -31,7 +36,7 @@
                 <app-checkbox [id]="'only-reactions'" formControlName="onlyReactions" [label]="'Pouze transakce z reakcí'"></app-checkbox>
             </div>
 
-            <div class="col-md-6 d-flex justify-content-end align-items-end">
+            <div class="col-md d-flex justify-content-end align-items-end">
                 <div class="mt-2">
                     <button class="btn btn-link me-2" type="button" (click)="submitForm()">Obnovit</button>
                     <button class="btn btn-danger" (click)="cleanFilter()">Smazat filtr</button>

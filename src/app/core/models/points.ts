@@ -69,6 +69,7 @@ export class GetPointTransactionsParams extends FilterBase {
     public assingnedAtTo: string | null;
     public onlyReactions: boolean;
     public onlyMessages: boolean;
+    public messageId: string | null;
 
     static get empty(): GetPointTransactionsParams { return new GetPointTransactionsParams(); }
 
@@ -80,7 +81,8 @@ export class GetPointTransactionsParams extends FilterBase {
             this.assingnedAtTo ? new QueryParam('assignedAt.to', this.assingnedAtTo) : null,
             this.onlyReactions ? new QueryParam('onlyReactions', this.onlyReactions) : null,
             this.onlyMessages ? new QueryParam('onlyMessages', this.onlyMessages) : null,
-            ...super.queryParams
+            ...super.queryParams,
+            this.messageId ? new QueryParam('messageId', this.messageId) : null
         ].filter(o => o);
     }
 
@@ -94,6 +96,7 @@ export class GetPointTransactionsParams extends FilterBase {
         params.assingnedAtTo = form.assingnedAtTo;
         params.onlyReactions = form.onlyReactions;
         params.onlyMessages = form.onlyMessages;
+        params.messageId = form.messageId;
 
         return params;
     }

@@ -36,7 +36,8 @@ export class FilterComponent extends FilterComponentBase<GetPointTransactionsPar
             assignedAtFrom: filter.assingnedAtFrom,
             assignedAtTo: filter.assingnedAtTo,
             onlyReactions: filter.onlyReactions,
-            onlyMessages: filter.onlyMessages
+            onlyMessages: filter.onlyMessages,
+            messageId: filter.messageId
         });
     }
 
@@ -47,7 +48,8 @@ export class FilterComponent extends FilterComponentBase<GetPointTransactionsPar
             assignedAtFrom: [filter.assingnedAtFrom],
             assignedAtTo: [filter.assingnedAtTo],
             onlyReactions: [filter.onlyReactions],
-            onlyMessages: [filter.onlyMessages]
+            onlyMessages: [filter.onlyMessages],
+            messageId: [filter.messageId]
         });
 
         this.form.get('onlyReactions').valueChanges.subscribe(onlyReactions => {
