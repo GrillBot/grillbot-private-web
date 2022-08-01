@@ -34,7 +34,8 @@
                         <ng-container *ngIf="!item.isCategory">{{item.lastMessageAt?.binding ?? ''}}</ng-container>
                     </td>
                     <td>
-                        <a routerLink="/admin/servers/{{item.guild.id}}" class="text-dark">{{item.guild.name}}</a>
+                        <a routerLink="/admin/servers/{{item.guild.id}}" class="text-dark"
+                            (click)="$event.stopPropagation()">{{item.guild.name}}</a>
                     </td>
                     <td>{{item.rolePermissionsCount?.toLocaleString()}}</td>
                     <td>{{item.userPermissionsCount?.toLocaleString()}}</td>

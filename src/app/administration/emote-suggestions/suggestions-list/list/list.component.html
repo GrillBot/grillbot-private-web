@@ -21,7 +21,8 @@
                     <td>{{item.id}}</td>
                     <td>{{item.createdAt.binding}}</td>
                     <td>
-                        <a routerLink="/admin/users/{{item.fromUser.id}}" class="text-dark">{{item.fromUser.fullUsername}}</a>
+                        <a routerLink="/admin/users/{{item.fromUser.id}}" class="text-dark"
+                            (click)="$event.stopPropagation()">{{item.fromUser.fullUsername}}</a>
                     </td>
                     <td>{{item.emoteName}}</td>
                     <td>
