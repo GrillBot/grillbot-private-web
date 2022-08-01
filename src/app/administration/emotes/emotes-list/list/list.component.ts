@@ -18,9 +18,9 @@ export class ListComponent extends ListComponentBase<EmotesListParams> {
 
     constructor(
         private emotesService: EmotesService,
-        modalService: ModalService,
+        private modalService: ModalService,
         private activatedRoute: ActivatedRoute
-    ) { super(modalService); }
+    ) { super(); }
 
     configure(): void {
         this.sort.orderBy = 'UseCount';

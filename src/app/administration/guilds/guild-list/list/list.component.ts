@@ -12,7 +12,7 @@ import { ListComponentBase } from 'src/app/shared/common-page/list-component-bas
 export class ListComponent extends ListComponentBase<GuildListFilter> {
     constructor(
         private guildService: GuildService
-    ) { super(null); }
+    ) { super(); }
 
     configure(): void { noop(); }
 

@@ -4,7 +4,6 @@ import { PaginatedParams, PaginatedResponse } from 'src/app/core/models/common';
 import { GetPointsSummaryParams } from 'src/app/core/models/points';
 import { PointsService } from 'src/app/core/services/points.service';
 import { ListComponentBase } from 'src/app/shared/common-page/list-component-base';
-import { ModalService } from 'src/app/shared/modal';
 
 @Component({
     selector: 'app-list',
@@ -13,9 +12,8 @@ import { ModalService } from 'src/app/shared/modal';
 export class ListComponent extends ListComponentBase<GetPointsSummaryParams> {
     constructor(
         private service: PointsService,
-        modal: ModalService
     ) {
-        super(modal);
+        super();
     }
 
     configure(): void {

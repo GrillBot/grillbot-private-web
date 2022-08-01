@@ -14,8 +14,8 @@ import { Observable } from 'rxjs';
 export class ListComponent extends ListComponentBase<GetSuggestionListParams> {
     constructor(
         private suggestionService: EmoteSuggestionService,
-        modalService: ModalService
-    ) { super(modalService); }
+        private modalService: ModalService
+    ) { super(); }
 
     configure(): void {
         this.sort.descending = true;

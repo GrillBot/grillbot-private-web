@@ -18,8 +18,8 @@ import { DetailModalComponent } from '../detail-modal/detail-modal.component';
 export class ListComponent extends ListComponentBase<AuditLogListParams> {
     constructor(
         private auditLogService: AuditLogService,
-        modalService: ModalService
-    ) { super(modalService); }
+        private modalService: ModalService
+    ) { super(); }
 
     get AuditLogItemType(): typeof AuditLogItemType { return AuditLogItemType; }
     get Support(): typeof Support { return Support; }
