@@ -3,34 +3,31 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { ExtendedFiltersModalData } from './extended-filters/filters-modal-result';
 import { Dictionary } from 'src/app/core/models/common';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { AuditLogListParams } from 'src/app/core/models/audit-log';
 import { StorageService } from 'src/app/core/services/storage.service';
 import { AuditLogItemType, AuditLogItemTypeTexts } from 'src/app/core/models/enums/audit-log-item-type';
 import { Support } from 'src/app/core/lib/support';
-import { debounceTime } from 'rxjs/operators';
 import { ModalService } from 'src/app/shared/modal';
 import { ExtendedFiltersModalComponent } from './extended-filters/extended-filters-modal/extended-filters-modal.component';
+import { FilterComponentBase } from 'src/app/shared/common-page/filter-component-base';
 
 @Component({
     selector: 'app-filter',
     templateUrl: './filter.component.html'
 })
-export class FilterComponent implements OnInit {
-    @Output() filterChanged = new EventEmitter<AuditLogListParams>();
-
-    form: FormGroup;
+export class FilterComponent extends FilterComponentBase<AuditLogListParams> {
     types: Dictionary<number, string>;
     extendedFilters: ExtendedFiltersModalData;
 
     constructor(
-        private fb: FormBuilder,
-        private storage: StorageService,
+        fb: FormBuilder,
+        storage: StorageService,
         private modal: ModalService
-    ) { }
+    ) { super(fb, storage); }
 
-    get guildId(): string { return this.form.get('guild').value as string; }
+    get guildId(): string { return this.form.get('guildId').value as string; }
     get selectedTypes(): AuditLogItemType[] { return this.form.get('types').value as AuditLogItemType[]; }
     get excludedTypes(): AuditLogItemType[] { return this.form.get('excludedTypes').value as AuditLogItemType[]; }
 
@@ -60,50 +57,95 @@ export class FilterComponent implements OnInit {
         return typesWithFilters.some(o => selected.includes(o));
     }
 
-    ngOnInit(): void {
+    configure(): void {
+        this.filterId = 'AuditLogList';
+
         this.types = Object.keys(AuditLogItemType)
             .filter(o => !isNaN(parseInt(o, 10)) && parseInt(o, 10) > 0)
             .map(o => ({
                 key: parseInt(o, 10),
                 value: AuditLogItemTypeTexts[Support.getEnumKeyByValue(AuditLogItemType, parseInt(o, 10))] as string
             }));
-
-        const filter = AuditLogListParams.create(this.storage.read<any>('AuditLogListParams')) || AuditLogListParams.empty;
-
-        this.initFilter(filter);
-        this.submitForm();
     }
 
-    submitForm(): void {
-        if (this.form.invalid) {
-            return;
-        }
-
-        const filter = AuditLogListParams.create(this.form.value);
-
-        if (this.extendedFilters) {
-            filter.infoFilter = this.extendedFilters.infoFilter;
-            filter.warningFilter = this.extendedFilters.warningFilter;
-            filter.errorFilter = this.extendedFilters.errorFilter;
-
-            filter.commandFilter = this.extendedFilters.commandFilter;
-            filter.interactionsFilter = this.extendedFilters.interactionFilter;
-            filter.jobFilter = this.extendedFilters.jobFilter;
-            filter.apiRequestFilter = this.extendedFilters.apiRequestFilter;
-            filter.overwriteCreatedFilter = this.extendedFilters.overwriteCreatedFilter;
-            filter.overwriteDeletedFilter = this.extendedFilters.overwriteDeletedFilter;
-            filter.overwriteUpdatedFilter = this.extendedFilters.overwriteUpdatedFilter;
-            filter.memberRoleUpdatedFilter = this.extendedFilters.memberRoleUpdatedFilter;
-            filter.memberUpdatedFilter = this.extendedFilters.memberUpdatedFilter;
-        }
-
-        this.filterChanged.emit(filter);
-        this.storage.store<AuditLogListParams>('AuditLogListParams', filter.serialized);
+    deserializeData(data: any): AuditLogListParams {
+        return AuditLogListParams.create(data);
     }
 
-    cleanFilter(): void {
-        this.extendedFilters = null;
-        this.form.patchValue(AuditLogListParams.empty.serialized);
+    createData(empty: boolean): AuditLogListParams {
+        if (empty) {
+            this.extendedFilters = null;
+            return AuditLogListParams.empty;
+        } else {
+            const filter = AuditLogListParams.create(this.form.value);
+
+            if (this.extendedFilters) {
+                filter.infoFilter = this.extendedFilters.infoFilter;
+                filter.warningFilter = this.extendedFilters.warningFilter;
+                filter.errorFilter = this.extendedFilters.errorFilter;
+
+                filter.commandFilter = this.extendedFilters.commandFilter;
+                filter.interactionsFilter = this.extendedFilters.interactionFilter;
+                filter.jobFilter = this.extendedFilters.jobFilter;
+                filter.apiRequestFilter = this.extendedFilters.apiRequestFilter;
+                filter.overwriteCreatedFilter = this.extendedFilters.overwriteCreatedFilter;
+                filter.overwriteDeletedFilter = this.extendedFilters.overwriteDeletedFilter;
+                filter.overwriteUpdatedFilter = this.extendedFilters.overwriteUpdatedFilter;
+                filter.memberRoleUpdatedFilter = this.extendedFilters.memberRoleUpdatedFilter;
+                filter.memberUpdatedFilter = this.extendedFilters.memberUpdatedFilter;
+            }
+
+            return filter;
+        }
+    }
+
+    updateForm(filter: AuditLogListParams): void {
+        this.form.patchValue({
+            guildId: filter.guildId,
+            channelId: filter.channelId,
+            createdFrom: filter.createdFrom,
+            createdTo: filter.createdTo,
+            ignoreBots: filter.ignoreBots,
+            processedUserIds: filter.processedUserIds,
+            types: filter.types,
+            ids: filter.ids,
+            excludedTypes: filter.excludedTypes
+        });
+
+        this.setExtendedFilters(filter);
+    }
+
+    initForm(filter: AuditLogListParams): void {
+        this.form = this.fb.group({
+            guildId: [filter.guildId],
+            channelId: [filter.channelId],
+            createdFrom: [filter.createdFrom],
+            createdTo: [filter.createdTo],
+            ignoreBots: [filter.ignoreBots],
+            processedUserIds: [filter.processedUserIds],
+            types: [filter.types],
+            ids: [filter.ids, Validators.pattern('^[0-9,]*$')],
+            excludedTypes: [filter.excludedTypes]
+        });
+
+        this.setExtendedFilters(filter);
+    }
+
+    setExtendedFilters(filter: AuditLogListParams): void {
+        this.extendedFilters = {
+            commandFilter: filter.commandFilter,
+            errorFilter: filter.errorFilter,
+            infoFilter: filter.infoFilter,
+            interactionFilter: filter.interactionsFilter,
+            jobFilter: filter.jobFilter,
+            warningFilter: filter.warningFilter,
+            apiRequestFilter: filter.apiRequestFilter,
+            overwriteCreatedFilter: filter.overwriteCreatedFilter,
+            overwriteDeletedFilter: filter.overwriteDeletedFilter,
+            overwriteUpdatedFilter: filter.overwriteUpdatedFilter,
+            memberRoleUpdatedFilter: filter.memberRoleUpdatedFilter,
+            memberUpdatedFilter: filter.memberUpdatedFilter
+        };
     }
 
     openExtendedFiltersModal(): void {
@@ -115,38 +157,5 @@ export class FilterComponent implements OnInit {
             this.extendedFilters = modal.componentInstance.result;
             this.submitForm();
         });
-    }
-
-    private initFilter(filterData: AuditLogListParams): void {
-        const serialized = filterData.serialized;
-
-        this.form = this.fb.group({
-            guild: [serialized.guild],
-            channel: [serialized.channel],
-            createdFrom: [serialized.createdFrom],
-            createdTo: [serialized.createdTo],
-            ignoreBots: [serialized.ignoreBots],
-            processedUsers: [serialized.processedUsers],
-            types: [serialized.types],
-            ids: [serialized.ids, Validators.pattern('^[0-9,]*$')],
-            excludedTypes: [serialized.excludedTypes]
-        });
-
-        this.extendedFilters = {
-            commandFilter: filterData.commandFilter,
-            errorFilter: filterData.errorFilter,
-            infoFilter: filterData.infoFilter,
-            interactionFilter: filterData.interactionsFilter,
-            jobFilter: filterData.jobFilter,
-            warningFilter: filterData.warningFilter,
-            apiRequestFilter: filterData.apiRequestFilter,
-            overwriteCreatedFilter: filterData.overwriteCreatedFilter,
-            overwriteDeletedFilter: filterData.overwriteDeletedFilter,
-            overwriteUpdatedFilter: filterData.overwriteUpdatedFilter,
-            memberRoleUpdatedFilter: filterData.memberRoleUpdatedFilter,
-            memberUpdatedFilter: filterData.memberUpdatedFilter
-        };
-
-        this.form.valueChanges.pipe(debounceTime(300)).subscribe(_ => this.submitForm());
     }
 }

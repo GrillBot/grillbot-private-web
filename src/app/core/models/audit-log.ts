@@ -223,42 +223,16 @@ export class AuditLogListParams extends FilterBase {
         ].filter(o => o);
     }
 
-    get serialized(): any {
-        return {
-            guild: this.guildId,
-            channel: this.channelId,
-            createdFrom: this.createdFrom,
-            createdTo: this.createdTo,
-            ignoreBots: this.ignoreBots ?? false,
-            processedUsers: this.processedUserIds,
-            types: this.types ? this.types : [],
-            excludedTypes: this.excludedTypes ? this.excludedTypes : [],
-            infoFilter: this.infoFilter?.serialized,
-            warningFilter: this.warningFilter?.serialized,
-            errorFilter: this.errorFilter?.serialized,
-            commandFilter: this.commandFilter?.serialized,
-            interactionsFilter: this.interactionsFilter?.serialized,
-            jobFilter: this.jobFilter?.serialized,
-            apiRequestFilter: this.apiRequestFilter?.serialized,
-            ids: this.ids,
-            overwriteCreatedFilter: this.overwriteCreatedFilter?.serialized,
-            overwriteUpdatedFilter: this.overwriteUpdatedFilter?.serialized,
-            overwriteDeletedFilter: this.overwriteDeletedFilter?.serialized,
-            memberUpdatedFilter: this.memberUpdatedFilter?.serialized,
-            memberRoleUpdatedFilter: this.memberRoleUpdatedFilter?.serialized
-        };
-    }
-
     static create(data: any): AuditLogListParams | null {
         if (!data) { return null; }
         const params = new AuditLogListParams();
 
-        params.guildId = data.guild;
-        params.channelId = data.channel;
+        params.guildId = data.guildId;
+        params.channelId = data.channelId;
         params.createdFrom = data.createdFrom;
         params.createdTo = data.createdTo;
         params.ignoreBots = data.ignoreBots ?? false;
-        params.processedUserIds = data.processedUsers;
+        params.processedUserIds = data.processedUserIds;
         params.types = data.types ? data.types : [];
         params.infoFilter = data.infoFilter ? TextFilter.create(data.infoFilter) : null
         params.warningFilter = data.warningFilter ? TextFilter.create(data.warningFilter) : null;

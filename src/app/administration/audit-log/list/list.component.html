@@ -9,16 +9,13 @@
                         <thead>
                             <tr>
                                 <td style="width: 150px">Seřadit podle: </td>
-                                <th style="width: 200px" sortable (clicked)="setSort($any($event))" [key]="'Guild'" [current]="sort.orderBy"
-                                    [sortDesc]="sort.descending">Serveru</th>
-                                <th style="width: 200px" sortable (clicked)="setSort($any($event))" [key]="'Processed'"
-                                    [current]="sort.orderBy" [sortDesc]="sort.descending">Uživatele</th>
-                                <th style="width: 200px" sortable (clicked)="setSort($any($event))" [key]="'Type'" [current]="sort.orderBy"
-                                    [sortDesc]="sort.descending">Typu</th>
-                                <th style="width: 200px" sortable (clicked)="setSort($any($event))" [key]="'Channel'"
-                                    [current]="sort.orderBy" [sortDesc]="sort.descending">Kanálu</th>
-                                <th style="width: 200px" sortable (clicked)="setSort($any($event))" [key]="'CreatedAt'"
-                                    [current]="sort.orderBy" [sortDesc]="sort.descending">Data a času vytvoření</th>
+                                <th style="width: 200px" sortable (clicked)="setSort($event)" [key]="'Guild'" [sort]="sort">Serveru</th>
+                                <th style="width: 200px" sortable (clicked)="setSort($event)" [key]="'Processed'" [sort]="sort">Uživatele
+                                </th>
+                                <th style="width: 200px" sortable (clicked)="setSort($event)" [key]="'Type'" [sort]="sort">Typu</th>
+                                <th style="width: 200px" sortable (clicked)="setSort($event)" [key]="'Channel'" [sort]="sort">Kanálu</th>
+                                <th style="width: 200px" sortable (clicked)="setSort($event)" [key]="'CreatedAt'" [sort]="sort">Data a času
+                                    vytvoření</th>
                             </tr>
                         </thead>
                     </table>
@@ -48,7 +45,8 @@
 
         <div class="col-auto">
             <div class="btn-group" role="group">
-                <button class="btn btn-outline-primary" *ngIf="item.canOpenDetail" (click)="openDetail(item, false)" title="Zobrazit detail záznamu">
+                <button class="btn btn-outline-primary" *ngIf="item.canOpenDetail" (click)="openDetail(item, false)"
+                    title="Zobrazit detail záznamu">
                     <i class="fas fa-info pe-1 ps-1"></i>
                 </button>
                 <button class="btn btn-outline-primary" (click)="openDetail(item, true)" title="Zobrazit surová data">
@@ -100,7 +98,8 @@
         <pre class="alert alert-danger" *ngIf="item.type === AuditLogItemType.Error">{{Support.cut(item.data, 1000)}}</pre>
 
         <div *ngIf="item.type === AuditLogItemType.MemberRoleUpdated">
-            <span class="badge bg-{{(role.added ? 'success' : 'danger')}} me-1 original" *ngFor="let role of item.data.roles">{{(role.added ? '+' :
+            <span class="badge bg-{{(role.added ? 'success' : 'danger')}} me-1 original" *ngFor="let role of item.data.roles">{{(role.added
+                ? '+' :
                 '-')}} {{role.name}}</span>
         </div>
 

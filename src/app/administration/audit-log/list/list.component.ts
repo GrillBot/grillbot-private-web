@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Support } from 'src/app/core/lib/support';
-import { AuditLogFileMetadata, AuditLogListItem, AuditLogListParams, SortingTypes } from 'src/app/core/models/audit-log';
-import { PaginatedParams, SortParams } from 'src/app/core/models/common';
+import { AuditLogFileMetadata, AuditLogListItem, AuditLogListParams } from 'src/app/core/models/audit-log';
+import { PaginatedParams, PaginatedResponse } from 'src/app/core/models/common';
 import { AuditLogItemType } from 'src/app/core/models/enums/audit-log-item-type';
 import { AuditLogService } from 'src/app/core/services/audit-log.service';
-import { DataListComponent } from 'src/app/shared/data-list/data-list.component';
+import { ListComponentBase } from 'src/app/shared/common-page/list-component-base';
 import { ModalService } from 'src/app/shared/modal';
 import { DetailModalComponent } from '../detail-modal/detail-modal.component';
 
@@ -14,40 +15,23 @@ import { DetailModalComponent } from '../detail-modal/detail-modal.component';
     templateUrl: './list.component.html',
     styleUrls: ['./list.component.scss']
 })
-export class ListComponent {
-    @ViewChild('list', { static: false }) list: DataListComponent;
-
-    sort: SortParams = { orderBy: 'CreatedAt', descending: true };
-    private filter: AuditLogListParams;
-
+export class ListComponent extends ListComponentBase<AuditLogListParams> {
     constructor(
         private auditLogService: AuditLogService,
-        private modalService: ModalService
-    ) { }
+        modalService: ModalService
+    ) { super(modalService); }
 
     get AuditLogItemType(): typeof AuditLogItemType { return AuditLogItemType; }
     get Support(): typeof Support { return Support; }
 
-    filterChanged(filter: AuditLogListParams): void {
-        this.filter = filter;
-        if (this.list) { this.list.filterChanged(); }
+    configure(): void {
+        this.sort.orderBy = 'CreatedAt';
+        this.sort.descending = true;
     }
 
-    readData(pagination: PaginatedParams): void {
-        if (!this.filter) { return; }
-
+    getRequest(pagination: PaginatedParams): Observable<PaginatedResponse<any>> {
         this.filter.set(pagination, this.sort);
-        this.auditLogService.getAuditLogList(this.filter)
-            .subscribe(list => this.list.setData(list));
-    }
-
-    setSort(sortBy: SortingTypes): void {
-        if (this.sort.orderBy !== sortBy) {
-            this.sort.orderBy = sortBy;
-        } else {
-            this.sort.descending = !this.sort.descending;
-        }
-        if (this.list) { this.list.filterChanged(); }
+        return this.auditLogService.getAuditLogList(this.filter);
     }
 
     removeItem(id: number): void {

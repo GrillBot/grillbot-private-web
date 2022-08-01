@@ -11,17 +11,17 @@
 
             <div class="col form-group">
                 <label>Server</label>
-                <app-search-input [searchSource]="'guilds'" formControlName="guild"></app-search-input>
+                <app-search-input [searchSource]="'guilds'" formControlName="guildId"></app-search-input>
             </div>
 
             <div class="col form-group">
                 <label>Kanál</label>
-                <app-search-input [searchSource]="'channels'" [guildId]="guildId" formControlName="channel"></app-search-input>
+                <app-search-input [searchSource]="'channels'" [guildId]="guildId" formControlName="channelId"></app-search-input>
             </div>
 
             <div class="col form-group">
                 <label>Uživatel</label>
-                <app-search-input [searchSource]="'users'" formControlName="processedUsers" [isMultiSelect]="true"></app-search-input>
+                <app-search-input [searchSource]="'users'" formControlName="processedUserIds" [isMultiSelect]="true"></app-search-input>
             </div>
         </div>
 
