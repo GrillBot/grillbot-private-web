@@ -50,7 +50,7 @@ export abstract class FilterComponentBase<TFilter> implements OnInit {
         }
 
         const data = this.storage.read<TFilter>(this.filterId);
-        return this.deserializeData(data);
+        return data ? this.deserializeData(data) : this.createData(true);
     }
 
     abstract configure(): void;

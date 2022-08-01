@@ -1,4 +1,4 @@
-<app-card #card [title]="'Seznam transakcí'" [icon]="'fas fa-comments'">
+<app-card #card [title]="'Denní souhrny'" [icon]="'fas fa-comments'">
     <app-data-list #list (readData)="readData($event)" [parentCard]="card">
         <app-loading *ngIf="!list.isDataLoaded"></app-loading>
 
@@ -6,11 +6,11 @@
             <thead>
                 <tr>
                     <th>Server</th>
-                    <th sortable (clicked)="setSort($any($event))" [key]="'User'" [sort]="sort">Uživatel</th>
-                    <th sortable (clicked)="setSort($any($event))" [key]="'AssignedAt'" [sort]="sort">Založeno</th>
-                    <th>ID zprávy</th>
-                    <th>Z reakce?</th>
-                    <th sortable (clicked)="setSort($any($event))" [key]="'Points'" [sort]="sort">Body</th>
+                    <th>Uživatel</th>
+                    <th sortable [sort]="this.sort" [key]="'Day'" (clicked)="setSort($event)">Den</th>
+                    <th sortable [sort]="this.sort" [key]="'MessagePoints'" (clicked)="setSort($event)">Bodů za zprávy</th>
+                    <th sortable [sort]="this.sort" [key]="'ReactionPoints'" (clicked)="setSort($event)">Bodů za reakce</th>
+                    <th>Bodů celkem</th>
                 </tr>
             </thead>
             <tbody>
@@ -21,13 +21,13 @@
                     <td>
                         <a routerLink="/admin/users/{{item.user.id}}" class="text-dark">{{item.user.fullUsername}}</a>
                     </td>
-                    <td>{{item.assignedAt.binding}}</td>
-                    <td>{{item.messageId}}</td>
-                    <td>{{item.isReaction | czechBooleanPipe}}</td>
-                    <td>{{item.points.toLocaleString()}}</td>
+                    <td>{{item.day.toLocaleString(true)}}</td>
+                    <td>{{item.messagePoints.toLocaleString()}}</td>
+                    <td>{{item.reactionPoints.toLocaleString()}}</td>
+                    <td>{{item.totalPoints.toLocaleString()}}</td>
                 </tr>
                 <tr *ngIf="list.isEmpty">
-                    <td colspan="6">Nebyly nalezeny žádné transakce.</td>
+                    <td colspan="6">Nebyly nalezeny žádné sumáře bodů.</td>
                 </tr>
             </tbody>
         </table>

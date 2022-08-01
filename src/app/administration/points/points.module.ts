@@ -7,6 +7,10 @@ const routes: Routes = [
     {
         path: 'transactions',
         loadChildren: () => import('./transactions/transactions.module').then(mod => mod.TransactionsModule)
+    },
+    {
+        path: 'summary',
+        loadChildren: () => import('./summary/summary.module').then(mod => mod.SummaryModule)
     }
 ];
 

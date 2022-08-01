@@ -38,8 +38,8 @@ export class DateTime {
         return this.compare(DateTime.now);
     }
 
-    toLocaleString(): string {
-        return this.moment.locale('cs').format('L LTS');
+    toLocaleString(onlyDate: boolean = false): string {
+        return this.moment.locale('cs').format('L' + (onlyDate ? '' : ' LTS'));
     }
 
     getTime(): number { return this.moment.unix(); }

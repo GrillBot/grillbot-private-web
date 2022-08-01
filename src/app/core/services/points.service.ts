@@ -34,8 +34,8 @@ export class PointsService {
         const url = this.base.createUrl('user/points/graph', params.queryParams);
         const headers = this.base.getHttpHeaders();
 
-        return this.base.http.get<PointsSummary[]>(url, { headers }).pipe(
-            map(data => data.map((entity: PointsSummary) => PointsSummary.create(entity))),
+        return this.base.http.get<PointsSummaryBase[]>(url, { headers }).pipe(
+            map(data => data.map((entity: PointsSummaryBase) => PointsSummaryBase.create(entity))),
             catchError((err: HttpErrorResponse) => this.base.catchError(err))
         );
     }

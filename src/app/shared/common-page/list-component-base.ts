@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { ChangeDetectorRef, Directive, ViewChild } from '@angular/core';
+import { Directive, ViewChild } from '@angular/core';
 import { PaginatedParams, PaginatedResponse, SortParams } from 'src/app/core/models/common';
 import { DataListComponent } from '../data-list/data-list.component';
 import { ModalService } from '../modal';

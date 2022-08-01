@@ -105,7 +105,7 @@ export class GetPointsSummaryParams extends FilterBase {
     public daysFrom: string | null;
     public daysTo: string | null;
 
-    get empty(): GetPointsSummaryParams { return new GetPointsSummaryParams(); }
+    static get empty(): GetPointsSummaryParams { return new GetPointsSummaryParams(); }
 
     get queryParams(): QueryParam[] {
         return [
@@ -131,3 +131,4 @@ export class GetPointsSummaryParams extends FilterBase {
 }
 
 export type TransactionSortType = 'AssignedAt' | 'User' | 'Points';
+export type SummarySortType = 'Day' | 'MessagePoints' | 'ReactionPoints';
