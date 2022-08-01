@@ -30,6 +30,10 @@ export abstract class FilterComponentBase<TFilter> implements OnInit {
     }
 
     submitForm(): void {
+        if (this.form.invalid) {
+            return;
+        }
+
         const filter = this.createData(false);
         this.filterChanged.emit(filter);
 
