@@ -51,6 +51,9 @@
                         </list-button>
                     </td>
                 </tr>
+                <tr *ngIf="list.isEmpty">
+                    <td colspan="6">Nebyly nalezeny žádné návrhy.</td>
+                </tr>
             </tbody>
         </table>
     </app-data-list>

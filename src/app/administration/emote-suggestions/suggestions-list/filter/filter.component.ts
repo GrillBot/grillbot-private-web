@@ -1,45 +1,38 @@
-import { debounceTime } from 'rxjs/operators';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { Component } from '@angular/core';
 import { GetSuggestionListParams } from 'src/app/core/models/suggestions';
 import { StorageService } from 'src/app/core/services/storage.service';
+import { FilterComponentBase } from 'src/app/shared/common-page/filter-component-base';
 
 @Component({
     selector: 'app-filter',
     templateUrl: './filter.component.html'
 })
-export class FilterComponent implements OnInit {
-    @Output() filterChanged = new EventEmitter<GetSuggestionListParams>();
-
-    form: FormGroup;
-
-    constructor(
-        private fb: FormBuilder,
-        private storage: StorageService
-    ) { }
-
-    ngOnInit(): void {
-        const filter = GetSuggestionListParams.deserialize(
-            this.storage.read<GetSuggestionListParams>('GetSuggestionListParams')
-        ) || GetSuggestionListParams.empty;
-
-        this.initFilter(filter);
-        this.submitForm();
+export class FilterComponent extends FilterComponentBase<GetSuggestionListParams> {
+    constructor(fb: FormBuilder, storage: StorageService) {
+        super(fb, storage);
     }
 
-    submitForm(): void {
-        const filter = GetSuggestionListParams.create(this.form.value);
-
-        this.filterChanged.emit(filter);
-        this.storage.store<GetSuggestionListParams>('GetSuggestionListParams', filter);
+    configure(): void {
+        this.filterId = 'EmoteSuggestions';
     }
 
-    cleanFilter(): void {
-        const filter = GetSuggestionListParams.empty;
+    deserializeData(data: any): GetSuggestionListParams {
+        return GetSuggestionListParams.create(data);
+    }
 
+    createData(empty: boolean): GetSuggestionListParams {
+        if (empty) {
+            return GetSuggestionListParams.empty;
+        } else {
+            return GetSuggestionListParams.create(this.form.value);
+        }
+    }
+
+    updateForm(filter: GetSuggestionListParams): void {
         this.form.patchValue({
-            createdAtFrom: filter.createdAt.from,
-            createdAtTo: filter.createdAt.to,
+            createdAtFrom: filter.createdAtFrom,
+            createdAtTo: filter.createdAtTo,
             guildId: filter.guildId,
             fromUserId: filter.fromUserId,
             emoteName: filter.emoteName,
@@ -49,10 +42,10 @@ export class FilterComponent implements OnInit {
         });
     }
 
-    private initFilter(filter: GetSuggestionListParams): void {
+    initForm(filter: GetSuggestionListParams): void {
         this.form = this.fb.group({
-            createdAtFrom: [filter.createdAt.from],
-            createdAtTo: [filter.createdAt.to],
+            createdAtFrom: [filter.createdAtFrom],
+            createdAtTo: [filter.createdAtTo],
             guildId: [filter.guildId],
             fromUserId: [filter.fromUserId],
             emoteName: [filter.emoteName],
@@ -60,8 +53,5 @@ export class FilterComponent implements OnInit {
             onlyUnfinishedVotes: [filter.onlyUnfinishedVotes],
             onlyCommunityApproved: [filter.onlyCommunityApproved]
         });
-
-        this.form.valueChanges.pipe(debounceTime(300)).subscribe(_ => this.submitForm());
     }
-
 }

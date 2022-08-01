@@ -1,43 +1,29 @@
 import { SuggestionDetailModalComponent } from './../../suggestion-detail-modal/suggestion-detail-modal.component';
 import { EmoteSuggestion, GetSuggestionListParams } from './../../../../core/models/suggestions';
-import { Component, ViewChild } from '@angular/core';
-import { DataListComponent } from 'src/app/shared/data-list/data-list.component';
-import { PaginatedParams, SortParams } from 'src/app/core/models/common';
+import { Component } from '@angular/core';
+import { PaginatedParams, PaginatedResponse } from 'src/app/core/models/common';
 import { EmoteSuggestionService } from 'src/app/core/services/emote-suggestion.service';
 import { ModalService } from 'src/app/shared/modal';
+import { ListComponentBase } from 'src/app/shared/common-page/list-component-base';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-list',
-    templateUrl: './list.component.html',
-    styleUrls: ['./list.component.scss']
+    templateUrl: './list.component.html'
 })
-export class ListComponent {
-    @ViewChild('list', { static: false }) list: DataListComponent;
-
-    sort: SortParams = { descending: true };
-
-    private filter: GetSuggestionListParams;
-
+export class ListComponent extends ListComponentBase<GetSuggestionListParams> {
     constructor(
         private suggestionService: EmoteSuggestionService,
-        private modalService: ModalService
-    ) { }
+        modalService: ModalService
+    ) { super(modalService); }
 
-    filterChanged(filter: GetSuggestionListParams): void {
-        this.filter = filter;
-        if (this.list) { this.list.filterChanged(); }
+    configure(): void {
+        this.sort.descending = true;
     }
 
-    readData(pagination: PaginatedParams): void {
-        if (!this.filter) { return; }
-
+    getRequest(pagination: PaginatedParams): Observable<PaginatedResponse<any>> {
         this.filter.set(pagination, this.sort);
-        this.suggestionService.getSuggestionList(this.filter).subscribe(data => this.list.setData(data));
-    }
-
-    setSort(): void {
-        this.sort.descending = !this.sort.descending;
-        if (this.list) { this.list.filterChanged(); }
+        return this.suggestionService.getSuggestionList(this.filter);
     }
 
     showDetail(suggestion: EmoteSuggestion): void {

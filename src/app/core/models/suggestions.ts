@@ -43,7 +43,8 @@ export class EmoteSuggestion {
 }
 
 export class GetSuggestionListParams extends FilterBase {
-    public createdAt: RangeParams<DateTime> = {};
+    public createdAtFrom: string | null = null;
+    public createdAtTo: string | null = null;
     public guildId: string | null;
     public fromUserId: string | null;
     public emoteName: string;
@@ -55,8 +56,8 @@ export class GetSuggestionListParams extends FilterBase {
 
     get queryParams(): QueryParam[] {
         return [
-            this.createdAt.from != null ? new QueryParam('createdAt.from', this.createdAt.from.toISOString()) : null,
-            this.createdAt.to != null ? new QueryParam('createdAt.to', this.createdAt.to.toISOString()) : null,
+            this.createdAtFrom ? new QueryParam('createdAt.from', this.createdAtFrom) : null,
+            this.createdAtTo ? new QueryParam('createdAt.to', this.createdAtTo) : null,
             this.guildId ? new QueryParam('guildId', this.guildId) : null,
             this.fromUserId ? new QueryParam('fromUserId', this.fromUserId) : null,
             this.onlyApprovedToVote ? new QueryParam('onlyApprovedToVote', this.onlyApprovedToVote) : null,
@@ -66,36 +67,12 @@ export class GetSuggestionListParams extends FilterBase {
         ].filter(o => o);
     }
 
-    static deserialize(data: GetSuggestionListParams): GetSuggestionListParams | null {
-        if (!data) { return null; }
-
-        const params = this.empty;
-
-        params.createdAt = {
-            from: data.createdAt.from,
-            to: data.createdAt.to
-        };
-
-        params.guildId = data.guildId;
-        params.fromUserId = data.fromUserId;
-        params.emoteName = data.emoteName;
-        params.onlyApprovedToVote = data.onlyApprovedToVote;
-        params.onlyUnfinishedVotes = data.onlyUnfinishedVotes;
-        params.onlyCommunityApproved = data.onlyCommunityApproved;
-
-        return params;
-    }
-
     static create(data: any): GetSuggestionListParams | null {
         if (!data) { return null; }
 
         const params = this.empty;
-
-        params.createdAt = {
-            from: data.createdAtFrom,
-            to: data.createdAtTo
-        };
-
+        params.createdAtFrom = data.createdAtFrom;
+        params.createdAtTo = data.createdAtTo;
         params.guildId = data.guildId;
         params.emoteName = data.emoteName;
         params.fromUserId = data.fromUserId;
