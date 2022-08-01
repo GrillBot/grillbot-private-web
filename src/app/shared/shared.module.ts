@@ -11,7 +11,6 @@ import { LoadingComponent } from './loading/loading.component';
 import { ListButtonComponent } from './list-button/list-button.component';
 import { ModalComponent } from './modal/modal.component';
 import { ValidationErrorsModalComponent } from './modal/validation-errors-modal/validation-errors-modal.component';
-import { CommonDashboardComponent } from './common-dashboard/common-dashboard.component';
 import { CheckboxComponent } from './checkbox/checkbox.component';
 import { CheckboxBitmaskComponent } from './checkbox-bitmask/checkbox-bitmask.component';
 import { NgxFilesizeModule } from 'ngx-filesize';
@@ -23,6 +22,7 @@ import { EmotePickerComponent } from './emote-picker/emote-picker.component';
 import { DataListModule } from './data-list/data-list.module';
 import { SelectComponent } from './select/select.component';
 import { ChartsModule } from './charts/charts.module';
+import { CommonPageModule } from './common-page/common-page.module';
 
 @NgModule({
     declarations: [
@@ -31,7 +31,6 @@ import { ChartsModule } from './charts/charts.module';
         ListButtonComponent,
         ModalComponent,
         ValidationErrorsModalComponent,
-        CommonDashboardComponent,
         CheckboxComponent,
         CheckboxBitmaskComponent,
         TimeSpanInputComponent,
@@ -52,7 +51,8 @@ import { ChartsModule } from './charts/charts.module';
         DirectivesModule,
         PipesModule,
         DataListModule,
-        ChartsModule
+        ChartsModule,
+        CommonPageModule
     ],
     exports: [
         CommonModule,
@@ -64,7 +64,6 @@ import { ChartsModule } from './charts/charts.module';
         ListButtonComponent,
         ModalComponent,
         ValidationErrorsModalComponent,
-        CommonDashboardComponent,
         CheckboxComponent,
         CheckboxBitmaskComponent,
         NgxFilesizeModule,
@@ -77,7 +76,8 @@ import { ChartsModule } from './charts/charts.module';
         EmotePickerComponent,
         DataListModule,
         SelectComponent,
-        ChartsModule
+        ChartsModule,
+        CommonPageModule
     ]
 })
 export class SharedModule { }

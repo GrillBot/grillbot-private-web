@@ -12,6 +12,8 @@
                 <ng-container
                     *ngTemplateOutlet="menuItem; context: {link: '/channels', icon:'fa-envelope-open-text', title:'Kanály', id:'channels'}">
                 </ng-container>
+                <ng-container *ngTemplateOutlet="menuItem; context: {link: '/points', icon: 'fa-comments', title:'Body', id: 'points'}">
+                </ng-container>
                 <ng-container
                     *ngTemplateOutlet="menuItem;context: {link:'/emotes',icon:'fa-smile',title:'Správa emotů',id:'emotes',iconGroup:'far'}">
                 </ng-container>

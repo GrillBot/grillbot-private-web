@@ -1,0 +1,32 @@
+<app-card #card [title]="'Seznam transakcí'" [icon]="'fas fa-comments'">
+    <app-data-list #list (readData)="readData($event)" [parentCard]="card">
+        <app-loading *ngIf="!list.isDataLoaded"></app-loading>
+
+        <table class="table table-bordered table-sm auto-column-width table-striped">
+            <thead>
+                <tr>
+                    <th>Server</th>
+                    <th sortable (clicked)="setSort($any($event))" [key]="'User'" [sort]="sort">Uživatel</th>
+                    <th sortable (clicked)="setSort($any($event))" [key]="'AssignedAt'" [sort]="sort">Založeno</th>
+                    <th>ID zprávy</th>
+                    <th>Z reakce?</th>
+                    <th sortable (clicked)="setSort($any($event))" [key]="'Points'" [sort]="sort">Body</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of list.items">
+                    <td>
+                        <a routerLink="/admin/servers/{{item.guild.id}}" class="text-dark">{{item.guild.name}}</a>
+                    </td>
+                    <td>
+                        <a routerLink="/admin/users/{{item.user.id}}" class="text-dark">{{item.user.fullUsername}}</a>
+                    </td>
+                    <td>{{item.assignedAt.binding}}</td>
+                    <td>{{item.messageId}}</td>
+                    <td>{{item.isReaction | czechBooleanPipe}}</td>
+                    <td>{{item.points.toLocaleString()}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </app-data-list>
+</app-card>

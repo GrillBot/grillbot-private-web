@@ -52,6 +52,7 @@ export type Dictionary<TKey, TValue> = KeyValuePair<TKey, TValue>[];
 export type ObservableDict<TKey, TValue> = Observable<Dictionary<TKey, TValue>>;
 export type ObservableList<TItem> = Observable<TItem[]>;
 export type EmptyObservable = Observable<unknown>;
+export type ObservablePaginatedData<TData> = Observable<PaginatedResponse<TData>>;
 
 export interface RangeParams<T> {
     from?: T;

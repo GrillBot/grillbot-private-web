@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { PaginatedParams, PaginatedResponse, ObservableDict, Dictionary } from './../models/common';
+import { PaginatedResponse, ObservableDict, Dictionary } from './../models/common';
 import { Injectable } from '@angular/core';
-import { GetInviteListParams, GuildInvite, InviteListSortTypes } from '../models/invites';
+import { GetInviteListParams, GuildInvite } from '../models/invites';
 import { BaseService } from './base.service';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';

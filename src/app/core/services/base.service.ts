@@ -1,9 +1,10 @@
+import { environment } from './../../../environments/environment';
 import { StorageService } from './storage.service';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { EMPTY, Observable, throwError } from 'rxjs';
-import { HTTPHeaders } from '../models/http';
+import { HTTPHeaders, QueryParam } from '../models/http';
 import { AuthToken } from '../models/auth';
 import { ModalService, ValidationErrorsModalComponent } from 'src/app/shared/modal';
 import { Support } from '../lib/support';
@@ -66,5 +67,15 @@ export class BaseService {
         return {
             Authorization: `Bearer ${auth.accessToken}`
         };
+    }
+
+    createUrl(endpoint: string, queryParams: QueryParam[]): string {
+        let url = environment.apiUrl + `/${endpoint}`;
+        if (queryParams && queryParams.length > 0) {
+            const parameters = queryParams.map(o => o.toString()).join('&');
+            url += `?${parameters}`;
+        }
+
+        return url;
     }
 }
