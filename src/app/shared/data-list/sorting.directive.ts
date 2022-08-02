@@ -6,9 +6,7 @@ import { SortParams } from 'src/app/core/models/common';
 })
 export class SortingDirective implements OnInit {
     @Input() key: string;
-    @Input() current: string;
-    @Input() sortDesc: boolean;
-    @Input() sort: SortParams | null = null; // TODO Migrate to this property.
+    @Input() sort: SortParams | null = null;
 
     @Output() clicked = new EventEmitter<string>();
 
@@ -23,17 +21,16 @@ export class SortingDirective implements OnInit {
     ngOnInit(): void {
         this.ref.nativeElement.classList.add('sortable');
 
-        const current = this.sort?.orderBy ?? this.current;
-        if (current === this.key) {
+        if (this.sort?.orderBy === this.key) {
             this.setSortIcon();
         }
     }
 
     setSortIcon(): void {
+        if (!this.sort) { return; }
         document.querySelectorAll('.sortable').forEach(elem => elem.classList.remove('sort-desc', 'sort-asc'));
 
-        const sortDesc = this.sort?.descending ?? this.sortDesc;
-        if (sortDesc) {
+        if (this.sort.descending) {
             this.ref.nativeElement.classList.add('sort-desc');
         } else {
             this.ref.nativeElement.classList.add('sort-asc');
