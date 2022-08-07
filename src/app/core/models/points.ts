@@ -1,8 +1,25 @@
-import { FilterBase, RangeParams } from './common';
+import { FilterBase } from './common';
 import { DateTime } from './datetime';
 import { Guild } from './guilds';
 import { QueryParam } from './http';
 import { User } from './users';
+
+export class PointsMergeInfo {
+    public mergeRangeFrom: DateTime;
+    public mergeRangeTo: DateTime;
+    public mergedItemsCount: number;
+
+    static create(data: any): PointsMergeInfo | null {
+        if (!data) { return null; }
+
+        const info = new PointsMergeInfo();
+        info.mergeRangeFrom = DateTime.fromISOString(data.mergeRangeFrom);
+        info.mergeRangeTo = DateTime.fromISOString(data.mergeRangeTo);
+        info.mergedItemsCount = data.mergedItemsCount;
+
+        return info;
+    }
+}
 
 export class PointsTransaction {
     public guild: Guild;
@@ -11,6 +28,7 @@ export class PointsTransaction {
     public isReaction: boolean;
     public assignedAt: DateTime;
     public points: number;
+    public mergeInfo: PointsMergeInfo | null;
 
     static create(data: any): PointsTransaction | null {
         if (!data) { return null; }
@@ -22,6 +40,7 @@ export class PointsTransaction {
         transaction.messageId = data.messageId;
         transaction.points = data.points;
         transaction.user = User.create(data.user);
+        transaction.mergeInfo = data.mergeInfo ? PointsMergeInfo.create(data.mergeInfo) : null;
 
         return transaction;
     }
@@ -49,6 +68,7 @@ export class PointsSummaryBase {
 export class PointsSummary extends PointsSummaryBase {
     public guild: Guild;
     public user: User;
+    public mergeInfo: PointsMergeInfo | null;
 
     static create(data: any): PointsSummary | null {
         if (!data) { return null; }
@@ -57,12 +77,14 @@ export class PointsSummary extends PointsSummaryBase {
         Object.assign(summary, super.create(data));
         summary.guild = Guild.create(data.guild);
         summary.user = User.create(data.user);
+        summary.mergeInfo = data.mergeInfo ? PointsMergeInfo.create(data.mergeInfo) : null;
 
         return summary;
     }
 }
 
 export class GetPointTransactionsParams extends FilterBase {
+    public merged: boolean = false;
     public guildId: string | null;
     public userId: string | null;
     public assingnedAtFrom: string | null;
@@ -75,6 +97,7 @@ export class GetPointTransactionsParams extends FilterBase {
 
     get queryParams(): QueryParam[] {
         return [
+            new QueryParam('merged', this.merged),
             this.guildId ? new QueryParam('guildId', this.guildId) : null,
             this.userId ? new QueryParam('userId', this.userId) : null,
             this.assingnedAtFrom ? new QueryParam('assignedAt.from', this.assingnedAtFrom) : null,
@@ -103,6 +126,7 @@ export class GetPointTransactionsParams extends FilterBase {
 }
 
 export class GetPointsSummaryParams extends FilterBase {
+    public merged: boolean = false;
     public guildId: string | null;
     public userId: string | null;
     public daysFrom: string | null;
@@ -112,6 +136,7 @@ export class GetPointsSummaryParams extends FilterBase {
 
     get queryParams(): QueryParam[] {
         return [
+            new QueryParam('merged', this.merged),
             this.guildId ? new QueryParam('guildId', this.guildId) : null,
             this.userId ? new QueryParam('userId', this.userId) : null,
             this.daysFrom ? new QueryParam('days.from', this.daysFrom) : null,
@@ -132,6 +157,3 @@ export class GetPointsSummaryParams extends FilterBase {
         return params;
     }
 }
-
-export type TransactionSortType = 'AssignedAt' | 'User' | 'Points';
-export type SummarySortType = 'Day' | 'MessagePoints' | 'ReactionPoints';

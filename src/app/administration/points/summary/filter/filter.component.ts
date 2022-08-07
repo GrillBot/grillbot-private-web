@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { Component } from '@angular/core';
 import { GetPointsSummaryParams } from 'src/app/core/models/points';
@@ -14,9 +15,15 @@ export class FilterComponent extends FilterComponentBase<GetPointsSummaryParams>
     constructor(
         fb: FormBuilder,
         storage: StorageService,
-        private modalService: ModalService
+        private modalService: ModalService,
+        private route: ActivatedRoute
     ) {
         super(fb, storage);
+    }
+
+    get isMerged(): boolean {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        return this.route.snapshot.data?.merged ?? false;
     }
 
     configure(): void {
@@ -28,11 +35,10 @@ export class FilterComponent extends FilterComponentBase<GetPointsSummaryParams>
     }
 
     createData(empty: boolean): GetPointsSummaryParams {
-        if (empty) {
-            return GetPointsSummaryParams.empty;
-        } else {
-            return GetPointsSummaryParams.fromForm(this.form.value);
-        }
+        const data = empty ? GetPointsSummaryParams.empty : GetPointsSummaryParams.fromForm(this.form.value);
+        data.merged = this.isMerged;
+
+        return data;
     }
 
     updateForm(filter: GetPointsSummaryParams): void {

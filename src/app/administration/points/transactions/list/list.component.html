@@ -6,11 +6,15 @@
             <thead>
                 <tr>
                     <th>Server</th>
-                    <th sortable (clicked)="setSort($any($event))" [key]="'User'" [sort]="sort">Uživatel</th>
-                    <th sortable (clicked)="setSort($any($event))" [key]="'AssignedAt'" [sort]="sort">Založeno</th>
+                    <th sortable (clicked)="setSort($event)" [key]="'User'" [sort]="sort">Uživatel</th>
+                    <th sortable (clicked)="setSort($event)" [key]="'AssignedAt'" [sort]="sort">Založeno</th>
                     <th>ID zprávy</th>
                     <th>Z reakce?</th>
-                    <th sortable (clicked)="setSort($any($event))" [key]="'Points'" [sort]="sort">Body</th>
+                    <th sortable (clicked)="setSort($event)" [key]="'Points'" [sort]="sort">Body</th>
+                    <ng-container *ngIf="isMerged">
+                        <th>Sloučené období</th>
+                        <th>Poč. sloučených transakcí</th>
+                    </ng-container>
                 </tr>
             </thead>
             <tbody>
@@ -25,6 +29,10 @@
                     <td>{{item.messageId}}</td>
                     <td>{{item.isReaction | czechBooleanPipe}}</td>
                     <td>{{item.points.toLocaleString()}}</td>
+                    <ng-container *ngIf="isMerged">
+                        <td>{{item.mergeInfo.mergeRangeFrom.binding}} - {{item.mergeInfo.mergeRangeTo.binding}}</td>
+                        <td>{{item.mergeInfo.mergedItemsCount.toLocaleString()}}</td>
+                    </ng-container>
                 </tr>
                 <tr *ngIf="list.isEmpty">
                     <td colspan="6">Nebyly nalezeny žádné transakce.</td>

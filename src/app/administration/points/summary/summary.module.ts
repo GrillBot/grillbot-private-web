@@ -7,7 +7,8 @@ import { ListComponent } from './list/list.component';
 import { GraphModalComponent } from './graph-modal/graph-modal.component';
 
 const routes: Routes = [
-    { path: '', component: DashboardComponent }
+    { path: '', component: DashboardComponent, data: { merged: false } },
+    { path: 'merged', component: DashboardComponent, data: { merged: true } }
 ];
 
 @NgModule({

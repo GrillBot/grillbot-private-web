@@ -6,7 +6,8 @@ import { FilterComponent } from './filter/filter.component';
 import { ListComponent } from './list/list.component';
 
 const routes: Routes = [
-    { path: '', component: DashboardComponent }
+    { path: '', component: DashboardComponent, data: { merged: false } },
+    { path: 'merged', component: DashboardComponent, data: { merged: true } }
 ];
 
 @NgModule({
