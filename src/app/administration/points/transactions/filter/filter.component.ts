@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { Component } from '@angular/core';
 import { FilterComponentBase } from 'src/app/shared/common-page/filter-component-base';
@@ -9,12 +10,21 @@ import { GetPointTransactionsParams } from 'src/app/core/models/points';
     templateUrl: './filter.component.html'
 })
 export class FilterComponent extends FilterComponentBase<GetPointTransactionsParams> {
-    constructor(fb: FormBuilder, storage: StorageService) {
+    constructor(
+        fb: FormBuilder,
+        storage: StorageService,
+        private route: ActivatedRoute
+    ) {
         super(fb, storage);
     }
 
+    get isMerged(): boolean {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        return this.route.snapshot.data?.merged ?? false;
+    }
+
     configure(): void {
-        this.filterId = 'PointTransactions';
+        this.filterId = 'PointTransactions' + (this.isMerged ? '-Merged' : '');
     }
 
     deserializeData(data: any): GetPointTransactionsParams {
@@ -26,6 +36,7 @@ export class FilterComponent extends FilterComponentBase<GetPointTransactionsPar
             return GetPointTransactionsParams.empty;
         } else {
             return GetPointTransactionsParams.fromForm(this.form.value);
+
         }
     }
 
@@ -33,11 +44,11 @@ export class FilterComponent extends FilterComponentBase<GetPointTransactionsPar
         this.form.patchValue({
             guildId: filter.guildId,
             userId: filter.userId,
-            assignedAtFrom: filter.assingnedAtFrom,
-            assignedAtTo: filter.assingnedAtTo,
+            assignedAtFrom: filter.assignedAtFrom,
+            assignedAtTo: filter.assignedAtTo,
             onlyReactions: filter.onlyReactions,
             onlyMessages: filter.onlyMessages,
-            messageId: filter.messageId
+            messageId: !this.isMerged ? filter.messageId : null
         });
     }
 
@@ -45,11 +56,11 @@ export class FilterComponent extends FilterComponentBase<GetPointTransactionsPar
         this.form = this.fb.group({
             guildId: [filter.guildId],
             userId: [filter.userId],
-            assignedAtFrom: [filter.assingnedAtFrom],
-            assignedAtTo: [filter.assingnedAtTo],
+            assignedAtFrom: [filter.assignedAtFrom],
+            assignedAtTo: [filter.assignedAtTo],
             onlyReactions: [filter.onlyReactions],
             onlyMessages: [filter.onlyMessages],
-            messageId: [filter.messageId]
+            messageId: [this.isMerged ? null : filter.messageId]
         });
 
         this.form.get('onlyReactions').valueChanges.subscribe(onlyReactions => {

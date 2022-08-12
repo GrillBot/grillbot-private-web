@@ -30,12 +30,15 @@
                     <td>{{item.isReaction | czechBooleanPipe}}</td>
                     <td>{{item.points.toLocaleString()}}</td>
                     <ng-container *ngIf="isMerged">
-                        <td>{{item.mergeInfo.mergeRangeFrom.binding}} - {{item.mergeInfo.mergeRangeTo.binding}}</td>
+                        <td>
+                            {{item.mergeInfo.mergeRangeFrom.binding}}
+                            <span *ngIf="item.mergeInfo.mergeRangeTo"> - {{item.mergeInfo.mergeRangeTo.binding}}</span>
+                        </td>
                         <td>{{item.mergeInfo.mergedItemsCount.toLocaleString()}}</td>
                     </ng-container>
                 </tr>
                 <tr *ngIf="list.isEmpty">
-                    <td colspan="6">Nebyly nalezeny žádné transakce.</td>
+                    <td [attr.colspan]="isMerged ? 8 : 6">Nebyly nalezeny žádné transakce.</td>
                 </tr>
             </tbody>
         </table>

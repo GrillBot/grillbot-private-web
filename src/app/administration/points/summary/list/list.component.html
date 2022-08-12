@@ -30,13 +30,15 @@
                     <td>{{item.reactionPoints.toLocaleString()}}</td>
                     <td>{{item.totalPoints.toLocaleString()}}</td>
                     <ng-container *ngIf="isMerged && item.mergeInfo">
-                        <td>{{item.mergeInfo.mergeRangeFrom.toLocaleString(true)}} - {{item.mergeInfo.mergeRangeTo.toLocaleString(true)}}
+                        <td>
+                            {{item.mergeInfo.mergeRangeFrom.toLocaleString(true)}}
+                            <span *ngIf="item.mergeInfo.mergeRangeTo">- {{item.mergeInfo.mergeRangeTo.toLocaleString(true)}}</span>
                         </td>
                         <td>{{item.mergeInfo.mergedItemsCount.toLocaleString()}}</td>
                     </ng-container>
                 </tr>
                 <tr *ngIf="list.isEmpty">
-                    <td colspan="6">Nebyly nalezeny žádné sumáře bodů.</td>
+                    <td [attr.colspan]="isMerged ? 8 : 6">Nebyly nalezeny žádné sumáře bodů.</td>
                 </tr>
             </tbody>
         </table>

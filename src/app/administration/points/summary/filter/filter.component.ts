@@ -27,7 +27,7 @@ export class FilterComponent extends FilterComponentBase<GetPointsSummaryParams>
     }
 
     configure(): void {
-        this.filterId = 'PointsSummary';
+        this.filterId = 'PointsSummary' + (this.isMerged ? '-Merged' : '');
     }
 
     deserializeData(data: any): GetPointsSummaryParams {
@@ -62,5 +62,6 @@ export class FilterComponent extends FilterComponentBase<GetPointsSummaryParams>
     showGraph(): void {
         const modal = this.modalService.showCustomModal<GraphModalComponent>(GraphModalComponent, 'xl');
         modal.componentInstance.filter = this.createData(false);
+        modal.componentInstance.isMerged = this.isMerged;
     }
 }

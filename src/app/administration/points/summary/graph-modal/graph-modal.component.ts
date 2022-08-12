@@ -9,6 +9,7 @@ import { PointsService } from 'src/app/core/services/points.service';
 })
 export class GraphModalComponent implements OnInit {
     @Input() filter: GetPointsSummaryParams;
+    @Input() isMerged: boolean;
 
     messagePoints: Dictionary<string, number> = [];
     reactionPoints: Dictionary<string, number> = [];
@@ -17,14 +18,6 @@ export class GraphModalComponent implements OnInit {
     constructor(
         private service: PointsService
     ) { }
-
-    get canShowMessagePoints(): boolean {
-        return this.messagePoints.reduce((prev, current) => prev + current.value, 0) > 0;
-    }
-
-    get canShowReactionPoints(): boolean {
-        return this.reactionPoints.reduce((prev, current) => prev + current.value, 0) > 0;
-    }
 
     ngOnInit(): void {
         this.service.getGraphData(this.filter).subscribe(data => {

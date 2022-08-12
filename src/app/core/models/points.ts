@@ -6,7 +6,7 @@ import { User } from './users';
 
 export class PointsMergeInfo {
     public mergeRangeFrom: DateTime;
-    public mergeRangeTo: DateTime;
+    public mergeRangeTo: DateTime | null;
     public mergedItemsCount: number;
 
     static create(data: any): PointsMergeInfo | null {
@@ -14,7 +14,7 @@ export class PointsMergeInfo {
 
         const info = new PointsMergeInfo();
         info.mergeRangeFrom = DateTime.fromISOString(data.mergeRangeFrom);
-        info.mergeRangeTo = DateTime.fromISOString(data.mergeRangeTo);
+        info.mergeRangeTo = data.mergeRangeTo ? DateTime.fromISOString(data.mergeRangeTo) : null;
         info.mergedItemsCount = data.mergedItemsCount;
 
         return info;
@@ -87,8 +87,8 @@ export class GetPointTransactionsParams extends FilterBase {
     public merged: boolean = false;
     public guildId: string | null;
     public userId: string | null;
-    public assingnedAtFrom: string | null;
-    public assingnedAtTo: string | null;
+    public assignedAtFrom: string | null;
+    public assignedAtTo: string | null;
     public onlyReactions: boolean;
     public onlyMessages: boolean;
     public messageId: string | null;
@@ -100,8 +100,8 @@ export class GetPointTransactionsParams extends FilterBase {
             new QueryParam('merged', this.merged),
             this.guildId ? new QueryParam('guildId', this.guildId) : null,
             this.userId ? new QueryParam('userId', this.userId) : null,
-            this.assingnedAtFrom ? new QueryParam('assignedAt.from', this.assingnedAtFrom) : null,
-            this.assingnedAtTo ? new QueryParam('assignedAt.to', this.assingnedAtTo) : null,
+            this.assignedAtFrom ? new QueryParam('assignedAt.from', this.assignedAtFrom) : null,
+            this.assignedAtTo ? new QueryParam('assignedAt.to', this.assignedAtTo) : null,
             this.onlyReactions ? new QueryParam('onlyReactions', this.onlyReactions) : null,
             this.onlyMessages ? new QueryParam('onlyMessages', this.onlyMessages) : null,
             ...super.queryParams,
@@ -114,9 +114,9 @@ export class GetPointTransactionsParams extends FilterBase {
 
         const params = new GetPointTransactionsParams();
         params.guildId = form.guildId;
-        params.userId = form.guildId;
-        params.assingnedAtFrom = form.assignedAtFrom;
-        params.assingnedAtTo = form.assingnedAtTo;
+        params.userId = form.userId;
+        params.assignedAtFrom = form.assignedAtFrom;
+        params.assignedAtTo = form.assignedAtTo;
         params.onlyReactions = form.onlyReactions;
         params.onlyMessages = form.onlyMessages;
         params.messageId = form.messageId;
