@@ -39,11 +39,11 @@
 
 <ng-template #logRow let-item="item">
     <div class="row">
-        <div class="col">
+        <div class="col-md">
             <ng-container *ngTemplateOutlet="logRowContent;context:{item:item}"></ng-container>
         </div>
 
-        <div class="col-auto">
+        <div class="col-md-auto">
             <div class="btn-group" role="group">
                 <button class="btn btn-outline-primary" *ngIf="item.canOpenDetail" (click)="openDetail(item, false)"
                     title="Zobrazit detail záznamu">
@@ -62,13 +62,13 @@
 
 <ng-template #logRowContent let-item="item">
     <div class="row">
-        <div class="col">
+        <div class="col-md">
             <h6>#{{item.id}} ({{item.title}}) - {{item.createdAt.toLocaleString()}}</h6>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-5">
+        <div class="col-md-5">
             <p *ngIf="item.guild" class="m-0">Server: <b>{{item.guild.name}}</b></p>
             <p *ngIf="item.channel" class="m-0">Kanál: <b>{{item.channel.name}}</b></p>
             <p *ngIf="item.processedUser" class="m-0">
@@ -179,7 +179,7 @@
 </ng-template>
 
 <ng-template #logDataCol let-data="data" let-type="type">
-    <div class="col log-data-col">
+    <div class="col-md log-data-col">
         <ng-container *ngIf="type === AuditLogItemType.Command">
             <p>Příkaz: <b>{{data.command}}</b></p>
             <p>Dokončen úspěšně: <b>{{data.isSuccess | czechBooleanPipe}}</b></p>
@@ -302,7 +302,6 @@
         </ng-container>
 
         <ng-container *ngIf="type === AuditLogItemType.MessageDeleted">
-            <p>Nalezeno v cache: <b>{{data.cached | czechBooleanPipe}}</b></p>
             <p>Autor: <b>{{data.data.author.username}}#{{data.data.author.discriminator}}</b></p>
             <p>Vytvořeno: <b>{{data.data.createdAt | dateTimeFormatter}}</b></p>
         </ng-container>
