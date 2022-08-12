@@ -109,7 +109,8 @@ export class FilterComponent extends FilterComponentBase<AuditLogListParams> {
             processedUserIds: filter.processedUserIds,
             types: filter.types,
             ids: filter.ids,
-            excludedTypes: filter.excludedTypes
+            excludedTypes: filter.excludedTypes,
+            onlyFromStart: filter.onlyFromStart
         });
 
         this.setExtendedFilters(filter);
@@ -125,7 +126,8 @@ export class FilterComponent extends FilterComponentBase<AuditLogListParams> {
             processedUserIds: [filter.processedUserIds],
             types: [filter.types],
             ids: [filter.ids, Validators.pattern('^[0-9,]*$')],
-            excludedTypes: [filter.excludedTypes]
+            excludedTypes: [filter.excludedTypes],
+            onlyFromStart: [filter.onlyFromStart]
         });
 
         this.setExtendedFilters(filter);

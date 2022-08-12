@@ -188,6 +188,7 @@ export class AuditLogListParams extends FilterBase {
     public overwriteDeletedFilter: TargetIdFilter | null = null;
     public memberUpdatedFilter: TargetIdFilter | null = null;
     public memberRoleUpdatedFilter: TargetIdFilter | null = null;
+    public onlyFromStart: boolean = false;
 
     static get empty(): AuditLogListParams {
         const params = new AuditLogListParams();
@@ -219,7 +220,8 @@ export class AuditLogListParams extends FilterBase {
             ...(this.overwriteDeletedFilter ? this.overwriteDeletedFilter.getQueryParams('OverwriteDeletedFilter') : []),
             ...(this.overwriteUpdatedFilter ? this.overwriteUpdatedFilter.getQueryParams('OverwriteUpdatedFilter') : []),
             ...(this.memberUpdatedFilter ? this.memberUpdatedFilter.getQueryParams('MemberUpdatedFilter') : []),
-            ...(this.memberRoleUpdatedFilter ? this.memberRoleUpdatedFilter.getQueryParams('MemberRolesUpdatedFilter') : [])
+            ...(this.memberRoleUpdatedFilter ? this.memberRoleUpdatedFilter.getQueryParams('MemberRolesUpdatedFilter') : []),
+            this.onlyFromStart ? new QueryParam('onlyFromStart', this.onlyFromStart) : null
         ].filter(o => o);
     }
 
@@ -248,6 +250,7 @@ export class AuditLogListParams extends FilterBase {
         params.overwriteUpdatedFilter = data.overwriteUpdatedFilter ? TargetIdFilter.create(data.overwriteUpdatedFilter) : null;
         params.memberUpdatedFilter = data.memberUpdatedFilter ? TargetIdFilter.create(data.memberUpdatedFilter) : null;
         params.memberRoleUpdatedFilter = data.memberRoleUpdatedFilter ? TargetIdFilter.create(data.memberRoleUpdatedFilter) : null;
+        params.onlyFromStart = data.onlyFromStart;
 
         return params;
     }
