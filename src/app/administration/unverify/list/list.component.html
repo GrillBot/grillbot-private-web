@@ -34,7 +34,10 @@
                     <div class="col">
                         <div class="row">
                             <div class="col">
-                                <h6>#{{item.id}} ({{item.formattedOperation}}) - {{item.createdAt.binding}}</h6>
+                                <h6>
+                                    #{{item.id}} ({{item.formattedOperation}}) - {{item.createdAt.binding}}
+                                    <span class="badge bg-secondary" *ngIf="item.anyData && item.removeData?.fromWeb">Web</span>
+                                </h6>
                             </div>
                         </div>
 

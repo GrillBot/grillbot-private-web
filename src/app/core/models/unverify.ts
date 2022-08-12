@@ -101,6 +101,7 @@ export class UnverifyLogItem {
 export class UnverifyLogRemove {
     public returnedRoles: Role[];
     public returnedChannels: string[];
+    public fromWeb: boolean;
 
     static create(data: any): UnverifyLogRemove | null {
         if (!data) { return null; }
@@ -108,6 +109,7 @@ export class UnverifyLogRemove {
 
         item.returnedChannels = data.returnedChannelIds.map((o: any) => o as string);
         item.returnedRoles = data.returnedRoles.map((o: any) => Role.create(o));
+        item.fromWeb = data.fromWeb;
 
         return item;
     }
