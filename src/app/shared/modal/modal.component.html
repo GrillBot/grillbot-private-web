@@ -26,5 +26,6 @@
     <ng-container *ngIf="type === 'filter'">
         <button type="button" (click)="modal.close(true)" class="btn btn-outline-success">Potvrdit</button>
         <button type="button" (click)="modal.close(false)" class="btn btn-outline-danger">Zrušit</button>
+        <button type="button" (click)="onResetFilter()" class="btn btn-outline-danger" *ngIf="resetFilter.observed">Smazat filtr</button>
     </ng-container>
 </div>

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalType } from './modal-data';
 
@@ -11,5 +11,15 @@ export class ModalComponent {
     @Input() text = '';
     @Input() type: ModalType = 'notification';
 
+    @Output() resetFilter = new EventEmitter<unknown>();
+
     constructor(public modal: NgbActiveModal) { }
+
+    onResetFilter(): void {
+        if (this.resetFilter.observed) {
+            this.resetFilter.emit();
+        }
+
+        this.modal.close(true);
+    }
 }

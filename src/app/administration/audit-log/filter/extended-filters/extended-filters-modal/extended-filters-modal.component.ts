@@ -69,6 +69,25 @@ export class ExtendedFiltersModalComponent implements OnInit, AfterViewInit {
         return this.selectedTypes.includes(type);
     }
 
+    resetFilter(): void {
+        this.tmpData = {
+            infoFilter: null,
+            commandFilter: null,
+            errorFilter: null,
+            interactionFilter: null,
+            jobFilter: null,
+            warningFilter: null,
+            apiRequestFilter: null,
+            overwriteCreatedFilter: null,
+            overwriteDeletedFilter: null,
+            overwriteUpdatedFilter: null,
+            memberRoleUpdatedFilter: null,
+            memberUpdatedFilter: null
+        };
+
+        this.fill();
+    }
+
     private fill(): void {
         if (!this.tmpData) {
             return;

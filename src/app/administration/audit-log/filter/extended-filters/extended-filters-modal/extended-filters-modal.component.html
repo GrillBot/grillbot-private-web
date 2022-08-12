@@ -1,4 +1,4 @@
-<app-modal [title]="'Pokročilé vyhledávání'" [type]="'filter'">
+<app-modal [title]="'Pokročilé vyhledávání'" [type]="'filter'" (resetFilter)="resetFilter()">
     <form [formGroup]="form">
         <app-text-filter [label]="'Informační zpráva'" *ngIf="can(auditLogItemType.Info)" formControlName="info"></app-text-filter>
         <app-text-filter [label]="'Varování'" *ngIf="can(auditLogItemType.Warning)" formControlName="warning"></app-text-filter>
