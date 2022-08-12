@@ -23,76 +23,98 @@
                     <img width="150" height="150" [src]="data.iconUrl" [alt]="data.name" class="rounded-circle border" />
                 </div>
 
-                <div keyValueItem class="border-bottom mt-2" [key]="'Název'" [value]="data.name"></div>
-                <div keyValueItem class="border-bottom mt-2" [key]="'Identifikátor'" [value]="data.id"></div>
-                <div keyValueItem class="border-bottom mt-2" [key]="'Vytvořen'" [value]="data.createdAt.toLocaleString()"></div>
-                <div keyValueItem class="border-bottom mt-2" [key]="'Vlastník'" [value]="data.owner.fullUsername"></div>
-                <div keyValueItem class="border-bottom mt-2" [key]="'Úroveň vylepšení'" [value]="'Level ' + data.premiumTier"></div>
-                <div keyValueItem class="border-bottom mt-2" [key]="'Univerzální pozvánka'" [value]="data.vanityUrl ?? 'Neexistuje'"></div>
-                <div keyValueItem class="mt-2" [key]="'Booster role'" [value]="data.boosterRole?.name ?? 'Neexistuje'"></div>
+                <div keyValueItem class="mt-2" [key]="'Název'" [value]="data.name"></div>
+                <div keyValueItem class="border-top mt-2" [key]="'Identifikátor'" [value]="data.id"></div>
+                <div keyValueItem class="border-top mt-2" [key]="'Vytvořen'" [value]="data.createdAt.toLocaleString()"></div>
+                <div keyValueItem class="border-top mt-2" [key]="'Vlastník'" [value]="data.owner.fullUsername"></div>
+                <div keyValueItem class="border-top mt-2" [key]="'Úroveň vylepšení'" [value]="'Level ' + data.premiumTier"></div>
+                <div keyValueItem class="border-top mt-2" [key]="'Univerzální pozvánka'" [value]="data.vanityUrl" *ngIf="data.vanityUrl">
+                </div>
+                <div keyValueItem class="border-top mt-2" [key]="'Booster role'" [value]="data.boosterRole?.name" *ngIf="data.boosterRole"></div>
             </app-card>
         </div>
 
         <div class="col">
             <app-card icon="fas fa-server" [title]="'Informace o serveru'">
                 <div class="row">
-                    <div class="col">
-                        <div class="row">
-                            <p class="fw-bold mb-0">Omezení serveru</p>
-                        </div>
+                    <p class="fw-bold mb-0">Omezení serveru</p>
+                </div>
 
-                        <div class="grid">
-                            <div keyValueItem [key]="'Max. členů'" [value]="data.maxMembers?.toLocaleString() ?? 'Neznámé'"></div>
-                            <div keyValueItem [key]="'Max. online uživatelů'" [value]="data.maxPresences?.toLocaleString() ?? 'Neznámé'">
-                            </div>
-                            <div keyValueItem [key]="'Maxi. uživatelů s webkamerou'"
-                                [value]="data.maxVideoChannelUsers?.toLocaleString() ?? 'Není známo'"></div>
-                            <div keyValueItem [key]="'Max. bitrate'" [value]="data.maxBitrate + ' kbps'"></div>
-                            <div keyValueItem [key]="'Max. velikost souboru'" [value]="data.maxUploadLimit + ' MB'"></div>
-                        </div>
-
-                        <ng-container *ngIf="data.userStatusReport">
-                            <div class="row mt-2 border-top">
-                                <p class="fw-bold mb-0">Statistiky uživatelů</p>
-                            </div>
-
-                            <div class="grid">
-                                <div keyValueItem [key]="'Online'" [value]="data.userStatusReport.online.toLocaleString()"></div>
-                                <div keyValueItem [key]="'Neaktivní'" [value]="data.userStatusReport.idle.toLocaleString()"></div>
-                                <div keyValueItem [key]="'Nerušit'" [value]="data.userStatusReport.doNotDisturb.toLocaleString()"></div>
-                            </div>
-                        </ng-container>
-
-                        <ng-container *ngIf="data.clientTypeReport">
-                            <div class="row mt-2 border-top">
-                                <p class="fw-bold mb-0">Statistiky aktivních zařízení</p>
-                            </div>
-
-                            <div class="grid">
-                                <div keyValueItem [key]="'Desktop'" [value]="data.clientTypeReport.desktop.toLocaleString()"></div>
-                                <div keyValueItem [key]="'Telefon'" [value]="data.clientTypeReport.mobile.toLocaleString()"></div>
-                                <div keyValueItem [key]="'Web'" [value]="data.clientTypeReport.web.toLocaleString()"></div>
-                            </div>
-                        </ng-container>
-
-                        <ng-container *ngIf="data.databaseReport">
-                            <div class="row mt-2 border-top">
-                                <p class="fw-bold mb-0">Statistiky databáze</p>
-                            </div>
-
-                            <div class="grid">
-                                <div keyValueItem [key]="'Logy'" [value]="data.databaseReport.auditLogs.toLocaleString()"></div>
-                                <div keyValueItem [key]="'Kanály'" [value]="data.databaseReport.channels.toLocaleString()"></div>
-                                <div keyValueItem [key]="'Pozvánky'" [value]="data.databaseReport.invites.toLocaleString()"></div>
-                                <div keyValueItem [key]="'Hledání'" [value]="data.databaseReport.searches.toLocaleString()"></div>
-                                <div keyValueItem [key]="'Unverify'" [value]="data.databaseReport.unverifies.toLocaleString()"></div>
-                                <div keyValueItem [key]="'Unverify logy'" [value]="data.databaseReport.unverifyLogs.toLocaleString()"></div>
-                                <div keyValueItem [key]="'Uživatelé'" [value]="data.databaseReport.users.toLocaleString()"></div>
-                                <div keyValueItem [key]="'Cache zpráv'" [value]="data.databaseReport.cacheIndexes.toLocaleString()"></div>
-                            </div>
-                        </ng-container>
+                <div class="row">
+                    <div keyValueItem class="col-md-auto" [key]="'Max. členů'" [value]="data.maxMembers?.toLocaleString() ?? 'Neznámé'">
+                    </div>
+                    <div keyValueItem class="col-md-auto" [key]="'Max. online uživatelů'"
+                        [value]="data.maxPresences?.toLocaleString() ?? 'Neznámé'"></div>
+                    <div keyValueItem class="col-md-auto" [key]="'Max. uživatelů s webkamerou'"
+                        [value]="data.maxVideoChannelUsers?.toLocaleString() ?? 'Není známo'"></div>
+                    <div keyValueItem class="col-md-auto" [key]="'Max. bitrate'" [value]="data.maxBitrate + ' kbps'"></div>
+                    <div keyValueItem class="col-md-auto" [key]="'Max. velikost souboru'" [value]="data.maxUploadLimit + ' MB'">
                     </div>
                 </div>
+
+                <div class="row" *ngIf="data.userStatusReport || data.clientTypeReport">
+                    <div class="col-md-4" *ngIf="data.userStatusReport">
+                        <div class="row mt-2 border-top">
+                            <p class="fw-bold mb-0">Statistiky uživatelů</p>
+                        </div>
+
+                        <div class="row">
+                            <div keyValueItem class="col-md-auto" [key]="'Online'" [value]="data.userStatusReport.online.toLocaleString()">
+                            </div>
+                            <div keyValueItem class="col-md-auto" [key]="'Neaktivní'" [value]="data.userStatusReport.idle.toLocaleString()">
+                            </div>
+                            <div keyValueItem class="col-md-auto" [key]="'Nerušit'"
+                                [value]="data.userStatusReport.doNotDisturb.toLocaleString()"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-md" *ngIf="data.clientTypeReport">
+                        <div class="row mt-2 border-top">
+                            <p class="fw-bold mb-0">Statistiky aktivních zařízení</p>
+                        </div>
+
+                        <div class="row">
+                            <div keyValueItem class="col-md-auto" [key]="'Desktop'"
+                                [value]="data.clientTypeReport.desktop.toLocaleString()"></div>
+                            <div keyValueItem class="col-md-auto" [key]="'Telefon'" [value]="data.clientTypeReport.mobile.toLocaleString()">
+                            </div>
+                            <div keyValueItem class="col-md-auto" [key]="'Web'" [value]="data.clientTypeReport.web.toLocaleString()">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <ng-container *ngIf="data.databaseReport">
+                    <div class="row mt-2 border-top">
+                        <p class="fw-bold mb-0">Statistiky databáze</p>
+                    </div>
+
+                    <div class="row">
+                        <div keyValueItem class="col-md-auto" [key]="'Uživatelé'" [value]="data.databaseReport.users.toLocaleString()">
+                        </div>
+                        <div keyValueItem class="col-md-auto" [key]="'Pozvánky'" [value]="data.databaseReport.invites.toLocaleString()">
+                        </div>
+                        <div keyValueItem class="col-md-auto" [key]="'Kanály'" [value]="data.databaseReport.channels.toLocaleString()">
+                        </div>
+                        <div keyValueItem class="col-md-auto" [key]="'Hledání'" [value]="data.databaseReport.searches.toLocaleString()">
+                        </div>
+                        <div keyValueItem class="col-md-auto" [key]="'Unverify'" [value]="data.databaseReport.unverifies.toLocaleString()">
+                        </div>
+                        <div keyValueItem class="col-md-auto" [key]="'Unverify logy'"
+                            [value]="data.databaseReport.unverifyLogs.toLocaleString()"></div>
+                        <div keyValueItem class="col-md-auto" [key]="'Logy'" [value]="data.databaseReport.auditLogs.toLocaleString()"></div>
+                        <div keyValueItem class="col-md-auto" [key]="'Cache zpráv'"
+                            [value]="data.databaseReport.cacheIndexes.toLocaleString()"></div>
+                        <div keyValueItem class="col-md-auto" [key]="'Emoty'" [value]="data.databaseReport.emoteStats.toLocaleString()">
+                        </div>
+                        <div keyValueItem class="col-md-auto" [key]="'Návrhy na emoty'"
+                            [value]="data.databaseReport.emoteSuggestions.toLocaleString()"></div>
+                        <div keyValueItem class="col-md-auto" [key]="'Body (transakce)'"
+                            [value]="data.databaseReport.pointTransactions.toLocaleString()"></div>
+                        <div keyValueItem class="col-md-auto" [key]="'Body (sumáře)'"
+                            [value]="data.databaseReport.pointTransactionSummaries.toLocaleString()"></div>
+                    </div>
+                </ng-container>
             </app-card>
 
             <div class="mt-3">

@@ -63,14 +63,18 @@ export class ClientTypeReport {
 }
 
 export class GuildDatabaseReport {
-    public auditLogs: number;
-    public channels: number;
+    public users: number;
     public invites: number;
+    public channels: number;
     public searches: number;
     public unverifies: number;
     public unverifyLogs: number;
-    public users: number;
+    public auditLogs: number;
     public cacheIndexes: number;
+    public emoteStats: number;
+    public emoteSuggestions: number;
+    public pointTransactions: number;
+    public pointTransactionSummaries: number;
 
     static create(data: any): GuildDatabaseReport | null {
         if (!data) { return null; }
@@ -84,6 +88,10 @@ export class GuildDatabaseReport {
         report.unverifyLogs = data.unverifyLogs ?? 0;
         report.users = data.users ?? 0;
         report.cacheIndexes = data.cacheIndexes ?? 0;
+        report.emoteStats = data.emoteStats ?? 0;
+        report.emoteSuggestions = data.emoteSuggestions ?? 0;
+        report.pointTransactions = data.pointTransactions ?? 0;
+        report.pointTransactionSummaries = data.pointTransactionSummaries ?? 0;
 
         return report;
     }
