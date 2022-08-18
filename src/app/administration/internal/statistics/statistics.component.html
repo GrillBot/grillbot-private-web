@@ -37,9 +37,11 @@
     <app-line-chart [data]="dictQuery | async" *ngIf="canLineChart"></app-line-chart>
     <app-bar-chart [data]="dictQuery | async" *ngIf="canBarChart"></app-bar-chart>
 
-    <ul *ngIf="isList && listQuery | async as result; else loading">
-        <li *ngFor="let item of result"><code class="text-dark">{{item}}</code></li>
-    </ul>
+    <ng-container *ngIf="isList">
+        <ul *ngIf="listQuery | async as result; else loading">
+            <li *ngFor="let item of result"><code class="text-dark">{{item}}</code></li>
+        </ul>
+    </ng-container>
 </app-modal>
 
 <ng-template #loading_table>
