@@ -1,6 +1,6 @@
 <div class="row ms-0 me-0 mt-3">
     <div class="col">
-        <app-card [title]="'Diagnostika'" [icon]="'fas fa-network-wired'">
+        <app-card [icon]="'fas fa-network-wired'" [header]="false">
             <app-loading *ngIf="!data"></app-loading>
 
             <ng-container *ngIf="data">
@@ -56,21 +56,38 @@
 
 <div class="row ms-0 me-0 mt-3">
     <div class="col">
-        <app-card [title]="'Statistiky'" [icon]="'far fa-list-alt'">
-            <ul>
-                <li><a href="javascript:;" (click)="openStats('db')" class="text-dark">Stav databáze</a></li>
-                <li><a href="javascript:;" (click)="openStats('db/cache')" class="text-dark">Stav DB cache</a></li>
-                <li><a href="javascript:;" (click)="openStats('audit-log/type')" class="text-dark">Audit log (podle typu)</a></li>
-                <li><a href="javascript:;" (click)="openStats('audit-log/date')" class="text-dark">Audit log (po měsících)</a></li>
-                <li><a href="javascript:;" (click)="openStats('unverify-logs/type')" class="text-dark">Unverify log (podle typu)</a></li>
-                <li><a href="javascript:;" (click)="openStats('unverify-logs/date')" class="text-dark">Unverify-log (po měsících)</a></li>
-                <li><a href="javascript:;" (click)="openStats('text-commands')" class="text-dark">Textové příkazy</a></li>
-                <li><a href="javascript:;" (click)="openStats('interactions')" class="text-dark">Interaktivní příkazy</a></li>
-                <li><a href="javascript:;" (click)="openStats('jobs')" class="text-dark">Naplánované úlohy</a></li>
-                <li><a href="javascript:;" (click)="openStats('api/date')" class="text-dark">API (po měsících)</a></li>
-                <li><a href="javascript:;" (click)="openStats('api/endpoint')" class="text-dark">API (po metodách)</a></li>
-                <li><a href="javascript:;" (click)="openStats('api/status')" class="text-dark">API (podle výsledku)</a></li>
-            </ul>
+        <app-card [header]="false" [icon]="'far fa-list-alt'">
+            <div class="row">
+                <div class="col-md">
+                    <ul>
+                        <li><a href="javascript:;" (click)="openStats('db')" class="text-dark">Stav databáze</a></li>
+                        <li><a href="javascript:;" (click)="openStats('db/cache')" class="text-dark">Stav DB cache</a></li>
+                        <li><a href="javascript:;" (click)="openStats('audit-log/type')" class="text-dark">Audit log (podle typu)</a></li>
+                        <li><a href="javascript:;" (click)="openStats('audit-log/date')" class="text-dark">Audit log (po měsících)</a></li>
+                        <li><a href="javascript:;" (click)="openStats('unverify-logs/type')" class="text-dark">Unverify log (podle typu)</a>
+                        </li>
+                        <li><a href="javascript:;" (click)="openStats('unverify-logs/date')" class="text-dark">Unverify-log (po
+                                měsících)</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md">
+                    <ul class="col-md">
+                        <li><a href="javascript:;" (click)="openStats('text-commands')" class="text-dark">Textové příkazy</a></li>
+                        <li><a href="javascript:;" (click)="openStats('interactions')" class="text-dark">Interaktivní příkazy</a></li>
+                        <li><a href="javascript:;" (click)="openStats('jobs')" class="text-dark">Naplánované úlohy</a></li>
+                        <li><a href="javascript:;" (click)="openStats('api/date')" class="text-dark">API (po měsících)</a></li>
+                        <li><a href="javascript:;" (click)="openStats('api/endpoint')" class="text-dark">API (po metodách)</a></li>
+                        <li><a href="javascript:;" (click)="openStats('api/status')" class="text-dark">API (podle výsledku)</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md">
+                    <ul>
+                        <li><a href="javascript:;" (click)="openStats('eventLog')" class="text-dark">Log událostí</a></li>
+                    </ul>
+                </div>
+            </div>
         </app-card>
     </div>
 </div>

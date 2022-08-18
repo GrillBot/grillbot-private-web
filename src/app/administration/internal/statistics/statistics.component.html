@@ -1,7 +1,7 @@
 <app-modal [title]="header">
-    <table class="table table-sm table-bordered table-striped auto-column-width">
+    <table class="table table-sm table-bordered table-striped auto-column-width" *ngIf="isStatLike">
         <thead>
-            <tr *ngIf="isStatLike">
+            <tr>
                 <th *ngIf="isTextCommands || isInteractions">Příkaz</th>
                 <th *ngIf="isJobs">Název úlohy</th>
                 <th *ngIf="isApiRequestsByEndpoint">Endpoint</th>
@@ -16,8 +16,8 @@
             </tr>
         </thead>
 
-        <tbody *ngIf="isStatLike">
-            <ng-container *ngIf="statItemsQuery | async as result; else loading_statlike">
+        <tbody>
+            <ng-container *ngIf="statItemsQuery | async as result; else loading_table">
                 <tr *ngFor="let item of result" [class.bg-warning]="item.successRate > 25 && item.successRate < 50"
                     [class.bg-danger]="item.successRate <= 25">
                     <td [title]="item.key">{{item.key | cut:35}}</td>
@@ -36,20 +36,20 @@
 
     <app-line-chart [data]="dictQuery | async" *ngIf="canLineChart"></app-line-chart>
     <app-bar-chart [data]="dictQuery | async" *ngIf="canBarChart"></app-bar-chart>
+
+    <ul *ngIf="isList && listQuery | async as result; else loading">
+        <li *ngFor="let item of result"><code class="text-dark">{{item}}</code></li>
+    </ul>
 </app-modal>
 
-<ng-template #loading_dictlike>
-    <tr>
-        <td colspan="2">
-            <app-loading></app-loading>
-        </td>
-    </tr>
-</ng-template>
-
-<ng-template #loading_statlike>
+<ng-template #loading_table>
     <tr>
         <td colspan="9">
             <app-loading></app-loading>
         </td>
     </tr>
+</ng-template>
+
+<ng-template #loading>
+    <app-loading></app-loading>
 </ng-template>
