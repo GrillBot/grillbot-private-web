@@ -96,6 +96,13 @@
             <pre>{{data.messageContent}}</pre>
         </td>
     </tr>
+
+    <tr *ngIf="data.exception">
+        <td>Obsah chyby</td>
+        <td>
+            <pre class="alert alert-danger">{{data.exception}}</pre>
+        </td>
+    </tr>
 </ng-template>
 
 <ng-template #interaction>
@@ -153,6 +160,13 @@
                     </tr>
                 </tbody>
             </table>
+        </td>
+    </tr>
+
+    <tr *ngIf="data.exception">
+        <td>Obsah chyby</td>
+        <td>
+            <pre class="alert alert-danger">{{data.exception}}</pre>
         </td>
     </tr>
 </ng-template>
