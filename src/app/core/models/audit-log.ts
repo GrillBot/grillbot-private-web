@@ -1,7 +1,7 @@
 import { Support } from 'src/app/core/lib/support';
 import { AuditLogItemTypeTexts } from 'src/app/core/models/enums/audit-log-item-type';
 import { Channel } from './channels';
-import { FilterBase, RangeParams } from './common';
+import { FilterBase, RangeParams, createRangeParams } from './common';
 import { DateTime } from './datetime';
 import { AuditLogItemType } from './enums/audit-log-item-type';
 import { Guild } from './guilds';
@@ -27,7 +27,7 @@ export class TextFilter {
 export class ExecutionFilter {
     public name: string = null;
     public wasSuccess?: boolean;
-    public duration: RangeParams<number>;
+    public duration: RangeParams<number> | null;
 
     get serialized(): any {
         return {
@@ -44,14 +44,7 @@ export class ExecutionFilter {
 
         filter.name = data.name;
         filter.wasSuccess = data.wasSuccess;
-        filter.duration = {
-            from: data.durationFrom,
-            to: data.durationTo
-        };
-
-        if (!filter.duration.from && !filter.duration.to) {
-            filter.duration = null;
-        }
+        filter.duration = createRangeParams(data.durationFrom, data.durationTo);
 
         return filter;
     }
@@ -84,16 +77,9 @@ export class ApiRequestFilter {
         filter.controllerName = data.controllerName;
         filter.actionName = data.actionName;
         filter.pathTemplate = data.pathTemplate;
-        filter.duration = {
-            from: data.durationFrom,
-            to: data.durationTo
-        };
+        filter.duration = createRangeParams(data.durationFrom, data.durationTo);
         filter.method = data.method;
         filter.loggedUserRole = data.loggedUserRole;
-
-        if (!filter.duration.from && !filter.duration.to) {
-            filter.duration = null;
-        }
 
         return filter;
     }

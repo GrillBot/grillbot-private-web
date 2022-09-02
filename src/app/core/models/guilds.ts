@@ -4,7 +4,7 @@ import { DateTime } from './datetime';
 import { PremiumTier } from './enums/premium-tier';
 import { Role } from './roles';
 import { User } from './users';
-import { FilterBase, RangeParams } from './common';
+import { createRangeParams, FilterBase, RangeParams } from './common';
 
 export class GuildListFilter extends FilterBase {
     public nameQuery: string | null;
@@ -126,10 +126,7 @@ export class GuildEvent {
         const guildEvent = new GuildEvent();
 
         guildEvent.id = data.id;
-        guildEvent.validity = {
-            from: data.validity.from,
-            to: data.validity.to
-        };
+        guildEvent.validity = createRangeParams(data.validity.from, data.validity.to);
 
         return guildEvent;
     }

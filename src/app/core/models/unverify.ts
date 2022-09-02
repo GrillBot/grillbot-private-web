@@ -162,7 +162,7 @@ export class UnverifyLogParams extends FilterBase {
     public guildId: string | null = null;
     public fromUserId: string | null = null;
     public toUserId: string | null = null;
-    public created: RangeParams<string>;
+    public created: RangeParams<string> | null;
 
     static get empty(): UnverifyLogParams { return new UnverifyLogParams(); }
 

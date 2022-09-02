@@ -1,4 +1,4 @@
-import { FilterBase, RangeParams } from './common';
+import { createRangeParams, FilterBase, RangeParams } from './common';
 import { DateTime } from './datetime';
 import { Guild } from './guilds';
 import { User } from './users';
@@ -86,7 +86,7 @@ export class GetPointTransactionsParams extends FilterBase {
     public merged: boolean = false;
     public guildId: string | null;
     public userId: string | null;
-    public assignedAt: RangeParams<string>;
+    public assignedAt: RangeParams<string> | null;
     public onlyReactions: boolean;
     public onlyMessages: boolean;
     public messageId: string | null;
@@ -99,11 +99,7 @@ export class GetPointTransactionsParams extends FilterBase {
         const params = new GetPointTransactionsParams();
         params.guildId = form.guildId;
         params.userId = form.userId;
-        params.assignedAt = {
-            from: form.assignedAtFrom,
-            to: form.assignedAtTo
-        };
-        if (!params.assignedAt.from && params.assignedAt.to) { params.assignedAt = null; }
+        params.assignedAt = createRangeParams(form.assignedAtFrom, form.assignedAtTo);
         params.onlyReactions = form.onlyReactions ?? false;
         params.onlyMessages = form.onlyMessages ?? false;
         params.messageId = form.messageId;
@@ -128,7 +124,7 @@ export class GetPointsSummaryParams extends FilterBase {
     public merged: boolean = false;
     public guildId: string | null;
     public userId: string | null;
-    public days: RangeParams<string>;
+    public days: RangeParams<string> | null;
 
     static get empty(): GetPointsSummaryParams { return new GetPointsSummaryParams(); }
 
@@ -136,11 +132,7 @@ export class GetPointsSummaryParams extends FilterBase {
         if (!form) { return null; }
 
         const params = new GetPointsSummaryParams();
-        params.days = {
-            from: form.daysFrom,
-            to: form.daysTo
-        };
-        if (!params.days.from && !params.days.to) { params.days = null; }
+        params.days = createRangeParams(form.daysFrom, form.daysTo);
         params.guildId = form.guildId;
         params.userId = form.userId;
 

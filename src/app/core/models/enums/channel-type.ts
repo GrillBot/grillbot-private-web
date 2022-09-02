@@ -5,7 +5,8 @@ export enum ChannelType {
     News = 5,
     PublicThread = 11,
     PrivateThread = 12,
-    Stage = 13
+    Stage = 13,
+    Forum = 15
 }
 
 export enum ChannelTypeTexts {
@@ -15,5 +16,6 @@ export enum ChannelTypeTexts {
     News = 'Kanál s novinkami',
     PublicThread = 'Veřejné vlákno',
     PrivateThread = 'Soukromé vlákno',
-    Stage = 'Stage'
+    Stage = 'Stage',
+    Forum = 'Fórum'
 }

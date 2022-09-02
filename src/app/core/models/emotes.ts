@@ -1,4 +1,4 @@
-import { FilterBase, PaginatedParams, RangeParams, SortParams } from "./common";
+import { createRangeParams, FilterBase, PaginatedParams, RangeParams, SortParams } from "./common";
 import { DateTime } from "./datetime";
 import { QueryParam } from "./http";
 
@@ -44,11 +44,11 @@ export class EmoteStatItem {
 
 export class EmotesListParams extends FilterBase {
     public guildId: string;
-    public useCount: RangeParams<number>;
-    public lastOccurence: RangeParams<string>;
+    public useCount: RangeParams<number> | null;
+    public lastOccurence: RangeParams<string> | null;
     public filterAnimated: boolean = false;
     public emoteName: string;
-    public firstOccurence: RangeParams<string>;
+    public firstOccurence: RangeParams<string> | null;
 
     static get empty(): EmotesListParams { return new EmotesListParams(); }
 
@@ -61,21 +61,10 @@ export class EmotesListParams extends FilterBase {
         params.guildId = form.guildId;
         params.filterAnimated = form.filterAnimated ?? false;
         params.emoteName = form.emoteName;
-        params.useCount = {
-            from: form.useCountFrom,
-            to: form.useCountTo
-        };
-        if (!params.useCount.from && !params.useCount.to) { params.useCount = null; }
-        params.firstOccurence = {
-            from: form.firstOccurenceFrom,
-            to: form.firstOccurenceTo
-        };
-        if (!params.firstOccurence.from && params.firstOccurence.to) { params.firstOccurence = null; }
-        params.lastOccurence = {
-            from: form.lastOccurenceFrom,
-            to: form.lastOccurenceTo
-        };
-        if (!params.lastOccurence.from && !params.lastOccurence.to) { params.lastOccurence = null; }
+        params.useCount = createRangeParams(form.useCountFrom, form.useCountTo);
+        params.firstOccurence = createRangeParams(form.firstOccurenceFrom, form.firstOccurenceTo);
+        params.lastOccurence = createRangeParams(form.lastOccurenceFrom, form.lastOccurenceTo);
+
         return params;
     }
 

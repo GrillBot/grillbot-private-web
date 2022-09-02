@@ -42,7 +42,7 @@ export class EmoteSuggestion {
 }
 
 export class GetSuggestionListParams extends FilterBase {
-    public createdAt: RangeParams<string>;
+    public createdAt: RangeParams<string> | null;
     public guildId: string | null;
     public fromUserId: string | null;
     public emoteName: string;
