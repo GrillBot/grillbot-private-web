@@ -21,7 +21,7 @@
                     </table>
                 </div>
 
-                <div class="col-auto mt-1">
+                <div class="col-auto mt-1" *ngIf="!list.isEmpty">
                     <app-items-count></app-items-count>
                 </div>
             </div>

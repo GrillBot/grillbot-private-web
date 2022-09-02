@@ -28,6 +28,9 @@
                     <list-button (clicked)="removeItem(item)" title="Smazat přístup" icon="trash-alt"></list-button>
                 </td>
             </tr>
+            <tr *ngIf="data.length === 0">
+                <td colspan="5">Nebyly nalezeny žádné oprávnění.</td>
+            </tr>
         </tbody>
     </table>
 </app-card>
