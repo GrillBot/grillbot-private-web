@@ -507,12 +507,12 @@
         <td>{{data.endAt | duration:data.startAt}}</td>
     </tr>
 
-    <tr *ngIf="data.queryParams">
+    <tr *ngIf="data.parameters">
         <td>Parametry</td>
         <td>
             <table class="table table-sm table-bordered auto-column-width mb-0">
                 <tbody>
-                    <tr *ngFor="let param of data.queryParams | keyvalue">
+                    <tr *ngFor="let param of data.parameters | keyvalue">
                         <td>{{param.key}}</td>
                         <td>
                             <code>{{param.value}}</code>
@@ -520,13 +520,6 @@
                     </tr>
                 </tbody>
             </table>
-        </td>
-    </tr>
-
-    <tr *ngIf="data.bodyContent">
-        <td>Tělo požadavku</td>
-        <td>
-            <pre class="alert alert-secondary">{{data.bodyContent}}</pre>
         </td>
     </tr>
 </ng-template>

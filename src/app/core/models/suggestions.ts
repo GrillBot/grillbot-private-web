@@ -1,8 +1,7 @@
 import { GuildUser } from './users';
 import { DateTime } from 'src/app/core/models/datetime';
 import { Guild } from './guilds';
-import { RangeParams, FilterBase } from './common';
-import { QueryParam } from './http';
+import { RangeParams, FilterBase, createRangeParams } from './common';
 
 export class EmoteSuggestion {
     public id: number;
@@ -43,8 +42,7 @@ export class EmoteSuggestion {
 }
 
 export class GetSuggestionListParams extends FilterBase {
-    public createdAtFrom: string | null = null;
-    public createdAtTo: string | null = null;
+    public createdAt: RangeParams<string>;
     public guildId: string | null;
     public fromUserId: string | null;
     public emoteName: string;
@@ -54,25 +52,11 @@ export class GetSuggestionListParams extends FilterBase {
 
     static get empty(): GetSuggestionListParams { return new GetSuggestionListParams(); }
 
-    get queryParams(): QueryParam[] {
-        return [
-            this.createdAtFrom ? new QueryParam('createdAt.from', this.createdAtFrom) : null,
-            this.createdAtTo ? new QueryParam('createdAt.to', this.createdAtTo) : null,
-            this.guildId ? new QueryParam('guildId', this.guildId) : null,
-            this.fromUserId ? new QueryParam('fromUserId', this.fromUserId) : null,
-            this.onlyApprovedToVote ? new QueryParam('onlyApprovedToVote', this.onlyApprovedToVote) : null,
-            this.onlyUnfinishedVotes ? new QueryParam('onlyUnfinishedVotes', this.onlyUnfinishedVotes) : null,
-            this.onlyCommunityApproved ? new QueryParam('onlyCommunityApproved', this.onlyCommunityApproved) : null,
-            ...super.queryParams
-        ].filter(o => o);
-    }
-
     static create(data: any): GetSuggestionListParams | null {
         if (!data) { return null; }
 
         const params = this.empty;
-        params.createdAtFrom = data.createdAtFrom;
-        params.createdAtTo = data.createdAtTo;
+        params.createdAt = createRangeParams(data.createdAtFrom, data.createdAtTo);
         params.guildId = data.guildId;
         params.emoteName = data.emoteName;
         params.fromUserId = data.fromUserId;
@@ -81,5 +65,18 @@ export class GetSuggestionListParams extends FilterBase {
         params.onlyUnfinishedVotes = data.onlyUnfinishedVotes;
 
         return params;
+    }
+
+    public serialize(): any {
+        return {
+            createdAtFrom: this.createdAt?.from,
+            createdAtTo: this.createdAt?.to,
+            guildId: this.guildId,
+            emoteName: this.emoteName,
+            fromUserId: this.fromUserId,
+            onlyApprovedToVote: this.onlyApprovedToVote,
+            onlyCommunityApproved: this.onlyCommunityApproved,
+            onlyUnfinishedVotes: this.onlyUnfinishedVotes
+        };
     }
 }

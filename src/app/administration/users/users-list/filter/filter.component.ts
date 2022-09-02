@@ -81,7 +81,7 @@ export class FilterComponent extends FilterComponentBase<GetUserListParams> {
         this.form = this.fb.group({
             username: [filter.username],
             guildId: [filter.guildId],
-            flags: [filter.flags],
+            flags: [filter.serializeFlags()],
             usedInviteCode: [filter.usedInviteCode],
             status: [filter.status]
         });

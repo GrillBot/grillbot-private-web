@@ -1,7 +1,6 @@
-import { FilterBase } from './common';
+import { FilterBase, RangeParams } from './common';
 import { DateTime } from './datetime';
 import { Guild } from './guilds';
-import { QueryParam } from './http';
 import { User } from './users';
 
 export class PointsMergeInfo {
@@ -87,27 +86,12 @@ export class GetPointTransactionsParams extends FilterBase {
     public merged: boolean = false;
     public guildId: string | null;
     public userId: string | null;
-    public assignedAtFrom: string | null;
-    public assignedAtTo: string | null;
+    public assignedAt: RangeParams<string>;
     public onlyReactions: boolean;
     public onlyMessages: boolean;
     public messageId: string | null;
 
     static get empty(): GetPointTransactionsParams { return new GetPointTransactionsParams(); }
-
-    get queryParams(): QueryParam[] {
-        return [
-            new QueryParam('merged', this.merged),
-            this.guildId ? new QueryParam('guildId', this.guildId) : null,
-            this.userId ? new QueryParam('userId', this.userId) : null,
-            this.assignedAtFrom ? new QueryParam('assignedAt.from', this.assignedAtFrom) : null,
-            this.assignedAtTo ? new QueryParam('assignedAt.to', this.assignedAtTo) : null,
-            this.onlyReactions ? new QueryParam('onlyReactions', this.onlyReactions) : null,
-            this.onlyMessages ? new QueryParam('onlyMessages', this.onlyMessages) : null,
-            ...super.queryParams,
-            this.messageId ? new QueryParam('messageId', this.messageId) : null
-        ].filter(o => o);
-    }
 
     static fromForm(form: any): GetPointTransactionsParams | null {
         if (!form) { return null; }
@@ -115,13 +99,28 @@ export class GetPointTransactionsParams extends FilterBase {
         const params = new GetPointTransactionsParams();
         params.guildId = form.guildId;
         params.userId = form.userId;
-        params.assignedAtFrom = form.assignedAtFrom;
-        params.assignedAtTo = form.assignedAtTo;
-        params.onlyReactions = form.onlyReactions;
-        params.onlyMessages = form.onlyMessages;
+        params.assignedAt = {
+            from: form.assignedAtFrom,
+            to: form.assignedAtTo
+        };
+        if (!params.assignedAt.from && params.assignedAt.to) { params.assignedAt = null; }
+        params.onlyReactions = form.onlyReactions ?? false;
+        params.onlyMessages = form.onlyMessages ?? false;
         params.messageId = form.messageId;
 
         return params;
+    }
+
+    public serialize(): any {
+        return {
+            guildId: this.guildId,
+            userId: this.userId,
+            assignedAtFrom: this.assignedAt?.from,
+            assignedAtTo: this.assignedAt?.to,
+            onlyReactions: this.onlyReactions,
+            onlyMessages: this.onlyMessages,
+            messageId: this.messageId
+        };
     }
 }
 
@@ -129,31 +128,31 @@ export class GetPointsSummaryParams extends FilterBase {
     public merged: boolean = false;
     public guildId: string | null;
     public userId: string | null;
-    public daysFrom: string | null;
-    public daysTo: string | null;
+    public days: RangeParams<string>;
 
     static get empty(): GetPointsSummaryParams { return new GetPointsSummaryParams(); }
-
-    get queryParams(): QueryParam[] {
-        return [
-            new QueryParam('merged', this.merged),
-            this.guildId ? new QueryParam('guildId', this.guildId) : null,
-            this.userId ? new QueryParam('userId', this.userId) : null,
-            this.daysFrom ? new QueryParam('days.from', this.daysFrom) : null,
-            this.daysTo ? new QueryParam('days.to', this.daysTo) : null,
-            ...super.queryParams
-        ].filter(o => o);
-    }
 
     static fromForm(form: any): GetPointsSummaryParams | null {
         if (!form) { return null; }
 
         const params = new GetPointsSummaryParams();
-        params.daysFrom = form.daysFrom;
-        params.daysTo = form.daysTo;
+        params.days = {
+            from: form.daysFrom,
+            to: form.daysTo
+        };
+        if (!params.days.from && !params.days.to) { params.days = null; }
         params.guildId = form.guildId;
         params.userId = form.userId;
 
         return params;
+    }
+
+    public serialize(): any {
+        return {
+            guildId: this.guildId,
+            userId: this.userId,
+            daysFrom: this.days?.from,
+            daysTo: this.days?.to
+        };
     }
 }

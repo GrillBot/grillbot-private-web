@@ -25,11 +25,9 @@ export class Invite extends InviteBase {
 
     static create(data: any): Invite {
         if (!data) { return null; }
-        const base = super.create(data);
         const invite = new Invite();
 
-        invite.code = base.code;
-        invite.createdAt = base.createdAt;
+        Object.assign(invite, super.create(data));
         invite.creator = data.creator ? User.create(data.creator) : null;
         invite.usedUsersCount = data.usedUsersCount;
 
@@ -42,14 +40,10 @@ export class GuildInvite extends Invite {
 
     static create(data: any): GuildInvite | null {
         if (!data) { return null; }
-        const base = super.create(data);
         const invite = new GuildInvite();
 
-        invite.code = base.code;
-        invite.createdAt = base.createdAt;
-        invite.creator = base.creator;
+        Object.assign(invite, super.create(data));
         invite.guild = data.guild ? Guild.create(data.guild) : null;
-        invite.usedUsersCount = base.usedUsersCount;
 
         return invite;
     }
@@ -61,17 +55,6 @@ export class GetInviteListParams extends FilterBase {
     public code: string | null = null;
     public createdFrom: string | null = null;
     public createdTo: string | null = null;
-
-    get queryParams(): QueryParam[] {
-        return [
-            this.guildId ? new QueryParam('guildId', this.guildId) : null,
-            this.creatorId ? new QueryParam('creatorId', this.creatorId) : null,
-            this.code ? new QueryParam('code', this.code) : null,
-            this.createdFrom ? new QueryParam('createdFrom', this.createdFrom) : null,
-            this.createdTo ? new QueryParam('createdTo', this.createdTo) : null,
-            ...super.queryParams
-        ].filter(o => o);
-    }
 
     static get empty(): GetInviteListParams { return new GetInviteListParams(); }
 
@@ -88,5 +71,3 @@ export class GetInviteListParams extends FilterBase {
         return params;
     }
 }
-
-export type InviteListSortTypes = 'code' | 'createdAt' | 'creator';

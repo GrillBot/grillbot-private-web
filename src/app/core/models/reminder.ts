@@ -1,6 +1,4 @@
 import { FilterBase } from './common';
-import { FormGroup } from '@angular/forms';
-import { QueryParam } from './http';
 import { DateTime } from './datetime';
 import { User } from './users';
 
@@ -40,20 +38,6 @@ export class GetReminderListParams extends FilterBase {
 
     static get empty(): GetReminderListParams { return new GetReminderListParams(); }
 
-    get queryParams(): QueryParam[] {
-        return [
-            this.fromUserId ? new QueryParam('fromUserId', this.fromUserId) : null,
-            this.toUserId ? new QueryParam('toUserId', this.toUserId) : null,
-            this.originalMessageId ? new QueryParam('originalMessageId', this.originalMessageId) : null,
-            this.messageContains ? new QueryParam('messageContains', this.messageContains) : null,
-            this.createdFrom ? new QueryParam('createdFrom', this.createdFrom) : null,
-            this.createdTo ? new QueryParam('createdTo', this.createdTo) : null,
-            new QueryParam('onlyWaiting', this.onlyWaiting),
-            ...super.queryParams
-        ].filter(o => o);
-    }
-
-    /* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access */
     static create(form: any): GetReminderListParams | null {
         if (!form) { return null; }
         const params = new GetReminderListParams();
@@ -69,5 +53,3 @@ export class GetReminderListParams extends FilterBase {
         return params;
     }
 }
-
-export type RemindListSortTypes = 'id' | 'fromUser' | 'toUser' | 'at' | 'postpone';

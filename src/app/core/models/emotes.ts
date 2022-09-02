@@ -44,47 +44,53 @@ export class EmoteStatItem {
 
 export class EmotesListParams extends FilterBase {
     public guildId: string;
-    public useCountFrom: number | null;
-    public useCountTo: number | null;
-    public firstOccurenceFrom: string | null;
-    public firstOccurenceTo: string | null;
-    public lastOccurenceFrom: string | null;
-    public lastOccurenceTo: string | null;
+    public useCount: RangeParams<number>;
+    public lastOccurence: RangeParams<string>;
     public filterAnimated: boolean = false;
     public emoteName: string;
+    public firstOccurence: RangeParams<string>;
 
     static get empty(): EmotesListParams { return new EmotesListParams(); }
 
-    get queryParams(): QueryParam[] {
-        return [
-            this.guildId ? new QueryParam('guildId', this.guildId) : null,
-            this.useCountFrom != null ? new QueryParam('useCount.from', this.useCountFrom) : null,
-            this.useCountTo != null ? new QueryParam('useCount.to', this.useCountTo) : null,
-            this.firstOccurenceFrom != null ? new QueryParam('firstOccurence.from', this.firstOccurenceFrom) : null,
-            this.firstOccurenceTo != null ? new QueryParam('firstOccurence.to', this.firstOccurenceTo) : null,
-            this.lastOccurenceFrom != null ? new QueryParam('lastOccurence.from', this.lastOccurenceFrom) : null,
-            this.lastOccurenceTo != null ? new QueryParam('lastOccurence.to', this.lastOccurenceTo) : null,
-            ...super.queryParams,
-            new QueryParam('filterAnimated', this.filterAnimated),
-            this.emoteName ? new QueryParam('emoteName', this.emoteName) : null
-        ].filter(o => o);
-    }
-
     static create(form: any): EmotesListParams {
         if (!form) { return null; }
+        console.log(form);
 
         const params = new EmotesListParams();
 
         params.guildId = form.guildId;
         params.filterAnimated = form.filterAnimated ?? false;
         params.emoteName = form.emoteName;
-        params.useCountFrom = form.useCountFrom;
-        params.useCountTo = form.useCountTo;
-        params.firstOccurenceFrom = form.firstOccurenceFrom;
-        params.firstOccurenceTo = form.firstOccurenceTo;
-        params.lastOccurenceFrom = form.lastOccurenceFrom;
-        params.lastOccurenceTo = form.lastOccurenceTo;
+        params.useCount = {
+            from: form.useCountFrom,
+            to: form.useCountTo
+        };
+        if (!params.useCount.from && !params.useCount.to) { params.useCount = null; }
+        params.firstOccurence = {
+            from: form.firstOccurenceFrom,
+            to: form.firstOccurenceTo
+        };
+        if (!params.firstOccurence.from && params.firstOccurence.to) { params.firstOccurence = null; }
+        params.lastOccurence = {
+            from: form.lastOccurenceFrom,
+            to: form.lastOccurenceTo
+        };
+        if (!params.lastOccurence.from && !params.lastOccurence.to) { params.lastOccurence = null; }
         return params;
+    }
+
+    public serialize(): any {
+        return {
+            guildId: this.guildId,
+            useCountFrom: this.useCount?.from,
+            useCountTo: this.useCount?.to,
+            firstOccurenceFrom: this.firstOccurence?.from,
+            firstOccurenceTo: this.firstOccurence?.to,
+            lastOccurenceFrom: this.lastOccurence?.from,
+            lastOccurenceTo: this.lastOccurence?.to,
+            emoteName: this.emoteName,
+            filterAnimated: this.filterAnimated
+        }
     }
 }
 
@@ -94,5 +100,3 @@ export class MergeEmoteStatsParams {
         public destinationEmoteId: string
     ) { }
 }
-
-export type SortingTypes = 'EmoteId' | 'UseCount' | 'FirstOccurence' | 'LastOccurence';

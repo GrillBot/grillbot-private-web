@@ -15,20 +15,20 @@ export class EmotesService {
     ) { }
 
     getStatsOfSupportedEmotes(params: EmotesListParams): Observable<PaginatedResponse<EmoteStatItem>> {
-        const url = `${environment.apiUrl}/emotes/stats/supported?${params.queryParams.map(o => o.toString()).join('&')}`;
+        const url = `${environment.apiUrl}/emotes/stats/supported/list`;
         const headers = this.base.getHttpHeaders();
 
-        return this.base.http.get<PaginatedResponse<EmoteStatItem>>(url, { headers }).pipe(
+        return this.base.http.post<PaginatedResponse<EmoteStatItem>>(url, params, { headers }).pipe(
             map(data => PaginatedResponse.create(data, entity => EmoteStatItem.create(entity))),
             catchError((err: HttpErrorResponse) => this.base.catchError(err))
         );
     }
 
     getStatsOfUnsupportedEmotes(params: EmotesListParams): Observable<PaginatedResponse<EmoteStatItem>> {
-        const url = `${environment.apiUrl}/emotes/stats/unsupported?${params.queryParams.map(o => o.toString()).join('&')}`;
+        const url = `${environment.apiUrl}/emotes/stats/unsupported/list`;
         const headers = this.base.getHttpHeaders();
 
-        return this.base.http.get<PaginatedResponse<EmoteStatItem>>(url, { headers }).pipe(
+        return this.base.http.post<PaginatedResponse<EmoteStatItem>>(url, params, { headers }).pipe(
             map(data => PaginatedResponse.create(data, entity => EmoteStatItem.create(entity))),
             catchError((err: HttpErrorResponse) => this.base.catchError(err))
         );

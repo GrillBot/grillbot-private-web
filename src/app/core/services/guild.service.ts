@@ -14,12 +14,10 @@ export class GuildService {
     ) { }
 
     getGuildList(filter: GuildListFilter): Observable<PaginatedResponse<Guild>> {
-        const parameters = filter.queryParams.map(o => o.toString()).join('&');
-
-        const url = `${environment.apiUrl}/guild?${parameters}`;
+        const url = `${environment.apiUrl}/guild/list`;
         const headers = this.base.getHttpHeaders();
 
-        return this.base.http.get<PaginatedResponse<Guild>>(url, { headers }).pipe(
+        return this.base.http.post<PaginatedResponse<Guild>>(url, filter, { headers }).pipe(
             map(data => PaginatedResponse.create<Guild>(data, entity => Guild.create(entity))),
             catchError((err: HttpErrorResponse) => this.base.catchError(err))
         );

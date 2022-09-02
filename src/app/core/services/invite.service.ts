@@ -14,11 +14,10 @@ export class InviteService {
     ) { }
 
     getInviteList(params: GetInviteListParams): Observable<PaginatedResponse<GuildInvite>> {
-        const parameters = params.queryParams.map(o => o.toString()).join('&');
-        const url = `${environment.apiUrl}/invite?${parameters}`;
+        const url = `${environment.apiUrl}/invite/list`;
         const headers = this.base.getHttpHeaders();
 
-        return this.base.http.get<PaginatedResponse<GuildInvite>>(url, { headers }).pipe(
+        return this.base.http.post<PaginatedResponse<GuildInvite>>(url, params, { headers }).pipe(
             map(data => PaginatedResponse.create(data, entity => GuildInvite.create(entity))),
             catchError((err: HttpErrorResponse) => this.base.catchError(err))
         );

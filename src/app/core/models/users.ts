@@ -110,27 +110,14 @@ export class GetUserListParams extends FilterBase {
     public usedInviteCode: string | null = null;
     public status: UserStatus | null = null;
 
-    get queryParams(): QueryParam[] {
-        return [
-            this.username ? new QueryParam('username', this.username) : null,
-            this.guildId ? new QueryParam('guildId', this.guildId) : null,
-            this.flags ? new QueryParam('flags', this.flags) : null,
-            new QueryParam('haveBirthday', this.haveBirthday),
-            this.usedInviteCode ? new QueryParam('usedInviteCode', this.usedInviteCode) : null,
-            ...super.queryParams,
-            this.status !== undefined && this.status !== null ? new QueryParam('status', this.status) : null
-        ].filter(o => o);
-    }
-
     static get empty(): GetUserListParams { return new GetUserListParams(); }
 
-    // tslint:disable: no-bitwise
     static create(form: any): GetUserListParams | null {
         if (!form) { return null; }
         const params = GetUserListParams.empty;
 
         params.flags = this.buildFlags(form.flags);
-        params.guildId = form.guild;
+        params.guildId = form.guildId;
         params.haveBirthday = (form.flags & UserFilterFlags.HaveBirthday) !== 0;
         params.username = form.username;
         params.usedInviteCode = form.usedInviteCode;
@@ -140,34 +127,20 @@ export class GetUserListParams extends FilterBase {
     }
 
     private static buildFlags(flags: number): number {
-        let result = 0;
-
-        for (const item of UserFilterMapping) {
-            if ((flags & item.source) !== 0) {
-                result |= item.destination;
-            }
-        }
-
-        return result;
+        return UserFilterMapping
+            .filter(o => (flags & o.source) !== 0).reduce((prev, curr) => prev | curr.destination, 0);
     }
 
-    private serializeFlags(): number {
-        let result = 0;
-
+    public serializeFlags(): number {
+        let result = UserFilterMapping.filter(o => (this.flags & o.destination) !== 0).reduce((prev, curr) => prev | curr.source, 0);
         if (this.haveBirthday) { result |= UserFilterFlags.HaveBirthday; }
-
-        for (const item of UserFilterMapping) {
-            if ((this.flags & item.destination) !== 0) {
-                result |= item.source;
-            }
-        }
 
         return result;
     }
 
     serialize(): any {
         return {
-            guild: this.guildId,
+            guildId: this.guildId,
             flags: this.serializeFlags(),
             username: this.username,
             usedInviteCode: this.usedInviteCode,

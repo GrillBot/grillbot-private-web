@@ -5,22 +5,13 @@ import { FilterBase, RangeParams } from './common';
 import { DateTime } from './datetime';
 import { AuditLogItemType } from './enums/audit-log-item-type';
 import { Guild } from './guilds';
-import { QueryParam } from './http';
 import { User } from './users';
 
 export class TextFilter {
     public text: string | null = null;
 
     get serialized(): any {
-        return {
-            text: this.text
-        };
-    }
-
-    getQueryParams(property: string): QueryParam[] {
-        return [
-            this.text ? new QueryParam(`${property}.Text`, this.text) : null
-        ].filter(o => o);
+        return { text: this.text };
     }
 
     static create(data: any): TextFilter | null {
@@ -47,25 +38,6 @@ export class ExecutionFilter {
         };
     }
 
-    getQueryParams(property: string): QueryParam[] {
-        const params = [
-            this.name ? new QueryParam(`${property}.Name`, this.name) : null,
-            this.wasSuccess != undefined ? new QueryParam(`${property}.WasSuccess`, this.wasSuccess) : null
-        ];
-
-        if (this.duration) {
-            if (this.duration.from) {
-                params.push(new QueryParam(`${property}.Duration.From`, this.duration.from));
-            }
-
-            if (this.duration.to) {
-                params.push(new QueryParam(`${property}.Duration.To`, this.duration.to));
-            }
-        }
-
-        return params.filter(o => o);
-    }
-
     static create(data: any): ExecutionFilter | null {
         if (!data) { return null; }
         const filter = new ExecutionFilter();
@@ -76,6 +48,10 @@ export class ExecutionFilter {
             from: data.durationFrom,
             to: data.durationTo
         };
+
+        if (!filter.duration.from && !filter.duration.to) {
+            filter.duration = null;
+        }
 
         return filter;
     }
@@ -101,28 +77,6 @@ export class ApiRequestFilter {
         };
     }
 
-    get queryParams(): QueryParam[] {
-        const params = [
-            this.controllerName ? new QueryParam('ApiRequestFilter.ControllerName', this.controllerName) : null,
-            this.actionName ? new QueryParam('ApiRequestFilter.ActionName', this.actionName) : null,
-            this.pathTemplate ? new QueryParam('ApiRequestFilter.PathTemplate', this.pathTemplate) : null,
-            this.method ? new QueryParam('ApiRequestFilter.Method', this.method) : null,
-            this.loggedUserRole ? new QueryParam('ApiRequestFilter.LoggedUserRole', this.loggedUserRole) : null
-        ];
-
-        if (this.duration) {
-            if (this.duration.from) {
-                params.push(new QueryParam('ApiRequestFilter.Duration.From', this.duration.from));
-            }
-
-            if (this.duration.to) {
-                params.push(new QueryParam('ApiRequestFilter.Duration.To', this.duration.to));
-            }
-        }
-
-        return params.filter(o => o);
-    }
-
     static create(data: any): ApiRequestFilter | null {
         if (!data) { return null; }
         const filter = new ApiRequestFilter();
@@ -137,6 +91,10 @@ export class ApiRequestFilter {
         filter.method = data.method;
         filter.loggedUserRole = data.loggedUserRole;
 
+        if (!filter.duration.from && !filter.duration.to) {
+            filter.duration = null;
+        }
+
         return filter;
     }
 }
@@ -145,15 +103,7 @@ export class TargetIdFilter {
     public targetId: string;
 
     get serialized(): any {
-        return {
-            targetId: this.targetId
-        };
-    }
-
-    getQueryParams(propertyName: string): QueryParam[] {
-        return [
-            this.targetId ? new QueryParam(`${propertyName}.TargetId`, this.targetId) : null
-        ].filter(o => o);
+        return { targetId: this.targetId };
     }
 
     static create(data: any): TargetIdFilter | null {
@@ -192,37 +142,9 @@ export class AuditLogListParams extends FilterBase {
 
     static get empty(): AuditLogListParams {
         const params = new AuditLogListParams();
-        params.excludedTypes = [AuditLogItemType.API, AuditLogItemType.JobCompleted];
+        params.excludedTypes = [AuditLogItemType.API];
 
         return params;
-    }
-
-    get queryParams(): QueryParam[] {
-        return [
-            this.guildId ? new QueryParam('guildId', this.guildId) : null,
-            ...(this.processedUserIds ? this.processedUserIds.map(o => new QueryParam('processedUserIds', o)) : []),
-            ...(this.types && this.types.length > 0 ? this.types.map(o => new QueryParam('types', o)) : []),
-            ...(this.excludedTypes && this.excludedTypes.length > 0 ? this.excludedTypes.map(o => new QueryParam('excludedTypes', o)) : []),
-            this.createdFrom ? new QueryParam('createdFrom', this.createdFrom) : null,
-            this.createdTo ? new QueryParam('createdTo', this.createdTo) : null,
-            new QueryParam('ignoreBots', this.ignoreBots),
-            this.channelId ? new QueryParam('channelId', this.channelId) : null,
-            ...super.queryParams,
-            ...(this.infoFilter ? this.infoFilter.getQueryParams('InfoFilter') : []),
-            ...(this.warningFilter ? this.warningFilter.getQueryParams('WarningFilter') : []),
-            ...(this.errorFilter ? this.errorFilter.getQueryParams('ErrorFilter') : []),
-            ...(this.commandFilter ? this.commandFilter.getQueryParams('CommandFilter') : []),
-            ...(this.interactionsFilter ? this.interactionsFilter.getQueryParams('InteractionFilter') : []),
-            ...(this.jobFilter ? this.jobFilter.getQueryParams('JobFilter') : []),
-            ...(this.apiRequestFilter ? this.apiRequestFilter.queryParams : []),
-            this.ids ? new QueryParam('ids', this.ids) : null,
-            ...(this.overwriteCreatedFilter ? this.overwriteCreatedFilter.getQueryParams('OverwriteCreatedFilter') : []),
-            ...(this.overwriteDeletedFilter ? this.overwriteDeletedFilter.getQueryParams('OverwriteDeletedFilter') : []),
-            ...(this.overwriteUpdatedFilter ? this.overwriteUpdatedFilter.getQueryParams('OverwriteUpdatedFilter') : []),
-            ...(this.memberUpdatedFilter ? this.memberUpdatedFilter.getQueryParams('MemberUpdatedFilter') : []),
-            ...(this.memberRoleUpdatedFilter ? this.memberRoleUpdatedFilter.getQueryParams('MemberRolesUpdatedFilter') : []),
-            this.onlyFromStart ? new QueryParam('onlyFromStart', this.onlyFromStart) : null
-        ].filter(o => o);
     }
 
     static create(data: any): AuditLogListParams | null {
@@ -355,8 +277,6 @@ export class AuditLogFileMetadata {
         return metadata;
     }
 }
-
-export type SortingTypes = 'guild' | 'processed' | 'type' | 'channel' | 'createdat';
 
 export class ClientLogItemRequest {
     constructor(

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call,
+ @typescript-eslint/no-unsafe-argument */
 import { debounceTime } from 'rxjs/operators';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Directive, EventEmitter, OnInit, Output } from '@angular/core';
@@ -38,7 +40,8 @@ export abstract class FilterComponentBase<TFilter> implements OnInit {
         this.filterChanged.emit(filter);
 
         if (this.canStoreData) {
-            this.storage.store<TFilter>(this.filterId, filter);
+            const serializedFilter = (filter as any).serialize ? (filter as any).serialize() : filter;
+            this.storage.store<TFilter>(this.filterId, serializedFilter);
         }
     }
 

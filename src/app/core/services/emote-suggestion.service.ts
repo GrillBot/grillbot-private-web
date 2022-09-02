@@ -14,10 +14,10 @@ export class EmoteSuggestionService {
     ) { }
 
     getSuggestionList(params: GetSuggestionListParams): Observable<PaginatedResponse<EmoteSuggestion>> {
-        const url = `${environment.apiUrl}/emotes/suggestion?${params.queryParams.map(o => o.toString()).join('&')}`;
+        const url = `${environment.apiUrl}/emotes/suggestion/list`;
         const headers = this.base.getHttpHeaders();
 
-        return this.base.http.get<PaginatedResponse<EmoteSuggestion>>(url, { headers }).pipe(
+        return this.base.http.post<PaginatedResponse<EmoteSuggestion>>(url, params, { headers }).pipe(
             map(data => PaginatedResponse.create(data, entity => EmoteSuggestion.create(entity))),
             catchError((err: HttpErrorResponse) => this.base.catchError(err))
         );

@@ -5,7 +5,7 @@ import { GuildUser, User } from './users';
 import { Guild } from './guilds';
 import { QueryParam } from './http';
 import { Support } from '../lib/support';
-import { FilterBase } from './common';
+import { FilterBase, RangeParams, createRangeParams } from './common';
 
 export class UnverifyInfo {
     public start: DateTime;
@@ -162,20 +162,7 @@ export class UnverifyLogParams extends FilterBase {
     public guildId: string | null = null;
     public fromUserId: string | null = null;
     public toUserId: string | null = null;
-    public createdFrom: string | null = null;
-    public createdTo: string | null = null;
-
-    get queryParams(): QueryParam[] {
-        return [
-            this.operation != null ? new QueryParam('operation', this.operation) : null,
-            this.guildId ? new QueryParam('guildId', this.guildId) : null,
-            this.fromUserId ? new QueryParam('fromUserId', this.fromUserId) : null,
-            this.toUserId ? new QueryParam('toUserId', this.toUserId) : null,
-            this.createdFrom ? new QueryParam('created.From', this.createdFrom) : null,
-            this.createdTo ? new QueryParam('created.To', this.createdTo) : null,
-            ...super.queryParams
-        ].filter(o => o);
-    }
+    public created: RangeParams<string>;
 
     static get empty(): UnverifyLogParams { return new UnverifyLogParams(); }
 
@@ -183,8 +170,7 @@ export class UnverifyLogParams extends FilterBase {
         if (!form) { return null; }
         const params = new UnverifyLogParams();
 
-        params.createdFrom = form.createdFrom;
-        params.createdTo = form.createdTo;
+        params.created = createRangeParams(form.createdFrom, form.createdTo);
         params.fromUserId = form.fromUserId;
         params.guildId = form.guildId;
         params.operation = form.operation;
@@ -192,6 +178,15 @@ export class UnverifyLogParams extends FilterBase {
 
         return params;
     }
-}
 
-export type UnverifyListSortTypes = 'operation' | 'guild' | 'fromUser' | 'toUser' | 'createdAt';
+    public serialize(): any {
+        return {
+            createdFrom: this.created?.from,
+            createdTo: this.created?.to,
+            fromUserId: this.fromUserId,
+            toUserId: this.toUserId,
+            operation: this.operation,
+            guildId: this.guildId
+        };
+    }
+}

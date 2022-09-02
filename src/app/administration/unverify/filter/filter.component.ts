@@ -43,8 +43,8 @@ export class FilterComponent extends FilterComponentBase<UnverifyLogParams> {
             guildId: filter.guildId,
             fromUserId: filter.fromUserId,
             toUserId: filter.toUserId,
-            createdFrom: filter.createdFrom,
-            createdTo: filter.createdTo
+            createdFrom: filter.created?.from,
+            createdTo: filter.created?.to
         });
     }
 
@@ -54,8 +54,8 @@ export class FilterComponent extends FilterComponentBase<UnverifyLogParams> {
             guildId: [filter.guildId],
             fromUserId: [filter.fromUserId],
             toUserId: [filter.toUserId],
-            createdFrom: [filter.createdFrom],
-            createdTo: [filter.createdTo]
+            createdFrom: [filter.created?.from],
+            createdTo: [filter.created?.to]
         });
     }
 }

@@ -32,12 +32,12 @@ export class FilterComponent extends FilterComponentBase<EmotesListParams> {
     updateForm(filter: EmotesListParams): void {
         this.form.patchValue({
             guildId: filter.guildId,
-            useCountFrom: filter.useCountFrom,
-            useCountTo: filter.useCountTo,
-            firstOccurenceFrom: filter.firstOccurenceFrom,
-            firstOccurenceTo: filter.firstOccurenceTo,
-            lastOccurenceFrom: filter.lastOccurenceFrom,
-            lastOccurenceTo: filter.lastOccurenceTo,
+            useCountFrom: filter.useCount?.from,
+            useCountTo: filter.useCount?.to,
+            firstOccurenceFrom: filter.firstOccurence?.from,
+            firstOccurenceTo: filter.firstOccurence?.to,
+            lastOccurenceFrom: filter.lastOccurence?.from,
+            lastOccurenceTo: filter.lastOccurence?.to,
             filterAnimated: filter.filterAnimated,
             emoteName: filter.emoteName
         });
@@ -46,12 +46,12 @@ export class FilterComponent extends FilterComponentBase<EmotesListParams> {
     initForm(filter: EmotesListParams): void {
         this.form = this.fb.group({
             guildId: [filter.guildId],
-            useCountFrom: [filter.useCountFrom, Validators.min(0)],
-            useCountTo: [filter.useCountTo, Validators.min(0)],
-            firstOccurenceFrom: [filter.firstOccurenceFrom],
-            firstOccurenceTo: [filter.firstOccurenceTo],
-            lastOccurenceFrom: [filter.lastOccurenceFrom],
-            lastOccurenceTo: [filter.lastOccurenceTo],
+            useCountFrom: [filter.useCount?.from, Validators.min(0)],
+            useCountTo: [filter.useCount?.to, Validators.min(0)],
+            firstOccurenceFrom: [filter.firstOccurence?.from],
+            firstOccurenceTo: [filter.firstOccurence?.to],
+            lastOccurenceFrom: [filter.lastOccurence?.from],
+            lastOccurenceTo: [filter.lastOccurence?.to],
             filterAnimated: [filter.filterAnimated],
             emoteName: [filter.emoteName]
         });

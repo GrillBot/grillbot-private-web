@@ -1,12 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { PaginatedResponse, EmptyObservable } from './../models/common';
-import { QueryParam } from './../models/http';
 import { catchError, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { BaseService } from './base.service';
 import { Injectable } from '@angular/core';
 import {
-    ChannelDetail, ChannelListSortTypes, ChannelUserStatItem, GetChannelListParams,
+    ChannelDetail, ChannelUserStatItem, GetChannelListParams,
     SendMessageToChannelParams, GuildChannelListItem, UpdateChannelParams
 } from '../models/channels';
 import { environment } from 'src/environments/environment';
@@ -29,11 +28,10 @@ export class ChannelService {
     }
 
     getChannelsList(filter: GetChannelListParams): Observable<PaginatedResponse<GuildChannelListItem>> {
-        const parameters = filter.queryParams.map(o => o.toString()).join('&');
-        const url = `${environment.apiUrl}/channel?${parameters}`;
+        const url = `${environment.apiUrl}/channel/list`;
         const headers = this.base.getHttpHeaders();
 
-        return this.base.http.get<PaginatedResponse<GuildChannelListItem>>(url, { headers }).pipe(
+        return this.base.http.post<PaginatedResponse<GuildChannelListItem>>(url, filter, { headers }).pipe(
             map(data => PaginatedResponse.create(data, entity => GuildChannelListItem.create(entity))),
             catchError((err: HttpErrorResponse) => this.base.catchError(err))
         );
@@ -68,11 +66,10 @@ export class ChannelService {
     }
 
     getUserStatsOfChannel(id: string, pagination: PaginatedParams): Observable<PaginatedResponse<ChannelUserStatItem>> {
-        const parameters = pagination.queryParams.filter(o => o).map(o => o.toString()).join('&');
-        const url = `${environment.apiUrl}/channel/${id}/userStats?${parameters}`;
+        const url = `${environment.apiUrl}/channel/${id}/userStats`;
         const headers = this.base.getHttpHeaders();
 
-        return this.base.http.get<PaginatedResponse<ChannelUserStatItem>>(url, { headers }).pipe(
+        return this.base.http.post<PaginatedResponse<ChannelUserStatItem>>(url, pagination, { headers }).pipe(
             map(data => PaginatedResponse.create(data, entity => ChannelUserStatItem.create(entity))),
             catchError((err: HttpErrorResponse) => this.base.catchError(err))
         );

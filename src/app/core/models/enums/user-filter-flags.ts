@@ -4,8 +4,8 @@ export enum UserFilterFlags {
     BotAdmin = 1,
     WebAdmin = 2,
     NotUser = 4,
-    HaveBirthday = 8,
-    WebAdminOnline = 16
+    WebAdminOnline = 16,
+    HaveBirthday = 128
 }
 
 export enum UserFilterFlagsTexts {

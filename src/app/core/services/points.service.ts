@@ -11,30 +11,30 @@ export class PointsService {
     constructor(private base: BaseService) { }
 
     getTransactionList(params: GetPointTransactionsParams): ObservablePaginatedData<PointsTransaction> {
-        const url = this.base.createUrl('user/points/transactions', params.queryParams);
+        const url = this.base.createUrl('user/points/transactions/list', null);
         const headers = this.base.getHttpHeaders();
 
-        return this.base.http.get<PaginatedResponse<PointsTransaction>>(url, { headers }).pipe(
+        return this.base.http.post<PaginatedResponse<PointsTransaction>>(url, params, { headers }).pipe(
             map(data => PaginatedResponse.create(data, entity => PointsTransaction.create(entity))),
             catchError((err: HttpErrorResponse) => this.base.catchError(err))
         );
     }
 
     getSummariesList(params: GetPointsSummaryParams): ObservablePaginatedData<PointsSummary> {
-        const url = this.base.createUrl('user/points/summaries', params.queryParams);
+        const url = this.base.createUrl('user/points/summaries/list', null);
         const headers = this.base.getHttpHeaders();
 
-        return this.base.http.get<PaginatedResponse<PointsSummary>>(url, { headers }).pipe(
+        return this.base.http.post<PaginatedResponse<PointsSummary>>(url, params, { headers }).pipe(
             map(data => PaginatedResponse.create(data, entity => PointsSummary.create(entity))),
             catchError((err: HttpErrorResponse) => this.base.catchError(err))
         );
     }
 
     getGraphData(params: GetPointsSummaryParams): ObservableList<PointsSummaryBase> {
-        const url = this.base.createUrl('user/points/graph', params.queryParams);
+        const url = this.base.createUrl('user/points/graph/data', null);
         const headers = this.base.getHttpHeaders();
 
-        return this.base.http.get<PointsSummaryBase[]>(url, { headers }).pipe(
+        return this.base.http.post<PointsSummaryBase[]>(url, params, { headers }).pipe(
             map(data => data.map((entity: PointsSummaryBase) => PointsSummaryBase.create(entity))),
             catchError((err: HttpErrorResponse) => this.base.catchError(err))
         );

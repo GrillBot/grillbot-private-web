@@ -44,8 +44,8 @@ export class FilterComponent extends FilterComponentBase<GetPointTransactionsPar
         this.form.patchValue({
             guildId: filter.guildId,
             userId: filter.userId,
-            assignedAtFrom: filter.assignedAtFrom,
-            assignedAtTo: filter.assignedAtTo,
+            assignedAtFrom: filter.assignedAt?.from,
+            assignedAtTo: filter.assignedAt?.to,
             onlyReactions: filter.onlyReactions,
             onlyMessages: filter.onlyMessages,
             messageId: !this.isMerged ? filter.messageId : null
@@ -56,8 +56,8 @@ export class FilterComponent extends FilterComponentBase<GetPointTransactionsPar
         this.form = this.fb.group({
             guildId: [filter.guildId],
             userId: [filter.userId],
-            assignedAtFrom: [filter.assignedAtFrom],
-            assignedAtTo: [filter.assignedAtTo],
+            assignedAtFrom: [filter.assignedAt?.from],
+            assignedAtTo: [filter.assignedAt?.to],
             onlyReactions: [filter.onlyReactions],
             onlyMessages: [filter.onlyMessages],
             messageId: [this.isMerged ? null : filter.messageId]

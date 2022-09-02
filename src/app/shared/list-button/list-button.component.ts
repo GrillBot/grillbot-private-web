@@ -17,9 +17,9 @@ export class ListButtonComponent {
     @Output() clicked = new EventEmitter<Event>();
 
     onClicked(event: Event): void {
-        if (this.link) {
-            event.stopPropagation();
-        } else {
+        event.stopPropagation();
+
+        if (!this.link) {
             this.clicked.emit(event);
         }
     }

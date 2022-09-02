@@ -11,13 +11,6 @@ export class GuildListFilter extends FilterBase {
 
     static get empty(): GuildListFilter { return new GuildListFilter(); }
 
-    get queryParams(): QueryParam[] {
-        return [
-            this.nameQuery ? new QueryParam('nameQuery', this.nameQuery) : null,
-            ...super.queryParams
-        ].filter(o => o);
-    }
-
     static create(form: any): GuildListFilter | null {
         if (!form) { return null; }
         const item = new GuildListFilter();

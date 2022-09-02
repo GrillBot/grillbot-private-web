@@ -45,8 +45,8 @@ export class FilterComponent extends FilterComponentBase<GetPointsSummaryParams>
         this.form.patchValue({
             guildId: filter.guildId,
             userId: filter.userId,
-            daysFrom: filter.daysFrom,
-            daysTo: filter.daysTo
+            daysFrom: filter.days?.from,
+            daysTo: filter.days?.to
         });
     }
 
@@ -54,8 +54,8 @@ export class FilterComponent extends FilterComponentBase<GetPointsSummaryParams>
         this.form = this.fb.group({
             guildId: [filter.guildId],
             userId: [filter.userId],
-            daysFrom: [filter.daysFrom],
-            daysTo: [filter.daysTo]
+            daysFrom: [filter.days?.from],
+            daysTo: [filter.days?.to]
         });
     }
 

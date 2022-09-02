@@ -31,16 +31,6 @@ export class GetSearchingListParams extends FilterBase {
     public channelId: string | null = null;
     public messageQuery: string | null = null;
 
-    get queryParams(): QueryParam[] {
-        return [
-            this.userId ? new QueryParam('userId', this.userId) : null,
-            this.guildId ? new QueryParam('guildId', this.guildId) : null,
-            this.channelId ? new QueryParam('channelId', this.channelId) : null,
-            this.messageQuery ? new QueryParam('messageQuery', this.messageQuery) : null,
-            ...super.queryParams
-        ].filter(o => o);
-    }
-
     static get empty(): GetSearchingListParams { return new GetSearchingListParams(); }
 
     static create(form: any): GetSearchingListParams | null {
@@ -55,5 +45,3 @@ export class GetSearchingListParams extends FilterBase {
         return params;
     }
 }
-
-export type SearchingListSortTypes = 'id' | 'user' | 'guild' | 'channel';

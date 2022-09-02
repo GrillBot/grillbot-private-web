@@ -83,16 +83,6 @@ export class GetChannelListParams extends FilterBase {
     public channelType: ChannelType | null = null;
     public hideDeleted: boolean = true;
 
-    get queryParams(): QueryParam[] {
-        return [
-            this.guildId ? new QueryParam('guildId', this.guildId) : null,
-            this.nameContains ? new QueryParam('nameContains', this.nameContains) : null,
-            this.channelType != null ? new QueryParam('channelType', this.channelType) : null,
-            ...super.queryParams,
-            new QueryParam('hideDeleted', this.hideDeleted)
-        ].filter(o => o);
-    }
-
     static get empty(): GetChannelListParams { return new GetChannelListParams(); }
 
     static create(form: any): GetChannelListParams | null {
@@ -107,8 +97,6 @@ export class GetChannelListParams extends FilterBase {
         return params;
     }
 }
-
-export type ChannelListSortTypes = 'name' | 'type';
 
 export class GuildChannelListItem extends Channel {
     public cachedMessagesCount: number;
@@ -192,13 +180,7 @@ export class UpdateChannelParams {
         if (!form) { return null; }
 
         const params = new UpdateChannelParams();
-
-        params.flags = 0;
-        for (const map of ChannelFlagMapping) {
-            if ((form.flags & map.source) != 0) {
-                params.flags |= map.destination;
-            }
-        }
+        params.flags = ChannelFlagMapping.filter(o => (form.flags & o.source) !== 0).reduce((prev, curr) => prev | curr.destination, 0);
 
         return params;
     }

@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { UnverifyLogParams, UnverifyListSortTypes, UnverifyLogItem } from './../models/unverify';
+import { UnverifyLogParams, UnverifyLogItem } from './../models/unverify';
 import { catchError, map } from 'rxjs/operators';
-import { EmptyObservable, ObservableList, PaginatedParams, PaginatedResponse } from './../models/common';
+import { EmptyObservable, ObservableList, PaginatedResponse } from './../models/common';
 import { Injectable } from '@angular/core';
 import { BaseService } from './base.service';
 import { UnverifyUserProfile } from '../models/unverify';
@@ -47,11 +47,10 @@ export class UnverifyService {
     }
 
     getUnverifyLog(filter: UnverifyLogParams): Observable<PaginatedResponse<UnverifyLogItem>> {
-        const parameters = filter.queryParams.map(o => o.toString()).join('&');
-        const url = `${environment.apiUrl}/unverify/log?${parameters}`;
+        const url = `${environment.apiUrl}/unverify/log`;
         const headers = this.base.getHttpHeaders();
 
-        return this.base.http.get<PaginatedResponse<UnverifyLogItem>>(url, { headers }).pipe(
+        return this.base.http.post<PaginatedResponse<UnverifyLogItem>>(url, filter, { headers }).pipe(
             map(data => PaginatedResponse.create(data, entity => UnverifyLogItem.create(entity))),
             catchError((err: HttpErrorResponse) => this.base.catchError(err))
         );

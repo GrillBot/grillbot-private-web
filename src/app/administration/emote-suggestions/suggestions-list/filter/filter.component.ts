@@ -31,8 +31,8 @@ export class FilterComponent extends FilterComponentBase<GetSuggestionListParams
 
     updateForm(filter: GetSuggestionListParams): void {
         this.form.patchValue({
-            createdAtFrom: filter.createdAtFrom,
-            createdAtTo: filter.createdAtTo,
+            createdAtFrom: filter.createdAt?.from,
+            createdAtTo: filter.createdAt?.to,
             guildId: filter.guildId,
             fromUserId: filter.fromUserId,
             emoteName: filter.emoteName,
@@ -44,8 +44,8 @@ export class FilterComponent extends FilterComponentBase<GetSuggestionListParams
 
     initForm(filter: GetSuggestionListParams): void {
         this.form = this.fb.group({
-            createdAtFrom: [filter.createdAtFrom],
-            createdAtTo: [filter.createdAtTo],
+            createdAtFrom: [filter.createdAt?.from],
+            createdAtTo: [filter.createdAt?.to],
             guildId: [filter.guildId],
             fromUserId: [filter.fromUserId],
             emoteName: [filter.emoteName],

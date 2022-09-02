@@ -16,11 +16,10 @@ export class UserService {
     ) { }
 
     getUsersList(filter: GetUserListParams): Observable<PaginatedResponse<UserListItem>> {
-        const parameters = filter.queryParams.map(o => o.toString()).join('&');
-        const url = `${environment.apiUrl}/users?${parameters}`;
+        const url = `${environment.apiUrl}/users/list`;
         const headers = this.base.getHttpHeaders();
 
-        return this.base.http.get<PaginatedResponse<UserListItem>>(url, { headers }).pipe(
+        return this.base.http.post<PaginatedResponse<UserListItem>>(url, filter, { headers }).pipe(
             map(data => PaginatedResponse.create(data, entity => UserListItem.create(entity))),
             catchError((err: HttpErrorResponse) => this.base.catchError(err))
         );
