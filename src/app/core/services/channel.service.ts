@@ -8,7 +8,6 @@ import {
     ChannelDetail, ChannelUserStatItem, GetChannelListParams,
     SendMessageToChannelParams, GuildChannelListItem, UpdateChannelParams
 } from '../models/channels';
-import { environment } from 'src/environments/environment';
 import { PaginatedParams } from '../models/common';
 
 /* eslint-disable @typescript-eslint/indent */
@@ -19,7 +18,7 @@ export class ChannelService {
     ) { }
 
     sendMessageToChannel(guildId: string, channelId: string, params: SendMessageToChannelParams): Observable<unknown> {
-        const url = `${environment.apiUrl}/channel/${guildId}/${channelId}`;
+        const url = this.base.createUrl(`channel/${guildId}/${channelId}`);
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.post(url, params, { headers }).pipe(
@@ -28,7 +27,7 @@ export class ChannelService {
     }
 
     getChannelsList(filter: GetChannelListParams): Observable<PaginatedResponse<GuildChannelListItem>> {
-        const url = `${environment.apiUrl}/channel/list`;
+        const url = this.base.createUrl('channel/list');
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.post<PaginatedResponse<GuildChannelListItem>>(url, filter, { headers }).pipe(
@@ -38,7 +37,7 @@ export class ChannelService {
     }
 
     removeMessagesFromCache(guildId: string, channelId: string): Observable<unknown> {
-        const url = `${environment.apiUrl}/channel/${guildId}/${channelId}/cache`;
+        const url = this.base.createUrl(`channel/${guildId}/${channelId}/cache`);
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.delete(url, { headers }).pipe(
@@ -47,7 +46,7 @@ export class ChannelService {
     }
 
     getChannelDetail(id: string): Observable<ChannelDetail> {
-        const url = `${environment.apiUrl}/channel/${id}`;
+        const url = this.base.createUrl(`channel/${id}`);
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.get<ChannelDetail>(url, { headers }).pipe(
@@ -57,7 +56,7 @@ export class ChannelService {
     }
 
     updateChannel(id: string, params: UpdateChannelParams): EmptyObservable {
-        const url = `${environment.apiUrl}/channel/${id}`;
+        const url = this.base.createUrl(`channel/${id}`);
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.put(url, params, { headers }).pipe(
@@ -66,7 +65,7 @@ export class ChannelService {
     }
 
     getUserStatsOfChannel(id: string, pagination: PaginatedParams): Observable<PaginatedResponse<ChannelUserStatItem>> {
-        const url = `${environment.apiUrl}/channel/${id}/userStats`;
+        const url = this.base.createUrl(`channel/${id}/userStats`);
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.post<PaginatedResponse<ChannelUserStatItem>>(url, pagination, { headers }).pipe(

@@ -1,7 +1,6 @@
 import { QueryParam } from './../models/http';
 import { Dictionary, ObservableDict, ObservableList } from './../models/common';
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
 import { BaseService } from './base.service';
 import { map, catchError } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -14,7 +13,7 @@ export class DataService {
     ) { }
 
     getGuilds(): ObservableDict<string, string> {
-        const url = `${environment.apiUrl}/data/guilds`;
+        const url = this.base.createUrl('data/guilds');
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.get<Dictionary<string, string>>(url, { headers }).pipe(
@@ -27,8 +26,7 @@ export class DataService {
         const parameters: QueryParam[] = [];
         if (guildId) { parameters.push(new QueryParam('guildId', guildId)); }
         if (ignoreThreads) { parameters.push(new QueryParam('ignoreThreads', ignoreThreads)); }
-        const params = parameters.map(o => o.toString()).join('&');
-        const url = `${environment.apiUrl}/data/channels?${params}`;
+        const url = this.base.createUrl('data/channels', parameters);
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.get<Dictionary<string, string>>(url, { headers }).pipe(
@@ -38,8 +36,7 @@ export class DataService {
     }
 
     getRoles(guildId?: string): ObservableDict<string, string> {
-        const parameter = [guildId ? new QueryParam('guildId', guildId) : null].filter(o => o).map(o => o.toString()).join('&');
-        const url = `${environment.apiUrl}/data/roles?${parameter}`;
+        const url = this.base.createUrl('data/roles', [guildId ? new QueryParam('guildId', guildId) : null].filter(o => o));
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.get<Dictionary<string, string>>(url, { headers }).pipe(
@@ -49,7 +46,7 @@ export class DataService {
     }
 
     getCommands(): ObservableList<string> {
-        const url = `${environment.apiUrl}/data/commands`;
+        const url = this.base.createUrl('data/commands');
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.get<string[]>(url, { headers }).pipe(
@@ -59,8 +56,8 @@ export class DataService {
     }
 
     getUsersList(bots?: boolean): ObservableDict<string, string> {
-        const parameter = bots === undefined ? '' : new QueryParam('bots', bots).toString();
-        const url = `${environment.apiUrl}/data/users?${parameter}`;
+        const parameter = bots === undefined ? null : [new QueryParam('bots', bots)];
+        const url = this.base.createUrl('data/users', parameter);
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.get<Dictionary<string, string>>(url, { headers }).pipe(
@@ -70,7 +67,7 @@ export class DataService {
     }
 
     getEmotes(): ObservableList<EmoteItem> {
-        const url = `${environment.apiUrl}/data/emotes`;
+        const url = this.base.createUrl('data/emotes');
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.get<EmoteItem[]>(url, { headers }).pipe(

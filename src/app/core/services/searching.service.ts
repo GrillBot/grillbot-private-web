@@ -4,7 +4,6 @@ import { PaginatedResponse } from '../models/common';
 import { GetSearchingListParams, SearchingListItem } from '../models/searching';
 import { BaseService } from './base.service';
 import { QueryParam } from '../models/http';
-import { environment } from 'src/environments/environment';
 import { map, catchError } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -17,7 +16,7 @@ export class SearchingService {
 
     getSearchList(filter: GetSearchingListParams)
         : Observable<PaginatedResponse<SearchingListItem>> {
-        const url = `${environment.apiUrl}/search/list`;
+        const url = this.base.createUrl('search/list');
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.post<PaginatedResponse<SearchingListItem>>(url, filter, { headers }).pipe(
@@ -27,8 +26,8 @@ export class SearchingService {
     }
 
     removeSearches(ids: number[]): Observable<unknown> {
-        const parameters = ids.map(o => new QueryParam('id', o)).map(o => o.toString()).join('&');
-        const url = `${environment.apiUrl}/search?${parameters}`;
+        const parameters = ids.map(o => new QueryParam('id', o));
+        const url = this.base.createUrl('search', parameters);
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.delete(url, { headers }).pipe(

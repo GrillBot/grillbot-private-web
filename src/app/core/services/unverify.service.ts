@@ -5,7 +5,6 @@ import { EmptyObservable, ObservableList, PaginatedResponse } from './../models/
 import { Injectable } from '@angular/core';
 import { BaseService } from './base.service';
 import { UnverifyUserProfile } from '../models/unverify';
-import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { QueryParam } from '../models/http';
 
@@ -17,7 +16,7 @@ export class UnverifyService {
     ) { }
 
     getCurrentUnverifies(): ObservableList<UnverifyUserProfile> {
-        const url = `${environment.apiUrl}/unverify/current`;
+        const url = this.base.createUrl('unverify/current');
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.get<UnverifyUserProfile[]>(url, { headers }).pipe(
@@ -27,7 +26,7 @@ export class UnverifyService {
     }
 
     removeUnverify(guildId: string, userId: string): EmptyObservable {
-        const url = `${environment.apiUrl}/unverify/${guildId}/${userId}`;
+        const url = this.base.createUrl(`unverify/${guildId}/${userId}`);
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.delete(url, { headers }).pipe(
@@ -36,8 +35,8 @@ export class UnverifyService {
     }
 
     updateUnverifyTime(guildId: string, userId: string, newEnd: string): Observable<string> {
-        const parameter = new QueryParam('endTime', newEnd).toString();
-        const url = `${environment.apiUrl}/unverify/${guildId}/${userId}?${parameter}`;
+        const parameter = new QueryParam('endTime', newEnd);
+        const url = this.base.createUrl(`unverify/${guildId}/${userId}`, [parameter]);
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.put<{ message: string }>(url, null, { headers }).pipe(
@@ -47,7 +46,7 @@ export class UnverifyService {
     }
 
     getUnverifyLog(filter: UnverifyLogParams): Observable<PaginatedResponse<UnverifyLogItem>> {
-        const url = `${environment.apiUrl}/unverify/log`;
+        const url = this.base.createUrl('unverify/log');
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.post<PaginatedResponse<UnverifyLogItem>>(url, filter, { headers }).pipe(
@@ -57,7 +56,7 @@ export class UnverifyService {
     }
 
     recoverUnverifyState(logId: number): EmptyObservable {
-        const url = `${environment.apiUrl}/unverify/log/${logId}/recover`;
+        const url = this.base.createUrl(`unverify/log/${logId}/recover`);
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.post(url, null, { headers }).pipe(

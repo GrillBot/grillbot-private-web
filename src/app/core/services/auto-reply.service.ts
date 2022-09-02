@@ -1,4 +1,3 @@
-import { environment } from './../../../environments/environment';
 import { EmptyObservable, ObservableList } from './../models/common';
 import { Observable } from 'rxjs';
 import { Injectable } from "@angular/core";
@@ -14,7 +13,7 @@ export class AutoReplyService {
     ) { }
 
     getAutoReplyList(): ObservableList<AutoReplyItem> {
-        const url = `${environment.apiUrl}/autoreply`;
+        const url = this.base.createUrl('autoreply');
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.get<AutoReplyItem[]>(url, { headers }).pipe(
@@ -24,7 +23,7 @@ export class AutoReplyService {
     }
 
     getItem(id: number): Observable<AutoReplyItem> {
-        const url = `${environment.apiUrl}/autoreply/${id}`;
+        const url = this.base.createUrl(`autoreply/${id}`);
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.get<AutoReplyItem>(url, { headers }).pipe(
@@ -34,7 +33,7 @@ export class AutoReplyService {
     }
 
     createItem(parameters: AutoReplyItemParams): Observable<AutoReplyItem> {
-        const url = `${environment.apiUrl}/autoreply`;
+        const url = this.base.createUrl('autoreply');
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.post<AutoReplyItem>(url, parameters, { headers }).pipe(
@@ -44,7 +43,7 @@ export class AutoReplyService {
     }
 
     updateItem(id: number, parameters: AutoReplyItemParams): Observable<AutoReplyItem> {
-        const url = `${environment.apiUrl}/autoreply/${id}`;
+        const url = this.base.createUrl(`autoreply/${id}`);
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.put<AutoReplyItem>(url, parameters, { headers }).pipe(
@@ -54,7 +53,7 @@ export class AutoReplyService {
     }
 
     removeItem(id: number): EmptyObservable {
-        const url = `${environment.apiUrl}/autoreply/${id}`;
+        const url = this.base.createUrl(`autoreply/${id}`);
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.delete(url, { headers }).pipe(

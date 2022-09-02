@@ -69,7 +69,7 @@ export class BaseService {
         };
     }
 
-    createUrl(endpoint: string, queryParams: QueryParam[]): string {
+    createUrl(endpoint: string, queryParams: QueryParam[] = null): string {
         let url = environment.apiUrl + `/${endpoint}`;
         if (queryParams && queryParams.length > 0) {
             const parameters = queryParams.map(o => o.toString()).join('&');

@@ -4,7 +4,6 @@ import { Injectable } from '@angular/core';
 import { Guild, GuildDetail, GuildListFilter, UpdateGuildParams } from '../models/guilds';
 import { BaseService } from './base.service';
 import { PaginatedResponse } from '../models/common';
-import { environment } from 'src/environments/environment';
 import { catchError, map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
@@ -14,7 +13,7 @@ export class GuildService {
     ) { }
 
     getGuildList(filter: GuildListFilter): Observable<PaginatedResponse<Guild>> {
-        const url = `${environment.apiUrl}/guild/list`;
+        const url = this.base.createUrl('guild/list');
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.post<PaginatedResponse<Guild>>(url, filter, { headers }).pipe(
@@ -24,7 +23,7 @@ export class GuildService {
     }
 
     getGuildDetail(id: string): Observable<GuildDetail> {
-        const url = `${environment.apiUrl}/guild/${id}`;
+        const url = this.base.createUrl(`guild/${id}`);
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.get<GuildDetail>(url, { headers }).pipe(
@@ -34,7 +33,7 @@ export class GuildService {
     }
 
     updateGuild(id: string, params: UpdateGuildParams): Observable<GuildDetail> {
-        const url = `${environment.apiUrl}/guild/${id}`;
+        const url = this.base.createUrl(`guild/${id}`);
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.put<GuildDetail>(url, params, { headers }).pipe(

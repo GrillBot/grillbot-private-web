@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 import { PaginatedResponse } from '../models/common';
 import { GetUserListParams, UserDetail, UserListItem } from '../models/users';
 import { BaseService } from './base.service';
-import { environment } from 'src/environments/environment';
 import { map, catchError } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -16,7 +15,7 @@ export class UserService {
     ) { }
 
     getUsersList(filter: GetUserListParams): Observable<PaginatedResponse<UserListItem>> {
-        const url = `${environment.apiUrl}/users/list`;
+        const url = this.base.createUrl('users/list');
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.post<PaginatedResponse<UserListItem>>(url, filter, { headers }).pipe(
@@ -26,7 +25,7 @@ export class UserService {
     }
 
     getUserDetail(id: string): Observable<UserDetail> {
-        const url = `${environment.apiUrl}/users/${id}`;
+        const url =  this.base.createUrl(`users/${id}`);
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.get<UserDetail>(url, { headers }).pipe(
@@ -36,7 +35,7 @@ export class UserService {
     }
 
     updateUser(id: string, params: UpdateUserParams): EmptyObservable {
-        const url = `${environment.apiUrl}/users/${id}`;
+        const url = this.base.createUrl(`users/${id}`);
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.put<unknown>(url, params, { headers }).pipe(
@@ -45,7 +44,7 @@ export class UserService {
     }
 
     hearthbeatOff(): Observable<unknown> {
-        const url = `${environment.apiUrl}/users/hearthbeat`;
+        const url = this.base.createUrl('users/hearthbeat');
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.delete(url, { headers }).pipe(

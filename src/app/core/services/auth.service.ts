@@ -4,7 +4,6 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BaseService } from './base.service';
 import { AuthToken, OAuth2Link } from '../models/auth';
-import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { UserService } from './user.service';
@@ -41,7 +40,7 @@ export class AuthService {
     }
 
     getLink(): Observable<OAuth2Link> {
-        const url = `${environment.apiUrl}/auth/link?isPublic=false`;
+        const url = this.base.createUrl('auth/link', [new QueryParam('isPublic', 'false')]);
 
         return this.base.http.get<any>(url).pipe(
             map(data => OAuth2Link.create(data))
@@ -53,9 +52,7 @@ export class AuthService {
             new QueryParam('sessionId', sessionId),
             new QueryParam('isPublic', isPublic)
         ];
-
-        const query = parameters.map(o => o.toString()).join('&');
-        const url = `${environment.apiUrl}/auth/token?${query}`;
+        const url = this.base.createUrl('auth/token', parameters);
 
         return this.base.http.get<any>(url).pipe(
             map(data => AuthToken.create(data)),

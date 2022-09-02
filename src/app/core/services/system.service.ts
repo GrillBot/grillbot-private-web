@@ -14,7 +14,7 @@ export class SystemService {
     ) { }
 
     getDiagnostics(): Observable<DiagnosticsInfo> {
-        const url = this.base.createUrl('system/diag', null);
+        const url = this.base.createUrl('system/diag');
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.get<DiagnosticsInfo>(url, { headers }).pipe(
@@ -33,7 +33,7 @@ export class SystemService {
     }
 
     getEventLog(): ObservableList<string> {
-        const url = this.base.createUrl('system/eventLog', null);
+        const url = this.base.createUrl('system/eventLog');
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.get<string[]>(url, { headers }).pipe(

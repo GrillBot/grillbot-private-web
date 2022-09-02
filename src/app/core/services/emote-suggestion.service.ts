@@ -1,6 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
-import { environment } from '../../../environments/environment';
 import { map, Observable } from 'rxjs';
 import { EmoteSuggestion, GetSuggestionListParams } from 'src/app/core/models/suggestions';
 import { PaginatedResponse } from '../models/common';
@@ -14,7 +13,7 @@ export class EmoteSuggestionService {
     ) { }
 
     getSuggestionList(params: GetSuggestionListParams): Observable<PaginatedResponse<EmoteSuggestion>> {
-        const url = `${environment.apiUrl}/emotes/suggestion/list`;
+        const url = this.base.createUrl('emotes/suggestion/list');
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.post<PaginatedResponse<EmoteSuggestion>>(url, params, { headers }).pipe(

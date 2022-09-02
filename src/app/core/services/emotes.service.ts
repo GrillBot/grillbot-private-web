@@ -3,7 +3,6 @@ import { Injectable } from "@angular/core";
 import { EmotesListParams, EmoteStatItem, MergeEmoteStatsParams } from '../models/emotes';
 import { Observable } from 'rxjs';
 import { PaginatedResponse } from '../models/common';
-import { environment } from 'src/environments/environment';
 import { HttpErrorResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { QueryParam } from '../models/http';
@@ -15,7 +14,7 @@ export class EmotesService {
     ) { }
 
     getStatsOfSupportedEmotes(params: EmotesListParams): Observable<PaginatedResponse<EmoteStatItem>> {
-        const url = `${environment.apiUrl}/emotes/stats/supported/list`;
+        const url = this.base.createUrl('emotes/stats/supported/list');
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.post<PaginatedResponse<EmoteStatItem>>(url, params, { headers }).pipe(
@@ -25,7 +24,7 @@ export class EmotesService {
     }
 
     getStatsOfUnsupportedEmotes(params: EmotesListParams): Observable<PaginatedResponse<EmoteStatItem>> {
-        const url = `${environment.apiUrl}/emotes/stats/unsupported/list`;
+        const url = this.base.createUrl('emotes/stats/unsupported/list');
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.post<PaginatedResponse<EmoteStatItem>>(url, params, { headers }).pipe(
@@ -35,7 +34,7 @@ export class EmotesService {
     }
 
     mergeStatsToAnother(params: MergeEmoteStatsParams): Observable<number> {
-        const url = `${environment.apiUrl}/emotes/stats/merge`;
+        const url = this.base.createUrl('emotes/stats/merge');
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.post<number>(url, params, { headers }).pipe(
@@ -44,7 +43,7 @@ export class EmotesService {
     }
 
     removeStatistics(emoteId: string) {
-        const url = `${environment.apiUrl}/emotes/stats?${new QueryParam('emoteId', emoteId).toString()}`;
+        const url = this.base.createUrl('emotes/stats', [new QueryParam('emoteId', emoteId)]);
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.delete<number>(url, { headers }).pipe(

@@ -11,7 +11,7 @@ export class PointsService {
     constructor(private base: BaseService) { }
 
     getTransactionList(params: GetPointTransactionsParams): ObservablePaginatedData<PointsTransaction> {
-        const url = this.base.createUrl('user/points/transactions/list', null);
+        const url = this.base.createUrl('user/points/transactions/list');
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.post<PaginatedResponse<PointsTransaction>>(url, params, { headers }).pipe(
@@ -21,7 +21,7 @@ export class PointsService {
     }
 
     getSummariesList(params: GetPointsSummaryParams): ObservablePaginatedData<PointsSummary> {
-        const url = this.base.createUrl('user/points/summaries/list', null);
+        const url = this.base.createUrl('user/points/summaries/list');
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.post<PaginatedResponse<PointsSummary>>(url, params, { headers }).pipe(
@@ -31,7 +31,7 @@ export class PointsService {
     }
 
     getGraphData(params: GetPointsSummaryParams): ObservableList<PointsSummaryBase> {
-        const url = this.base.createUrl('user/points/graph/data', null);
+        const url = this.base.createUrl('user/points/graph/data');
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.post<PointsSummaryBase[]>(url, params, { headers }).pipe(
