@@ -36,7 +36,10 @@
                 <span class="d-block">Použitá pozvánka</span>
                 <b>
                     {{guild.usedInvite.code}}
-                    <ng-container *ngIf="guild.usedInvite.creator">({{guild.usedInvite.creator.fullUsername}}) </ng-container>
+                    <ng-container *ngIf="guild.usedInvite.creator">
+                        (<a routerLink="/admin/users/{{guild.usedInvite.creator.id}}"
+                            class="text-dark">{{guild.usedInvite.creator.fullUsername}}</a>)
+                    </ng-container>
                     <ng-container *ngIf="guild.usedInvite.createdAt">({{guild.usedInvite.createdAt.toLocaleString()}})
                     </ng-container>
                 </b>
@@ -57,7 +60,10 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let invite of guild.createdInvites">
-                                <td>{{invite.code}}</td>
+                                <td>
+                                    <a routerLink="/admin/users" [queryParams]="{usedInviteCode: invite.code}"
+                                        class="text-dark">{{invite.code}}</a>
+                                </td>
                                 <td>{{invite.createdAt.toLocaleString()}}</td>
                             </tr>
                         </tbody>
@@ -72,9 +78,7 @@
                     </span>
                     <span *ngIf="isVisible('nicknameHistory', i)">
                         <ol>
-                            <li *ngFor="let nickname of guild.nicknameHistory">
-                                <b>{{nickname}}</b>
-                            </li>
+                            <li *ngFor="let nickname of guild.nicknameHistory" class="fw-bold">{{nickname}}</li>
                         </ol>
                     </span>
                 </div>
@@ -113,7 +117,9 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let channel of guild.channels">
-                                <td>{{channel.channel.name}}</td>
+                                <td>
+                                    <a routerLink="/admin/channels/{{channel.channel.id}}" class="text-dark">{{channel.channel.name}}</a>
+                                </td>
                                 <td>{{channel.count.toLocaleString()}}</td>
                                 <td>{{channel.firstMessageAt.toLocaleString()}}</td>
                                 <td>{{channel.lastMessageAt.toLocaleString()}}</td>

@@ -20,7 +20,7 @@
                     </table>
                 </div>
 
-                <div class="col-auto mt-1">
+                <div class="col-auto mt-1" *ngIf="!list.isEmpty">
                     <app-items-count></app-items-count>
                 </div>
             </div>
@@ -43,9 +43,18 @@
 
                         <div class="row">
                             <div class="col">
-                                <p class="m-0">Server: <b>{{item.guild.name}}</b></p>
-                                <p class="m-0">Provedl: <b>{{item.fromUser.fullname}}</b></p>
-                                <p class="m-0">Cílový uživatel: <b>{{item.toUser.fullname}}</b></p>
+                                <p class="m-0">
+                                    Server: <b><a routerLink="/admin/servers/{{item.guild.id}}"
+                                            class="text-dark">{{item.guild.name}}</a></b>
+                                </p>
+                                <p class="m-0">
+                                    Provedl: <b><a routerLink="/admin/users/{{item.fromUser.id}}"
+                                            class="text-dark">{{item.fromUser.fullname}}</a></b>
+                                </p>
+                                <p class="m-0">
+                                    Cílový uživatel: <b><a routerLink="/admin/users/{{item.toUser.id}}"
+                                            class="text-dark">{{item.toUser.fullname}}</a></b>
+                                </p>
                             </div>
 
                             <div class="col" *ngIf="item.anyData">

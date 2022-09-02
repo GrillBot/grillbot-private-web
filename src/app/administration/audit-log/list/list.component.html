@@ -69,14 +69,21 @@
 
     <div class="row">
         <div class="col-md-5">
-            <p *ngIf="item.guild" class="m-0">Server: <b>{{item.guild.name}}</b></p>
-            <p *ngIf="item.channel" class="m-0">Kanál: <b>{{item.channel.name}}</b></p>
+            <p *ngIf="item.guild" class="m-0">
+                Server: <b><a routerLink="/admin/servers/{{item.guild.id}}" class="text-dark">{{item.guild.name}}</a></b>
+            </p>
+            <p *ngIf="item.channel" class="m-0">
+                Kanál: <b><a routerLink="/admin/channels/{{item.channel.id}}" class="text-dark">{{item.channel.name}}</a></b>
+            </p>
             <p *ngIf="item.processedUser" class="m-0">
                 Provedl:
                 <b>
-                    <ng-container *ngIf="item.processedUser.nickname">{{item.processedUser.nickname}} ({{item.processedUser.fullUsername}})
-                    </ng-container>
-                    <ng-container *ngIf="!item.processedUser.nickname">{{item.processedUser.fullUsername}}</ng-container>
+                    <a routerLink="/admin/users/{{item.processedUser.id}}" class="text-dark">
+                        <ng-container *ngIf="item.processedUser.nickname">{{item.processedUser.nickname}}
+                            ({{item.processedUser.fullUsername}})
+                        </ng-container>
+                        <ng-container *ngIf="!item.processedUser.nickname">{{item.processedUser.fullUsername}}</ng-container>
+                    </a>
                 </b>
             </p>
         </div>

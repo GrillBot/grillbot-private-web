@@ -7,7 +7,7 @@
                 <h6 class="mb-0">Pro zadaný filtr nebyly nalezeny žádné položky.</h6>
             </app-card>
 
-            <table class="table table-sm table-bordered table-striped auto-column-width" *ngIf="!list.isEmpty">
+            <table class="table table-sm table-bordered table-striped auto-column-width clickable" *ngIf="!list.isEmpty">
                 <thead>
                     <tr>
                         <th sortable [key]="'Id'" [sort]="sort" (clicked)="setSort($event)">#</th>
@@ -20,10 +20,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let item of list.items">
+                    <tr *ngFor="let item of list.items" (click)="showMessage(item)">
                         <td>{{item.id}}</td>
-                        <td>{{item.fromUser?.fullUsername}}</td>
-                        <td>{{item.toUser?.fullUsername}}</td>
+                        <td>
+                            <a *ngIf="item.fromUser" routerLink="/admin/users/{{item.fromUser.id}}" class="text-dark"
+                                (click)="$event.stopPropagation()">{{item.fromUser.fullUsername}}</a>
+                        </td>
+                        <td>
+                            <a *ngIf="item.toUser" routerLink="/admin/users/{{item.toUser.id}}" class="text-dark"
+                                (click)="$event.stopPropagation()">{{item.toUser.fullUsername}}</a>
+                        </td>
                         <td>{{item.at.toLocaleString()}}</td>
                         <td>{{item.postpone}}</td>
                         <td>{{item.notified | czechBooleanPipe}}</td>
