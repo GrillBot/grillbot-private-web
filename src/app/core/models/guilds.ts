@@ -158,14 +158,10 @@ export class GuildDetail extends Guild {
 
     static create(data: any): GuildDetail | null {
         if (!data) { return null; }
-        const base = super.create(data);
 
         const guild = new GuildDetail();
-        guild.id = base.id;
-        guild.name = base.name;
-        guild.memberCount = base.memberCount;
+        Object.assign(guild, super.create(data));
         guild.iconUrl = data.iconUrl;
-        guild.isConnected = base.isConnected;
         guild.premiumTier = data.premiumTier;
         guild.vanityUrl = data.vanityUrl;
         guild.maxMembers = data.maxMembers;

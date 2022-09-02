@@ -51,18 +51,14 @@ export class GuildUser extends User {
 
     static create(data: any): GuildUser | null {
         if (!data) { return null; }
-        const base = super.create(data);
         const user = new GuildUser();
 
-        user.avatarUrl = base.avatarUrl;
-        user.discriminator = base.discriminator;
+        Object.assign(user, super.create(data));
         user.givenReactions = data.givenReactions;
-        user.id = base.id;
         user.nickname = data.nickname;
         user.obtainedReactions = data.obtainedReactions;
         user.points = data.points;
         user.usedInvite = data.usedInvite ? Invite.create(data.usedInvite) : null;
-        user.username = base.username;
 
         return user;
     }
