@@ -1,16 +1,8 @@
 import { Observable } from 'rxjs';
-import { QueryParam } from './http';
 
 export class PaginatedParams {
     public page: number;
     public pageSize: number;
-
-    get queryParams(): QueryParam[] {
-        return [
-            new QueryParam('page', this.page),
-            new QueryParam('pageSize', this.pageSize)
-        ];
-    }
 
     static create(form: any): PaginatedParams | null {
         if (!form) { return null; }
@@ -71,26 +63,6 @@ export interface SortParams {
 export class FilterBase {
     public pagination: PaginatedParams;
     public sort: SortParams;
-
-    get queryParams(): QueryParam[] {
-        const result = [];
-
-        if (this.sort) {
-            result.push(
-                new QueryParam('sort.orderBy', this.sort.orderBy),
-                new QueryParam('sort.descending', this.sort.descending)
-            );
-        }
-
-        if (this.pagination) {
-            result.push(
-                new QueryParam('pagination.page', this.pagination.page),
-                new QueryParam('pagination.pageSize', this.pagination.pageSize)
-            );
-        }
-
-        return result;
-    }
 
     set(pagination: PaginatedParams, sort: SortParams) {
         this.pagination = pagination;
