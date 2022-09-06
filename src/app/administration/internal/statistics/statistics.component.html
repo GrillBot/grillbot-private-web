@@ -6,13 +6,15 @@
                 <th *ngIf="isJobs">Název úlohy</th>
                 <th *ngIf="isApiRequestsByEndpoint">Endpoint</th>
                 <th>Poslední volání</th>
-                <th>Úspěšných</th>
-                <th>Chybných</th>
-                <th>Úspěšnost</th>
-                <th>Min. doba běhu</th>
-                <th>Max. doba běhu</th>
-                <th>Celk. doba běhu</th>
-                <th>Prům. doba běhu</th>
+                <th>
+                    Úspěšnost<br>
+                    <span style="font-size: 10px" class="m-0 p-0 d-block">OK / S chybou ( % )</span>
+                </th>
+                <th>Min. doba</th>
+                <th>Max. doba</th>
+                <th>Celk. doba</th>
+                <th>Posl. běh</th>
+                <th>Prům. doba</th>
             </tr>
         </thead>
 
@@ -20,14 +22,13 @@
             <ng-container *ngIf="statItemsQuery | async as result; else loading_table">
                 <tr *ngFor="let item of result" [class.bg-warning]="item.successRate > 25 && item.successRate < 50"
                     [class.bg-danger]="item.successRate <= 25">
-                    <td [title]="item.key">{{item.key | cut:35}}</td>
+                    <td [title]="item.key">{{item.key | cut:30}}</td>
                     <td>{{item.last.binding}}</td>
-                    <td>{{item.successCount}}</td>
-                    <td>{{item.failedCount}}</td>
-                    <td>{{item.successRate}} %</td>
+                    <td>{{item.successCount}} / {{item.failedCount}} ({{item.successRate}} %)</td>
                     <td>{{item.minDuration}} ms</td>
                     <td>{{item.maxDuration}} ms</td>
                     <td>{{item.totalDuration}} ms</td>
+                    <td>{{item.lastRunDuration}} ms</td>
                     <td>{{item.avgDuration}} ms</td>
                 </tr>
             </ng-container>

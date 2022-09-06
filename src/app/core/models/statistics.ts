@@ -10,6 +10,7 @@ export class StatisticItem {
     public maxDuration: number;
     public totalDuration: number;
     public avgDuration: number;
+    public lastRunDuration: number;
 
     static create(data: any): StatisticItem | null {
         if (!data) { return null; }
@@ -24,6 +25,7 @@ export class StatisticItem {
         item.maxDuration = data.maxDuration;
         item.totalDuration = data.totalDuration;
         item.avgDuration = data.avgDuration;
+        item.lastRunDuration = data.lastRunDuration;
 
         return item;
     }

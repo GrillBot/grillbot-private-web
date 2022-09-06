@@ -34,6 +34,7 @@ export class StatisticsComponent implements OnInit, OnDestroy {
     get isApiRequestsByEndpoint(): boolean { return this.type === 'api/endpoint'; }
     get isApiRequestsByStatusCode(): boolean { return this.type === 'api/status'; }
     get isEventLog(): boolean { return this.type === 'eventLog'; }
+    get isEventStats(): boolean { return this.type === 'eventStats'; }
 
     get isStatLike(): boolean {
         return this.isTextCommands || this.isInteractions || this.isJobs || this.isApiRequestsByEndpoint;
@@ -44,7 +45,8 @@ export class StatisticsComponent implements OnInit, OnDestroy {
     }
 
     get canBarChart(): boolean {
-        return this.isDb || this.isDbCache || this.isAuditLogByType || this.isUnverifyLogByType || this.isApiRequestsByStatusCode;
+        return this.isDb || this.isDbCache || this.isAuditLogByType || this.isUnverifyLogByType || this.isApiRequestsByStatusCode
+            || this.isEventStats;
     }
 
     get isList(): boolean {
@@ -65,6 +67,7 @@ export class StatisticsComponent implements OnInit, OnDestroy {
         if (this.isApiRequestsByEndpoint) { return 'Statistika API požadavků (po metodách)'; }
         if (this.isApiRequestsByStatusCode) { return 'Statistika API požadavků (podle výsledku)'; }
         if (this.isEventLog) { return 'Log událostí'; }
+        if (this.isEventStats) { return 'Statistika událostí'; }
 
         return '';
     }
@@ -83,6 +86,7 @@ export class StatisticsComponent implements OnInit, OnDestroy {
         if (this.isApiRequestsByEndpoint) { this.statItemsQuery = this.statisticsService.getApiRequestsByEndpoint(); }
         if (this.isApiRequestsByStatusCode) { this.dictQuery = this.statisticsService.getApiRequestsByStatusCode(); }
         if (this.isEventLog) { this.listQuery = this.systemService.getEventLog(); }
+        if (this.isEventStats) { this.dictQuery = this.statisticsService.getEventStatistics(); }
 
         if (this.dictQuery) {
             this.dictQuery = this.dictQuery.pipe(map(data => data.reverse()));

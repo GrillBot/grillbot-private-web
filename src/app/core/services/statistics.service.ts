@@ -61,6 +61,10 @@ export class StatisticsService {
         return this.getDictionaryStatistics('stats/api/method');
     }
 
+    getEventStatistics(): ObservableDict<string, number> {
+        return this.getDictionaryStatistics('stats/events');
+    }
+
     private getDictionaryStatistics(urlPart: string): ObservableDict<string, number> {
         const url = this.base.createUrl(urlPart);
         const headers = this.base.getHttpHeaders();
