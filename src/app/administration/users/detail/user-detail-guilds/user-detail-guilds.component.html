@@ -24,11 +24,14 @@
                 </ng-container>
             </div>
 
-            <div class="grid mb-2">
-                <div keyValueItem [key]="'Server'" [value]="guild.guild.name"></div>
-                <div keyValueItem [key]="'Serverový nick'" [value]="guild.nickname ?? 'Nenastaven'"></div>
-                <div keyValueItem [key]="'Počet udělených reakcí'" [value]="guild.givenReactions.toLocaleString()"></div>
-                <div keyValueItem [key]="'Počet obdržených reakcí'" [value]="guild.obtainedReactions.toLocaleString()"></div>
+            <div class="row mb-2">
+                <div keyValueItem class="col-md-auto" [key]="'Server'" [value]="guild.guild.name"></div>
+                <div keyValueItem class="col-md-auto" [key]="'Serverový nick'" [value]="guild.nickname ?? 'Nenastaven'"></div>
+                <div keyValueItem class="col-md-auto" [key]="'Počet udělených reakcí'" [value]="guild.givenReactions.toLocaleString()">
+                </div>
+                <div keyValueItem class="col-md-auto" [key]="'Počet obdržených reakcí'" [value]="guild.obtainedReactions.toLocaleString()">
+                </div>
+
             </div>
 
             <div *ngIf="guild.usedInvite" class="mb-2">
@@ -133,7 +136,8 @@
                         <tbody>
                             <tr *ngFor="let channel of guild.channels">
                                 <td>
-                                    <a routerLink="/admin/channels/{{channel.channel.id}}" class="text-dark">{{channel.channel.name}}</a>
+                                    <a routerLink="/admin/channels/{{channel.channel.id}}" class="text-dark"
+                                        title="channel.channel.name">{{channel.channel.name | cut:60}}</a>
                                 </td>
                                 <td>{{channel.count.toLocaleString()}}</td>
                                 <td>{{channel.firstMessageAt.toLocaleString()}}</td>
