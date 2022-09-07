@@ -1,4 +1,4 @@
-import { CutPipe } from './cut-test.pipe';
+import { CutPipe } from './cut.pipe';
 import { DurationPipe } from './duration.pipe';
 import { DiscordPermsPipePipe } from './discord-perms-pipe.pipe';
 import { DateTimeFormatterPipe } from './date-time-formatter.pipe';
