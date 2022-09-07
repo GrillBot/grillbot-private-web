@@ -45,7 +45,7 @@
             </div>
 
             <app-user-detail-settings [user]="data" (userUpdated)="reload()"></app-user-detail-settings>
-            <app-user-detail-guilds [userGuilds]="data.guilds"></app-user-detail-guilds>
+            <app-user-detail-guilds [userGuilds]="data.guilds" [points]="pointsRequest$ | async"></app-user-detail-guilds>
         </div>
     </div>
 </ng-container>

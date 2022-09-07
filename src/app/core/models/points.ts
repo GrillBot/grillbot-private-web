@@ -1,3 +1,4 @@
+import { number } from 'echarts';
 import { createRangeParams, FilterBase, RangeParams } from './common';
 import { DateTime } from './datetime';
 import { Guild } from './guilds';
@@ -146,5 +147,32 @@ export class GetPointsSummaryParams extends FilterBase {
             daysFrom: this.days?.from,
             daysTo: this.days?.to
         };
+    }
+}
+
+export class UserPointsItem {
+    public user: User | null = null;
+    public guild: Guild | null = null;
+    public nickname: string | null = null;
+    public pointsYearBack: number = 0;
+    public pointsMonthBack: number = 0;
+    public pointsToday: number = 0;
+    public totalPoints: number = 0;
+
+    get anyPoints(): boolean { return this.totalPoints > 0; }
+
+    static create(data: any): UserPointsItem | null {
+        if(!data) {return null;}
+        const item = new UserPointsItem();
+
+        item.user = User.create(data.user);
+        item.guild = Guild.create(data.guild);
+        item.nickname = data.nickname;
+        item.pointsYearBack = data.pointsYearBack;
+        item.pointsMonthBack = data.pointsMonthBack;
+        item.pointsToday = data.pointsToday;
+        item.totalPoints = data.totalPoints;
+
+        return item;
     }
 }

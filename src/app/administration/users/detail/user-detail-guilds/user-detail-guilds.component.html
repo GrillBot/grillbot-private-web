@@ -25,9 +25,8 @@
             </div>
 
             <div class="grid mb-2">
-                <div keyValueItem [key]="'Serverový nick'" [value]="guild.nickname ?? 'Nenastaven'"></div>
                 <div keyValueItem [key]="'Server'" [value]="guild.guild.name"></div>
-                <div keyValueItem [key]="'Body'" [value]="guild.points.toLocaleString()"></div>
+                <div keyValueItem [key]="'Serverový nick'" [value]="guild.nickname ?? 'Nenastaven'"></div>
                 <div keyValueItem [key]="'Počet udělených reakcí'" [value]="guild.givenReactions.toLocaleString()"></div>
                 <div keyValueItem [key]="'Počet obdržených reakcí'" [value]="guild.obtainedReactions.toLocaleString()"></div>
             </div>
@@ -70,7 +69,7 @@
                     </table>
                 </div>
 
-                <div class="col" *ngIf="guild.nicknameHistory.length > 0">
+                <div class="col-md-4 mb-3" *ngIf="guild.nicknameHistory.length > 0">
                     <span class="d-block">
                         Dřívější přezdívky
                         <a class="smaller" href="javascript:;"
@@ -80,6 +79,22 @@
                         <ol>
                             <li *ngFor="let nickname of guild.nicknameHistory" class="fw-bold">{{nickname}}</li>
                         </ol>
+                    </span>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <span class="d-block">
+                        Body
+                        <a class="smaller" href="javascript:;" (click)="toggleVisibility('points', i)">{{visibilityText('points', i)}}</a>
+                    </span>
+                    <span *ngIf="isVisible('points', i)">
+                        <app-loading [small]="true" *ngIf="!points"></app-loading>
+                        <ng-container *ngIf="points">
+                            Za poslední rok: <b>{{getGuildPoints(i).pointsYearBack.toLocaleString()}}</b><br>
+                            Za poslední měsíc: <b>{{getGuildPoints(i).pointsMonthBack.toLocaleString()}}</b><br>
+                            Dnes: <b>{{getGuildPoints(i).pointsToday.toLocaleString()}}</b><br>
+                            Celkem: <b>{{getGuildPoints(i).totalPoints.toLocaleString()}}</b><br>
+                        </ng-container>
                     </span>
                 </div>
             </div>

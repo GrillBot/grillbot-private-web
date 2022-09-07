@@ -15,7 +15,7 @@ export class UserService {
     ) { }
 
     getUsersList(filter: GetUserListParams): Observable<PaginatedResponse<UserListItem>> {
-        const url = this.base.createUrl('users/list');
+        const url = this.base.createUrl('user/list');
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.post<PaginatedResponse<UserListItem>>(url, filter, { headers }).pipe(
@@ -25,7 +25,7 @@ export class UserService {
     }
 
     getUserDetail(id: string): Observable<UserDetail> {
-        const url =  this.base.createUrl(`users/${id}`);
+        const url =  this.base.createUrl(`user/${id}`);
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.get<UserDetail>(url, { headers }).pipe(
@@ -35,7 +35,7 @@ export class UserService {
     }
 
     updateUser(id: string, params: UpdateUserParams): EmptyObservable {
-        const url = this.base.createUrl(`users/${id}`);
+        const url = this.base.createUrl(`user/${id}`);
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.put<unknown>(url, params, { headers }).pipe(
@@ -44,7 +44,7 @@ export class UserService {
     }
 
     hearthbeatOff(): Observable<unknown> {
-        const url = this.base.createUrl('users/hearthbeat');
+        const url = this.base.createUrl('user/hearthbeat');
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.delete(url, { headers }).pipe(

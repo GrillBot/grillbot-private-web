@@ -193,7 +193,6 @@ export class UserDetail {
 
 export class GuildUserDetail {
     public guild: Guild;
-    public points: number;
     public givenReactions: number;
     public obtainedReactions: number;
     public nickname: string;
@@ -212,7 +211,6 @@ export class GuildUserDetail {
         const detail = new GuildUserDetail();
 
         detail.guild = Guild.create(data.guild);
-        detail.points = data.points;
         detail.givenReactions = data.givenReactions;
         detail.obtainedReactions = data.obtainedReactions;
         detail.nickname = data.nickname;
