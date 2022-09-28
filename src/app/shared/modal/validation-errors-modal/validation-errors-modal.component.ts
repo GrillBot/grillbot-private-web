@@ -6,4 +6,8 @@ import { Component, Input } from '@angular/core';
 })
 export class ValidationErrorsModalComponent {
     @Input() errors: string[] = [];
+
+    get errorList(): string[] {
+        return [...new Set(this.errors)];
+    }
 }
