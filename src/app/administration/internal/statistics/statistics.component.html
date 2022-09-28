@@ -43,6 +43,15 @@
             <li *ngFor="let item of result"><code class="text-dark">{{item}}</code></li>
         </ul>
     </ng-container>
+
+    <ng-container *ngIf="isDb">
+        <ng-container *ngIf="databaseQuery | async as dbData">
+            <h4>Databáze</h4>
+            <app-bar-chart [data]="dbData.database"></app-bar-chart>
+            <h4>Cache</h4>
+            <app-bar-chart [data]="dbData.cache"></app-bar-chart>
+        </ng-container>
+    </ng-container>
 </app-modal>
 
 <ng-template #loading_table>

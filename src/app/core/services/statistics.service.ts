@@ -2,19 +2,22 @@ import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from "@angular/common/http";
 import { catchError, map } from "rxjs/operators";
 import { Dictionary, ObservableDict, ObservableList } from "../models/common";
-import { StatisticItem } from "../models/statistics";
+import { DatabaseStatistics, StatisticItem } from "../models/statistics";
 import { BaseService } from "./base.service";
+import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class StatisticsService {
     constructor(private base: BaseService) { }
 
-    getDbStatus(): ObservableDict<string, number> {
-        return this.getDictionaryStatistics('stats/db');
-    }
+    getDbStatus(): Observable<DatabaseStatistics> {
+        const url = this.base.createUrl('stats/db');
+        const headers = this.base.getHttpHeaders();
 
-    getDbCacheStatus(): ObservableDict<string, number> {
-        return this.getDictionaryStatistics('stats/db/cache');
+        return this.base.http.get<DatabaseStatistics>(url, { headers }).pipe(
+            map(data => DatabaseStatistics.create(data)),
+            catchError((err: HttpErrorResponse) => this.base.catchError(err))
+        );
     }
 
     getAuditLogsStatisticsByType(): ObservableDict<string, number> {

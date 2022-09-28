@@ -1,3 +1,4 @@
+import { Dictionary } from 'src/app/core/models/common';
 import { DateTime } from "./datetime";
 
 export class StatisticItem {
@@ -28,5 +29,20 @@ export class StatisticItem {
         item.lastRunDuration = data.lastRunDuration;
 
         return item;
+    }
+}
+
+export class DatabaseStatistics {
+    public database: Dictionary<string, number>;
+    public cache: Dictionary<string, number>;
+
+    static create(data: any): DatabaseStatistics | null {
+        if (!data) { return null; }
+        const stats = new DatabaseStatistics();
+
+        stats.database = Object.keys(data.database).map(k => ({ key: k, value: data.database[k] as number }));
+        stats.cache = Object.keys(data.cache).map(k => ({ key: k, value: data.cache[k] as number }));
+
+        return stats;
     }
 }

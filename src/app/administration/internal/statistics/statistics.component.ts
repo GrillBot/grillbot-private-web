@@ -2,8 +2,9 @@ import { map } from 'rxjs/operators';
 import { ObservableDict, ObservableList } from './../../../core/models/common';
 import { StatisticsService } from './../../../core/services/statistics.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { StatisticItem } from 'src/app/core/models/statistics';
+import { DatabaseStatistics, StatisticItem } from 'src/app/core/models/statistics';
 import { SystemService } from 'src/app/core/services/system.service';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-statistics',
@@ -15,6 +16,7 @@ export class StatisticsComponent implements OnInit, OnDestroy {
     statItemsQuery: ObservableList<StatisticItem>;
     dictQuery: ObservableDict<string, number>;
     listQuery: ObservableList<string>;
+    databaseQuery: Observable<DatabaseStatistics>;
 
     constructor(
         private statisticsService: StatisticsService,
@@ -22,7 +24,6 @@ export class StatisticsComponent implements OnInit, OnDestroy {
     ) { }
 
     get isDb(): boolean { return this.type === 'db'; }
-    get isDbCache(): boolean { return this.type === 'db/cache'; }
     get isAuditLogByType(): boolean { return this.type === 'audit-log/type'; }
     get isAuditLogByDate(): boolean { return this.type === 'audit-log/date'; }
     get isUnverifyLogByType(): boolean { return this.type === 'unverify-logs/type'; }
@@ -45,8 +46,7 @@ export class StatisticsComponent implements OnInit, OnDestroy {
     }
 
     get canBarChart(): boolean {
-        return this.isDb || this.isDbCache || this.isAuditLogByType || this.isUnverifyLogByType || this.isApiRequestsByStatusCode
-            || this.isEventStats;
+        return this.isAuditLogByType || this.isUnverifyLogByType || this.isApiRequestsByStatusCode || this.isEventStats;
     }
 
     get isList(): boolean {
@@ -54,8 +54,7 @@ export class StatisticsComponent implements OnInit, OnDestroy {
     }
 
     get header(): string {
-        if (this.isDb) { return 'Statistika databáze'; }
-        if (this.isDbCache) { return 'Statistika DB cache'; }
+        if (this.isDb) { return 'Statistika datového skladu'; }
         if (this.isAuditLogByType) { return 'Statistika audit logu (podle typu)'; }
         if (this.isAuditLogByDate) { return 'Statistika audit logu (po měsících)'; }
         if (this.isUnverifyLogByType) { return 'Statistika unverify logu (podle typu)'; }
@@ -73,8 +72,7 @@ export class StatisticsComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        if (this.isDb) { this.dictQuery = this.statisticsService.getDbStatus(); }
-        if (this.isDbCache) { this.dictQuery = this.statisticsService.getDbCacheStatus(); }
+        if (this.isDb) { this.databaseQuery = this.statisticsService.getDbStatus(); }
         if (this.isAuditLogByType) { this.dictQuery = this.statisticsService.getAuditLogsStatisticsByType(); }
         if (this.isAuditLogByDate) { this.dictQuery = this.statisticsService.getAuditLogsStatisticsByDate(); }
         if (this.isUnverifyLogByType) { this.dictQuery = this.statisticsService.getUnverifyLogsStatisticsByOperation(); }
@@ -97,5 +95,6 @@ export class StatisticsComponent implements OnInit, OnDestroy {
         this.statItemsQuery = null;
         this.dictQuery = null;
         this.listQuery = null;
+        this.databaseQuery = null;
     }
 }

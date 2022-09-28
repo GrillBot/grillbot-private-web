@@ -8,7 +8,6 @@ export class DiagnosticsInfo {
     public startAt: DateTime;
     public uptime: string;
     public cpuTime: string;
-    public latency: string;
     public connectionState: ConnectionState;
     public usedMemory: number;
     public isActive: boolean;
@@ -26,7 +25,6 @@ export class DiagnosticsInfo {
         info.connectionState = data.connectionState;
         info.cpuTime = data.cpuTime;
         info.instanceType = data.instanceType;
-        info.latency = data.latency;
         info.startAt = DateTime.fromISOString(data.startAt as string);
         info.uptime = data.uptime;
         info.usedMemory = data.usedMemory;
