@@ -123,6 +123,11 @@
         <td>{{data.isValidToken | czechBooleanPipe}}</td>
     </tr>
 
+    <tr *ngIf="data.locale">
+        <td>Jazyk</td>
+        <td>{{data.locale}}</td>
+    </tr>
+
     <tr *ngIf="data.parameters?.length > 0">
         <td>Parametry</td>
         <td>
