@@ -85,7 +85,7 @@ export class FilterComponent extends FilterComponentBase<AuditLogListParams> {
                 filter.errorFilter = this.extendedFilters.errorFilter;
 
                 filter.commandFilter = this.extendedFilters.commandFilter;
-                filter.interactionsFilter = this.extendedFilters.interactionFilter;
+                filter.interactionFilter = this.extendedFilters.interactionFilter;
                 filter.jobFilter = this.extendedFilters.jobFilter;
                 filter.apiRequestFilter = this.extendedFilters.apiRequestFilter;
                 filter.overwriteCreatedFilter = this.extendedFilters.overwriteCreatedFilter;
@@ -138,7 +138,7 @@ export class FilterComponent extends FilterComponentBase<AuditLogListParams> {
             commandFilter: filter.commandFilter,
             errorFilter: filter.errorFilter,
             infoFilter: filter.infoFilter,
-            interactionFilter: filter.interactionsFilter,
+            interactionFilter: filter.interactionFilter,
             jobFilter: filter.jobFilter,
             warningFilter: filter.warningFilter,
             apiRequestFilter: filter.apiRequestFilter,
