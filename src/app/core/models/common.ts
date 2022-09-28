@@ -13,6 +13,10 @@ export class PaginatedParams {
 
         return item;
     }
+
+    clone(): PaginatedParams {
+        return PaginatedParams.create({ page: this.page, pageSize: this.pageSize });
+    }
 }
 
 export class PaginatedResponse<TData> {
@@ -66,7 +70,10 @@ export class FilterBase {
     public sort: SortParams;
 
     set(pagination: PaginatedParams, sort: SortParams) {
-        this.pagination = pagination;
+        const paginatedData = pagination.clone();
+        paginatedData.page = Math.max(paginatedData.page - 1, 0);
+
+        this.pagination = paginatedData;
         this.sort = sort;
     }
 }

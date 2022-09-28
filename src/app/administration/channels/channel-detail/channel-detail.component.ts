@@ -81,7 +81,10 @@ export class ChannelDetailComponent implements OnInit {
     }
 
     readChannelStats(pagination: PaginatedParams): void {
-        this.channelService.getUserStatsOfChannel(this.channelId, pagination)
+        const paginatedData = pagination.clone();
+        paginatedData.page = Math.max(paginatedData.page - 1, 0);
+
+        this.channelService.getUserStatsOfChannel(this.channelId, paginatedData)
             .subscribe(stats => this.channelStats.setData(stats));
     }
 

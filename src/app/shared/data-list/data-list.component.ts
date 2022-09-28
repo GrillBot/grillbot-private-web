@@ -49,7 +49,7 @@ export class DataListComponent implements OnInit {
 
     setData(result: PaginatedResponse<any>): void {
         this.items = result.data;
-        this.currentPage = result.page;
+        this.currentPage = result.page + 1;
         this.totalItemsCount = result.totalItemsCount === 0 ? 1 : result.totalItemsCount;
 
         if (this.parentCard) {
