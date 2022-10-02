@@ -28,4 +28,13 @@ export class ValidationHelper {
             return err;
         }
     }
+
+    static nonZeroNumber(): ValidatorFn {
+        return (control: AbstractControl): ValidationErrors | null => {
+            const value = parseInt(control.value, 10);
+            const error = { nonZeroNumber: true };
+
+            return isNaN(value) || value === 0 ? error : null;
+        };
+    }
 }
