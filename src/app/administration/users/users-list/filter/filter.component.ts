@@ -48,7 +48,12 @@ export class FilterComponent extends FilterComponentBase<GetUserListParams> {
     }
 
     deserializeData(data: any): GetUserListParams {
-        return GetUserListParams.create(data);
+        const result = GetUserListParams.create(data);
+        if (!this.canChangeUsedInviteCode) {
+            result.usedInviteCode = this.usedInviteCode;
+        }
+
+        return result;
     }
 
     createData(empty: boolean): GetUserListParams {
@@ -85,5 +90,9 @@ export class FilterComponent extends FilterComponentBase<GetUserListParams> {
             usedInviteCode: [filter.usedInviteCode],
             status: [filter.status]
         });
+
+        if (!this.canChangeUsedInviteCode) {
+            this.form.get('usedInviteCode').disable();
+        }
     }
 }
