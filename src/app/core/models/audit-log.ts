@@ -197,7 +197,8 @@ export class AuditLogListItem {
             AuditLogItemType.InteractionCommand,
             AuditLogItemType.ThreadDeleted,
             AuditLogItemType.JobCompleted,
-            AuditLogItemType.API
+            AuditLogItemType.API,
+            AuditLogItemType.MessageDeleted
         ];
 
         return otherTypeWithDetails.includes(this.type);

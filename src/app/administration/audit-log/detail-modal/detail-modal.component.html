@@ -1,4 +1,4 @@
-<app-modal [title]="(rawView ? 'Detail' : 'Data') + ' záznamu #' + item.id">
+<app-modal #modal [title]="(rawView ? 'Detail' : 'Data') + ' záznamu #' + item.id">
     <pre *ngIf="isTextView">{{data}}</pre>
 
     <ng-container *ngIf="!isTextView">
@@ -49,6 +49,9 @@
                     </ng-container>
                     <ng-container *ngSwitchCase="AuditLogItemType.API">
                         <ng-container *ngTemplateOutlet="api"></ng-container>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="AuditLogItemType.MessageDeleted">
+                        <ng-container *ngTemplateOutlet="messageDeleted"></ng-container>
                     </ng-container>
                 </ng-container>
             </tbody>
@@ -521,6 +524,91 @@
                         <td>{{param.key}}</td>
                         <td>
                             <code>{{param.value}}</code>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+</ng-template>
+
+<ng-template #messageDeleted>
+    <tr>
+        <td>Vytvořeno</td>
+        <td>{{data.data.createdAt | dateTimeFormatter}}</td>
+    </tr>
+
+    <tr>
+        <td>Autor</td>
+        <td>
+            <a routerLink="/admin/users/{{data.data.author.id}}" class="text-dark" (click)="modal.modal.close()">
+                {{data.data.author.username}}#{{data.data.author.discriminator}}
+            </a>
+        </td>
+    </tr>
+
+    <tr *ngIf="data.data.content">
+        <td>Obsah</td>
+        <td>
+            <pre class="alert alert-secondary">{{data.data.content}}</pre>
+        </td>
+    </tr>
+
+    <tr *ngIf="data.data.embeds">
+        <td>Embedy</td>
+        <td>
+            <table class="table table-sm table-bordered" *ngFor="let embed of data.data.embeds; let i = index">
+                <thead>
+                    <tr>
+                        <th colspan="2">#{{i}} - {{embed.title}} ({{embed.type}})</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngIf="embed.imageInfo">
+                        <td>Obrázek</td>
+                        <td>
+                            <code>{{embed.imageInfo}}</code>
+                        </td>
+                    </tr>
+
+                    <tr *ngIf="embed.videoInfo">
+                        <td>Video</td>
+                        <td><code>{{embed.videoInfo}}</code></td>
+                    </tr>
+
+                    <tr *ngIf="embed.authorName">
+                        <td>Autor</td>
+                        <td>{{embed.authorName}}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Obsahuje patičku</td>
+                        <td>{{embed.containsFooter | czechBooleanPipe}}</td>
+                    </tr>
+
+                    <tr *ngIf="embed.providerName">
+                        <td>Poskytovatel</td>
+                        <td>{{embed.providerName}}</td>
+                    </tr>
+
+                    <tr *ngIf="embed.thumbnailInfo">
+                        <td>Náhled</td>
+                        <td><code>{{embed.thumbnailInfo}}</code></td>
+                    </tr>
+
+                    <tr>
+                        <td>Počet polí</td>
+                        <td>{{embed.fieldsCount}}</td>
+                    </tr>
+
+                    <tr *ngIf="embed.fieldsCount > 0">
+                        <td colspan="2">
+                            <app-card [header]="false" *ngFor="let field of embed.fields; let i = index" [classes]="['mb-2']">
+                                <h6>#{{i}} - {{field.name}} <span *ngIf="field.inline">- Inline</span></h6>
+
+                                <pre class="alert alert-secondary">{{field.value}}</pre>
+                            </app-card>
                         </td>
                     </tr>
                 </tbody>
