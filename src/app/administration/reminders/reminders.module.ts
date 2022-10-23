@@ -4,6 +4,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ListComponent } from './list/list.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { RouterModule, Routes } from '@angular/router';
+import { DetailModalComponent } from './detail-modal/detail-modal.component';
 
 const routes: Routes = [
     { path: '', component: DashboardComponent }
@@ -13,7 +14,8 @@ const routes: Routes = [
     declarations: [
         FilterComponent,
         DashboardComponent,
-        ListComponent
+        ListComponent,
+        DetailModalComponent
     ],
     imports: [
         SharedModule,

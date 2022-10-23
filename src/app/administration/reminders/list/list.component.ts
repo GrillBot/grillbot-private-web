@@ -5,6 +5,7 @@ import { GetReminderListParams, RemindMessage } from 'src/app/core/models/remind
 import { ReminderService } from 'src/app/core/services/reminder.service';
 import { ListComponentBase } from 'src/app/shared/common-page/list-component-base';
 import { ModalService } from 'src/app/shared/modal';
+import { DetailModalComponent } from '../detail-modal/detail-modal.component';
 
 @Component({
     selector: 'app-list',
@@ -36,6 +37,7 @@ export class ListComponent extends ListComponentBase<GetReminderListParams> {
     }
 
     showMessage(item: RemindMessage): void {
-        this.modalService.showNotification(`Obsah notifikace #${item.id}`, item.message);
+        const modal = this.modalService.showCustomModal<DetailModalComponent>(DetailModalComponent);
+        modal.componentInstance.item = item;
     }
 }

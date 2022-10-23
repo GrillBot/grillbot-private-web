@@ -10,6 +10,7 @@ export class RemindMessage {
     public message: string;
     public postpone: number;
     public notified: boolean;
+    public language: string;
 
     static create(data: any): RemindMessage | null {
         if (!data) { return null; }
@@ -22,6 +23,7 @@ export class RemindMessage {
         message.postpone = data.postpone;
         message.toUser = data.toUser ? User.create(data.toUser) : null;
         message.notified = data.notified;
+        message.language = data.language;
 
         return message;
     }

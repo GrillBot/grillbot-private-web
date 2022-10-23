@@ -16,6 +16,7 @@
                         <th sortable [key]="'At'" [sort]="sort" (clicked)="setSort($event)">Oznámit v</th>
                         <th sortable [key]="'Postpone'" [sort]="sort" (clicked)="setSort($event)">Odloženo</th>
                         <th>Oznámeno</th>
+                        <th>Jazyk</th>
                         <th>Akce</th>
                     </tr>
                 </thead>
@@ -33,6 +34,7 @@
                         <td>{{item.at.toLocaleString()}}</td>
                         <td>{{item.postpone}}</td>
                         <td>{{item.notified | czechBooleanPipe}}</td>
+                        <td>{{item.language}}</td>
                         <td>
                             <list-button (clicked)="showMessage(item)" title="Zobrazit zprávu" icon="info"></list-button>
                             <list-button (clicked)="cancel(item, false)" title="Stornovat" icon="window-close" *ngIf="!item.notified">
