@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from "@angular/common/http";
 import { catchError, map } from "rxjs/operators";
 import { Dictionary, ObservableDict, ObservableList } from "../models/common";
-import { DatabaseStatistics, StatisticItem } from "../models/statistics";
+import { AvgExecutionTimes, DatabaseStatistics, StatisticItem } from "../models/statistics";
 import { BaseService } from "./base.service";
 import { Observable } from 'rxjs';
 
@@ -66,6 +66,16 @@ export class StatisticsService {
 
     getEventStatistics(): ObservableDict<string, number> {
         return this.getDictionaryStatistics('stats/events');
+    }
+
+    getAvgTimes(): Observable<AvgExecutionTimes> {
+        const url = this.base.createUrl('stats/avg-times');
+        const headers = this.base.getHttpHeaders();
+
+        return this.base.http.get<AvgExecutionTimes>(url, { headers }).pipe(
+            map(data => AvgExecutionTimes.create(data)),
+            catchError((err: HttpErrorResponse) => this.base.catchError(err))
+        );
     }
 
     private getDictionaryStatistics(urlPart: string): ObservableDict<string, number> {

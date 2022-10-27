@@ -1,4 +1,5 @@
 import { diffLines } from 'diff';
+import { Dictionary } from '../models/common';
 
 export class Support {
     static getEnumKeyByValue(type: any, value: any): string {
@@ -34,5 +35,9 @@ export class Support {
             else if (o.removed) { return `- ${o.value}`; }
             else { return null; }
         }).filter(o => o !== null);
+    }
+
+    static createDictFromObj<TValue>(obj: any): Dictionary<string, TValue> {
+        return Object.keys(obj).map(k => ({ key: k, value: obj[k] as TValue }));
     }
 }

@@ -1,4 +1,5 @@
 import { Dictionary } from 'src/app/core/models/common';
+import { Support } from '../lib/support';
 import { DateTime } from "./datetime";
 
 export class StatisticItem {
@@ -40,9 +41,28 @@ export class DatabaseStatistics {
         if (!data) { return null; }
         const stats = new DatabaseStatistics();
 
-        stats.database = Object.keys(data.database).map(k => ({ key: k, value: data.database[k] as number }));
-        stats.cache = Object.keys(data.cache).map(k => ({ key: k, value: data.cache[k] as number }));
+        stats.database = Support.createDictFromObj(data.database);
+        stats.cache = Support.createDictFromObj(data.cache);
 
         return stats;
+    }
+}
+
+export class AvgExecutionTimes {
+    public internalApi: Dictionary<string, number>;
+    public externalApi: Dictionary<string, number>;
+    public jobs: Dictionary<string, number>;
+    public interactions: Dictionary<string, number>;
+
+    static create(data: any) {
+        if (!data) { return null; }
+        const result = new AvgExecutionTimes();
+
+        result.internalApi = Support.createDictFromObj(data.internalApi);
+        result.externalApi = Support.createDictFromObj(data.externalApi);
+        result.jobs = Support.createDictFromObj(data.jobs);
+        result.interactions = Support.createDictFromObj(data.interactions);
+
+        return result;
     }
 }

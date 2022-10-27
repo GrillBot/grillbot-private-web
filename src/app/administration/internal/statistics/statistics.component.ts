@@ -2,7 +2,7 @@ import { map } from 'rxjs/operators';
 import { ObservableDict, ObservableList } from './../../../core/models/common';
 import { StatisticsService } from './../../../core/services/statistics.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { DatabaseStatistics, StatisticItem } from 'src/app/core/models/statistics';
+import { AvgExecutionTimes, DatabaseStatistics, StatisticItem } from 'src/app/core/models/statistics';
 import { SystemService } from 'src/app/core/services/system.service';
 import { Observable } from 'rxjs';
 
@@ -17,6 +17,7 @@ export class StatisticsComponent implements OnInit, OnDestroy {
     dictQuery: ObservableDict<string, number>;
     listQuery: ObservableList<string>;
     databaseQuery: Observable<DatabaseStatistics>;
+    avgTimesQuery: Observable<AvgExecutionTimes>;
 
     constructor(
         private statisticsService: StatisticsService,
@@ -36,6 +37,7 @@ export class StatisticsComponent implements OnInit, OnDestroy {
     get isApiRequestsByStatusCode(): boolean { return this.type === 'api/status'; }
     get isEventLog(): boolean { return this.type === 'eventLog'; }
     get isEventStats(): boolean { return this.type === 'eventStats'; }
+    get isAvgTimes(): boolean { return this.type === 'avg-times'; }
 
     get isStatLike(): boolean {
         return this.isTextCommands || this.isInteractions || this.isJobs || this.isApiRequestsByEndpoint;
@@ -67,6 +69,7 @@ export class StatisticsComponent implements OnInit, OnDestroy {
         if (this.isApiRequestsByStatusCode) { return 'Statistika API požadavků (podle výsledku)'; }
         if (this.isEventLog) { return 'Log událostí'; }
         if (this.isEventStats) { return 'Statistika událostí'; }
+        if (this.isAvgTimes) { return 'Průměrné časy (po dnech)'; }
 
         return '';
     }
@@ -85,6 +88,7 @@ export class StatisticsComponent implements OnInit, OnDestroy {
         if (this.isApiRequestsByStatusCode) { this.dictQuery = this.statisticsService.getApiRequestsByStatusCode(); }
         if (this.isEventLog) { this.listQuery = this.systemService.getEventLog(); }
         if (this.isEventStats) { this.dictQuery = this.statisticsService.getEventStatistics(); }
+        if (this.isAvgTimes) { this.avgTimesQuery = this.statisticsService.getAvgTimes(); }
 
         if (this.dictQuery) {
             this.dictQuery = this.dictQuery.pipe(map(data => data.reverse()));
@@ -96,5 +100,6 @@ export class StatisticsComponent implements OnInit, OnDestroy {
         this.dictQuery = null;
         this.listQuery = null;
         this.databaseQuery = null;
+        this.avgTimesQuery = null;
     }
 }

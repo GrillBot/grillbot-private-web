@@ -52,6 +52,19 @@
             <app-bar-chart [data]="dbData.cache"></app-bar-chart>
         </ng-container>
     </ng-container>
+
+    <ng-container *ngIf="isAvgTimes">
+        <ng-container *ngIf="avgTimesQuery | async as avgTimes">
+            <h4>Interní API</h4>
+            <app-line-chart [data]="avgTimes.internalApi"></app-line-chart>
+            <h4>Veřejné API</h4>
+            <app-line-chart [data]="avgTimes.externalApi"></app-line-chart>
+            <h4>Naplánované úlohy</h4>
+            <app-line-chart [data]="avgTimes.jobs"></app-line-chart>
+            <h4>Integrované příkazy</h4>
+            <app-line-chart [data]="avgTimes.interactions"></app-line-chart>
+        </ng-container>
+    </ng-container>
 </app-modal>
 
 <ng-template #loading_table>
