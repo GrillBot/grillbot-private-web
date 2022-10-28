@@ -45,7 +45,7 @@
     </ng-container>
 
     <ng-container *ngIf="isDb">
-        <ng-container *ngIf="databaseQuery | async as dbData">
+        <ng-container *ngIf="databaseQuery | async as dbData else loading">
             <h4>Databáze</h4>
             <app-bar-chart [data]="dbData.database"></app-bar-chart>
             <h4>Cache</h4>
@@ -54,7 +54,7 @@
     </ng-container>
 
     <ng-container *ngIf="isAvgTimes">
-        <ng-container *ngIf="avgTimesQuery | async as avgTimes">
+        <ng-container *ngIf="avgTimesQuery | async as avgTimes else loading">
             <h4>Interní API</h4>
             <app-line-chart [data]="avgTimes.internalApi"></app-line-chart>
             <h4>Veřejné API</h4>
