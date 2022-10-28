@@ -331,7 +331,7 @@
 
         <ng-container *ngIf="type === AuditLogItemType.API">
             <p>Akce: <b>{{data.controllerName}}.{{data.actionName}}</b></p>
-            <p>HTTP akce: <b>{{data.method}} {{data.templatePath}}</b></p>
+            <p>HTTP akce: <b>{{data.method}} {{data.templatePath}}<span *ngIf="data.apiGroupName"> (API {{data.apiGroupName}})</span></b></p>
             <p *ngIf="data.statusCode">Výsledek: <b>{{data.statusCode}}</b></p>
         </ng-container>
     </div>

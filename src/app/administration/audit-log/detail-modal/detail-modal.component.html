@@ -520,6 +520,11 @@
         <td>{{data.language}}</td>
     </tr>
 
+    <tr *ngIf="data.apiGroupName">
+        <td>Verze API</td>
+        <td>{{data.apiGroupName}}</td>
+    </tr>
+
     <tr *ngIf="data.parameters">
         <td>Parametry</td>
         <td>
