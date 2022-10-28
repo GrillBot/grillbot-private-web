@@ -1,4 +1,4 @@
-import { TextFilter, ExecutionFilter, ApiRequestFilter, TargetIdFilter } from './../../../../core/models/audit-log';
+import { TextFilter, ExecutionFilter, ApiRequestFilter, TargetIdFilter, MessageDeletedFilter } from './../../../../core/models/audit-log';
 
 export interface ExtendedFiltersModalData {
     infoFilter: TextFilter;
@@ -13,4 +13,5 @@ export interface ExtendedFiltersModalData {
     overwriteUpdatedFilter: TargetIdFilter;
     memberUpdatedFilter: TargetIdFilter;
     memberRoleUpdatedFilter: TargetIdFilter;
+    messageDeletedFilter: MessageDeletedFilter;
 }

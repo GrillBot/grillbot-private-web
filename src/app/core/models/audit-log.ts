@@ -102,6 +102,32 @@ export class TargetIdFilter {
     }
 }
 
+export class MessageDeletedFilter {
+    public containsEmbed?: boolean;
+    public contentContains: string;
+    public authorId: string;
+
+    get serialized(): any {
+        return {
+            containsEmbed: this.containsEmbed,
+            contentContains: this.contentContains,
+            authorId: this.authorId
+        };
+    }
+
+    static create(data: any): MessageDeletedFilter | null {
+        if (!data) { return null; }
+        const filter = new MessageDeletedFilter();
+
+        filter.authorId = data.authorId;
+        filter.contentContains = data.contentContains;
+        filter.containsEmbed = data.containsEmbed;
+        filter.authorId = data.authorId;
+
+        return filter;
+    }
+}
+
 export class AuditLogListParams extends FilterBase {
     public guildId: string | null;
     public processedUserIds: string[] = [];
@@ -124,6 +150,7 @@ export class AuditLogListParams extends FilterBase {
     public overwriteDeletedFilter: TargetIdFilter | null = null;
     public memberUpdatedFilter: TargetIdFilter | null = null;
     public memberRoleUpdatedFilter: TargetIdFilter | null = null;
+    public messageDeletedFilter: MessageDeletedFilter | null = null;
     public onlyFromStart: boolean = false;
 
     static get empty(): AuditLogListParams {
@@ -158,6 +185,7 @@ export class AuditLogListParams extends FilterBase {
         params.overwriteUpdatedFilter = data.overwriteUpdatedFilter ? TargetIdFilter.create(data.overwriteUpdatedFilter) : null;
         params.memberUpdatedFilter = data.memberUpdatedFilter ? TargetIdFilter.create(data.memberUpdatedFilter) : null;
         params.memberRoleUpdatedFilter = data.memberRoleUpdatedFilter ? TargetIdFilter.create(data.memberRoleUpdatedFilter) : null;
+        params.messageDeletedFilter = data.messageDeletedFilter ? MessageDeletedFilter.create(data.messageDeletedFilter) : null;
         params.onlyFromStart = data.onlyFromStart;
 
         return params;

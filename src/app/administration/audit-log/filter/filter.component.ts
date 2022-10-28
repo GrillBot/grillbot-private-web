@@ -44,7 +44,8 @@ export class FilterComponent extends FilterComponentBase<AuditLogListParams> {
             AuditLogItemType.OverwriteDeleted,
             AuditLogItemType.OverwriteUpdated,
             AuditLogItemType.MemberRoleUpdated,
-            AuditLogItemType.MemberUpdated
+            AuditLogItemType.MemberUpdated,
+            AuditLogItemType.MessageDeleted
         ];
 
         let selTypes = this.selectedTypes;
@@ -93,6 +94,7 @@ export class FilterComponent extends FilterComponentBase<AuditLogListParams> {
                 filter.overwriteUpdatedFilter = this.extendedFilters.overwriteUpdatedFilter;
                 filter.memberRoleUpdatedFilter = this.extendedFilters.memberRoleUpdatedFilter;
                 filter.memberUpdatedFilter = this.extendedFilters.memberUpdatedFilter;
+                filter.messageDeletedFilter = this.extendedFilters.messageDeletedFilter;
             }
 
             return filter;
@@ -146,7 +148,8 @@ export class FilterComponent extends FilterComponentBase<AuditLogListParams> {
             overwriteDeletedFilter: filter.overwriteDeletedFilter,
             overwriteUpdatedFilter: filter.overwriteUpdatedFilter,
             memberRoleUpdatedFilter: filter.memberRoleUpdatedFilter,
-            memberUpdatedFilter: filter.memberUpdatedFilter
+            memberUpdatedFilter: filter.memberUpdatedFilter,
+            messageDeletedFilter: filter.messageDeletedFilter
         };
     }
 

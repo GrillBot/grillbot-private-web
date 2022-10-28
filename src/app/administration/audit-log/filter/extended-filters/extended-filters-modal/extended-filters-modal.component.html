@@ -20,5 +20,7 @@
             [label]="'Upraveny role uživatele'"></app-target-id-filter>
         <app-target-id-filter *ngIf="can(auditLogItemType.MemberUpdated)" formControlName="memberUpdated" [label]="'Upraven uživatel'">
         </app-target-id-filter>
+        <app-message-deleted-filter *ngIf="can(auditLogItemType.MessageDeleted)" formControlName="messageDeleted">
+        </app-message-deleted-filter>
     </form>
 </app-modal>

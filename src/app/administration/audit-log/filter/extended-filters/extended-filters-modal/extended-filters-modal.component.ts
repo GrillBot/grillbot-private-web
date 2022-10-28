@@ -34,7 +34,8 @@ export class ExtendedFiltersModalComponent implements OnInit, AfterViewInit {
             overwriteDeletedFilter: value.overwriteDeleted,
             overwriteUpdatedFilter: value.overwriteUpdated,
             memberRoleUpdatedFilter: value.memberRoleUpdated,
-            memberUpdatedFilter: value.memberUpdated
+            memberUpdatedFilter: value.memberUpdated,
+            messageDeletedFilter: value.messageDeleted
         };
     }
 
@@ -55,7 +56,8 @@ export class ExtendedFiltersModalComponent implements OnInit, AfterViewInit {
             overwriteDeleted: [],
             overwriteUpdated: [],
             memberUpdated: [],
-            memberRoleUpdated: []
+            memberRoleUpdated: [],
+            messageDeleted: []
         });
 
         this.fill();
@@ -82,7 +84,8 @@ export class ExtendedFiltersModalComponent implements OnInit, AfterViewInit {
             overwriteDeletedFilter: null,
             overwriteUpdatedFilter: null,
             memberRoleUpdatedFilter: null,
-            memberUpdatedFilter: null
+            memberUpdatedFilter: null,
+            messageDeletedFilter: null
         };
 
         this.fill();
@@ -105,7 +108,8 @@ export class ExtendedFiltersModalComponent implements OnInit, AfterViewInit {
             overwriteDeleted: this.tmpData.overwriteDeletedFilter,
             overwriteUpdated: this.tmpData.overwriteUpdatedFilter,
             memberUpdated: this.tmpData.memberUpdatedFilter,
-            memberRoleUpdated: this.tmpData.memberRoleUpdatedFilter
+            memberRoleUpdated: this.tmpData.memberRoleUpdatedFilter,
+            messageDeleted: this.tmpData.messageDeletedFilter
         });
 
         this.tmpData = null;
