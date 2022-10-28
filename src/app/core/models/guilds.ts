@@ -169,6 +169,7 @@ export class UpdateGuildParams {
         public adminChannelId: string,
         public emoteSuggestionChannelId: string,
         public voteChannelId: string,
-        public emoteSuggestionsValidity: RangeParams<DateTime>
+        public emoteSuggestionsValidity: RangeParams<DateTime>,
+        public botRoomChannelId: string
     ) { }
 }

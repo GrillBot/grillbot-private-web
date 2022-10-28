@@ -30,7 +30,8 @@
                 <div keyValueItem class="border-top mt-2" [key]="'Úroveň vylepšení'" [value]="'Level ' + data.premiumTier"></div>
                 <div keyValueItem class="border-top mt-2" [key]="'Univerzální pozvánka'" [value]="data.vanityUrl" *ngIf="data.vanityUrl">
                 </div>
-                <div keyValueItem class="border-top mt-2" [key]="'Booster role'" [value]="data.boosterRole?.name" *ngIf="data.boosterRole"></div>
+                <div keyValueItem class="border-top mt-2" [key]="'Booster role'" [value]="data.boosterRole?.name" *ngIf="data.boosterRole">
+                </div>
             </app-card>
         </div>
 
@@ -147,6 +148,14 @@
                                 <label>Kanál pro veřejná hlasování</label>
                                 <app-search-input [searchSource]="'channels-no-threads'" [guildId]="data.id" formControlName="voteChannel">
                                 </app-search-input>
+                            </div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col-md-3 form-group">
+                                <label>Kanál pro příkazy</label>
+                                <app-search-input [searchSource]="'channels-no-threads'" [guildId]="data.id"
+                                    formControlName="botRoomChannel"></app-search-input>
                             </div>
                         </div>
 
