@@ -51,10 +51,6 @@ export class StatisticsComponent implements OnInit, OnDestroy {
         return this.isAuditLogByType || this.isUnverifyLogByType || this.isApiRequestsByStatusCode || this.isEventStats;
     }
 
-    get isList(): boolean {
-        return this.isEventLog;
-    }
-
     get header(): string {
         if (this.isDb) { return 'Statistika datového skladu'; }
         if (this.isAuditLogByType) { return 'Statistika audit logu (podle typu)'; }

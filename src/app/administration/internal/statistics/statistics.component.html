@@ -38,9 +38,11 @@
     <app-line-chart [data]="dictQuery | async" *ngIf="canLineChart"></app-line-chart>
     <app-bar-chart [data]="dictQuery | async" *ngIf="canBarChart"></app-bar-chart>
 
-    <ng-container *ngIf="isList">
+    <ng-container *ngIf="isEventLog">
         <ul *ngIf="listQuery | async as result; else loading">
-            <li *ngFor="let item of result"><code class="text-dark">{{item}}</code></li>
+            <li *ngFor="let item of result">
+                <code class="text-dark" [class.bg-warning]="!item.startsWith('PresenceUpdated')">{{item}}</code>
+            </li>
         </ul>
     </ng-container>
 
