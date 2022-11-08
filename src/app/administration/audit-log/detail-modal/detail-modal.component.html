@@ -147,14 +147,20 @@
                                 <ng-container *ngSwitchCase="'String'">
                                     <code>{{parameter.value}}</code>
                                 </ng-container>
-                                <ng-container *ngSwitchCase="'Channel'">#{{parameter.value?.Name}} ({{parameter.value?.Id}})</ng-container>
+                                <ng-container *ngSwitchCase="'Channel'">
+                                    #{{parameter.value?.Name}}
+                                    <ng-container *ngIf="parameter.value?.Id">({{parameter.value?.Id}})</ng-container>
+                                    <ng-container *ngIf="parameter.value?.ChannelId">({{parameter.value?.ChannelId}})</ng-container>
+                                </ng-container>
                                 <ng-container *ngSwitchCase="'Role'">
-                                    <span class="badge" [style.background-color]="parameter.value.Color">&nbsp;</span>
+                                    <span class="badge" [style.background-color]="'#' + parameter.value.Color?.toString(16)">&nbsp;</span>
                                     {{parameter.value.Name}}
                                 </ng-container>
                                 <ng-container *ngSwitchCase="'User'">
                                     <ng-container *ngIf="parameter.value">
-                                        {{parameter.value.Username}}#{{parameter.value.Discriminator}} ({{parameter.value.Id}})
+                                        {{parameter.value.Username}}#{{parameter.value.Discriminator}}
+                                        <ng-container *ngIf="parameter.value?.Id">({{parameter.value?.Id}})</ng-container>
+                                        <ng-container *ngIf="parameter.value?.UserId">({{parameter.value?.UserId}})</ng-container>
                                     </ng-container>
                                 </ng-container>
                                 <ng-container *ngSwitchCase="'Message'">
@@ -224,16 +230,22 @@
         <td>{{data.after.targetId}}</td>
     </tr>
 
-    <tr *ngIf="data.before.target != undefined || data.after.target != undefined">
+    <tr *ngIf="data.before.targetIdValue || data.after.targetIdValue">
+        <td>Id cíle</td>
+        <td>{{data.before.targetIdValue}}</td>
+        <td>{{data.after.targetIdValue}}</td>
+    </tr>
+
+    <tr *ngIf="data.before.Target != undefined || data.after.Target != undefined">
         <td>Typ</td>
         <td>
-            <ng-container [ngSwitch]="data.before.target">
+            <ng-container [ngSwitch]="data.before.Target">
                 <ng-container *ngSwitchCase="0">Role</ng-container>
                 <ng-container *ngSwitchCase="1">Uživatel</ng-container>
             </ng-container>
         </td>
         <td>
-            <ng-container [ngSwitch]="data.after.target">
+            <ng-container [ngSwitch]="data.after.Target">
                 <ng-container *ngSwitchCase="0">Role</ng-container>
                 <ng-container *ngSwitchCase="1">Uživatel</ng-container>
             </ng-container>
@@ -388,7 +400,8 @@
 <ng-template #threadDeleted>
     <tr>
         <td>ID</td>
-        <td>{{data.id}}</td>
+        <td *ngIf="data.id">{{data.id}}</td>
+        <td *ngIf="data.channelId">{{data.channelId}}</td>
     </tr>
 
     <tr>
@@ -551,7 +564,11 @@
     <tr>
         <td>Autor</td>
         <td>
-            <a routerLink="/admin/users/{{data.data.author.id}}" class="text-dark" (click)="modal.modal.close()">
+            <a *ngIf="data.data.author.id" routerLink="/admin/users/{{data.data.author.id}}" class="text-dark" (click)="modal.modal.close()">
+                {{data.data.author.username}}#{{data.data.author.discriminator}}
+            </a>
+
+            <a *ngIf="data.data.author.userId" routerLink="/admin/users/{{data.data.author.userId}}" class="text-dark" (click)="modal.modal.close()">
                 {{data.data.author.username}}#{{data.data.author.discriminator}}
             </a>
         </td>

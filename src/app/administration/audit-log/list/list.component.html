@@ -227,15 +227,17 @@
         </ng-container>
 
         <ng-container *ngIf="type === AuditLogItemType.EmojiDeleted">
-            <p>ID: <b>{{data.id}}</b></p>
+            <p *ngIf="data.id">ID: <b>{{data.id}}</b></p>
+            <p *ngIf="data.emoteId">ID: <b>{{data.emoteId}}</b></p>
             <p>Název: <b>{{data.name}}</b></p>
         </ng-container>
 
         <ng-container *ngIf="type === AuditLogItemType.OverwriteCreated || type === AuditLogItemType.OverwriteDeleted">
-            <p>ID cíle: <b>{{data.targetId}}</b></p>
+            <p *ngIf="data.targetId">ID cíle: <b>{{data.targetId}}</b></p>
+            <p *ngIf="data.targetIdValue">ID cíle: <b>{{data.targetIdValue}}</b></p>
             <p>
                 Typ:
-                <ng-container [ngSwitch]="data.target">
+                <ng-container [ngSwitch]="data.Target">
                     <b *ngSwitchCase="0">Role</b>
                     <b *ngSwitchCase="1">Uživatel</b>
                 </ng-container>
@@ -246,9 +248,9 @@
 
         <ng-container *ngIf="type === AuditLogItemType.OverwriteUpdated">
             <p *ngIf="data.before.targetId ?? data.after.targetId">ID cíle: <b>{{data.before.targetId ?? data.after.targetId}}</b></p>
-            <p *ngIf="data.before.target != undefined || data.after.target != undefined">
+            <p *ngIf="data.before.Target != undefined || data.after.Target != undefined">
                 Typ:
-                <ng-container [ngSwitch]="data.before.target ?? data.after.target">
+                <ng-container [ngSwitch]="data.before.Target ?? data.after.Target">
                     <b *ngSwitchCase="0">Role</b>
                     <b *ngSwitchCase="1">Uživatel</b>
                 </ng-container>
@@ -256,7 +258,8 @@
         </ng-container>
 
         <ng-container *ngIf="type === AuditLogItemType.Unban">
-            <p>ID: <b>{{data.id}}</b></p>
+            <p *ngIf="data.id">ID: <b>{{data.id}}</b></p>
+            <p *ngIf="data.userId">ID: <b>{{data.userId}}</b></p>
             <p>Název: <b>{{data.username}}#{{data.discriminator}}</b></p>
         </ng-container>
 
