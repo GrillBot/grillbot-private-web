@@ -90,29 +90,6 @@
                                     "maximumError": "10kb"
                                 }
                             ]
-                        },
-                        "test": {
-                            "fileReplacements": [
-                                {
-                                    "replace": "src/environments/environment.ts",
-                                    "with": "src/environments/environment.test.ts"
-                                }
-                            ],
-                            "outputHashing": "all",
-                            "extractLicenses": true,
-                            "buildOptimizer": true,
-                            "budgets": [
-                                {
-                                    "type": "initial",
-                                    "maximumWarning": "10mb",
-                                    "maximumError": "15mb"
-                                },
-                                {
-                                    "type": "anyComponentStyle",
-                                    "maximumWarning": "50kb",
-                                    "maximumError": "100kb"
-                                }
-                            ]
                         }
                     },
                     "defaultConfiguration": ""
