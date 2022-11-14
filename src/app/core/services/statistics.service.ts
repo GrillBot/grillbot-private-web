@@ -28,10 +28,6 @@ export class StatisticsService {
         return this.getDictionaryStatistics('stats/audit-log/date');
     }
 
-    getCommandsStatistics(): ObservableList<StatisticItem> {
-        return this.getObjectStatistics('stats/commands');
-    }
-
     getInteractionsStatus(): ObservableList<StatisticItem> {
         return this.getObjectStatistics('stats/interactions');
     }
@@ -42,10 +38,6 @@ export class StatisticsService {
 
     getUnverifyLogsStatisticsByDate(): ObservableDict<string, number> {
         return this.getDictionaryStatistics('stats/unverify-logs/date');
-    }
-
-    getJobsStatistics(): ObservableList<StatisticItem> {
-        return this.getObjectStatistics('stats/jobs');
     }
 
     getApiRequestsByEndpoint(): ObservableList<StatisticItem> {

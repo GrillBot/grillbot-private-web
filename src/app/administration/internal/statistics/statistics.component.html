@@ -2,8 +2,7 @@
     <table class="table table-sm table-bordered table-striped auto-column-width" *ngIf="isStatLike">
         <thead>
             <tr>
-                <th *ngIf="isTextCommands || isInteractions">Příkaz</th>
-                <th *ngIf="isJobs">Název úlohy</th>
+                <th *ngIf="isInteractions">Příkaz</th>
                 <th *ngIf="isApiRequestsByEndpoint">Endpoint</th>
                 <th>Poslední volání</th>
                 <th>

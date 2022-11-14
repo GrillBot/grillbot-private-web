@@ -29,9 +29,7 @@ export class StatisticsComponent implements OnInit, OnDestroy {
     get isAuditLogByDate(): boolean { return this.type === 'audit-log/date'; }
     get isUnverifyLogByType(): boolean { return this.type === 'unverify-logs/type'; }
     get isUnverifyLogByDate(): boolean { return this.type === 'unverify-logs/date'; }
-    get isTextCommands(): boolean { return this.type === 'text-commands'; }
     get isInteractions(): boolean { return this.type === 'interactions'; }
-    get isJobs(): boolean { return this.type === 'jobs'; }
     get isApiRequestsByDate(): boolean { return this.type === 'api/date'; }
     get isApiRequestsByEndpoint(): boolean { return this.type === 'api/endpoint'; }
     get isApiRequestsByStatusCode(): boolean { return this.type === 'api/status'; }
@@ -40,7 +38,7 @@ export class StatisticsComponent implements OnInit, OnDestroy {
     get isAvgTimes(): boolean { return this.type === 'avg-times'; }
 
     get isStatLike(): boolean {
-        return this.isTextCommands || this.isInteractions || this.isJobs || this.isApiRequestsByEndpoint;
+        return this.isInteractions || this.isApiRequestsByEndpoint;
     }
 
     get canLineChart(): boolean {
@@ -57,9 +55,7 @@ export class StatisticsComponent implements OnInit, OnDestroy {
         if (this.isAuditLogByDate) { return 'Statistika audit logu (po měsících)'; }
         if (this.isUnverifyLogByType) { return 'Statistika unverify logu (podle typu)'; }
         if (this.isUnverifyLogByDate) { return 'Statistika unverify logu (po měsících)'; }
-        if (this.isTextCommands) { return 'Statistika textových příkazů'; }
         if (this.isInteractions) { return 'Statistika interaktivních příkazů'; }
-        if (this.isJobs) { return 'Statistika naplánovaných úloh'; }
         if (this.isApiRequestsByDate) { return 'Statistika API požadavků (po měsících)'; }
         if (this.isApiRequestsByEndpoint) { return 'Statistika API požadavků (po metodách)'; }
         if (this.isApiRequestsByStatusCode) { return 'Statistika API požadavků (podle výsledku)'; }
@@ -76,9 +72,7 @@ export class StatisticsComponent implements OnInit, OnDestroy {
         if (this.isAuditLogByDate) { this.dictQuery = this.statisticsService.getAuditLogsStatisticsByDate(); }
         if (this.isUnverifyLogByType) { this.dictQuery = this.statisticsService.getUnverifyLogsStatisticsByOperation(); }
         if (this.isUnverifyLogByDate) { this.dictQuery = this.statisticsService.getUnverifyLogsStatisticsByDate(); }
-        if (this.isTextCommands) { this.statItemsQuery = this.statisticsService.getCommandsStatistics(); }
         if (this.isInteractions) { this.statItemsQuery = this.statisticsService.getInteractionsStatus(); }
-        if (this.isJobs) { this.statItemsQuery = this.statisticsService.getJobsStatistics(); }
         if (this.isApiRequestsByDate) { this.dictQuery = this.statisticsService.getApiRequestsByDate(); }
         if (this.isApiRequestsByEndpoint) { this.statItemsQuery = this.statisticsService.getApiRequestsByEndpoint(); }
         if (this.isApiRequestsByStatusCode) { this.dictQuery = this.statisticsService.getApiRequestsByStatusCode(); }
