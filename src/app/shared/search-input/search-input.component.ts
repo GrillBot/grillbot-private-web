@@ -43,10 +43,11 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor, OnCha
 
     ngOnChanges(changes: SimpleChanges): void {
         if (!changes) { return; }
-        if (
-            (this.searchSource === 'channels' || this.searchSource === 'roles' || this.searchSource === 'channels-no-threads')
-            && changes.guildId && !changes.guildId.firstChange
-        ) {
+
+        const canReload = ['channels', 'roles', 'channels-no-threads', 'bots', 'users'].includes(this.searchSource) && changes.guildId &&
+            !changes.guildId.firstChange;
+
+        if (canReload) {
             this.initData();
         }
     }
@@ -55,7 +56,7 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor, OnCha
         let request: ObservableDict<string, string>;
         switch (this.searchSource) {
             case 'bots':
-                request = this.dataService.getUsersList(true);
+                request = this.dataService.getUsersList(true, this.guildId);
                 break;
             case 'channels':
                 request = this.dataService.getChannels(this.guildId, false);
@@ -70,7 +71,7 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor, OnCha
                 request = this.dataService.getRoles(this.guildId);
                 break;
             case 'users':
-                request = this.dataService.getUsersList(false);
+                request = this.dataService.getUsersList(false, this.guildId);
                 break;
             case 'channels-no-threads':
                 request = this.dataService.getChannels(this.guildId, true);

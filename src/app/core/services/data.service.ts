@@ -55,9 +55,12 @@ export class DataService {
         );
     }
 
-    getUsersList(bots?: boolean): ObservableDict<string, string> {
-        const parameter = bots === undefined ? null : [new QueryParam('bots', bots)];
-        const url = this.base.createUrl('data/users', parameter);
+    getUsersList(bots?: boolean, guildId?: string): ObservableDict<string, string> {
+        const parameters: QueryParam[] = [];
+        if (bots !== undefined) { parameters.push(new QueryParam('bots', bots)); }
+        if (guildId) { parameters.push(new QueryParam('guildId', guildId)); }
+
+        const url = this.base.createUrl('data/users', parameters);
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.get<Dictionary<string, string>>(url, { headers }).pipe(

@@ -18,6 +18,8 @@ export class FilterComponent extends FilterComponentBase<UnverifyLogParams> {
         super(fb, storage);
     }
 
+    get guildId(): string | null { return this.form?.get('guildId')?.value as string; }
+
     configure(): void {
         this.filterId = 'UnverifyLog';
 

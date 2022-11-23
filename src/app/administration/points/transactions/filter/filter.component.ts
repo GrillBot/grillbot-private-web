@@ -23,6 +23,8 @@ export class FilterComponent extends FilterComponentBase<GetPointTransactionsPar
         return this.route.snapshot.data?.merged ?? false;
     }
 
+    get guildId(): string | null { return this.form?.get('guildId')?.value as string; }
+
     configure(): void {
         this.filterId = 'PointTransactions' + (this.isMerged ? '-Merged' : '');
     }

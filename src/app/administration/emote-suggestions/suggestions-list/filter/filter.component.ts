@@ -13,6 +13,8 @@ export class FilterComponent extends FilterComponentBase<GetSuggestionListParams
         super(fb, storage);
     }
 
+    get guildId(): string | null { return this.form?.get('guildId')?.value as string; }
+
     configure(): void {
         this.filterId = 'EmoteSuggestions';
     }

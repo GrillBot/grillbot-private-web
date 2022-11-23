@@ -19,14 +19,14 @@
             <div class="col">
                 <div class="form-group">
                     <label>Akci provedl</label>
-                    <app-search-input [searchSource]="'users'" formControlName="fromUserId"></app-search-input>
+                    <app-search-input [searchSource]="'users'" formControlName="fromUserId" [guildId]="guildId"></app-search-input>
                 </div>
             </div>
 
             <div class="col">
                 <div class="form-group">
                     <label>Cílový uživatel</label>
-                    <app-search-input [searchSource]="'users'" formControlName="toUserId"></app-search-input>
+                    <app-search-input [searchSource]="'users'" formControlName="toUserId" [guildId]="guildId"></app-search-input>
                 </div>
             </div>
         </div>

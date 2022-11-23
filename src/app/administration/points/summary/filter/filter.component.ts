@@ -26,6 +26,8 @@ export class FilterComponent extends FilterComponentBase<GetPointsSummaryParams>
         return this.route.snapshot.data?.merged ?? false;
     }
 
+    get guildId(): string | null { return this.form?.get('guildId')?.value as string; }
+
     configure(): void {
         this.filterId = 'PointsSummary' + (this.isMerged ? '-Merged' : '');
     }
