@@ -20,4 +20,8 @@ app-card {
             margin-bottom: 5px;
         }
     }
+
+    & .btn-group button > * {
+        margin-left: 6px;
+    }
 }

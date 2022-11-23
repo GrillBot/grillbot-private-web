@@ -3,7 +3,6 @@ import { DateTime } from './datetime';
 import { Role } from './roles';
 import { GuildUser, User } from './users';
 import { Guild } from './guilds';
-import { QueryParam } from './http';
 import { Support } from '../lib/support';
 import { FilterBase, RangeParams, createRangeParams } from './common';
 
@@ -189,4 +188,11 @@ export class UnverifyLogParams extends FilterBase {
             guildId: this.guildId
         };
     }
+}
+
+export class UpdateUnverifyParams {
+    constructor(
+        public endAt: string,
+        public reason: string
+    ) { }
 }

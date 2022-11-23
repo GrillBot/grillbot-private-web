@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { UnverifyLogParams, UnverifyLogItem } from './../models/unverify';
+import { UnverifyLogParams, UnverifyLogItem, UpdateUnverifyParams } from './../models/unverify';
 import { catchError, map } from 'rxjs/operators';
 import { EmptyObservable, ObservableList, PaginatedResponse } from './../models/common';
 import { Injectable } from '@angular/core';
@@ -34,12 +34,11 @@ export class UnverifyService {
         );
     }
 
-    updateUnverifyTime(guildId: string, userId: string, newEnd: string): Observable<string> {
-        const parameter = new QueryParam('endTime', newEnd);
-        const url = this.base.createUrl(`unverify/${guildId}/${userId}`, [parameter]);
+    updateUnverifyTime(guildId: string, userId: string, params: UpdateUnverifyParams): Observable<string> {
+        const url = this.base.createUrl(`unverify/${guildId}/${userId}`);
         const headers = this.base.getHttpHeaders();
 
-        return this.base.http.put<{ message: string }>(url, null, { headers }).pipe(
+        return this.base.http.put<{ message: string }>(url, params, { headers }).pipe(
             map(data => data.message),
             catchError((err: HttpErrorResponse) => this.base.catchError(err))
         );

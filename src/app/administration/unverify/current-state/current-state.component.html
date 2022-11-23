@@ -56,10 +56,20 @@
             </div>
         </div>
 
+        <div class="box" *ngIf="!unverify.isSelfUnverify">
+            <h5>Důvod</h5>
+            <pre class="alert alert-secondary pt-3">{{unverify.reason}}</pre>
+        </div>
+
         <div class="btn-group mt-2">
-            <button class="btn btn-outline-primary" (click)="showReason(unverify)" *ngIf="!unverify.isSelfUnverify">Důvod</button>
-            <button class="btn btn-outline-primary" (click)="openTimeUpdate(unverify)">Upravit čas</button>
-            <button class="btn btn-outline-danger" (click)="removeUnverify(unverify)">Odebrat</button>
+            <button #edit_button class="btn btn-outline-primary d-flex" (click)="openTimeUpdate(unverify, edit_button)">
+                Upravit čas
+                <app-loading [small]="true" [noText]="true" *ngIf="edit_button.disabled"></app-loading>
+            </button>
+            <button #remove_button class="btn btn-outline-danger d-flex" (click)="removeUnverify(unverify, remove_button)">
+                Odebrat
+                <app-loading [small]="true" [noText]="true" *ngIf="remove_button.disabled"></app-loading>
+            </button>
         </div>
     </app-card>
 </ng-template>
