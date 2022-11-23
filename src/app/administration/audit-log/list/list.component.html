@@ -5,7 +5,7 @@
         <ng-container *ngIf="list.isDataLoaded">
             <div class="row">
                 <div class="col">
-                    <table class="table table-bordered table-sm" *ngIf="!list.isEmpty">
+                    <table class="table table-bordered table-sm no-print" *ngIf="!list.isEmpty">
                         <thead>
                             <tr>
                                 <td style="width: 150px">Seřadit podle: </td>
@@ -43,7 +43,7 @@
             <ng-container *ngTemplateOutlet="logRowContent;context:{item:item}"></ng-container>
         </div>
 
-        <div class="col-md-auto">
+        <div class="col-md-auto no-print">
             <div class="btn-group" role="group">
                 <button class="btn btn-outline-primary" *ngIf="item.canOpenDetail" (click)="openDetail(item, false)"
                     title="Zobrazit detail záznamu">

@@ -13,10 +13,18 @@ table {
 
                 &.sort-desc:after {
                     content: "▼";
+
+                    @media print {
+                        display: none;
+                    }
                 }
 
                 &.sort-asc:after {
                     content: "▲";
+
+                    @media print {
+                        display: none;
+                    }
                 }
             }
         }

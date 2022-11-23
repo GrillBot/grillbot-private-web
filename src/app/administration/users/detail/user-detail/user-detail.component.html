@@ -4,7 +4,7 @@
 
 <ng-container *ngIf="data">
     <div class="row ms-0 me-0">
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xl-2 mb-3">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xl-2 mb-3 profile-card">
             <app-card [header]="false">
                 <div class="d-flex justify-content-center server-pfp">
                     <img width="150" height="150" [src]="data.avatarUrl" [alt]="data.username"
@@ -38,7 +38,7 @@
             </app-card>
         </div>
 
-        <div class="col">
+        <div class="col-md">
             <div class="alert alert-warning mb-3" *ngIf="!data.isKnown">
                 <i class="fas fa-exclamation-triangle"></i>
                 Tento uživatel si pravděpodobně zrušil účet. Data mohou být neúplná.

@@ -5,7 +5,7 @@
         <ng-container *ngIf="list.isDataLoaded">
             <div class="row">
                 <div class="col">
-                    <table class="table table-bordered table-sm">
+                    <table class="table table-bordered table-sm no-print">
                         <thead>
                             <tr>
                                 <th>Seřadit podle: </th>
@@ -129,7 +129,7 @@
                         </div>
                     </div>
 
-                    <div class="col-2 d-flex justify-content-end" *ngIf="item.isUnverify">
+                    <div class="col-2 d-flex justify-content-end no-print" *ngIf="item.isUnverify">
                         <div class="row mt-2">
                             <div class="col">
                                 <button class="btn btn-outline-success" (click)="recoverState(item)">Obnovit stav</button>

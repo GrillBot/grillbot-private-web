@@ -1,14 +1,14 @@
 <div class="row ms-0 me-0 mt-3">
     <div class="col">
         <app-card [title]="'Ponechatelné přístupy'" [icon]="'fas fa-book-dead'">
-            <i class="mt-0"><small>Kliknutím na koš smažete celou skupinu. Kliknutím na položku smažete pouze jednu položku.</small></i>
+            <i class="mt-0 no-print"><small>Kliknutím na koš smažete celou skupinu. Kliknutím na položku smažete pouze jednu položku.</small></i>
 
             <table class="table table-sm table-bordered auto-column-width mb-0" *ngIf="$keepablesRequest | async as response; else loading">
                 <thead>
                     <tr>
                         <th>Skupina</th>
                         <th>Položky</th>
-                        <th style="width: 100px !important;">Akce</th>
+                        <th style="width: 100px !important;" class="no-print">Akce</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -20,7 +20,7 @@
                                 <span></span>
                             </ng-container>
                         </td>
-                        <td style="width: 100px !important;">
+                        <td style="width: 100px !important;" class="no-print">
                             <list-button title="Smazat skupinu" icon="trash-alt" (clicked)="remove(item.key)"></list-button>
                         </td>
                     </tr>
@@ -30,7 +30,7 @@
     </div>
 </div>
 
-<div class="row ms-0 me-0 mt-3">
+<div class="row ms-0 me-0 mt-3 no-print">
     <div class="col">
         <app-card [title]="'Přidání přístupu'">
             <i><small>Je možné přidávat více přístupů najednou. Tlačítko + přidá řádek.</small></i>

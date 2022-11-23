@@ -14,7 +14,7 @@
                     <th>Server</th>
                     <th sortable (clicked)="setSort($event)" [key]="'RolePermissions'" [sort]="sort">Počet práv (role)</th>
                     <th sortable (clicked)="setSort($event)" [key]="'UserPermissions'" [sort]="sort">Počet práv (uživatel)</th>
-                    <th>Akce</th>
+                    <th class="no-print">Akce</th>
                 </tr>
             </thead>
             <tbody>
@@ -39,7 +39,7 @@
                     </td>
                     <td>{{item.rolePermissionsCount?.toLocaleString()}}</td>
                     <td>{{item.userPermissionsCount?.toLocaleString()}}</td>
-                    <td>
+                    <td class="no-print">
                         <list-button [link]="'/admin/channels/' + item.id" [icon]="'info'"></list-button>
                     </td>
                 </tr>

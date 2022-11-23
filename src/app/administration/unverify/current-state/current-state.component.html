@@ -61,7 +61,7 @@
             <pre class="alert alert-secondary pt-3">{{unverify.reason}}</pre>
         </div>
 
-        <div class="btn-group mt-2">
+        <div class="btn-group mt-2 no-print">
             <button #edit_button class="btn btn-outline-primary d-flex" (click)="openTimeUpdate(unverify, edit_button)">
                 Upravit čas
                 <app-loading [small]="true" [noText]="true" *ngIf="edit_button.disabled"></app-loading>

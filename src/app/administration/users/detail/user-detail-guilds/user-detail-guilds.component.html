@@ -31,7 +31,6 @@
                 </div>
                 <div keyValueItem class="col-md-auto" [key]="'Počet obdržených reakcí'" [value]="guild.obtainedReactions.toLocaleString()">
                 </div>
-
             </div>
 
             <div *ngIf="guild.usedInvite" class="mb-2">
@@ -51,7 +50,8 @@
                 <div class="col-md-4 mb-3" *ngIf="guild.createdInvites && guild.createdInvites.length > 0">
                     <span class="d-block">
                         Vytvořené pozvánky
-                        <a class="smaller" href="javascript:;" (click)="toggleVisibility('invites', i)">{{visibilityText('invites', i)}}</a>
+                        <a class="smaller no-print" href="javascript:;" (click)="toggleVisibility('invites', i)">{{visibilityText('invites',
+                            i)}}</a>
                     </span>
                     <table class="table table-sm table-bordered table-striped auto-column-width mb-0" *ngIf="isVisible('invites', i)">
                         <thead>
@@ -75,8 +75,8 @@
                 <div class="col-md-4 mb-3" *ngIf="guild.nicknameHistory.length > 0">
                     <span class="d-block">
                         Dřívější přezdívky
-                        <a class="smaller" href="javascript:;"
-                            (click)="toggleVisibility('nicknameHistory', i)">{{visibilityText('nicknameHistory', i)}}</a>
+                        <a class="smaller no-print" href="javascript:;" (click)="toggleVisibility('nicknameHistory', i)">
+                            {{visibilityText('nicknameHistory', i)}}</a>
                     </span>
                     <span *ngIf="isVisible('nicknameHistory', i)">
                         <ol>
@@ -88,7 +88,8 @@
                 <div class="col-md-4 mb-3">
                     <span class="d-block">
                         Body
-                        <a class="smaller" href="javascript:;" (click)="toggleVisibility('points', i)">{{visibilityText('points', i)}}</a>
+                        <a class="smaller no-print" href="javascript:;" (click)="toggleVisibility('points', i)">{{visibilityText('points',
+                            i)}}</a>
                     </span>
                     <span *ngIf="isVisible('points', i)">
                         <app-loading [small]="true" *ngIf="!points"></app-loading>
@@ -106,7 +107,7 @@
                 <div class="col mb-3">
                     <span class="d-block">
                         Přístupné kanály
-                        <a class="smaller" href="javascript:;"
+                        <a class="smaller no-print" href="javascript:;"
                             (click)="toggleVisibility('visibleChannels', i)">{{visibilityText('visibleChannels', i)}}</a>
                     </span>
                     <div *ngIf="isVisible('visibleChannels', i)">
@@ -121,7 +122,7 @@
                 <div class="col mb-3">
                     <span class="d-block">
                         Aktivita v kanálech
-                        <a class="smaller" href="javascript:;" (click)="toggleVisibility('channels', i)">{{visibilityText('channels',
+                        <a class="smaller no-print" href="javascript:;" (click)="toggleVisibility('channels', i)">{{visibilityText('channels',
                             i)}}</a>
                     </span>
                     <table class="table table-sm table-bordered table-striped mb-0 auto-column-width" *ngIf="isVisible('channels', i)">
@@ -152,7 +153,7 @@
                 <div class="col">
                     <span class="d-block">
                         Použité emotikony
-                        <a class="smaller" href="javascript:;" (click)="toggleVisibility('emotes', i)">{{visibilityText('emotes',
+                        <a class="smaller no-print" href="javascript:;" (click)="toggleVisibility('emotes', i)">{{visibilityText('emotes',
                             i)}}</a>
                     </span>
                     <div class="border rounded guild-emote-list" *ngIf="isVisible('emotes', i)">

@@ -16,14 +16,14 @@
                 <div class="row mt-3">
                     <div keyValueItem class="col-2" [key]="'Serverový čas'" [value]="data.currentDateTime.binding"></div>
                     <div keyValueItem class="col-2" [key]="'Stav bota'" [value]="(data.isActive ? 'Aktivní' : 'Neaktivní')"></div>
-                    <div class="col-2 d-flex align-items-end">
+                    <div class="col-2 d-flex align-items-end no-print">
                         <div class="btn-group">
                             <button class="btn btn-sm btn-success" [disabled]="data.isActive" (click)="toggleState(true)">Aktivní</button>
                             <button class="btn btn-sm btn-danger" [disabled]="!data.isActive"
                                 (click)="toggleState(false)">Neaktivní</button>
                         </div>
                     </div>
-                    <div class="col d-flex align-items-end justify">
+                    <div class="col d-flex align-items-end justify no-print">
                         <button class="btn btn-sm btn-secondary" (click)="refreshDiag()">Obnovit</button>
                     </div>
                 </div>
@@ -53,7 +53,7 @@
     </div>
 </div>
 
-<div class="row ms-0 me-0 mt-3">
+<div class="row ms-0 me-0 mt-3 no-print">
     <div class="col">
         <app-card [header]="false" [icon]="'far fa-list-alt'">
             <div class="row">

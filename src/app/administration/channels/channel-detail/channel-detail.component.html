@@ -56,7 +56,7 @@
                         [value]="data.userPermissionsCount?.toLocaleString() ?? 'Není známo'"></div>
                 </div>
 
-                <div class="row mt-1" *ngIf="!data.isCategory && !data.isDeleted">
+                <div class="row mt-1 no-print" *ngIf="!data.isCategory && !data.isDeleted">
                     <div class="col">
                         <button class="btn btn-danger btn-sm" type="button" (click)="cleanCache()">Vyčistit cache</button>
                     </div>
@@ -80,7 +80,7 @@
         </div>
     </div>
 
-    <div class="row mt-3 ms-0 me-0" *ngIf="!data.isCategory && !data.isDeleted">
+    <div class="row mt-3 ms-0 me-0 no-print" *ngIf="!data.isCategory && !data.isDeleted">
         <div class="col">
             <app-card icon="fas fa-envelope" [title]="'Odeslat zprávu do kanálu'" [allowHideButton]="true">
                 <form [formGroup]="sendMessageForm" (ngSubmit)="sendMessageSubmit()">

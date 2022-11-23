@@ -9,7 +9,7 @@
             <div>
                 <small *ngIf="recordsCount != undefined">Počet záznamů: {{recordsCount}}</small>
 
-                <button class="btn btn-link p-0" *ngIf="allowHideButton" (click)="toggleVisiblity()">
+                <button class="btn btn-link p-0 no-print" *ngIf="allowHideButton" (click)="toggleVisiblity()">
                     <ng-container *ngIf="visible">Skrýt</ng-container>
                     <ng-container *ngIf="!visible">Zobrazit</ng-container>
                 </button>
