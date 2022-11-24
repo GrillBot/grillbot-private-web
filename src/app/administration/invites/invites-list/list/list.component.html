@@ -9,7 +9,7 @@
                     <th sortable (clicked)="setSort($event)" [key]="'CreatedAt'" [sort]="sort">Vytvořeno</th>
                     <th sortable (clicked)="setSort($event)" [key]="'Creator'" [sort]="sort">Vytvořil</th>
                     <th>Server</th>
-                    <th>Použilo uživatelů</th>
+                    <th sortable (clicked)="setSort($event)" [key]="'UseCount'" [sort]="sort">Použilo uživatelů</th>
                 </tr>
             </thead>
             <tbody>
