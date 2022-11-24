@@ -234,7 +234,11 @@
 
         <ng-container *ngIf="type === AuditLogItemType.OverwriteCreated || type === AuditLogItemType.OverwriteDeleted">
             <p *ngIf="data.targetId">ID cíle: <b>{{data.targetId}}</b></p>
-            <p *ngIf="data.targetIdValue">ID cíle: <b>{{data.targetIdValue}}</b></p>
+            <p *ngIf="data.targetIdValue">
+                ID cíle:
+                <a *ngIf="data.target === 1" class="fw-bold text-dark" routerLink="/admin/users/{{data.targetIdValue}}">{{data.targetIdValue}}</a>
+                <b *ngIf="data.target !== 1">{{data.targetIdValue}}</b>
+            </p>
             <p>
                 Typ:
                 <ng-container [ngSwitch]="data.target">
