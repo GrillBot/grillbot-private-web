@@ -8,9 +8,9 @@ import { UserFilterFlags, UserFilterMapping } from './enums/user-filter-flags';
 import { UserFlags } from './enums/user-flags';
 import { StatusColorMapping, UserStatus, UserStatusTexts } from './enums/user-status';
 import { Guild } from './guilds';
-import { QueryParam } from './http';
 import { Invite, InviteBase } from './invites';
 import { UnverifyInfo } from './unverify';
+import { Role } from './roles';
 
 export class User {
     public id: string;
@@ -205,6 +205,7 @@ export class GuildUserDetail {
     public unverify: UnverifyInfo | null;
     public nicknameHistory: string[];
     public visibleChannels: Channel[];
+    public roles: Role[];
 
     static create(data: any): GuildUserDetail | null {
         if (!data) { return null; }
@@ -223,6 +224,7 @@ export class GuildUserDetail {
         detail.unverify = data.unverify ? UnverifyInfo.create(data.unverify) : null;
         detail.nicknameHistory = data.nicknameHistory ? data.nicknameHistory.map((o: string) => o) : [];
         detail.visibleChannels = data.visibleChannels ? data.visibleChannels.map((o: any) => Channel.create(o)) : [];
+        detail.roles = data.roles ? data.roles.map((o: any) => Role.create(o)) : [];
 
         return detail;
     }

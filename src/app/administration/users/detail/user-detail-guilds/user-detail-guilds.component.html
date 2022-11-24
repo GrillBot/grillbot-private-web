@@ -104,7 +104,7 @@
             </div>
 
             <div class="row" *ngIf="guild.visibleChannels.length > 0">
-                <div class="col mb-3">
+                <div class="col-md mb-3">
                     <span class="d-block">
                         Přístupné kanály
                         <a class="smaller no-print" href="javascript:;"
@@ -118,11 +118,25 @@
                 </div>
             </div>
 
+            <div class="row" *ngIf="guild.roles.length > 0">
+                <div class="col-md mb-3">
+                    <span class="d-block">
+                        Role
+                        <a class="smaller no-print" href="javascript:;" (click)="toggleVisibility('roles', i)">{{visibilityText('roles',
+                            i)}}</a>
+                    </span>
+                    <div *ngIf="isVisible('roles', i)">
+                        <span class="badge me-1" *ngFor="let role of guild.roles" [style.background-color]="role.color">{{role.name}}</span>
+                    </div>
+                </div>
+            </div>
+
             <div class="row" *ngIf="guild.channels && guild.channels.length > 0">
-                <div class="col mb-3">
+                <div class="col-md mb-3">
                     <span class="d-block">
                         Aktivita v kanálech
-                        <a class="smaller no-print" href="javascript:;" (click)="toggleVisibility('channels', i)">{{visibilityText('channels',
+                        <a class="smaller no-print" href="javascript:;"
+                            (click)="toggleVisibility('channels', i)">{{visibilityText('channels',
                             i)}}</a>
                     </span>
                     <table class="table table-sm table-bordered table-striped mb-0 auto-column-width" *ngIf="isVisible('channels', i)">
@@ -150,7 +164,7 @@
             </div>
 
             <div class="row" *ngIf="guild.emotes && guild.emotes.length > 0">
-                <div class="col">
+                <div class="col-md">
                     <span class="d-block">
                         Použité emotikony
                         <a class="smaller no-print" href="javascript:;" (click)="toggleVisibility('emotes', i)">{{visibilityText('emotes',
