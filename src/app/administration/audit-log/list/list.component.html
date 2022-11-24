@@ -237,7 +237,7 @@
             <p *ngIf="data.targetIdValue">ID cíle: <b>{{data.targetIdValue}}</b></p>
             <p>
                 Typ:
-                <ng-container [ngSwitch]="data.Target">
+                <ng-container [ngSwitch]="data.target">
                     <b *ngSwitchCase="0">Role</b>
                     <b *ngSwitchCase="1">Uživatel</b>
                 </ng-container>
