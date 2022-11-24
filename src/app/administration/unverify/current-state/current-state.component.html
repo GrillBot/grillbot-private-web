@@ -66,8 +66,14 @@
                 Upravit čas
                 <app-loading [small]="true" [noText]="true" *ngIf="edit_button.disabled"></app-loading>
             </button>
-            <button #remove_button class="btn btn-outline-danger d-flex" (click)="removeUnverify(unverify, remove_button)">
+            <button #remove_button class="btn btn-outline-danger d-flex" (click)="removeUnverify(unverify, remove_button, false)">
                 Odebrat
+                <app-loading [small]="true" [noText]="true" *ngIf="remove_button.disabled"></app-loading>
+            </button>
+            <button #force_remove_button class="btn btn-outline-danger d-flex align-items-center"
+                (click)="removeUnverify(unverify, force_remove_button, true)">
+                Smazat
+                <i class="fas fa-exclamation-triangle"></i>
                 <app-loading [small]="true" [noText]="true" *ngIf="remove_button.disabled"></app-loading>
             </button>
         </div>

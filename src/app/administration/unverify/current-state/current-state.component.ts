@@ -15,6 +15,7 @@ import { ModalService } from 'src/app/shared/modal';
 export class CurrentStateComponent implements OnInit {
     @ViewChildren('edit_button') editButtons: QueryList<ElementRef<HTMLButtonElement>>;
     @ViewChildren('remove_button') removeButtons: QueryList<ElementRef<HTMLButtonElement>>;
+    @ViewChildren('force_remove_button') forceRemoveButtons: QueryList<ElementRef<HTMLButtonElement>>;
 
     profiles: UnverifyUserProfile[];
     channels: Dictionary<string, string>;
@@ -41,6 +42,7 @@ export class CurrentStateComponent implements OnInit {
 
             this.editButtons.forEach(o => o.nativeElement.disabled = false);
             this.removeButtons.forEach(o => o.nativeElement.disabled = false);
+            this.forceRemoveButtons.forEach(o => o.nativeElement.disabled = false);
         });
     }
 
@@ -48,10 +50,13 @@ export class CurrentStateComponent implements OnInit {
         return (this.channels ? this.channels.find(o => o.key === id)?.value : '') ?? '';
     }
 
-    removeUnverify(profile: UnverifyUserProfile, button: HTMLButtonElement): void {
-        this.modalService.showQuestion('Vrácení přístupu', 'Opravdu si přejete vrátit přístup?').onAccept.subscribe(_ => {
+    removeUnverify(profile: UnverifyUserProfile, button: HTMLButtonElement, force: boolean): void {
+        const questionMessage = force ?
+            'Opravdu si přejete smazat toto odebrání přístupu?<br><b>Tato akce je nevratná a nevrací uživateli přístup!</b>' :
+            'Opravdu si přejete vrátit přístup tomto uživateli?';
+        this.modalService.showQuestion('Vrácení přístupu', questionMessage).onAccept.subscribe(_ => {
             button.disabled = true;
-            this.unverifyService.removeUnverify(profile.guild.id, profile.user.id).subscribe(() => this.reloadData());
+            this.unverifyService.removeUnverify(profile.guild.id, profile.user.id, force).subscribe(() => this.reloadData());
         });
     }
 

@@ -25,8 +25,9 @@ export class UnverifyService {
         );
     }
 
-    removeUnverify(guildId: string, userId: string): EmptyObservable {
-        const url = this.base.createUrl(`unverify/${guildId}/${userId}`);
+    removeUnverify(guildId: string, userId: string, force: boolean): EmptyObservable {
+        const parameters = [new QueryParam('force', force)];
+        const url = this.base.createUrl(`unverify/${guildId}/${userId}`, parameters);
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.delete(url, { headers }).pipe(
