@@ -40,11 +40,6 @@ const routes: Routes = [
                 data: { title: 'Pozvánky', id: 'invites' }
             },
             {
-                path: 'permissions',
-                loadChildren: () => import('./permissions/permissions.module').then(mod => mod.PermissionsModule),
-                data: { title: 'Oprávnění', id: 'permissions' }
-            },
-            {
                 path: 'reminder',
                 loadChildren: () => import('./reminders/reminders.module').then(mod => mod.RemindersModule),
                 data: { title: 'Reminder', id: 'reminder' }
