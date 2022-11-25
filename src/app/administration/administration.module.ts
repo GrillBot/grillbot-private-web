@@ -55,6 +55,11 @@ const routes: Routes = [
                 data: { title: 'Interní', id: 'internal' }
             },
             {
+                path: 'jobs',
+                loadChildren: () => import('./jobs/jobs.module').then(mod => mod.JobsModule),
+                data: { title: 'Naplánované úlohy', id: 'jobs' }
+            },
+            {
                 path: 'unverify',
                 loadChildren: () => import('./unverify/unverify.module').then(mod => mod.UnverifyModule),
                 data: { title: 'Unverify', id: 'unverify' }

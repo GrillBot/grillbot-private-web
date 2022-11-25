@@ -30,6 +30,8 @@
                 <ng-container
                     *ngTemplateOutlet="menuItem; context: {link: '/internal', icon:'fa-network-wired', title:'Interní', id:'internal'}">
                 </ng-container>
+                <ng-container *ngTemplateOutlet="menuItem; context: {link: '/jobs', icon:'fa-cogs', title: 'Naplánované úlohy', id:'jobs'}">
+                </ng-container>
                 <ng-container
                     *ngTemplateOutlet="menuItem; context: {link: '/unverify', icon:'fa-skull-crossbones', title:'Unverify', id:'unverify'}">
                 </ng-container>

@@ -5,6 +5,7 @@ import { DateTimeFormatterPipe } from './date-time-formatter.pipe';
 import { CzechBooleanPipePipe } from './czech-boolean-pipe.pipe';
 import { BitmaskToStringPipe } from './bitmask-to-string.pipe';
 import { NgModule } from '@angular/core';
+import { TimeDurationPipe } from './time-duration.pipe';
 
 @NgModule({
     declarations: [
@@ -13,7 +14,8 @@ import { NgModule } from '@angular/core';
         DateTimeFormatterPipe,
         DiscordPermsPipePipe,
         DurationPipe,
-        CutPipe
+        CutPipe,
+        TimeDurationPipe
     ],
     exports: [
         BitmaskToStringPipe,
@@ -21,7 +23,8 @@ import { NgModule } from '@angular/core';
         DateTimeFormatterPipe,
         DiscordPermsPipePipe,
         DurationPipe,
-        CutPipe
+        CutPipe,
+        TimeDurationPipe
     ]
 })
 export class PipesModule { }
