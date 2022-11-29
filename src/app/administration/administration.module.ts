@@ -60,6 +60,11 @@ const routes: Routes = [
                 data: { title: 'Naplánované úlohy', id: 'jobs' }
             },
             {
+                path: 'api-clients',
+                loadChildren: () => import('./api-clients/api-clients.module').then(mod => mod.ApiClientsModule),
+                data: { title: 'API v2 - Klienti', id: 'api-clients' }
+            },
+            {
                 path: 'unverify',
                 loadChildren: () => import('./unverify/unverify.module').then(mod => mod.UnverifyModule),
                 data: { title: 'Unverify', id: 'unverify' }

@@ -1,5 +1,5 @@
 input {
-    &.ng-invalid {
+    &.ng-dirty.ng-invalid {
         border-color: $danger;
     }
 }

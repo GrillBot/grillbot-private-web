@@ -34,6 +34,11 @@
                     <ng-container *ngIf="items.length > 1 && items.length < 5">uživatelé</ng-container>
                     <ng-container *ngIf="items.length >= 5">uživatelů</ng-container>
                 </ng-container>
+
+                <ng-container *ngIf="searchSource === 'public-api-methods'">
+                    <ng-container *ngIf="items.length > 1 && items.length < 5">metody</ng-container>
+                    <ng-container *ngIf="items.length >= 5">metod</ng-container>
+                </ng-container>
             </span>
         </div>
         <div class="ng-value" *ngIf="items.length === 1">

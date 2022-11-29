@@ -78,4 +78,14 @@ export class DataService {
             catchError((err: HttpErrorResponse) => this.base.catchError(err))
         );
     }
+
+    getPublicApiMethods(): ObservableDict<string, string> {
+        const url = this.base.createUrl('data/publicApi/methods');
+        const headers = this.base.getHttpHeaders();
+
+        return this.base.http.get<string[]>(url, { headers }).pipe(
+            map(data => data.map(k => ({ key: k, value: k }))),
+            catchError((err: HttpErrorResponse) => this.base.catchError(err))
+        );
+    }
 }
