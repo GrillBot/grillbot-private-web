@@ -1,13 +1,12 @@
 import { noop } from 'rxjs';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { Component, Input, OnInit, forwardRef } from '@angular/core';
+import { Component, Input, forwardRef } from '@angular/core';
 import { Dictionary } from 'src/app/core/models/common';
 
 @Component({
     // tslint:disable-next-line: component-selector
     selector: 'checkbox-bitmask',
     templateUrl: './checkbox-bitmask.component.html',
-    styleUrls: ['./checkbox-bitmask.component.scss'],
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
@@ -16,19 +15,14 @@ import { Dictionary } from 'src/app/core/models/common';
         }
     ]
 })
-export class CheckboxBitmaskComponent implements OnInit, ControlValueAccessor {
+export class CheckboxBitmaskComponent implements ControlValueAccessor {
     @Input() options: Dictionary<number, string>;
 
     bitmask = 0;
     disabled: boolean;
-    gridSize: number;
 
     private onChange: (value: number) => void = noop;
     private onTouched: () => void = noop;
-
-    ngOnInit(): void {
-        this.gridSize = Math.max(Math.min(this.options?.length ?? 3, 3), 1);
-    }
 
     writeValue(obj: number): void {
         this.bitmask = obj;

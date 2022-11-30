@@ -69,7 +69,7 @@
         <div class="col">
             <app-card icon="fas fa-cogs" [title]="'Nastavení'">
                 <div class="row">
-                    <div class="col-lg-auto col-sm-auto col-md-auto">
+                    <div class="col-lg col-sm col-md">
                         <app-loading [small]="true" [align]="'start'" [text]="'Probíhá ukládání'" *ngIf="settingsSaving"></app-loading>
                         <form [formGroup]="settingsForm">
                             <checkbox-bitmask [options]="flagsOptions" formControlName="flags"></checkbox-bitmask>

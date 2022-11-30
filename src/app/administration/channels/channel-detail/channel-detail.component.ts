@@ -26,7 +26,6 @@ export class ChannelDetailComponent implements OnInit {
     flagsOptions: Dictionary<number, string>;
     settingsSaving = false;
 
-
     constructor(
         private fb: FormBuilder,
         private activatedRoute: ActivatedRoute,

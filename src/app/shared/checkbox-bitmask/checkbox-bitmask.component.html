@@ -1,4 +1,6 @@
-<div class="grid grid-{{gridSize}}">
-    <app-checkbox *ngFor="let option of options" [id]="option.key.toString()" [label]="option.value" class="mr-4"
-        (onChange)="onValueChange(option.key, $event)" [checked]="isChecked(option.key)" [disabled]="disabled"></app-checkbox>
+<div class="row">
+    <div class="col-md-auto" *ngFor="let option of options">
+        <app-checkbox [id]="option.key.toString()" [label]="option.value" class="mr-4" (onChange)="onValueChange(option.key, $event)"
+            [checked]="isChecked(option.key)" [disabled]="disabled"></app-checkbox>
+    </div>
 </div>
