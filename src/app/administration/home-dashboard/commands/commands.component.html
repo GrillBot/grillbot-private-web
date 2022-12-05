@@ -1,0 +1,18 @@
+<app-card [header]="false">
+    <p class="fw-bold">Příkazy</p>
+
+    <app-loading *ngIf="loading; else view"></app-loading>
+    <ng-template #view>
+        <span class="text-danger" *ngIf="!data.commands">
+            <i class="fas fa-exclamation-triangle me-1"></i> Nezdařilo se načíst poslední příkazy.
+        </span>
+
+        <ng-container *ngIf="data.commands">
+            <div *ngFor="let item of data.commands" class="d-flex justify-content-between border-bottom" [class.text-danger]="!item.success"
+                [class.text-warning]="item.duration >= 1000">
+                <b>{{item.commandName}}</b>
+                <span>{{item.duration | timeDuration}}</span>
+            </div>
+        </ng-container>
+    </ng-template>
+</app-card>

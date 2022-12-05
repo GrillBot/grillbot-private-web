@@ -13,7 +13,11 @@ const routes: Routes = [
         component: AdministrationComponent,
         canActivateChild: [AuthGuard],
         children: [
-            { path: '', redirectTo: 'users', pathMatch: 'full' },
+            {
+                path: '',
+                loadChildren: () => import('./home-dashboard/home-dashboard.module').then(mod => mod.HomeDashboardModule),
+                data: { title: 'Domů', id: 'home' }
+            },
             {
                 path: 'servers',
                 loadChildren: () => import('./guilds/guilds.module').then(mod => mod.GuildsModule),

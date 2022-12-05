@@ -3,7 +3,7 @@ import { catchError, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { BaseService } from './base.service';
-import { DiagnosticsInfo } from '../models/system';
+import { Dashboard, DiagnosticsInfo } from '../models/system';
 import { HttpErrorResponse } from '@angular/common/http';
 import { QueryParam } from '../models/http';
 
@@ -39,5 +39,15 @@ export class SystemService {
         return this.base.http.get<string[]>(url, { headers }).pipe(
             catchError((err: HttpErrorResponse) => this.base.catchError(err))
         )
+    }
+
+    getDashboard(): Observable<Dashboard> {
+        const url = this.base.createUrl('system/dashboard');
+        const headers = this.base.getHttpHeaders();
+
+        return this.base.http.get<Dashboard>(url, { headers }).pipe(
+            map((o: any) => Dashboard.create(o)),
+            catchError((err: HttpErrorResponse) => this.base.catchError(err))
+        );
     }
 }

@@ -11,3 +11,10 @@ export enum ConnectionStateTexts {
     Connected = 'Připojen',
     Disconnecting = 'Odpojování'
 }
+
+export enum ConnectionStateColors {
+    Disconnected = 'danger',
+    Connecting = 'warning',
+    Connected = 'success',
+    Disconnecting = 'danger'
+}
