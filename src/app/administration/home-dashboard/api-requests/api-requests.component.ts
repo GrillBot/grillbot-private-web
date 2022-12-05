@@ -16,6 +16,6 @@ export class ApiRequestsComponent {
     }
 
     isFailedRequest(statusCode: string): boolean {
-        return parseInt(statusCode.substring(0, 3), 10) > 400;
+        return parseInt(statusCode.substring(0, 3), 10) >= 400;
     }
 }
