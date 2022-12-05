@@ -12,7 +12,7 @@
 
         <ng-container *ngIf="items">
             <div *ngFor="let item of items" class="d-flex justify-content-between border-bottom"
-                [class.text-danger]="item.statusCode != '200 (OK)'" [class.text-warning]="item.duration >= 1000">
+                [class.text-danger]="isFailedRequest(item.statusCode)" [class.text-warning]="item.duration >= 1000">
                 <b>{{item.endpoint}}</b>
                 <span>{{item.statusCode}}, {{item.duration}} ms</span>
             </div>

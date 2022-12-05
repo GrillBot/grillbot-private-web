@@ -4,7 +4,7 @@
     <app-loading *ngIf="loading; else view"></app-loading>
     <ng-template #view>
         <span class="badge bg-secondary me-1" *ngIf="data.isDevelopment">Development</span>
-        <span class="badge bg-success original me-" *ngIf="!data.isDevelopment">Production</span>
+        <span class="badge bg-success original me-1" *ngIf="!data.isDevelopment">Production</span>
         <span class="badge bg-{{connectionColor}} original me-1">{{connectionText}}</span>
         <span class="badge bg-danger original cursor-ptr text-decoration-underline" *ngIf="!data.isActive"
             (click)="toggleState(true)">Neaktivní</span>

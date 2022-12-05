@@ -14,4 +14,8 @@ export class ApiRequestsComponent {
     get items(): List<DashboardApiCall> {
         return this.isPublic ? this.data.publicApiRequests : this.data.internalApiRequests;
     }
+
+    isFailedRequest(statusCode: string): boolean {
+        return parseInt(statusCode.substring(0, 3), 10) > 400;
+    }
 }
