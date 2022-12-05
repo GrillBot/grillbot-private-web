@@ -28,9 +28,6 @@
                 </ng-container>
                 <ng-container *ngTemplateOutlet="menuItem; context: {link: '/search', icon:'fa-search', title:'Hledání', id:'searching'}">
                 </ng-container>
-                <ng-container
-                    *ngTemplateOutlet="menuItem; context: {link: '/internal', icon:'fa-network-wired', title:'Interní', id:'internal'}">
-                </ng-container>
                 <ng-container *ngTemplateOutlet="menuItem; context: {link: '/jobs', icon:'fa-cogs', title: 'Naplánované úlohy', id:'jobs'}">
                 </ng-container>
                 <ng-container
@@ -47,6 +44,9 @@
                 </ng-container>
                 <ng-container
                     *ngTemplateOutlet="menuItem; context: {link:'/auto-reply',icon:'fa-reply-all',title:'Automatické odpovědi',id:'auto-reply'}">
+                </ng-container>
+                <ng-container
+                    *ngTemplateOutlet="menuItem; context: {link: '/internal', icon:'fa-tachometer-alt', title:'Podrobné statistiky', id:'internal'}">
                 </ng-container>
                 <a class="nav-link cursor-ptr" (click)="authService.logout()">
                     <div class="sb-nav-link-icon">

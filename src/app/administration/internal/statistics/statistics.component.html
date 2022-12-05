@@ -40,7 +40,7 @@
     <ng-container *ngIf="isEventLog">
         <ul *ngIf="listQuery | async as result; else loading">
             <li *ngFor="let item of result">
-                <code class="text-dark" [class.bg-warning]="!item.startsWith('PresenceUpdated')">{{item}}</code>
+                <code class="text-dark">{{item}}</code>
             </li>
         </ul>
     </ng-container>
