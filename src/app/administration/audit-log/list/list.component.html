@@ -218,12 +218,13 @@
 
         <ng-container *ngIf="type === AuditLogItemType.ChannelUpdated">
             Změněno:
-            <b *ngIf="data.before.name || data.after.name">Název </b>
-            <b *ngIf="data.before.slowMode != undefined || data.after.slowMode != undefined">SlowMode </b>
-            <b *ngIf="data.before.isNsfw != undefined || data.after.isNsfw != undefined">NSFW stav </b>
-            <b *ngIf="data.before.bitrate || data.after.bitrate">Bitrate</b>
-            <b *ngIf="data.before.topic || data.after.topic">Popis</b>
-            <b *ngIf="data.before.flags != undefined || data.after.flags != undefined">Příznaky</b>
+            <b *ngIf="data.before.name != data.after.name">Název</b>
+            <b *ngIf="data.before.slowMode != data.after.slowMode">SlowMode</b>
+            <b *ngIf="data.before.isNsfw != data.after.isNsfw">NSFW stav</b>
+            <b *ngIf="data.before.bitrate != data.after.bitrate">Bitrate</b>
+            <b *ngIf="data.before.topic != data.after.topic">Popis</b>
+            <b *ngIf="data.before.flags != data.after.flags">Příznaky</b>
+            <b *ngIf="data.before.position != data.after.position">Pozice</b>
         </ng-container>
 
         <ng-container *ngIf="type === AuditLogItemType.EmojiDeleted">

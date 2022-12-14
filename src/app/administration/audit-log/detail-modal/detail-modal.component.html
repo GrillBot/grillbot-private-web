@@ -186,40 +186,46 @@
 </ng-template>
 
 <ng-template #channelUpdated>
-    <tr *ngIf="data.before.name || data.after.name">
+    <tr *ngIf="data.before.name != data.after.name">
         <td>Název</td>
         <td>{{data.before.name}}</td>
         <td>{{data.after.name}}</td>
     </tr>
 
-    <tr *ngIf="data.before.slowMode != undefined || data.after.slowMode != undefined">
+    <tr *ngIf="data.before.slowMode != data.after.slowMode">
         <td>SlowMode (vteřiny)</td>
         <td>{{data.before.slowMode}}</td>
         <td>{{data.after.slowMode}}</td>
     </tr>
 
-    <tr *ngIf="data.before.isNsfw != undefined || data.after.isNsfw != undefined">
+    <tr *ngIf="data.before.isNsfw != data.after.isNsfw">
         <td>NSFW</td>
         <td>{{data.before.isNsfw | czechBooleanPipe}}</td>
         <td>{{data.after.isNsfw | czechBooleanPipe}}</td>
     </tr>
 
-    <tr *ngIf="data.before.bitrate || data.after.bitrate">
+    <tr *ngIf="data.before.bitrate != data.after.bitrate">
         <td>Bitrate (bps)</td>
         <td>{{data.before.bitrate}}</td>
         <td>{{data.after.bitrate}}</td>
     </tr>
 
-    <tr *ngIf="data.before.topic || data.after.topic">
+    <tr *ngIf="data.before.topic != data.after.topic">
         <td>Popis</td>
         <td>{{data.before.topic}}</td>
         <td>{{data.after.topic}}</td>
     </tr>
 
-    <tr *ngIf="data.before.flags != undefined || data.after.flags != undefined">
+    <tr *ngIf="data.before.flags != data.after.flags">
         <td>Příznaky</td>
         <td>{{data.before.flags}} ({{data.before.flags | bitmaskToString:32}})</td>
         <td>{{data.after.flags}} ({{data.after.flags | bitmaskToString:32}})</td>
+    </tr>
+
+    <tr *ngIf="data.before.position != data.after.position">
+        <td>Pozice</td>
+        <td>{{data.before.position.toLocaleString()}}</td>
+        <td>{{data.after.position.toLocaleString()}}</td>
     </tr>
 </ng-template>
 
@@ -564,11 +570,13 @@
     <tr>
         <td>Autor</td>
         <td>
-            <a *ngIf="data.data.author.id" routerLink="/admin/users/{{data.data.author.id}}" class="text-dark" (click)="modal.modal.close()">
+            <a *ngIf="data.data.author.id" routerLink="/admin/users/{{data.data.author.id}}" class="text-dark"
+                (click)="modal.modal.close()">
                 {{data.data.author.username}}#{{data.data.author.discriminator}}
             </a>
 
-            <a *ngIf="data.data.author.userId" routerLink="/admin/users/{{data.data.author.userId}}" class="text-dark" (click)="modal.modal.close()">
+            <a *ngIf="data.data.author.userId" routerLink="/admin/users/{{data.data.author.userId}}" class="text-dark"
+                (click)="modal.modal.close()">
                 {{data.data.author.username}}#{{data.data.author.discriminator}}
             </a>
         </td>
