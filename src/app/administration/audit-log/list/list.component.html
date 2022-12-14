@@ -236,7 +236,8 @@
             <p *ngIf="data.targetId">ID cíle: <b>{{data.targetId}}</b></p>
             <p *ngIf="data.targetIdValue">
                 ID cíle:
-                <a *ngIf="data.target === 1" class="fw-bold text-dark" routerLink="/admin/users/{{data.targetIdValue}}">{{data.targetIdValue}}</a>
+                <a *ngIf="data.target === 1" class="fw-bold text-dark"
+                    routerLink="/admin/users/{{data.targetIdValue}}">{{data.targetIdValue}}</a>
                 <b *ngIf="data.target !== 1">{{data.targetIdValue}}</b>
             </p>
             <p>
@@ -251,10 +252,18 @@
         </ng-container>
 
         <ng-container *ngIf="type === AuditLogItemType.OverwriteUpdated">
-            <p *ngIf="data.before.targetId ?? data.after.targetId">ID cíle: <b>{{data.before.targetId ?? data.after.targetId}}</b></p>
-            <p *ngIf="data.before.Target != undefined || data.after.Target != undefined">
+            <p *ngIf="data.before?.targetId > 0 || data.after?.targetId > 0">ID cíle: <b>{{data.before.targetId ?? data.after.targetId}}</b>
+            </p>
+            <p *ngIf="data.before?.targetIdValue ?? data.after?.targetIdValue">
+                ID cíle:
+                <a *ngIf="(data.before?.target ?? data.after?.target) === 1" class="fw-bold text-dark"
+                    routerLink="/admin/users/{{data.before.targetIdValue ?? data.after.targetIdValue}}">
+                    {{data.before.targetIdValue ?? data.after.targetIdValue}}</a>
+                <b *ngIf="(data.before?.target ?? data.after?.target) !== 1">{{data.before.targetIdValue ?? data.after.targetIdValue}}</b>
+            </p>
+            <p *ngIf="data.before?.target != undefined || data.after?.target != undefined">
                 Typ:
-                <ng-container [ngSwitch]="data.before.Target ?? data.after.Target">
+                <ng-container [ngSwitch]="data.before.target ?? data.after.target">
                     <b *ngSwitchCase="0">Role</b>
                     <b *ngSwitchCase="1">Uživatel</b>
                 </ng-container>
@@ -338,7 +347,8 @@
 
         <ng-container *ngIf="type === AuditLogItemType.API">
             <p>Akce: <b>{{data.controllerName}}.{{data.actionName}}</b></p>
-            <p>HTTP akce: <b>{{data.method}} {{data.templatePath}}<span *ngIf="data.apiGroupName"> (API {{data.apiGroupName}})</span></b></p>
+            <p>HTTP akce: <b>{{data.method}} {{data.templatePath}}<span *ngIf="data.apiGroupName"> (API {{data.apiGroupName}})</span></b>
+            </p>
             <p *ngIf="data.statusCode">Výsledek: <b>{{data.statusCode}}</b></p>
         </ng-container>
     </div>
