@@ -385,21 +385,107 @@
             </ng-container>
         </td>
     </tr>
-    <tr>
+    <tr *ngIf="data.iconChanged">
         <td>Změněna ikona</td>
-        <td colspan="2">{{data.iconChanged | czechBooleanPipe}}</td>
+        <td colspan="2">{{true | czechBooleanPipe}}</td>
     </tr>
-    <tr>
+    <tr *ngIf="data.splashChanged">
         <td>Změněno pozadí pozvánky</td>
-        <td colspan="2">{{data.splashChanged | czechBooleanPipe}}</td>
+        <td colspan="2">{{true | czechBooleanPipe}}</td>
     </tr>
-    <tr>
+    <tr *ngIf="data.discoverySplashChanged">
         <td>Změněno komunitní pozadí</td>
-        <td colspan="2">{{data.discoverySplashChanged | czechBooleanPipe}}</td>
+        <td colspan="2">{{true | czechBooleanPipe}}</td>
     </tr>
-    <tr>
+    <tr *ngIf="data.bannerChanged">
         <td>Změnen banner</td>
-        <td colspan="2">{{data.bannerChanged | czechBooleanPipe}}</td>
+        <td colspan="2">{{true | czechBooleanPipe}}</td>
+    </tr>
+    <tr *ngIf="data.verificationLevel">
+        <td>Úroveň ověření</td>
+        <td>
+            <ng-container [ngSwitch]="data.verificationLevel.before">
+                <ng-container *ngSwitchCase="0">Žádná</ng-container>
+                <ng-container *ngSwitchCase="1">Nízká</ng-container>
+                <ng-container *ngSwitchCase="2">Střední</ng-container>
+                <ng-container *ngSwitchCase="3">Vysoká</ng-container>
+                <ng-container *ngSwitchCase="4">Extrémní</ng-container>
+            </ng-container>
+        </td>
+        <td>
+            <ng-container [ngSwitch]="data.verificationLevel.after">
+                <ng-container *ngSwitchCase="0">Žádná</ng-container>
+                <ng-container *ngSwitchCase="1">Nízká</ng-container>
+                <ng-container *ngSwitchCase="2">Střední</ng-container>
+                <ng-container *ngSwitchCase="3">Vysoká</ng-container>
+                <ng-container *ngSwitchCase="4">Extrémní</ng-container>
+            </ng-container>
+        </td>
+    </tr>
+    <tr *ngIf="data.explicitContentFilter">
+        <td>Filtr explicitního obsahu</td>
+        <td>
+            <ng-container [ngSwitch]="data.explicitContentFilter.before">
+                <ng-container *ngSwitchCase="0">Vypnuto</ng-container>
+                <ng-container *ngSwitchCase="1">Uživatelé bez rolí</ng-container>
+                <ng-container *ngSwitchCase="2">Všichni uživatelé</ng-container>
+            </ng-container>
+        </td>
+        <td>
+            <ng-container [ngSwitch]="data.explicitContentFilter.after">
+                <ng-container *ngSwitchCase="0">Vypnuto</ng-container>
+                <ng-container *ngSwitchCase="1">Uživatelé bez rolí</ng-container>
+                <ng-container *ngSwitchCase="2">Všichni uživatelé</ng-container>
+            </ng-container>
+        </td>
+    </tr>
+    <tr *ngIf="data.features">
+        <td>Funkcionalita</td>
+        <td>{{data.features.before | bitmaskToString:64}}</td>
+        <td>{{data.features.after | bitmaskToString:64}}</td>
+    </tr>
+    <tr *ngIf="data.premiumTier">
+        <td>Úroveň vylepšení</td>
+        <td>
+            <ng-container [ngSwitch]="data.premiumTier.before">
+                <ng-container *ngSwitchCase="0">Žádná úroveň</ng-container>
+                <ng-container *ngSwitchCase="1">Tier1</ng-container>
+                <ng-container *ngSwitchCase="2">Tier2</ng-container>
+                <ng-container *ngSwitchCase="2">Tier3</ng-container>
+            </ng-container>
+        </td>
+        <td>
+            <ng-container [ngSwitch]="data.premiumTier.after">
+                <ng-container *ngSwitchCase="0">Žádná úroveň</ng-container>
+                <ng-container *ngSwitchCase="1">Tier1</ng-container>
+                <ng-container *ngSwitchCase="2">Tier2</ng-container>
+                <ng-container *ngSwitchCase="2">Tier3</ng-container>
+            </ng-container>
+        </td>
+    </tr>
+    <tr *ngIf="data.systemChannelFlags">
+        <td>Nastavení systémového kanálu</td>
+        <td>{{data.systemChannelFlags.before | bitmaskToString:64}}</td>
+        <td>{{data.systemChannelFlags.after | bitmaskToString:64}}</td>
+    </tr>
+    <tr *ngIf="data.nsfwLevel">
+        <td>Úroveň NSFW</td>
+        <td>
+            <ng-container [ngSwitch]="data.nsfwLevel.before">
+                <ng-container *ngSwitchCase="0">Výchozí</ng-container>
+                <ng-container *ngSwitchCase="1">Explicitní</ng-container>
+                <ng-container *ngSwitchCase="2">Bezpečný</ng-container>
+                <ng-container *ngSwitchCase="3">Věkově omezený</ng-container>
+            </ng-container>
+        </td>
+        <td>
+            <ng-container [ngSwitch]="data.nsfwLevel.after">
+                <ng-container *ngSwitchCase="0">Výchozí</ng-container>
+                <ng-container *ngSwitchCase="1">Explicitní</ng-container>
+                <ng-container *ngSwitchCase="2">Bezpečný</ng-container>
+                <ng-container *ngSwitchCase="3">Věkově omezený</ng-container>
+            </ng-container>
+        </td>
     </tr>
 </ng-template>
 
