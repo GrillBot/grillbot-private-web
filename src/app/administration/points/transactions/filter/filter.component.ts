@@ -1,9 +1,11 @@
+import { GraphModalComponent } from '../graph-modal/graph-modal.component';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { Component } from '@angular/core';
 import { FilterComponentBase } from 'src/app/shared/common-page/filter-component-base';
 import { StorageService } from 'src/app/core/services/storage.service';
 import { GetPointTransactionsParams } from 'src/app/core/models/points';
+import { ModalService } from 'src/app/shared/modal';
 
 @Component({
     selector: 'app-filter',
@@ -13,7 +15,8 @@ export class FilterComponent extends FilterComponentBase<GetPointTransactionsPar
     constructor(
         fb: FormBuilder,
         storage: StorageService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private modalService: ModalService
     ) {
         super(fb, storage);
     }
@@ -76,5 +79,11 @@ export class FilterComponent extends FilterComponentBase<GetPointTransactionsPar
                 this.form.get('onlyReactions').setValue(false, { emitEvent: false });
             }
         });
+    }
+
+    showGraph(): void {
+        const modal = this.modalService.showCustomModal<GraphModalComponent>(GraphModalComponent, 'xl');
+        modal.componentInstance.filter = this.createData(false);
+        modal.componentInstance.isMerged = this.isMerged;
     }
 }

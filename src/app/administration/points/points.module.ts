@@ -9,10 +9,6 @@ const routes: Routes = [
         loadChildren: () => import('./transactions/transactions.module').then(mod => mod.TransactionsModule)
     },
     {
-        path: 'summary',
-        loadChildren: () => import('./summary/summary.module').then(mod => mod.SummaryModule)
-    },
-    {
         path: 'service',
         loadChildren: () => import('./service/service.module').then(mod => mod.ServiceModule)
     }

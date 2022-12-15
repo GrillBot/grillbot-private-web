@@ -1,6 +1,6 @@
-import { Dictionary } from './../../../../core/models/common';
+import { Dictionary } from '../../../../core/models/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { GetPointsSummaryParams } from 'src/app/core/models/points';
+import { GetPointTransactionsParams } from 'src/app/core/models/points';
 import { PointsService } from 'src/app/core/services/points.service';
 
 @Component({
@@ -8,7 +8,7 @@ import { PointsService } from 'src/app/core/services/points.service';
     templateUrl: './graph-modal.component.html'
 })
 export class GraphModalComponent implements OnInit {
-    @Input() filter: GetPointsSummaryParams;
+    @Input() filter: GetPointTransactionsParams;
     @Input() isMerged: boolean;
 
     messagePoints: Dictionary<string, number> = [];
@@ -20,6 +20,8 @@ export class GraphModalComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
+        this.filter.merged = this.isMerged;
+
         this.service.getGraphData(this.filter).subscribe(data => {
             for (const item of data) {
                 this.messagePoints.push({ key: item.day.toLocaleString(true), value: item.messagePoints });

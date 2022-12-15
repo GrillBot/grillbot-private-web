@@ -65,24 +65,6 @@ export class PointsSummaryBase {
     }
 }
 
-export class PointsSummary extends PointsSummaryBase {
-    public guild: Guild;
-    public user: User;
-    public mergeInfo: PointsMergeInfo | null;
-
-    static create(data: any): PointsSummary | null {
-        if (!data) { return null; }
-
-        const summary = new PointsSummary();
-        Object.assign(summary, super.create(data));
-        summary.guild = Guild.create(data.guild);
-        summary.user = User.create(data.user);
-        summary.mergeInfo = data.mergeInfo ? PointsMergeInfo.create(data.mergeInfo) : null;
-
-        return summary;
-    }
-}
-
 export class GetPointTransactionsParams extends FilterBase {
     public merged: boolean = false;
     public guildId: string | null;
@@ -117,35 +99,6 @@ export class GetPointTransactionsParams extends FilterBase {
             onlyReactions: this.onlyReactions,
             onlyMessages: this.onlyMessages,
             messageId: this.messageId
-        };
-    }
-}
-
-export class GetPointsSummaryParams extends FilterBase {
-    public merged: boolean = false;
-    public guildId: string | null;
-    public userId: string | null;
-    public days: RangeParams<string> | null;
-
-    static get empty(): GetPointsSummaryParams { return new GetPointsSummaryParams(); }
-
-    static fromForm(form: any): GetPointsSummaryParams | null {
-        if (!form) { return null; }
-
-        const params = new GetPointsSummaryParams();
-        params.days = createRangeParams(form.daysFrom, form.daysTo);
-        params.guildId = form.guildId;
-        params.userId = form.userId;
-
-        return params;
-    }
-
-    public serialize(): any {
-        return {
-            guildId: this.guildId,
-            userId: this.userId,
-            daysFrom: this.days?.from,
-            daysTo: this.days?.to
         };
     }
 }

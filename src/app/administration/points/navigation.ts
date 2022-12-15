@@ -8,9 +8,7 @@ export class PointsNavigation implements INavigation {
     getItems(): NavigationItem[] {
         return [
             new NavigationItem('/admin/points/transactions', 'Transakce - Aktivní'),
-            new NavigationItem('/admin/points/summary', 'Denní souhrny - Aktivní'),
             new NavigationItem('/admin/points/transactions/merged', 'Transakce - Archivní'),
-            new NavigationItem('/admin/points/summary/merged', 'Denní souhrny - Archivní'),
             new NavigationItem('/admin/points/service', 'Servisní operace')
         ];
     }

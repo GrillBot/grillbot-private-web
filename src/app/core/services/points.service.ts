@@ -1,4 +1,4 @@
-import { GetPointsSummaryParams, PointsSummary, PointsSummaryBase, UserPointsItem } from './../models/points';
+import { PointsSummaryBase, UserPointsItem } from './../models/points';
 import { HttpErrorResponse } from '@angular/common/http';
 import { List, ObservableList, ObservablePaginatedData, PaginatedResponse, EmptyObservable } from './../models/common';
 import { map, catchError } from 'rxjs';
@@ -20,17 +20,7 @@ export class PointsService {
         );
     }
 
-    getSummariesList(params: GetPointsSummaryParams): ObservablePaginatedData<PointsSummary> {
-        const url = this.base.createUrl('user/points/summaries/list');
-        const headers = this.base.getHttpHeaders();
-
-        return this.base.http.post<PaginatedResponse<PointsSummary>>(url, params, { headers }).pipe(
-            map(data => PaginatedResponse.create(data, entity => PointsSummary.create(entity))),
-            catchError((err: HttpErrorResponse) => this.base.catchError(err))
-        );
-    }
-
-    getGraphData(params: GetPointsSummaryParams): ObservableList<PointsSummaryBase> {
+    getGraphData(params: GetPointTransactionsParams): ObservableList<PointsSummaryBase> {
         const url = this.base.createUrl('user/points/graph/data');
         const headers = this.base.getHttpHeaders();
 
