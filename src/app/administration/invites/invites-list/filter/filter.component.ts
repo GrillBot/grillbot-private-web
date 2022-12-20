@@ -37,7 +37,8 @@ export class FilterComponent extends FilterComponentBase<GetInviteListParams> {
             createdFrom: filter.createdFrom,
             createdTo: filter.createdTo,
             creatorId: filter.creatorId,
-            guildId: filter.guildId
+            guildId: filter.guildId,
+            showUnused: filter.showUnused
         });
     }
 
@@ -47,7 +48,8 @@ export class FilterComponent extends FilterComponentBase<GetInviteListParams> {
             createdFrom: [filter.createdFrom],
             createdTo: [filter.createdTo],
             creatorId: [filter.creatorId],
-            guildId: [filter.guildId]
+            guildId: [filter.guildId],
+            showUnused: [filter.showUnused]
         });
     }
 }

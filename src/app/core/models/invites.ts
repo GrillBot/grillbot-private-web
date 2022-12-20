@@ -1,5 +1,4 @@
 import { FilterBase } from './common';
-import { QueryParam } from './http';
 import { DateTime } from './datetime';
 import { Guild } from './guilds';
 import { User } from './users';
@@ -55,6 +54,7 @@ export class GetInviteListParams extends FilterBase {
     public code: string | null = null;
     public createdFrom: string | null = null;
     public createdTo: string | null = null;
+    public showUnused: boolean = false;
 
     static get empty(): GetInviteListParams { return new GetInviteListParams(); }
 
@@ -67,6 +67,7 @@ export class GetInviteListParams extends FilterBase {
         params.createdTo = form.createdTo;
         params.creatorId = form.creatorId;
         params.guildId = form.guildId;
+        params.showUnused = form.showUnused;
 
         return params;
     }

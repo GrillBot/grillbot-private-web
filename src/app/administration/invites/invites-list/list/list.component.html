@@ -10,6 +10,7 @@
                     <th sortable (clicked)="setSort($event)" [key]="'Creator'" [sort]="sort">Vytvořil</th>
                     <th>Server</th>
                     <th sortable (clicked)="setSort($event)" [key]="'UseCount'" [sort]="sort">Použilo uživatelů</th>
+                    <th class="no-print">Akce</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,9 +27,12 @@
                         <a routerLink="/admin/servers/{{item.guild.id}}" class="text-dark" *ngIf="item.guild">{{item.guild.name}}</a>
                     </td>
                     <td>{{item.usedUsersCount}}</td>
+                    <td class="no-print">
+                        <list-button (clicked)="deleteInvite(item)" title="Smazat pozvánku" icon="trash-alt"></list-button>
+                    </td>
                 </tr>
                 <tr *ngIf="list.items.length === 0">
-                    <td colspan="5">Nebyly nalezeny žádné pozvánky.</td>
+                    <td colspan="6">Nebyly nalezeny žádné pozvánky.</td>
                 </tr>
             </tbody>
         </table>

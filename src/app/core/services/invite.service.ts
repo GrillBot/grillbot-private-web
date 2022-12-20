@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { PaginatedResponse, ObservableDict, Dictionary } from './../models/common';
+import { PaginatedResponse, ObservableDict, Dictionary, EmptyObservable } from './../models/common';
 import { Injectable } from '@angular/core';
 import { GetInviteListParams, GuildInvite } from '../models/invites';
 import { BaseService } from './base.service';
@@ -37,6 +37,15 @@ export class InviteService {
         const headers = this.base.getHttpHeaders();
 
         return this.base.http.get<number>(url, { headers }).pipe(
+            catchError((err: HttpErrorResponse) => this.base.catchError(err))
+        );
+    }
+
+    deleteInvite(guildId: string, code: string): EmptyObservable {
+        const url = this.base.createUrl(`invite/${guildId}/${code}`);
+        const headers = this.base.getHttpHeaders();
+
+        return this.base.http.delete(url, { headers }).pipe(
             catchError((err: HttpErrorResponse) => this.base.catchError(err))
         );
     }
