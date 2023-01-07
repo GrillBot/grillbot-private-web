@@ -9,8 +9,8 @@
 
         <ng-container *ngIf="data.commands">
             <div *ngFor="let item of data.commands" class="d-flex justify-content-between border-bottom" [class.text-danger]="!item.success"
-                [class.text-warning]="item.duration >= 1000">
-                <b>{{item.commandName}}</b>
+                [class.text-warning]="item.duration >= 5000">
+                <b title="{{item.commandName}}">{{item.commandName | cut:45}}</b>
                 <span>{{item.duration | timeDuration}}</span>
             </div>
         </ng-container>

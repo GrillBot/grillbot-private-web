@@ -9,7 +9,7 @@
 
         <ng-container *ngIf="data.jobs">
             <div *ngFor="let job of data.jobs" class="d-flex justify-content-between border-bottom" [class.text-danger]="!job.success"
-                [class.text-warning]="job.duration >= 1000">
+                [class.text-warning]="job.duration >= 5000">
                 <b>{{job.name}}</b>
                 <span>{{job.duration | timeDuration}}</span>
             </div>

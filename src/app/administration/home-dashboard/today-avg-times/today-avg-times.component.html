@@ -9,7 +9,7 @@
 
         <ng-container *ngIf="data.todayAvgTimes">
             <div *ngFor="let item of data.todayAvgTimes" class="d-flex justify-content-between border-bottom"
-                [class.text-warning]="item.value >= 1000">
+                [class.text-warning]="item.value >= 5000">
                 <b>{{translateKey(item.key)}}</b>
                 <span>{{item.value | timeDuration}}</span>
             </div>
