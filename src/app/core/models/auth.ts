@@ -28,7 +28,7 @@ export class JwtToken {
         if (!data) { return null; }
 
         const token = new JwtToken();
-        token.name = data.name;
+        token.name = data.unique_name;
         token.audience = data.aud;
         token.id = data.nameid;
         token.issuer = data.iss;
